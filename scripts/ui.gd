@@ -19,14 +19,15 @@ signal clear_demo_pressed
 @export var mute_music: CheckBox
 
 var music_mute: bool = false
-var initialized: bool = false
+var initialised: bool = false
 var display_swipe_to_start: bool = true
 var shader_objects: Array = []
 
 func _ready():
 	player = get_tree().get_root().get_node("Main/Player")
 	player.start_game_signal.connect(_on_player_start_game_signal)
-	initialized = true
+	player.in_launch_zone.connect(_on_player_in_launch_zone)
+	initialised = true
 	shader_objects = find_objects_with_shader()
 
 	for obj in shader_objects:
@@ -58,7 +59,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 	)
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	if not initialized:
+	if not initialised:
 		return
 	music_mute = toggled_on
 	emit_signal("music_mute_toggled", music_mute)

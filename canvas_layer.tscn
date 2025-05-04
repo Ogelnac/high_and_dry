@@ -143,6 +143,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Debug" type="Button" parent="UI"]
+visible = false
 material = SubResource("ShaderMaterial_lptq8")
 layout_mode = 1
 anchors_preset = 1
