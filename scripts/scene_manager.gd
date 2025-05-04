@@ -25,6 +25,6 @@ func _on_level_1_button_up() -> void:
 	await get_tree().create_timer(3.0).timeout
 	
 	get_tree().change_scene_to_file("res://arcade/main.tscn")
-	GameManager.player_start_position = Vector2(-192.0, -575.0)
-	GameManager.add_resources([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-	get_tree().reload_current_scene()
+	#GameManager.player_start_position = Vector2(-192.0, -575.0)
+	#GameManager.add_resources([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+	#get_tree().reload_current_scene()
