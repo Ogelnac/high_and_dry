@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
@@ -18,7 +18,6 @@
 [ext_resource type="Shader" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" path="res://scripts/color_rect.gd" id="13_wugvg"]
 [ext_resource type="Texture2D" uid="uid://b81ywd5l77m52" path="res://textures/Resource.png" id="14_xafuw"]
-[ext_resource type="Script" path="res://scripts/resource_counter.gd" id="15_8d1u7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
 
@@ -143,7 +142,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Debug" type="Button" parent="UI"]
-visible = false
 material = SubResource("ShaderMaterial_lptq8")
 layout_mode = 1
 anchors_preset = 1
@@ -234,7 +232,7 @@ rotation = 0.0523599
 pivot_offset = Vector2(290, 0)
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true
-text = "[center]Swipe Up TO Play![/center]"
+text = "[center]Swipe Up To Play![/center]"
 script = ExtResource("7_exrkc")
 
 [node name="SceneManager" type="Panel" parent="UI"]
@@ -326,7 +324,8 @@ frame = 1
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
-hframes = 2
+hframes = 3
+vframes = 2
 frame = 1
 
 [node name="Level3" type="Button" parent="UI/SceneManager"]
@@ -355,7 +354,8 @@ frame = 2
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
-hframes = 2
+hframes = 3
+vframes = 2
 frame = 1
 
 [node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager"]
@@ -389,8 +389,7 @@ offset_bottom = 68.0
 scale = Vector2(1.5, 1.5)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-text = ":0"
-script = ExtResource("15_8d1u7")
+text = ": 0"
 
 [node name="VirtualJoystick" type="Control" parent="."]
 visible = false
@@ -447,6 +446,35 @@ mouse_filter = 2
 texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
 rotation_speed = 1e+07
+
+[node name="StinkMeter" type="NinePatchRect" parent="."]
+visible = false
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.087
+anchor_right = 0.5
+anchor_bottom = 0.087
+offset_left = -240.0
+offset_top = -0.0500031
+offset_right = -80.0
+offset_bottom = 15.95
+scale = Vector2(3, 3)
+texture = ExtResource("6_uoqhr")
+region_rect = Rect2(0, 16, 48, 16)
+patch_margin_left = 24
+patch_margin_top = 8
+patch_margin_right = 24
+patch_margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="StinkMeter"]
+z_index = -1
+layout_mode = 1
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 2.0
+offset_bottom = 13.0
+color = Color(0.239216, 0.607843, 0.282353, 1)
 
 [connection signal="button_up" from="UI/Menu" to="UI" method="_on_menu_button_up"]
 [connection signal="toggled" from="UI/MenuPanel/MuteMusic" to="UI" method="_on_check_box_toggled"]

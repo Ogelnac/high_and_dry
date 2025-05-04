@@ -7,7 +7,7 @@
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="6_oiokv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqxtp"]
-size = Vector2(298, 90)
+size = Vector2(298, 849)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l3su1"]
 shader = ExtResource("5_7umgu")
@@ -36,7 +36,7 @@ collision_layer = 32
 script = ExtResource("6_n0gy2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RisingDeath"]
-position = Vector2(0, 252)
+position = Vector2(0, 631.5)
 shape = SubResource("RectangleShape2D_mqxtp")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="RisingDeath"]
@@ -70,3 +70,4 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="RisingDeath" to="RisingDeath" method="_on_body_entered"]
+[connection signal="body_exited" from="RisingDeath" to="RisingDeath" method="_on_body_exited"]

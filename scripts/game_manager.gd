@@ -15,12 +15,21 @@ var white_resources: int = 0
 
 var UI = preload("res://canvas_layer.tscn").instantiate()
 
+@onready var stink_meter: float = 0.0
+
 func _ready():
 	add_child(UI)
 
 func add_resource(collectable_type: int):
-	resources.push(collectable_type)
+	resources.append(collectable_type)
 
+func arcade_UI():
+	UI.find_child("SceneManager").hide()
+	UI.find_child("StinkMeter").show()
+
+func hub_UI():
+	UI.find_child("StinkMeter").hide()
+	
 func add_resources(collected: Array):
 	var resource_map := {
 		0: "red_resources", 7: "red_resources",

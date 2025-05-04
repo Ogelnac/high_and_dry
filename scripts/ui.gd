@@ -14,6 +14,8 @@ signal clear_demo_pressed
 @onready var click: AudioStreamPlayer = $Click
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 @onready var player: CharacterBody2D
+@onready var color_rect: ColorRect = $"../StinkMeter/ColorRect"
+@onready var label: Label = $Label
 
 @export var line_edit: LineEdit
 @export var mute_music: CheckBox
@@ -35,6 +37,9 @@ func _ready():
 			_fade_from_black()
 
 func _process(_delta: float) -> void:
+	color_rect.size.x = 156.0 * GameManager.stink_meter /100.0
+	label.text = ": " + str(GameManager.resources.size())
+	
 	if display_swipe_to_start:
 		while rich_text_label.modulate.a < 1.0:
 			rich_text_label.modulate.a += 0.1

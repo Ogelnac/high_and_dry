@@ -3,7 +3,10 @@ extends Node2D
 @export var rigidbody: PackedScene
 @export var counter: PackedScene
 
-@onready var spawn_timer: Timer = Timer.new()
+var spawn_cooldown = 0.15
+var spawn_time = 0.0
+var temp_resources = []
+
 @export var colours: Array[String] = [
 	"#ac3232",
 	"#df7126",
@@ -22,12 +25,19 @@ var current_counter: int = 1
 var text_colour: String = ""
 
 func _ready():
-	spawn_timer.wait_time = 0.15
-	spawn_timer.one_shot = false
-	spawn_timer.timeout.connect(_spawn_rigidbody)
-	add_child(spawn_timer)
+	if GameManager.resources.size() > 0:
+		_resource_count_start(GameManager.resources.size())
+		temp_resources = GameManager.resources
+		GameManager.resources = []
 
-func _process(_delta):
+func _process(delta):
+	if temp_resources.size() > 0:
+		if spawn_time <= spawn_cooldown:
+			spawn_time += delta
+		else:
+			spawn_time = 0.0
+			_spawn_rigidbody(temp_resources.pop_front())
+		
 	for instance in spawned_rigidbodies:
 		if instance and instance.global_position.y >= -290:
 			var counter_instance = counter.instantiate()
@@ -56,25 +66,22 @@ func _process(_delta):
 			await get_tree().create_timer(1.0).timeout
 			counter_instance.queue_free()
 
-func _on_ui_demo_resource_pressed(max_res: int) -> void:
+func _resource_count_start(max_res: int) -> void:
 	if rigidbody:
 		spawn_count = 0
 		spawn_max = max_res
-		spawn_timer.start()
 
-func _spawn_rigidbody():
+func _spawn_rigidbody(resource_type: int):
 	if spawn_count < spawn_max:
 		var instance = rigidbody.instantiate()
 		instance.position.x += randf()
 		
 		var sprite = instance.get_node_or_null("Sprite2D")
-		sprite.frame = randi_range(0, 15)
-
+		sprite.frame = resource_type
+		
 		add_child(instance)
 		spawned_rigidbodies.append(instance)
 		spawn_count += 1
-	else:
-		spawn_timer.stop()
 
 func _on_ui_clear_demo_pressed() -> void:
 	for instance in spawned_rigidbodies:
