@@ -1,0 +1,149 @@
+[gd_scene load_steps=15 format=3 uid="uid://dp4tgkuytlhc6"]
+
+[ext_resource type="Script" path="res://scripts/doorway.gd" id="1_6gsfp"]
+[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
+[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="3_stjff"]
+[ext_resource type="Script" path="res://scripts/door_button.gd" id="4_6rkla"]
+[ext_resource type="AudioStream" uid="uid://bmiv27ve11qv" path="res://audio/Door.wav" id="5_7otsf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qaiqh"]
+size = Vector2(31, 29)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdoto"]
+shader = ExtResource("2_8bxks")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+
+[sub_resource type="Animation" id="Animation_7stet"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_wrya3"]
+resource_name = "Jump"
+length = 0.02
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_6kf0e"]
+resource_name = "OpenPopup"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_ehjrk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_55hhd"]
+resource_name = "Run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
+_data = {
+"Idle": SubResource("Animation_7stet"),
+"Jump": SubResource("Animation_wrya3"),
+"OpenPopup": SubResource("Animation_6kf0e"),
+"RESET": SubResource("Animation_ehjrk"),
+"Run": SubResource("Animation_55hhd")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_myiov"]
+size = Vector2(28, 31)
+
+[node name="Doorway" type="Node2D"]
+script = ExtResource("1_6gsfp")
+
+[node name="DoorButton" type="Area2D" parent="."]
+visible = false
+script = ExtResource("4_6rkla")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorButton"]
+position = Vector2(0.5, -34.5)
+shape = SubResource("RectangleShape2D_qaiqh")
+
+[node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_gdoto")
+position = Vector2(0, -35)
+texture = ExtResource("3_stjff")
+hframes = 3
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup"]
+libraries = {
+"": SubResource("AnimationLibrary_tamwi")
+}
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_myiov")
+
+[node name="Door" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_7otsf")
+volume_db = -15.0
+
+[connection signal="sprite_tapped" from="DoorButton" to="." method="_on_door_button_sprite_tapped"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

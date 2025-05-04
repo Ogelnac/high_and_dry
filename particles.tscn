@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm18m62v3mpqv"]
+
+[ext_resource type="Texture2D" uid="uid://du5rvjj4acp4s" path="res://textures/Particles.png" id="2_p6iqk"]
+[ext_resource type="Texture2D" uid="uid://b8ot4y67kprtw" path="res://textures/Ring.png" id="3_uc3vb"]
+[ext_resource type="Script" path="res://scripts/particle.gd" id="4_2yw0v"]
+[ext_resource type="AudioStream" uid="uid://ckrw41na3da7c" path="res://audio/CollectResource.wav" id="5_kc5n5"]
+
+[node name="Particles" type="Node2D"]
+z_index = 10
+
+[node name="Particulate" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+texture = ExtResource("2_p6iqk")
+hframes = 2
+vframes = 2
+script = ExtResource("4_2yw0v")
+move_speed = 25.0
+spin_speed = 90.0
+
+[node name="Particulate1" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+texture = ExtResource("2_p6iqk")
+hframes = 2
+vframes = 2
+script = ExtResource("4_2yw0v")
+move_speed = 25.0
+spin_speed = 90.0
+
+[node name="Particulate2" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+texture = ExtResource("2_p6iqk")
+hframes = 2
+vframes = 2
+script = ExtResource("4_2yw0v")
+move_speed = 25.0
+spin_speed = 90.0
+
+[node name="Loop" type="Sprite2D" parent="."]
+z_index = 10
+texture_filter = 1
+texture = ExtResource("3_uc3vb")
+script = ExtResource("4_2yw0v")
+move_speed = 25.0
+spin_speed = 90.0
+
+[node name="CollectResource" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_kc5n5")
+volume_db = -20.0
+pitch_scale = 0.65
+autoplay = true

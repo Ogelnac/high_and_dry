@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://ci3qtnux1in3p"]
+
+[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="1_qws6c"]
+[ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://textures/Ingredients.png" id="2_bf347"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5odne"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfasj"]
+shader = ExtResource("1_qws6c")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2cee4"]
+radius = 7.0
+
+[node name="RigidBody2D" type="RigidBody2D" groups=["shader_objects"]]
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_5odne")
+gravity_scale = 0.25
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
+z_index = -2
+material = SubResource("ShaderMaterial_pfasj")
+texture = ExtResource("2_bf347")
+hframes = 8
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["shader_objects"]]
+shape = SubResource("CircleShape2D_2cee4")

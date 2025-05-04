@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ylpokppt2xeg"]
+
+[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="1_sw5hh"]
+[ext_resource type="Texture2D" uid="uid://l5xlxjpangqj" path="res://textures/SpriteSheet.png" id="2_ga20q"]
+
+[resource]
+shader = ExtResource("1_sw5hh")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+shader_parameter/texture_albedo = ExtResource("2_ga20q")

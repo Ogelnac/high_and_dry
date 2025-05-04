@@ -1,0 +1,107 @@
+[gd_scene load_steps=11 format=3 uid="uid://bhv16y778i1e2"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_dyp2x"]
+[ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="1_qowkf"]
+[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_gcr30"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hextx"]
+shader = ExtResource("2_gcr30")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/use_black_alpha = false
+shader_parameter/use_underlay = true
+
+[sub_resource type="Animation" id="Animation_7stet"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_wrya3"]
+resource_name = "Jump"
+length = 0.02
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_ehjrk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_55hhd"]
+resource_name = "Run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
+_data = {
+"Idle": SubResource("Animation_7stet"),
+"Jump": SubResource("Animation_wrya3"),
+"RESET": SubResource("Animation_ehjrk"),
+"Run": SubResource("Animation_55hhd")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lqj7t"]
+radius = 7.0
+height = 24.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_dyp2x")
+jump_force = -260.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
+texture_filter = 1
+material = SubResource("ShaderMaterial_hextx")
+texture = ExtResource("1_qowkf")
+hframes = 3
+vframes = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_tamwi")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lqj7t")
