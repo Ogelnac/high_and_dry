@@ -20,6 +20,7 @@ font_size = 100
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_jxk1v")
+metadata/_edit_horizontal_guides_ = [-399.0]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -177)
