@@ -25,7 +25,8 @@ var shader_objects: Array = []
 
 func _ready():
 	player = get_tree().get_root().get_node("Main/Player")
-	player.start_game_signal.connect(_on_player_start_game_signal)
+	#player.start_game_signal.connect(_on_player_start_game_signal)
+	#player.in_launch_zone.connect(_on_player_in_launch_zone)
 	initialized = true
 	shader_objects = find_objects_with_shader()
 

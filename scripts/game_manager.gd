@@ -2,6 +2,8 @@ extends Node
 
 var player_start_position: Vector2 = Vector2(0.0, -30.0)
 
+var resources = Array()
+
 var red_resources: int = 0
 var blue_resources: int = 0
 var yellow_resources: int = 0
@@ -11,12 +13,13 @@ var pink_resources: int = 0
 var brown_resources: int = 0
 var white_resources: int = 0
 
-var stinky_meter: float = 0.0
-
 var UI = preload("res://canvas_layer.tscn").instantiate()
 
 func _ready():
 	add_child(UI)
+
+func add_resource(collectable_type: int):
+	resources.push(collectable_type)
 
 func add_resources(collected: Array):
 	var resource_map := {

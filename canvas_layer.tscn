@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cdjwvw6ndvp3a"]
+[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
@@ -219,6 +219,7 @@ context_menu_enabled = false
 virtual_keyboard_type = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI" groups=["shader_objects"]]
+visible = false
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5

@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://bumper.tscn" id="25_i2igf"]
 [ext_resource type="Texture2D" uid="uid://p68uvx38ytqu" path="res://textures/Important.png" id="26_hgj3n"]
-[ext_resource type="PackedScene" uid="uid://cdjwvw6ndvp3a" path="res://canvas_layer.tscn" id="26_j17sk"]
+[ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://canvas_layer.tscn" id="26_j17sk"]
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://doorway.tscn" id="27_3nqyi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wg2xd"]
