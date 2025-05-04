@@ -25,6 +25,17 @@ var initialised: bool = false
 var display_swipe_to_start: bool = true
 var shader_objects: Array = []
 
+@export var colours: Array[String] = [
+	"#ac3232",
+	"#df7126",
+	"#fbf236",
+	"#6abe30",
+	"#639bff",
+	"#d77bba",
+	"#ffffff",
+	"#8f563b"
+]
+
 func _ready():
 	player = get_tree().get_root().get_node("Main/Player")
 	player.start_game_signal.connect(_on_player_start_game_signal)
@@ -38,7 +49,9 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	color_rect.size.x = 156.0 * GameManager.stink_meter /100.0
-	label.text = ": " + str(GameManager.resources.size())
+	label.text = str(GameManager.resources.size())
+	if GameManager.resources.size() > 0:
+		label.modulate = colours[GameManager.resources[GameManager.resources.size() - 1]]
 	
 	if display_swipe_to_start:
 		while rich_text_label.modulate.a < 1.0:

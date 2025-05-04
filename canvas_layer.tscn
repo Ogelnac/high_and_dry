@@ -142,6 +142,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Debug" type="Button" parent="UI"]
+visible = false
 material = SubResource("ShaderMaterial_lptq8")
 layout_mode = 1
 anchors_preset = 1
@@ -381,15 +382,24 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("14_xafuw")
 
 [node name="Label" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 204.0
-offset_top = 48.0
-offset_right = 244.0
-offset_bottom = 68.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.015
+anchor_right = 0.5
+anchor_bottom = 0.015
+offset_left = -113.3
+offset_top = -6.295
+offset_right = 37.7
+offset_bottom = 49.705
+grow_horizontal = 2
 scale = Vector2(1.5, 1.5)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-text = ": 0"
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 80
+text = "0
+"
+horizontal_alignment = 1
 
 [node name="VirtualJoystick" type="Control" parent="."]
 visible = false
