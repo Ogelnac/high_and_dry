@@ -11,6 +11,13 @@ var pink_resources: int = 0
 var brown_resources: int = 0
 var white_resources: int = 0
 
+var stinky_meter: float = 0.0
+
+var UI = preload("res://canvas_layer.tscn").instantiate()
+
+func _ready():
+	add_child(UI)
+
 func add_resources(collected: Array):
 	var resource_map := {
 		0: "red_resources", 7: "red_resources",
