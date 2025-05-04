@@ -14,6 +14,7 @@ var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: CharacterBody2D = $Player
 @onready var rising_death: Area2D = $RisingDeath
+@onready var stink_meter: float = 0.0
 
 var tiles_in_scene: Array[Object] = []
 var is_playing: bool = 0
@@ -22,13 +23,20 @@ var prev_tile: int = 1
 
 func _ready() -> void:
 	pattern_update(0, 1)
+	GameManager.resources = []
+	stink_meter = 0.0
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	# CAMERA MOVEMENT
 	camera_2d.global_position.y = player.global_position.y - 120.0
 	camera_2d.global_position.x = player.global_position.x * 0.01
 	
 	if is_playing:
+		if stink_meter <= 100.0:
+			stink_meter += 10.0 * delta
+		else:
+			get_tree().change_scene_to_file("res://main.tscn")
+		
 		current_tile = int(player.global_position.y) / 608
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)
