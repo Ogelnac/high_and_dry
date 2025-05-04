@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://cjyisk7r6qf4c"]
+[gd_scene load_steps=43 format=4 uid="uid://cjyisk7r6qf4c"]
 
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://player.tscn" id="1_fvgh8"]
 [ext_resource type="PackedScene" uid="uid://cpphloewhd56b" path="res://counter.tscn" id="3_1j66b"]
@@ -19,9 +19,6 @@
 [ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://shaders/mbg_tilemap_halftone.tres" id="9_xnmlj"]
 [ext_resource type="AudioStream" uid="uid://ql5hj6ewtuop" path="res://audio/LandingZone.wav" id="10_mca43"]
 [ext_resource type="AudioStream" uid="uid://by8c00akqg5i4" path="res://audio/Market.wav" id="11_2xfaf"]
-[ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="14_2gl1f"]
-[ext_resource type="PackedScene" uid="uid://d31wa3a4nc7db" path="res://ui.tscn" id="14_772pp"]
-[ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="15_i6pe2"]
 [ext_resource type="Texture2D" uid="uid://l8osgtemsh10" path="res://textures/Mask.png" id="16_a68v1"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="18_h2ws5"]
 [ext_resource type="Shader" path="res://shaders/noise_and_chromashift.gdshader" id="18_rtcbe"]
@@ -29,9 +26,8 @@
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://bumper.tscn" id="25_i2igf"]
 [ext_resource type="Texture2D" uid="uid://p68uvx38ytqu" path="res://textures/Important.png" id="26_hgj3n"]
+[ext_resource type="PackedScene" uid="uid://cdjwvw6ndvp3a" path="res://canvas_layer.tscn" id="26_j17sk"]
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://doorway.tscn" id="27_3nqyi"]
-[ext_resource type="Script" path="res://scripts/joystick_base.gd" id="27_lqamy"]
-[ext_resource type="Script" path="res://scripts/joystick_handle.gd" id="28_5b64u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wg2xd"]
 shader = ExtResource("4_bb06l")
@@ -665,66 +661,7 @@ offset_top = -777.0
 offset_right = 325.0
 offset_bottom = 247.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="UI" parent="CanvasLayer" instance=ExtResource("14_772pp")]
-mouse_filter = 1
-
-[node name="VirtualJoystick" type="Control" parent="CanvasLayer"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(292, 633)
-mouse_filter = 2
-
-[node name="JoystickBase" type="TextureRect" parent="CanvasLayer/VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
-modulate = Color(1, 1, 1, 0.784314)
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3, 3)
-pivot_offset = Vector2(16, 16)
-mouse_filter = 2
-texture = ExtResource("14_2gl1f")
-script = ExtResource("27_lqamy")
-joystick_handle = NodePath("../JoystickHandle")
-follow_weight = 0.85
-
-[node name="JoystickHandle" type="TextureRect" parent="CanvasLayer/VirtualJoystick"]
-modulate = Color(1, 1, 1, 0.784314)
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3, 3)
-pivot_offset = Vector2(8, 8)
-mouse_filter = 2
-texture = ExtResource("15_i6pe2")
-script = ExtResource("28_5b64u")
-rotation_speed = 1e+07
+[node name="CanvasLayer" parent="." instance=ExtResource("26_j17sk")]
 
 [node name="Important" type="Sprite2D" parent="."]
 visible = false
@@ -752,8 +689,6 @@ position = Vector2(128, -447)
 teleport_point = Transform2D(1, 0, 0, 1, -191, -31)
 player = NodePath("../Player")
 
-[connection signal="in_launch_zone" from="Player" to="CanvasLayer/UI" method="_on_player_in_launch_zone"]
-[connection signal="start_game_signal" from="Player" to="CanvasLayer/UI" method="_on_player_start_game_signal"]
 [connection signal="timeout" from="Player/StepTimer" to="Player" method="_on_step_timer_timeout"]
 [connection signal="body_entered" from="LandingZone" to="Camera2D" method="_on_landing_zone_body_entered"]
 [connection signal="body_entered" from="Hub" to="Camera2D" method="_on_hub_body_entered"]
@@ -762,6 +697,3 @@ player = NodePath("../Player")
 [connection signal="body_entered" from="Market" to="Camera2D" method="_on_market_body_entered"]
 [connection signal="body_entered" from="LaunchZone" to="Player" method="_on_launch_zone_body_entered"]
 [connection signal="body_exited" from="LaunchZone" to="Player" method="_on_launch_zone_body_exited"]
-[connection signal="clear_demo_pressed" from="CanvasLayer/UI" to="ResourceDemo" method="_on_ui_clear_demo_pressed"]
-[connection signal="demo_resource_pressed" from="CanvasLayer/UI" to="ResourceDemo" method="_on_ui_demo_resource_pressed"]
-[connection signal="music_mute_toggled" from="CanvasLayer/UI" to="Camera2D" method="_on_ui_music_mute_toggled"]

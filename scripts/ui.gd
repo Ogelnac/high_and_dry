@@ -13,9 +13,10 @@ signal clear_demo_pressed
 @onready var pipe: AudioStreamPlayer = $Pipe
 @onready var click: AudioStreamPlayer = $Click
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
+@onready var player: CharacterBody2D
 
-@export var mute_music: CheckBox
 @export var line_edit: LineEdit
+@export var mute_music: CheckBox
 
 var music_mute: bool = false
 var initialized: bool = false
@@ -23,6 +24,8 @@ var display_swipe_to_start: bool = true
 var shader_objects: Array = []
 
 func _ready():
+	player = get_tree().get_root().get_node("Main/Player")
+	player.start_game_signal.connect(_on_player_start_game_signal)
 	initialized = true
 	shader_objects = find_objects_with_shader()
 

@@ -1,0 +1,456 @@
+[gd_scene load_steps=26 format=3 uid="uid://cdjwvw6ndvp3a"]
+
+[ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
+[ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="2_l5iyv"]
+[ext_resource type="Script" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
+[ext_resource type="AudioStream" uid="uid://38ca42d0swi2" path="res://audio/Click.wav" id="3_xqyrb"]
+[ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="4_ccaf2"]
+[ext_resource type="AudioStream" uid="uid://c6ke50m7khljo" path="res://audio/Pipe.wav" id="4_erl81"]
+[ext_resource type="FontFile" uid="uid://c4xxo6yj6rnct" path="res://Shutupandcode-Regular.ttf" id="5_0s3la"]
+[ext_resource type="Script" path="res://scripts/joystick_handle.gd" id="5_kk307"]
+[ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="6_uoqhr"]
+[ext_resource type="Script" path="res://scripts/rich_text_label.gd" id="7_exrkc"]
+[ext_resource type="Script" path="res://scripts/scene_manager.gd" id="8_0ogh3"]
+[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="9_71g66"]
+[ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://textures/LevelSelect.png" id="10_gdo4b"]
+[ext_resource type="AudioStream" uid="uid://benp7kpvmacgv" path="res://audio/Collect50.wav" id="11_4mnhw"]
+[ext_resource type="Shader" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
+[ext_resource type="Script" path="res://scripts/color_rect.gd" id="13_wugvg"]
+[ext_resource type="Texture2D" uid="uid://b81ywd5l77m52" path="res://textures/Resource.png" id="14_xafuw"]
+[ext_resource type="Script" path="res://scripts/resource_counter.gd" id="15_8d1u7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qens6"]
+atlas = ExtResource("6_uoqhr")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
+shader = ExtResource("9_71g66")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iw0"]
+shader = ExtResource("9_71g66")
+shader_parameter/black_dot_transition = 1.1
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2cxs"]
+shader = ExtResource("9_71g66")
+shader_parameter/black_dot_transition = 1.1
+shader_parameter/use_black_alpha = true
+shader_parameter/use_underlay = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iabp7"]
+shader = ExtResource("12_uer7x")
+shader_parameter/transition_value = 0.0
+shader_parameter/transition_location = Vector2(292, 340)
+shader_parameter/colorrect_size = Vector2(0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("line_edit", "mute_music")]
+process_mode = 3
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_kmbj5")
+script = ExtResource("2_l5iyv")
+line_edit = NodePath("DebugPanel/LineEdit")
+mute_music = NodePath("MenuPanel/MuteMusic")
+
+[node name="Click" type="AudioStreamPlayer" parent="UI"]
+stream = ExtResource("3_xqyrb")
+
+[node name="Pipe" type="AudioStreamPlayer" parent="UI"]
+stream = ExtResource("4_erl81")
+
+[node name="Menu" type="Button" parent="UI"]
+material = SubResource("ShaderMaterial_lptq8")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -82.0
+offset_top = 39.0
+offset_right = -10.0
+offset_bottom = 81.0
+grow_horizontal = 0
+text = "MENU"
+
+[node name="MenuPanel" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 100.0
+offset_right = -10.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label2" type="Label" parent="UI/MenuPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Audio"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MuteMusic" type="CheckBox" parent="UI/MenuPanel"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 72.0
+offset_right = 217.0
+offset_bottom = 114.0
+theme_override_fonts/font = ExtResource("5_0s3la")
+theme_override_font_sizes/font_size = 30
+text = "MUTE MUSIC"
+
+[node name="HSlider" type="HSlider" parent="UI/MenuPanel"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 134.0
+offset_right = 508.0
+offset_bottom = 150.0
+value = 85.0
+
+[node name="Label" type="Label" parent="UI/MenuPanel"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 132.0
+offset_right = 184.0
+offset_bottom = 153.0
+theme_override_fonts/font = ExtResource("5_0s3la")
+theme_override_font_sizes/font_size = 30
+text = "VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Debug" type="Button" parent="UI"]
+material = SubResource("ShaderMaterial_lptq8")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -188.0
+offset_top = 39.0
+offset_right = -97.0
+offset_bottom = 81.0
+grow_horizontal = 0
+text = "Debug"
+icon = SubResource("AtlasTexture_qens6")
+
+[node name="DebugPanel" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 100.0
+offset_right = -10.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label2" type="Label" parent="UI/DebugPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Debug"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadeToBlack" type="Button" parent="UI/DebugPanel"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 69.0
+offset_right = 369.0
+offset_bottom = 111.0
+text = "Fade to black"
+
+[node name="SpawnResources" type="Button" parent="UI/DebugPanel"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 160.0
+offset_right = 391.0
+offset_bottom = 202.0
+text = "Spawn Resources"
+
+[node name="ClearResources" type="Button" parent="UI/DebugPanel"]
+layout_mode = 0
+offset_left = 417.335
+offset_top = 160.0
+offset_right = 520.715
+offset_bottom = 202.0
+text = "Clear"
+flat = true
+
+[node name="LineEdit" type="LineEdit" parent="UI/DebugPanel"]
+layout_mode = 0
+offset_left = 43.605
+offset_top = 160.0
+offset_right = 123.605
+offset_bottom = 200.0
+mouse_filter = 1
+text = "50"
+alignment = 1
+context_menu_enabled = false
+virtual_keyboard_type = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI" groups=["shader_objects"]]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 77.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0523599
+pivot_offset = Vector2(290, 0)
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[center]Swipe Up TO Play![/center]"
+script = ExtResource("7_exrkc")
+
+[node name="SceneManager" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_0ogh3")
+
+[node name="Label" type="Label" parent="UI/SceneManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+offset_left = -2.5
+offset_top = -60.0
+offset_right = 2.5
+offset_bottom = -60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "Level Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Level1" type="Button" parent="UI/SceneManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.175
+anchor_right = 0.5
+anchor_bottom = 0.175
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level1"]
+material = SubResource("ShaderMaterial_ugoqk")
+position = Vector2(64, 64)
+texture = ExtResource("10_gdo4b")
+vframes = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/SceneManager/Level1"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 45.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]LVL 1[/center]"
+
+[node name="Level2" type="Button" parent="UI/SceneManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level2"]
+material = SubResource("ShaderMaterial_b8iw0")
+position = Vector2(64, 64)
+texture = ExtResource("10_gdo4b")
+vframes = 3
+frame = 1
+
+[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level2"]
+position = Vector2(64, 64)
+scale = Vector2(2, 2)
+texture = ExtResource("6_uoqhr")
+hframes = 2
+frame = 1
+
+[node name="Level3" type="Button" parent="UI/SceneManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.825
+anchor_right = 0.5
+anchor_bottom = 0.825
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level3"]
+material = SubResource("ShaderMaterial_e2cxs")
+position = Vector2(64, 64)
+texture = ExtResource("10_gdo4b")
+vframes = 3
+frame = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level3"]
+position = Vector2(64, 64)
+scale = Vector2(2, 2)
+texture = ExtResource("6_uoqhr")
+hframes = 2
+frame = 1
+
+[node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager"]
+stream = ExtResource("11_4mnhw")
+volume_db = -20.0
+
+[node name="CircleFade" type="ColorRect" parent="UI"]
+visible = false
+z_index = 10
+material = SubResource("ShaderMaterial_iabp7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("13_wugvg")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI"]
+position = Vector2(123, 64)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("14_xafuw")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 204.0
+offset_top = 48.0
+offset_right = 244.0
+offset_bottom = 68.0
+scale = Vector2(1.5, 1.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = ":0"
+script = ExtResource("15_8d1u7")
+
+[node name="VirtualJoystick" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(292, 633)
+mouse_filter = 2
+
+[node name="JoystickBase" type="TextureRect" parent="VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
+modulate = Color(1, 1, 1, 0.784314)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(16, 16)
+mouse_filter = 2
+texture = ExtResource("2_77u76")
+script = ExtResource("3_nf0j4")
+joystick_handle = NodePath("../JoystickHandle")
+follow_weight = 0.85
+
+[node name="JoystickHandle" type="TextureRect" parent="VirtualJoystick"]
+modulate = Color(1, 1, 1, 0.784314)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(8, 8)
+mouse_filter = 2
+texture = ExtResource("4_ccaf2")
+script = ExtResource("5_kk307")
+rotation_speed = 1e+07
+
+[connection signal="button_up" from="UI/Menu" to="UI" method="_on_menu_button_up"]
+[connection signal="toggled" from="UI/MenuPanel/MuteMusic" to="UI" method="_on_check_box_toggled"]
+[connection signal="value_changed" from="UI/MenuPanel/HSlider" to="UI" method="_on_h_slider_value_changed"]
+[connection signal="button_up" from="UI/Debug" to="UI" method="_on_debug_button_up"]
+[connection signal="button_up" from="UI/DebugPanel/FadeToBlack" to="UI" method="_on_fade_to_black_button_up"]
+[connection signal="button_down" from="UI/DebugPanel/SpawnResources" to="UI" method="_on_spawn_resources_button_down"]
+[connection signal="button_down" from="UI/DebugPanel/ClearResources" to="UI" method="_on_clear_resources_button_down"]
+[connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]
