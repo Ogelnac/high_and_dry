@@ -14,8 +14,8 @@ signal clear_demo_pressed
 @onready var click: AudioStreamPlayer = $Click
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 @onready var player: CharacterBody2D
-@onready var color_rect: ColorRect = $"../StinkMeter/ColorRect"
-@onready var label: Label = $Label
+@onready var color_rect: ColorRect = $"../UI/StinkMeter/ColorRect"
+@onready var arcade_counter: Label = $ArcadeCounter
 
 @export var line_edit: LineEdit
 @export var mute_music: CheckBox
@@ -38,8 +38,9 @@ var shader_objects: Array = []
 
 func _ready():
 	player = get_tree().get_root().get_node("Main/Player")
-	player.start_game_signal.connect(_on_player_start_game_signal)
-	player.in_launch_zone.connect(_on_player_in_launch_zone)
+	if player:
+		player.start_game_signal.connect(_on_player_start_game_signal)
+		player.in_launch_zone.connect(_on_player_in_launch_zone)
 	initialised = true
 	shader_objects = find_objects_with_shader()
 
@@ -49,9 +50,9 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	color_rect.size.x = 156.0 * GameManager.stink_meter /100.0
-	label.text = str(GameManager.resources.size())
+	arcade_counter.text = str(GameManager.resources.size())
 	if GameManager.resources.size() > 0:
-		label.modulate = colours[GameManager.resources[GameManager.resources.size() - 1]]
+		arcade_counter.modulate = colours[GameManager.resources[GameManager.resources.size() - 1]]
 	
 	if display_swipe_to_start:
 		while rich_text_label.modulate.a < 1.0:

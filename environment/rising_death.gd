@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var player: CharacterBody2D = $"../Player"
+@onready var player: CharacterBody2D = $"../ArcadePlayer"
 @onready var main: Node2D = $".."
 var is_playing: bool = 0
 
@@ -14,8 +14,8 @@ func _process(delta: float) -> void:
 		global_position.y = global_position.y - 50.0 * delta
 		#elif global_position.y > player.global_position.y:
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	main.stink_multiplier = 4.0
 
-func _on_body_exited(body: Node2D) -> void:
+func _on_body_exited(_body: Node2D) -> void:
 	main.stink_multiplier = 1.0

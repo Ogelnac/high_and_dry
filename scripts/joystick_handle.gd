@@ -3,7 +3,6 @@ extends TextureRect
 @export var velocity: Vector2 = Vector2.ZERO
 @export var max_stretch: float = 1.75
 @export var min_squash: float = 0.25
-@export var rotation_speed: float = 20.0
 @export var stretch_sensitivity: float = 0.01
 
 var base_scale: Vector2
@@ -13,7 +12,7 @@ var prev_position: Vector2
 func _ready():
 	base_scale = scale
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	faux_velocity = position - prev_position
 	
 	if faux_velocity.length() > 0.01 and faux_velocity.length() < 100.0:

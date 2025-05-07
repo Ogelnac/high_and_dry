@@ -23,5 +23,5 @@ func _on_level_1_button_up() -> void:
 	fade_out = true
 	circle_fade.show()
 	await get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://arcade/main.tscn")
+	get_tree().change_scene_to_file("res://arcade_main.tscn")
 	GameManager.arcade_UI()

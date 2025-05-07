@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=23 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
@@ -10,14 +10,12 @@
 [ext_resource type="FontFile" uid="uid://c4xxo6yj6rnct" path="res://Shutupandcode-Regular.ttf" id="5_0s3la"]
 [ext_resource type="Script" path="res://scripts/joystick_handle.gd" id="5_kk307"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="6_uoqhr"]
-[ext_resource type="Script" path="res://scripts/rich_text_label.gd" id="7_exrkc"]
 [ext_resource type="Script" path="res://scripts/scene_manager.gd" id="8_0ogh3"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://textures/LevelSelect.png" id="10_gdo4b"]
 [ext_resource type="AudioStream" uid="uid://benp7kpvmacgv" path="res://audio/Collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" path="res://scripts/color_rect.gd" id="13_wugvg"]
-[ext_resource type="Texture2D" uid="uid://b81ywd5l77m52" path="res://textures/Resource.png" id="14_xafuw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
 
@@ -219,22 +217,23 @@ context_menu_enabled = false
 virtual_keyboard_type = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI" groups=["shader_objects"]]
-visible = false
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 77.0
-offset_bottom = 108.0
+offset_left = 1.0
+offset_top = -460.0
+offset_right = 1.0
+offset_bottom = -369.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.0523599
 pivot_offset = Vector2(290, 0)
-theme_override_font_sizes/normal_font_size = 45
+theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
-text = "[center]Swipe Up To Play![/center]"
-script = ExtResource("7_exrkc")
+text = "[center][wave amp=20 freq=5]Swipe up 
+to Play![/wave][/center]"
 
 [node name="SceneManager" type="Panel" parent="UI"]
 visible = false
@@ -376,12 +375,8 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("13_wugvg")
 
-[node name="Sprite2D" type="Sprite2D" parent="UI"]
-position = Vector2(123, 64)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("14_xafuw")
-
-[node name="Label" type="Label" parent="UI"]
+[node name="ArcadeCounter" type="Label" parent="UI"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -401,9 +396,9 @@ text = "0
 "
 horizontal_alignment = 1
 
-[node name="VirtualJoystick" type="Control" parent="."]
+[node name="VirtualJoystick" type="Control" parent="UI"]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -412,7 +407,7 @@ grow_vertical = 2
 pivot_offset = Vector2(292, 633)
 mouse_filter = 2
 
-[node name="JoystickBase" type="TextureRect" parent="VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
+[node name="JoystickBase" type="TextureRect" parent="UI/VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
 modulate = Color(1, 1, 1, 0.784314)
 texture_filter = 1
 layout_mode = 1
@@ -435,7 +430,7 @@ script = ExtResource("3_nf0j4")
 joystick_handle = NodePath("../JoystickHandle")
 follow_weight = 0.85
 
-[node name="JoystickHandle" type="TextureRect" parent="VirtualJoystick"]
+[node name="JoystickHandle" type="TextureRect" parent="UI/VirtualJoystick"]
 modulate = Color(1, 1, 1, 0.784314)
 texture_filter = 1
 layout_mode = 1
@@ -455,11 +450,11 @@ pivot_offset = Vector2(8, 8)
 mouse_filter = 2
 texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
-rotation_speed = 1e+07
 
-[node name="StinkMeter" type="NinePatchRect" parent="."]
+[node name="StinkMeter" type="NinePatchRect" parent="UI"]
 visible = false
 texture_filter = 1
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.087
@@ -477,7 +472,7 @@ patch_margin_top = 8
 patch_margin_right = 24
 patch_margin_bottom = 8
 
-[node name="ColorRect" type="ColorRect" parent="StinkMeter"]
+[node name="ColorRect" type="ColorRect" parent="UI/StinkMeter"]
 z_index = -1
 layout_mode = 1
 offset_left = 2.0

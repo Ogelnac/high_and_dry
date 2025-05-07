@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://busmpycjb5vsd"]
+[gd_scene load_steps=12 format=3 uid="uid://busmpycjb5vsd"]
 
-[ext_resource type="Script" path="res://player/player_scripts/player.gd" id="1_qxev7"]
-[ext_resource type="Texture2D" uid="uid://b7qlru57tssg" path="res://player/tailor.png" id="2_8x0fc"]
+[ext_resource type="Script" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
 [ext_resource type="Texture2D" uid="uid://krfgmtng4jn" path="res://player/needle/aim_line.png" id="3_7se61"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="3_ht8wu"]
+[ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="4_uymdo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0rtdd"]
 shader = ExtResource("3_ht8wu")
@@ -42,16 +42,50 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_h3mmb"]
+resource_name = "idle_temp"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
 "values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_53c1m"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cuypb"]
 _data = {
 "RESET": SubResource("Animation_tnktm"),
-"idle": SubResource("Animation_c6cnp")
+"idle": SubResource("Animation_c6cnp"),
+"idle_temp": SubResource("Animation_h3mmb"),
+"run": SubResource("Animation_53c1m")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer")]
+[node name="ArcadePlayer" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer")]
 z_index = 1
 collision_mask = 74
 script = ExtResource("1_qxev7")
@@ -63,15 +97,17 @@ collision_mask = 2
 
 [node name="AimLine" type="Line2D" parent="."]
 texture_repeat = 2
-width = 1.0
+position = Vector2(0, -4)
+width = 2.0
 texture = ExtResource("3_7se61")
 texture_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_0rtdd")
 position = Vector2(0, -4)
-texture = ExtResource("2_8x0fc")
-hframes = 2
+texture = ExtResource("4_uymdo")
+hframes = 3
+vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_sb2v7")

@@ -12,7 +12,7 @@ var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 
 
 @onready var camera_2d: Camera2D = $Camera2D
-@onready var player: CharacterBody2D = $Player
+@onready var player: CharacterBody2D = $ArcadePlayer
 @onready var rising_death: Area2D = $RisingDeath
 @export var stink_multiplier: float = 1.0
 
@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 			Engine.time_scale = 1.0
 			get_tree().change_scene_to_file("res://main.tscn")
 		
-		current_tile = int(player.global_position.y) / 608
+		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)
 			prev_tile = current_tile

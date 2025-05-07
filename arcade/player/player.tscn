@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://busmpycjb5vsd"]
 
-[ext_resource type="Script" path="res://player/player_scripts/player.gd" id="1_qxev7"]
-[ext_resource type="Texture2D" uid="uid://b7qlru57tssg" path="res://player/tailor.png" id="2_8x0fc"]
+[ext_resource type="Script" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
+[ext_resource type="Texture2D" path="res://player/tailor.png" id="2_8x0fc"]
 [ext_resource type="Texture2D" uid="uid://krfgmtng4jn" path="res://player/needle/aim_line.png" id="3_7se61"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="3_ht8wu"]
 

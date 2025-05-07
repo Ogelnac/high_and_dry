@@ -54,9 +54,9 @@ var change_sign: bool = false
 @onready var ground: TileMapLayer = $"../Ground"
 @onready var sprite: Node2D = $Sprite2D
 @onready var launch_zone: Area2D = $"../LaunchZone"
-@onready var virtual_joystick: Control = $"../CanvasLayer/VirtualJoystick"
-@onready var joystick_base: TextureRect = $"../CanvasLayer/VirtualJoystick/JoystickBase"
-@onready var joystick_handle: TextureRect = $"../CanvasLayer/VirtualJoystick/JoystickHandle"
+@onready var virtual_joystick: Control = $"../CanvasLayer/UI/VirtualJoystick"
+@onready var joystick_base: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickBase"
+@onready var joystick_handle: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickHandle"
 
 func _ready():
 	position = GameManager.player_start_position
@@ -70,6 +70,7 @@ func _input(event: InputEvent) -> void:
 			virtual_joystick_start = virtual_joystick.get_local_mouse_position()
 			swipe_start = event.position
 
+			joystick_base.set_base_position(virtual_joystick_start)
 			virtual_joystick.visible = true
 			joystick_base.target_position = virtual_joystick_start - ((joystick_base.size * joystick_base.scale) /  2.0)
 			joystick_handle.position = virtual_joystick_start - ((joystick_handle.size * joystick_handle.scale) /  4.0)

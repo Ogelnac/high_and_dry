@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://dxc74hnt0exva"]
 
-[ext_resource type="Script" path="res://arcade/main.gd" id="1_h4xiv"]
-[ext_resource type="PackedScene" uid="uid://busmpycjb5vsd" path="res://player/player.tscn" id="3_0nopa"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_h4xiv"]
+[ext_resource type="PackedScene" uid="uid://busmpycjb5vsd" path="res://player/arcade_player.tscn" id="3_0nopa"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="5_7umgu"]
 [ext_resource type="Script" path="res://environment/rising_death.gd" id="6_n0gy2"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="6_oiokv"]
@@ -23,11 +23,12 @@ metadata/_edit_horizontal_guides_ = [-399.0]
 position = Vector2(0, -177)
 zoom = Vector2(2.2, 2.2)
 
-[node name="Player" parent="." instance=ExtResource("3_0nopa")]
+[node name="ArcadePlayer" parent="." instance=ExtResource("3_0nopa")]
 texture_filter = 1
 position = Vector2(0, -160)
 
 [node name="RisingDeath" type="Area2D" parent="."]
+visible = false
 z_index = 1
 collision_layer = 32
 script = ExtResource("6_n0gy2")

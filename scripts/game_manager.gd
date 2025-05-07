@@ -26,9 +26,11 @@ func add_resource(collectable_type: int):
 func arcade_UI():
 	UI.find_child("SceneManager").hide()
 	UI.find_child("StinkMeter").show()
+	UI.find_child("ArcadeCounter").show()
 
 func hub_UI():
 	UI.find_child("StinkMeter").hide()
+	UI.find_child("ArcadeCounter").hide()
 	
 func add_resources(collected: Array):
 	var resource_map := {
