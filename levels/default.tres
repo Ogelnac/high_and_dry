@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://c8paym028sup6"]
 
-[ext_resource type="Texture2D" uid="uid://dfl38g152rah" path="res://environment/SpriteSheet.png" id="1_mt615"]
+[ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://textures/SpriteSheet.png" id="1_pmhb3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elf2s"]
-texture = ExtResource("1_mt615")
+texture = ExtResource("1_pmhb3")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:0/0/custom_data_0 = true

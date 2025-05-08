@@ -11,6 +11,13 @@ extends CharacterBody2D
 @export var throw_velocity: float = 800.0
 @export var collect_velocity: float = 0.0 #50.0
 
+# ANIMATION
+@export var squash_intensity: float = 0.5
+@export var landing_squash_multiplier: float = 2.5
+@export var landing_squash_threshold: float = 200.0
+var landing_squash_timer: float = 0.0
+var previous_velocity: Vector2 = Vector2.ZERO
+
 # NEEDLE
 const NEEDLE = preload("res://player/needle/needle.tscn")
 @export var max_needle_count: int = 1
@@ -41,6 +48,7 @@ var tap_screen_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
+	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
 func _process(delta: float) -> void:
 	if aiming:
@@ -68,6 +76,9 @@ func _process(delta: float) -> void:
 	
 	handle_animation()
 	update_sprite_orientation(delta)
+	apply_squash_and_stretch(delta)
+	previous_velocity = velocity
+
 	
 	if touching and tap_timer.is_stopped():
 		# Aiming
@@ -229,7 +240,7 @@ func handle_animation() -> void:
 		sprite.flip_h = release_displacement.x > 0
 		return
 
-	if needle_thrown and not climbing_thread:
+	if needle_thrown or climbing_thread:
 		anim.play("idle_temp")
 		return
 
@@ -244,7 +255,6 @@ func handle_animation() -> void:
 func update_sprite_orientation(delta: float) -> void:
 	var sprite := $Sprite2D
 	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
-	var target_angle := last_surface_angle
 
 	if on_surface:
 		var surface_normal = Vector2.ZERO
@@ -253,14 +263,12 @@ func update_sprite_orientation(delta: float) -> void:
 		if surface_normal != Vector2.ZERO:
 			surface_normal = surface_normal.normalized()
 			var tangent = Vector2(-surface_normal.y, surface_normal.x)
-			target_angle = tangent.angle()
-			last_surface_angle = target_angle
+			last_surface_angle = tangent.angle()
+		current_angle = lerp_angle(current_angle, last_surface_angle, delta * 10.0)
 	else:
-		target_angle = lerp_angle(last_surface_angle, 0.0, delta * 1.0)
+		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
 
-	current_angle = lerp_angle(current_angle, target_angle, delta * 10.0)
 	sprite.rotation = current_angle
-
 	sprite.position = Vector2(0, -4).rotated(current_angle)
 
 	if aiming:
@@ -270,3 +278,29 @@ func update_sprite_orientation(delta: float) -> void:
 
 func wrapf(value: float, min_val: float, max_val: float) -> float:
 	return fmod((value - min_val), (max_val - min_val)) + min_val
+
+func apply_squash_and_stretch(delta: float) -> void:
+	var sprite := $Sprite2D
+	var target_stretch_x = 1.0
+	var target_stretch_y = 1.0
+
+	if not is_on_floor():
+		if velocity.y < 0:
+			target_stretch_x = 1.0 + (squash_intensity * 0.2)
+			target_stretch_y = 1.0 - (squash_intensity * 0.2)
+		else:
+			target_stretch_x = 1.0 - (squash_intensity * 0.2)
+			target_stretch_y = 1.0 + (squash_intensity * 0.2)
+
+	if is_on_floor() and previous_velocity.y > landing_squash_threshold and landing_squash_timer <= 0:
+		landing_squash_timer = 0.2
+		target_stretch_x = 1.2 * landing_squash_multiplier
+		target_stretch_y = 0.6
+
+	if landing_squash_timer > 0:
+		landing_squash_timer -= delta
+	else:
+		landing_squash_timer = 0.0
+
+	sprite.scale.x = lerp(sprite.scale.x, target_stretch_x, delta * 10)
+	sprite.scale.y = lerp(sprite.scale.y, target_stretch_y, delta * 10)

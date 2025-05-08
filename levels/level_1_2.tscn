@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="2_x8tsw"]
 [ext_resource type="Shader" path="res://shaders/noise_and_chromashift.gdshader" id="3_0d4sf"]
 [ext_resource type="PackedScene" uid="uid://dnmgttt3udqre" path="res://collectables/collectable.tscn" id="3_y0gog"]
-[ext_resource type="Texture2D" uid="uid://bhuhq2kssoxr2" path="res://environment/Overlay.png" id="4_dde7l"]
+[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="5_w4n71"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bmdcp"]
 shader = ExtResource("1_rqpfe")
@@ -18,7 +18,7 @@ shader_parameter/overlay_pixel_size = Vector2(0.9, 1.9)
 shader_parameter/chroma_offset_c = Vector2(0, 0)
 shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
-shader_parameter/overlay = ExtResource("4_dde7l")
+shader_parameter/overlay = ExtResource("5_w4n71")
 
 [node name="level_0_0" type="Node2D"]
 

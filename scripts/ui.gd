@@ -49,21 +49,15 @@ func _ready():
 			_fade_from_black()
 
 func _process(_delta: float) -> void:
-	color_rect.size.x = 156.0 * GameManager.stink_meter /100.0
+	color_rect.size.x = 156.0 * GameManager.stink_meter / 100.0
 	arcade_counter.text = str(GameManager.resources.size())
 	if GameManager.resources.size() > 0:
 		arcade_counter.modulate = colours[GameManager.resources[GameManager.resources.size() - 1]]
-	
-	if display_swipe_to_start:
-		while rich_text_label.modulate.a < 1.0:
-			rich_text_label.modulate.a += 0.1
-			if get_tree():
-				await get_tree().create_timer(0.1).timeout
-	else:
-		while rich_text_label.modulate.a > 0.0:
-			rich_text_label.modulate.a -= 0.1
-			if get_tree():
-				await get_tree().create_timer(0.1).timeout
+		
+	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
+		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a + 0.05, 0.0, 1.0)
+	elif not display_swipe_to_start and rich_text_label.modulate.a > 0.0:
+		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a - 0.05, 0.0, 1.0)
 
 func linear_to_db(linear_value):
 	if linear_value <= 0:
@@ -165,9 +159,11 @@ func _on_clear_resources_button_down() -> void:
 
 func _on_player_start_game_signal() -> void:
 	_fade_to_black()
+	rich_text_label.visible = false;
 	emit_signal("music_mute_toggled", true)
 	await get_tree().create_timer(1.5).timeout
 	scene_manager.show()
 
-func _on_player_in_launch_zone(in_zone) -> void:
+
+func _on_player_in_launch_zone(in_zone):
 	display_swipe_to_start = in_zone

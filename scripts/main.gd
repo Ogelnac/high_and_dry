@@ -10,7 +10,6 @@ const LEVEL_1_2 = preload("res://levels/level_1_2.tscn")
 
 var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 
-
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: CharacterBody2D = $ArcadePlayer
 @onready var rising_death: Area2D = $RisingDeath
@@ -38,6 +37,8 @@ func _process(delta: float) -> void:
 			GameManager.hub_UI()
 			GameManager.player_start_position = Vector2(-192.0, -575.0)
 			GameManager.add_resources(GameManager.resources)
+			GameManager.save()
+			GameManager.update_display()
 			Engine.time_scale = 1.0
 			get_tree().change_scene_to_file("res://main.tscn")
 		

@@ -8,11 +8,6 @@ uniform bool use_underlay = true;
 
 varying float alpha;
 
-float random (vec2 uv) {
-    return fract(sin(dot(uv.xy,
-        vec2(12.9898,78.233))) * 43758.5453123);
-}
-
 vec3 colour_cbs_adjustment(vec3 colour, float contrast, float brightness, float saturation) {
 	colour += brightness;
 	colour = (colour - 0.5) * contrast + 0.5;
@@ -72,23 +67,15 @@ void fragment() {
 
 	float k_dot = halftone(TEXTURE, UV, radians(45.0), black_dot_transition - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);
 
-	//if (use_black_alpha)
-	//{alpha = tex.a - (1.0 - max(colour.r, max(colour.g, colour.b)) * 10.0) + (1.0 - k_dot);}
-	//else
-	//{alpha = tex.a;}
-
 	alpha = tex.a;
 
 	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
 
 	float contrast = 1.0;
 	float brightness = 0.0;
-	float saturation = 0.7;
+	float saturation = 1.0;
 
 	final_colour = colour_cbs_adjustment(final_colour, contrast, brightness, saturation);
-
-	//if (use_underlay)
-	//{final_colour *= vec3(colour);}
 
 	final_colour *= vec3(k_dot);
 

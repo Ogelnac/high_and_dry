@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhjo78s7o0ca2"]
 
-[ext_resource type="Script" path="res://collectables/burst_particles.gd" id="1_xpf8o"]
+[ext_resource type="Script" path="res://effects/burst_particles.gd" id="1_xpf8o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2bp5t"]
 friction = 0.5
@@ -29,3 +29,4 @@ offset_left = -2.0
 offset_top = -2.0
 offset_right = 2.0
 offset_bottom = 2.0
+color = Color(0.223529, 0.384314, 0.184314, 1)

@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="1_qowkf"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_gcr30"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hextx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ov318"]
 shader = ExtResource("2_gcr30")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = false
+shader_parameter/use_black_alpha = true
 shader_parameter/use_underlay = true
 
 [sub_resource type="Animation" id="Animation_7stet"]
@@ -93,7 +93,7 @@ jump_force = -260.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
 texture_filter = 1
-material = SubResource("ShaderMaterial_hextx")
+material = SubResource("ShaderMaterial_ov318")
 texture = ExtResource("1_qowkf")
 hframes = 3
 vframes = 7

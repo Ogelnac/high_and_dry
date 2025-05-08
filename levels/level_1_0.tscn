@@ -3,7 +3,7 @@
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="1_581a3"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="2_chcf0"]
 [ext_resource type="Shader" path="res://shaders/noise_and_chromashift.gdshader" id="3_dcqyk"]
-[ext_resource type="Texture2D" uid="uid://bhuhq2kssoxr2" path="res://environment/Overlay.png" id="4_qrcsx"]
+[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="4_dghav"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjjnm"]
 shader = ExtResource("1_581a3")
@@ -17,7 +17,7 @@ shader_parameter/overlay_pixel_size = Vector2(0.9, 1.9)
 shader_parameter/chroma_offset_c = Vector2(0, 0)
 shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
-shader_parameter/overlay = ExtResource("4_qrcsx")
+shader_parameter/overlay = ExtResource("4_dghav")
 
 [node name="level_0_0" type="Node2D"]
 

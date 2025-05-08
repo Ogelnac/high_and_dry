@@ -216,7 +216,8 @@ alignment = 1
 context_menu_enabled = false
 virtual_keyboard_type = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI" groups=["shader_objects"]]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
+z_index = -1
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -234,6 +235,20 @@ theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
 text = "[center][wave amp=20 freq=5]Swipe up 
 to Play![/wave][/center]"
+
+[node name="HubCounter" type="RichTextLabel" parent="UI"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 35.0
+offset_right = -35.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+fit_content = true
 
 [node name="SceneManager" type="Panel" parent="UI"]
 visible = false
@@ -384,9 +399,9 @@ anchor_top = 0.015
 anchor_right = 0.5
 anchor_bottom = 0.015
 offset_left = -113.3
-offset_top = -6.295
+offset_top = 47.75
 offset_right = 37.7
-offset_bottom = 49.705
+offset_bottom = 103.75
 grow_horizontal = 2
 scale = Vector2(1.5, 1.5)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -461,9 +476,9 @@ anchor_top = 0.087
 anchor_right = 0.5
 anchor_bottom = 0.087
 offset_left = -240.0
-offset_top = -0.0500031
+offset_top = 49.95
 offset_right = -80.0
-offset_bottom = 15.95
+offset_bottom = 65.95
 scale = Vector2(3, 3)
 texture = ExtResource("6_uoqhr")
 region_rect = Rect2(0, 16, 48, 16)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dnmgttt3udqre"]
 
 [ext_resource type="Script" path="res://collectables/collectable.gd" id="1_wspct"]
-[ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://collectables/burst_particle.tscn" id="2_qfbh6"]
+[ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://effects/burst_particle.tscn" id="2_qfbh6"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_xnjlc"]
 [ext_resource type="AudioStream" uid="uid://bm3aoqj51thkd" path="res://audio/ArcadeCollectResource.wav" id="4_mvtsp"]
 [ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://textures/Ingredients.png" id="4_qv4on"]
