@@ -18,11 +18,12 @@ var UI = preload("res://canvas_layer.tscn").instantiate()
 @onready var stink_meter: float = 0.0
  
 var path = "user://highscore.save"
+var dropdown_active: bool = false;
 
 func _ready():
 	add_child(UI)
 	load_game()
-	update_display()
+	display_normal_counter()
 
 func save():
 	var file = FileAccess.open(path,FileAccess.WRITE)
@@ -76,9 +77,9 @@ func add_resources(collected: Array):
 			var value = 2 if resource >= 8 else 1
 			set(variable_name, get(variable_name) + value)
 
-func update_display():
-	UI.find_child("HubCounter").text = (
-"
+func display_dropdown():
+	dropdown_active = true
+	UI.find_child("HubCounter").text = ("
 [img width=48 region=1,1,16,16]res://textures/Ingredients.png[/img][color=ac3232]x[font_size=60]"+str(red_resources)+"[/font_size][/color]
 [img width=48 region=19,1,16,16]res://textures/Ingredients.png[/img][color=df7126]x[font_size=60]"+str(orange_resources)+"[/font_size][/color]
 [img width=48 region=37,1,16,16]res://textures/Ingredients.png[/img][color=fbf236]x[font_size=60]"+str(yellow_resources)+"[/font_size][/color]
@@ -88,3 +89,10 @@ func update_display():
 [img width=48 region=109,1,16,16]res://textures/Ingredients.png[/img][color=ffffff]x[font_size=60]"+str(brown_resources)+"[/font_size][/color]
 [img width=48 region=127,1,16,16]res://textures/Ingredients.png[/img][color=8f563b]x[font_size=60]"+str(white_resources)+"[/font_size][/color]
 ")
+
+func display_normal_counter():
+	dropdown_active = false
+	UI.find_child("HubCounter").text = ("
+[img width=40 region=32,1,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]"+
+str(red_resources + orange_resources + yellow_resources + green_resources + blue_resources + pink_resources + brown_resources + white_resources)+
+"[/font_size][/color]")

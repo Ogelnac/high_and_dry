@@ -164,6 +164,12 @@ func _on_player_start_game_signal() -> void:
 	await get_tree().create_timer(1.5).timeout
 	scene_manager.show()
 
-
 func _on_player_in_launch_zone(in_zone):
 	display_swipe_to_start = in_zone
+
+func _on_hub_counter_gui_input(event: InputEvent):	
+	if event is InputEventMouseButton and event.pressed:
+		if GameManager.dropdown_active:
+			GameManager.display_normal_counter()
+		else:
+			GameManager.display_dropdown()

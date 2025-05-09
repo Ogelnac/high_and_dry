@@ -231,24 +231,28 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.0523599
 pivot_offset = Vector2(290, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
 theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
-text = "[center][wave amp=20 freq=5]Swipe up 
+text = "[center][wave amp=25 freq=5]Swipe up 
 to Play![/wave][/center]"
 
 [node name="HubCounter" type="RichTextLabel" parent="UI"]
-z_index = -1
+z_index = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 35.0
-offset_right = -35.0
+offset_left = 33.0
+offset_right = -33.0
+offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 fit_content = true
+meta_underlined = false
 
 [node name="SceneManager" type="Panel" parent="UI"]
 visible = false
@@ -503,4 +507,5 @@ color = Color(0.239216, 0.607843, 0.282353, 1)
 [connection signal="button_up" from="UI/DebugPanel/FadeToBlack" to="UI" method="_on_fade_to_black_button_up"]
 [connection signal="button_down" from="UI/DebugPanel/SpawnResources" to="UI" method="_on_spawn_resources_button_down"]
 [connection signal="button_down" from="UI/DebugPanel/ClearResources" to="UI" method="_on_clear_resources_button_down"]
+[connection signal="gui_input" from="UI/HubCounter" to="UI" method="_on_hub_counter_gui_input"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]
