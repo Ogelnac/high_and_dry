@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://dxc74hnt0exva"]
+[gd_scene load_steps=9 format=4 uid="uid://dxc74hnt0exva"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_h4xiv"]
+[ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://canvas_layer.tscn" id="2_t5ymh"]
 [ext_resource type="PackedScene" uid="uid://busmpycjb5vsd" path="res://player/arcade_player.tscn" id="3_0nopa"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="5_7umgu"]
 [ext_resource type="Script" path="res://environment/rising_death.gd" id="6_n0gy2"]
@@ -17,8 +18,9 @@ shader_parameter/use_underlay = true
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h4xiv")
-stink_multiplier = null
 metadata/_edit_horizontal_guides_ = [-399.0]
+
+[node name="CanvasLayer" parent="." instance=ExtResource("2_t5ymh")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -177)

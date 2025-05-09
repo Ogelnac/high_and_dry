@@ -13,17 +13,17 @@ var pink_resources: int = 0
 var brown_resources: int = 0
 var white_resources: int = 0
 
-var UI = preload("res://canvas_layer.tscn").instantiate()
+var silk_worms: int = 0
+var sand: int = 0
 
 @onready var stink_meter: float = 0.0
- 
+@onready var UI: Node
+
 var path = "user://highscore.save"
 var dropdown_active: bool = false;
 
-func _ready():
-	add_child(UI)
-	load_game()
-	display_normal_counter()
+func get_ui_reference():
+	UI = get_node("/root/Main/CanvasLayer")
 
 func save():
 	var file = FileAccess.open(path,FileAccess.WRITE)
@@ -51,13 +51,12 @@ func add_resource(collectable_type: int):
 	resources.append(collectable_type)
 
 func arcade_UI():
-	UI.find_child("SceneManager").hide()
 	UI.find_child("StinkMeter").show()
 	UI.find_child("ArcadeCounter").show()
 
 func hub_UI():
-	UI.find_child("StinkMeter").hide()
-	UI.find_child("ArcadeCounter").hide()
+	load_game()
+	display_normal_counter()
 	
 func add_resources(collected: Array):
 	var resource_map := {
@@ -79,8 +78,10 @@ func add_resources(collected: Array):
 
 func display_dropdown():
 	dropdown_active = true
-	UI.find_child("HubCounter").text = ("
-[img width=48 region=1,1,16,16]res://textures/Ingredients.png[/img][color=ac3232]x[font_size=60]"+str(red_resources)+"[/font_size][/color]
+	var hub_counter = UI.find_child("HubCounter")
+	var resource_counter = hub_counter.find_child("ResourceCounter")
+	
+	resource_counter.text = ("[img width=48 region=1,1,16,16]res://textures/Ingredients.png[/img][color=ac3232]x[font_size=60]"+str(red_resources)+"[/font_size][/color]
 [img width=48 region=19,1,16,16]res://textures/Ingredients.png[/img][color=df7126]x[font_size=60]"+str(orange_resources)+"[/font_size][/color]
 [img width=48 region=37,1,16,16]res://textures/Ingredients.png[/img][color=fbf236]x[font_size=60]"+str(yellow_resources)+"[/font_size][/color]
 [img width=48 region=55,1,16,16]res://textures/Ingredients.png[/img][color=6abe30]x[font_size=60]"+str(green_resources)+"[/font_size][/color]
@@ -92,7 +93,13 @@ func display_dropdown():
 
 func display_normal_counter():
 	dropdown_active = false
-	UI.find_child("HubCounter").text = ("
-[img width=40 region=32,1,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]"+
-str(red_resources + orange_resources + yellow_resources + green_resources + blue_resources + pink_resources + brown_resources + white_resources)+
-"[/font_size][/color]")
+	var hub_counter = UI.find_child("HubCounter")
+	var resource_counter = hub_counter.find_child("ResourceCounter")
+	var silk_sand_counter = hub_counter.find_child("SilkSandCounter")
+
+	var sum = red_resources + orange_resources + yellow_resources + green_resources + blue_resources + pink_resources + brown_resources + white_resources
+	
+	resource_counter.text = ("[img width=48 region=32,0,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]"+str(sum))
+
+	silk_sand_counter.text = (" [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]"+str(silk_worms)+
+" [img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]"+str(sand))

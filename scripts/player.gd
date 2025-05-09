@@ -54,6 +54,8 @@ var change_sign: bool = false
 @onready var ground: TileMapLayer = $"../Ground"
 @onready var sprite: Node2D = $Sprite2D
 @onready var launch_zone: Area2D = $"../LaunchZone"
+
+@onready var hub_counter: Control = $"../CanvasLayer/UI/HubCounter"
 @onready var virtual_joystick: Control = $"../CanvasLayer/UI/VirtualJoystick"
 @onready var joystick_base: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickBase"
 @onready var joystick_handle: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickHandle"
@@ -62,7 +64,7 @@ func _ready():
 	position = GameManager.player_start_position
 
 func _input(event: InputEvent) -> void:
-	if !launch_commence and event is InputEventScreenTouch or event is InputEventMouseButton:
+	if (launch_commence == false) and (event is InputEventScreenTouch or event is InputEventMouseButton):
 		if event.pressed:
 			if event.position.y < 100:
 				return
@@ -87,6 +89,7 @@ func _input(event: InputEvent) -> void:
 			if swipe_length > 50 and abs(swipe_normalized.y) > 0.2:
 				if swipe_normalized.y < -0.5 and is_on_floor():
 					if inside_launch_zone:
+						hub_counter.visible = false
 						launch_commence = true
 					else:
 						var horizontal_jump_strength = max(abs(swipe_normalized.x) * max_speed, 50.0)
@@ -103,7 +106,7 @@ func _input(event: InputEvent) -> void:
 				elif swipe_normalized.y > 0.5 and is_on_floor():
 					fall_through_one_way_platform()
 
-	if !launch_commence and (event is InputEventScreenDrag or event is InputEventMouseMotion) and virtual_joystick_active:
+	if launch_commence == false and (event is InputEventScreenDrag or event is InputEventMouseMotion) and virtual_joystick_active:
 		virtual_joystick_offset = virtual_joystick.get_local_mouse_position() - virtual_joystick_start
 
 		joystick_handle.position = virtual_joystick.get_local_mouse_position()
@@ -120,7 +123,7 @@ func _process(delta: float) -> void:
 	else:
 		velocity.x = 0
 
-	if launch_commence and !launch_end:
+	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
 		var target_x = 0
@@ -181,7 +184,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0
 		is_jumping = false
 
-	if launch_commence and !launch_end:
+	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
 		var target_x = 0

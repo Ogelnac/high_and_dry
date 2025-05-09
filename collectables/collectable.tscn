@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://textures/Ingredients.png" id="4_qv4on"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qx60i"]
-radius = 8.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2626j"]
 shader = ExtResource("2_xnjlc")
@@ -26,7 +25,7 @@ shape = SubResource("CircleShape2D_qx60i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_2626j")
-scale = Vector2(1.25, 1.25)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_qv4on")
 hframes = 8
 vframes = 2

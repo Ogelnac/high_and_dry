@@ -16,12 +16,15 @@ var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 @export var stink_multiplier: float = 1.0
 
 var tiles_in_scene: Array[Object] = []
-var is_playing: bool = 0
+var is_playing: bool = false
 var current_tile: int = 1
 var prev_tile: int = 1
 
 func _ready() -> void:
 	pattern_update(0, 1)
+	
+	GameManager.get_ui_reference()
+	GameManager.arcade_UI()
 	GameManager.resources = []
 	GameManager.stink_meter = 0.0
 
@@ -34,11 +37,9 @@ func _process(delta: float) -> void:
 		if GameManager.stink_meter <= 100.0:
 			GameManager.stink_meter += 5.0 * stink_multiplier * delta
 		else:
-			GameManager.hub_UI()
 			GameManager.player_start_position = Vector2(-192.0, -575.0)
 			GameManager.add_resources(GameManager.resources)
 			GameManager.save()
-			GameManager.update_display()
 			Engine.time_scale = 1.0
 			get_tree().change_scene_to_file("res://main.tscn")
 		
@@ -66,5 +67,5 @@ func pattern_update(level: int, tile: int) -> void:
 
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
-		is_playing = 1
+		is_playing = true
 		rising_death.is_playing = 1;

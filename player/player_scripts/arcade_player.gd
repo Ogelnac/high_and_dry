@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # WORLD
-@export var gravity: float = 98.0
+@export var gravity: float = 200.0
 @export var friction: float = 1.0
 
 # VELOCITIES

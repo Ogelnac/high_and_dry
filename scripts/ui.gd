@@ -37,8 +37,8 @@ var shader_objects: Array = []
 ]
 
 func _ready():
-	player = get_tree().get_root().get_node("Main/Player")
-	if player:
+	if get_node_or_null("../../Player"):
+		player = get_tree().get_root().get_node("Main/Player")
 		player.start_game_signal.connect(_on_player_start_game_signal)
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
 	initialised = true
@@ -159,7 +159,7 @@ func _on_clear_resources_button_down() -> void:
 
 func _on_player_start_game_signal() -> void:
 	_fade_to_black()
-	rich_text_label.visible = false;
+	display_swipe_to_start = false;
 	emit_signal("music_mute_toggled", true)
 	await get_tree().create_timer(1.5).timeout
 	scene_manager.show()
@@ -167,7 +167,7 @@ func _on_player_start_game_signal() -> void:
 func _on_player_in_launch_zone(in_zone):
 	display_swipe_to_start = in_zone
 
-func _on_hub_counter_gui_input(event: InputEvent):	
+func _on_resource_counter_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if GameManager.dropdown_active:
 			GameManager.display_normal_counter()
