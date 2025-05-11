@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dp4tgkuytlhc6"]
+[gd_scene load_steps=14 format=3 uid="uid://dp4tgkuytlhc6"]
 
 [ext_resource type="Script" path="res://scripts/doorway.gd" id="1_6gsfp"]
 [ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="3_stjff"]
-[ext_resource type="Script" path="res://scripts/door_button.gd" id="4_6rkla"]
 [ext_resource type="AudioStream" uid="uid://bmiv27ve11qv" path="res://audio/Door.wav" id="5_7otsf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qaiqh"]
@@ -12,8 +11,6 @@ size = Vector2(31, 29)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gdoto"]
 shader = ExtResource("2_8bxks")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -113,8 +110,6 @@ size = Vector2(28, 31)
 script = ExtResource("1_6gsfp")
 
 [node name="DoorButton" type="Area2D" parent="."]
-visible = false
-script = ExtResource("4_6rkla")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorButton"]
 position = Vector2(0.5, -34.5)
@@ -135,6 +130,7 @@ libraries = {
 }
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(-1, -0.5)
@@ -144,6 +140,6 @@ shape = SubResource("RectangleShape2D_myiov")
 stream = ExtResource("5_7otsf")
 volume_db = -15.0
 
-[connection signal="sprite_tapped" from="DoorButton" to="." method="_on_door_button_sprite_tapped"]
+[connection signal="input_event" from="DoorButton" to="." method="_on_door_button_input_event"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

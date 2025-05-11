@@ -24,6 +24,7 @@ var falling_through = false
 var virtual_joystick_active: bool = false
 var virtual_joystick_start: Vector2
 var virtual_joystick_offset: Vector2
+var dialogue_mode: bool = false
 
 var direction: int = 0
 var is_facing_right: bool = true
@@ -40,7 +41,7 @@ var movement_start_timer: float = 0.0
 var movement_locked: bool = false
 var previous_velocity: Vector2 = Vector2.ZERO
 var landing_squash_timer: float = 0.0
-var inside_launch_zone: bool = true
+var inside_launch_zone: bool = false
 var launch_commence: bool = false
 var wait_to_change_layer: bool = false
 var launch_end: bool = false
@@ -64,10 +65,17 @@ func _ready():
 	position = GameManager.player_start_position
 
 func _input(event: InputEvent) -> void:
-	if (launch_commence == false) and (event is InputEventScreenTouch or event is InputEventMouseButton):
+	if event.position.y < 100:
+		return
+	
+	if dialogue_mode:
+		if event is InputEventScreenTouch or event is InputEventMouseButton:
+			if event.pressed:
+				DialogueManager.show_next_line()
+		return
+	
+	if event is InputEventScreenTouch or event is InputEventMouseButton:
 		if event.pressed:
-			if event.position.y < 100:
-				return
 			virtual_joystick_active = true
 			virtual_joystick_start = virtual_joystick.get_local_mouse_position()
 			swipe_start = event.position

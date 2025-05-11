@@ -27,20 +27,14 @@ filter_clip = true
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iw0"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2cxs"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iabp7"]
 shader = ExtResource("12_uer7x")
@@ -519,6 +513,36 @@ offset_top = 3.0
 offset_right = 2.0
 offset_bottom = 13.0
 color = Color(0.239216, 0.607843, 0.282353, 1)
+
+[node name="DialogueBox" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 200.0
+offset_right = -20.0
+offset_bottom = 357.0
+grow_horizontal = 2
+
+[node name="NameLabel" type="Label" parent="UI/DialogueBox"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 87.0
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 35
+
+[node name="TextLabel" type="RichTextLabel" parent="UI/DialogueBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 35.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
 
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
 [connection signal="button_up" from="UI/Menu" to="UI" method="_on_menu_button_up"]

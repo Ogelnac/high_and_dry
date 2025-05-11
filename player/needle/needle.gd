@@ -12,7 +12,7 @@ var collected = false
 
 # Wobble thread configuration
 const THREAD_RESOLUTION := 10
-var wave_amplitude := 10.0
+var wave_amplitude := 15.0
 var wave_speed := 5.0
 var wave_time := 0.0
 
@@ -42,7 +42,6 @@ func _physics_process(delta: float) -> void:
 				else:
 					recalled = true
 
-	# Update the thread
 	update_thread(delta)
 
 func update_thread(delta: float) -> void:

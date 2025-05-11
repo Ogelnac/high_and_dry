@@ -3,8 +3,6 @@ shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 uniform float black_dot_transition: hint_range(0.5, 2.0) = 0.5;
-uniform bool use_black_alpha = true;
-uniform bool use_underlay = true;
 
 varying float alpha;
 
@@ -25,7 +23,7 @@ vec2 fix_aspect(sampler2D tex, vec2 uv) {
 float get_dynamic_dot_scale(sampler2D tex) {
     ivec2 tex_size = textureSize(tex, 0);
     vec2 pixel_size = 1.0 / vec2(tex_size);
-    return 0.9 / pixel_size.x;
+    return 0.5 / pixel_size.x;
 }
 
 float halftone(sampler2D tex, vec2 uv, float angle, float ink_coverage, float dot_radius) {
@@ -43,7 +41,7 @@ float halftone(sampler2D tex, vec2 uv, float angle, float ink_coverage, float do
     float dist = length(grid);
 
     float radius = dot_radius * ink_coverage;
-    float edge = fwidth(dist);
+    float edge = fract(dist);
     return smoothstep(radius - edge, radius + edge, dist);
 }
 
@@ -58,11 +56,11 @@ void fragment() {
     vec4 tex = texture(TEXTURE, padded_uv);
     vec3 colour = tex.rgb;
 
-	float max_CMY_dot_radius = 0.8;
-	float max_k_dot_radius = 0.8;
+	float max_CMY_dot_radius = 0.75;
+	float max_k_dot_radius = 1.0;
 
 	float c_dot = halftone(TEXTURE, UV, radians(15.0), (1.0 - colour.r), max_CMY_dot_radius);
-	float m_dot = halftone(TEXTURE, UV, radians(75.0), (1.0 - colour.g), max_CMY_dot_radius);
+	float m_dot = halftone(TEXTURE, UV, radians(60.0), (1.0 - colour.g), max_CMY_dot_radius);
 	float y_dot = halftone(TEXTURE, UV, radians(0.0), (1.0 - colour.b), max_CMY_dot_radius);
 
 	float k_dot = halftone(TEXTURE, UV, radians(45.0), black_dot_transition - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);

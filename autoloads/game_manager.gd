@@ -1,6 +1,7 @@
 extends Node
 
 var player_start_position: Vector2 = Vector2(0.0, -30.0)
+#var player_start_position: Vector2 = Vector2(-640.0, -447.0)
 
 var resources = Array()
 
@@ -53,6 +54,7 @@ func add_resource(collectable_type: int):
 func arcade_UI():
 	UI.find_child("StinkMeter").show()
 	UI.find_child("ArcadeCounter").show()
+	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
 	load_game()

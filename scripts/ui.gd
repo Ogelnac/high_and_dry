@@ -165,6 +165,7 @@ func _on_player_start_game_signal() -> void:
 	scene_manager.show()
 
 func _on_player_in_launch_zone(in_zone):
+	rich_text_label.visible = true
 	display_swipe_to_start = in_zone
 
 func _on_resource_counter_gui_input(event: InputEvent) -> void:

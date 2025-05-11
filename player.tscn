@@ -7,8 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov318"]
 shader = ExtResource("2_gcr30")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
+shader_parameter/dot_softness = 3.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"

@@ -9,8 +9,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n2fwb"]
 shader = ExtResource("1_om4u4")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cfr0f"]
 shader = ExtResource("4_5n5ui")
@@ -21,19 +19,6 @@ shader_parameter/chroma_offset_y = Vector2(0, 0)
 shader_parameter/overlay = ExtResource("5_qycse")
 
 [node name="level_0_0" type="Node2D"]
-
-[node name="BackgroundColour" type="ColorRect" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -142.0
-offset_top = -608.0
-offset_right = 142.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.0117647, 0.0156863, 0.0196078, 1)
 
 [node name="Background" type="TileMapLayer" parent="."]
 material = SubResource("ShaderMaterial_n2fwb")
