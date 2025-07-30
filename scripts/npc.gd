@@ -41,3 +41,4 @@ func is_confirm_input(event: InputEvent) -> bool:
 func _on_tap_button_input_event(viewport, event, shape_idx):
 	if is_confirm_input(event):
 		DialogueManager.start_dialogue("pesto_welcome")
+		

@@ -5,5 +5,3 @@
 [resource]
 shader = ExtResource("1_sw5hh")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true

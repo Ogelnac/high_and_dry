@@ -408,14 +408,14 @@ shader_parameter/black_dot_transition = 0.5
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6o7rn")
 
+[node name="CanvasLayer" parent="." instance=ExtResource("26_j17sk")]
+
 [node name="ResourceManager" type="Node2D" parent="."]
 z_index = -20
 position = Vector2(-192, -575)
 script = ExtResource("20_a3i5d")
 rigidbody = ExtResource("21_3hmti")
 counter = ExtResource("3_1j66b")
-
-[node name="CanvasLayer" parent="." instance=ExtResource("26_j17sk")]
 
 [node name="Player" parent="." instance=ExtResource("1_fvgh8")]
 z_index = 1

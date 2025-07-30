@@ -395,6 +395,67 @@ frame = 1
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
 
+[node name="DialogueInput" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/DialogueInput"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -50.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]This is what a lot of text looks like when written in this dialogue box"
+fit_content = true
+
+[node name="Option1" type="Button" parent="UI/DialogueInput"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -66.0
+offset_right = -275.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Yes"
+
+[node name="Option2" type="Button" parent="UI/DialogueInput"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 275.0
+offset_top = -66.0
+offset_right = -25.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "NO"
+
+[node name="LevelSelect" type="AudioStreamPlayer" parent="UI/DialogueInput"]
+stream = ExtResource("11_4mnhw")
+volume_db = -20.0
+
 [node name="CircleFade" type="ColorRect" parent="UI"]
 visible = false
 z_index = 10

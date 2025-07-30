@@ -2,6 +2,7 @@ extends Node
 
 const SAVE_PATH := "user://player_progress.json"
 const DIALOGUE_PATH := "res://data/dialogue/"
+const VOX_AUDIO := "res://audio/Vox.wav"
 
 var player_progress := {}
 var current_dialogue := []
@@ -38,16 +39,13 @@ func load_npc_dialogue(npc_id: String) -> Array:
 func start_dialogue(npc_id: String):
 	if is_typing:
 		return
-
 	player.dialogue_mode = true
 	player.virtual_joystick_active = false
 	player.virtual_joystick_offset = Vector2.ZERO
 	player.virtual_joystick.visible = false
-
 	current_dialogue = load_npc_dialogue(npc_id)
 	dialogue_index = 0
 	dialogue_box.visible = true
-
 	if current_dialogue.size() > 0:
 		show_line(current_dialogue[0])
 
@@ -63,17 +61,14 @@ func show_next_line():
 func show_line(dialogue_data: Dictionary):
 	var name_label = dialogue_box.get_node("NameLabel") as Label
 	var text_label = dialogue_box.get_node("TextLabel") as RichTextLabel
-
 	name_label.text = dialogue_data.get("name", "")
 	text_label.clear()
-
 	var text = dialogue_data.get("text", "")
 	is_typing = true
 	_typing_effect(text_label, text)
 
 func end_dialogue():
 	player.dialogue_mode = false
-
 	is_typing = false
 	dialogue_box.visible = false
 
@@ -86,7 +81,6 @@ func _yield_typing(text: String, label: RichTextLabel):
 	var tag_stack := []
 	var output := ""
 	var i := 0
-
 	while i < text.length():
 		if text[i] == "[":
 			var end_idx := text.find("]", i)
@@ -104,11 +98,15 @@ func _yield_typing(text: String, label: RichTextLabel):
 				tag_stack.pop_back()
 				i = end_idx + 1
 				continue
-
 		output += text[i]
 		label.clear()
 		label.append_text(output)
+		var audio_player := AudioStreamPlayer.new()
+		audio_player.stream = load(VOX_AUDIO)
+		audio_player.pitch_scale = randf_range(0.9, 1.1)
+		add_child(audio_player)
+		audio_player.play()
+		audio_player.connect("finished", Callable(audio_player, "queue_free"))
 		await get_tree().create_timer(typing_speed).timeout
 		i += 1
-
 	return null
