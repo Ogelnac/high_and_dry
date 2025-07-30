@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://dp4tgkuytlhc6"]
 
-[ext_resource type="Script" path="res://scripts/doorway.gd" id="1_6gsfp"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
+[ext_resource type="Script" uid="uid://dqf36t4gsnc1v" path="res://scripts/doorway.gd" id="1_6gsfp"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="3_stjff"]
 [ext_resource type="AudioStream" uid="uid://bmiv27ve11qv" path="res://audio/Door.wav" id="5_7otsf"]
 
@@ -96,11 +96,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
 _data = {
-"Idle": SubResource("Animation_7stet"),
-"Jump": SubResource("Animation_wrya3"),
-"OpenPopup": SubResource("Animation_6kf0e"),
-"RESET": SubResource("Animation_ehjrk"),
-"Run": SubResource("Animation_55hhd")
+&"Idle": SubResource("Animation_7stet"),
+&"Jump": SubResource("Animation_wrya3"),
+&"OpenPopup": SubResource("Animation_6kf0e"),
+&"RESET": SubResource("Animation_ehjrk"),
+&"Run": SubResource("Animation_55hhd")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_myiov"]

@@ -1,13 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://bhv16y778i1e2"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_dyp2x"]
+[ext_resource type="Script" uid="uid://crly0a8s7fa74" path="res://scripts/player.gd" id="1_dyp2x"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="1_qowkf"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_gcr30"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_gcr30"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov318"]
 shader = ExtResource("2_gcr30")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/dot_softness = 3.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -76,10 +75,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
 _data = {
-"Idle": SubResource("Animation_7stet"),
-"Jump": SubResource("Animation_wrya3"),
-"RESET": SubResource("Animation_ehjrk"),
-"Run": SubResource("Animation_55hhd")
+&"Idle": SubResource("Animation_7stet"),
+&"Jump": SubResource("Animation_wrya3"),
+&"RESET": SubResource("Animation_ehjrk"),
+&"Run": SubResource("Animation_55hhd")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lqj7t"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=4 uid="uid://dxc74hnt0exva"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_h4xiv"]
+[ext_resource type="Script" uid="uid://bkobh7wvl5ub4" path="res://scripts/main.gd" id="1_h4xiv"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://canvas_layer.tscn" id="2_t5ymh"]
 [ext_resource type="PackedScene" uid="uid://busmpycjb5vsd" path="res://player/arcade_player.tscn" id="3_0nopa"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="5_7umgu"]
-[ext_resource type="Script" path="res://environment/rising_death.gd" id="6_n0gy2"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="5_7umgu"]
+[ext_resource type="Script" uid="uid://cu5jdrknx0858" path="res://environment/rising_death.gd" id="6_n0gy2"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="6_oiokv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqxtp"]
@@ -13,8 +13,6 @@ size = Vector2(298, 849)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l3su1"]
 shader = ExtResource("5_7umgu")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h4xiv")

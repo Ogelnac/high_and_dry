@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bfcp62kdq7nfb"]
 
-[ext_resource type="Script" path="res://player/needle/needle.gd" id="1_2m4oq"]
+[ext_resource type="Script" uid="uid://btddpfxdevytg" path="res://player/needle/needle.gd" id="1_2m4oq"]
 [ext_resource type="Texture2D" uid="uid://x33yb3ffdix" path="res://player/needle/needle.png" id="2_7ikqs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7x3n0"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhjo78s7o0ca2"]
 
-[ext_resource type="Script" path="res://effects/burst_particles.gd" id="1_xpf8o"]
+[ext_resource type="Script" uid="uid://h205rh24q1uk" path="res://effects/burst_particles.gd" id="1_xpf8o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2bp5t"]
 friction = 0.5

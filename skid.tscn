@@ -1,16 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvspdyryeddrv"]
 
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="1_qj5wa"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="1_qj5wa"]
 [ext_resource type="Texture2D" uid="uid://b4t18aawx008f" path="res://textures/Skid.png" id="2_mj8vf"]
-[ext_resource type="Script" path="res://scripts/skid.gd" id="3_rfgr4"]
+[ext_resource type="Script" uid="uid://cy2vpw7tkrsd" path="res://scripts/skid.gd" id="3_rfgr4"]
 [ext_resource type="AudioStream" uid="uid://1gexj0cbyhq" path="res://audio/Skid.wav" id="4_4qryo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpt51"]
 shader = ExtResource("1_qj5wa")
 shader_parameter/black_dot_transition = 1.5
-shader_parameter/use_black_alpha = false
-shader_parameter/use_underlay = false
-shader_parameter/texture_albedo = ExtResource("2_mj8vf")
 
 [sub_resource type="Animation" id="Animation_63htf"]
 length = 0.001
@@ -45,8 +42,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6mwum"]
 _data = {
-"RESET": SubResource("Animation_63htf"),
-"skid": SubResource("Animation_6pqvm")
+&"RESET": SubResource("Animation_63htf"),
+&"skid": SubResource("Animation_6pqvm")
 }
 
 [node name="Skid" type="Sprite2D"]

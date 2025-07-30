@@ -1,15 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://busmpycjb5vsd"]
 
-[ext_resource type="Script" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
+[ext_resource type="Script" uid="uid://bc13dhll8e5s3" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
 [ext_resource type="Texture2D" uid="uid://krfgmtng4jn" path="res://player/needle/aim_line.png" id="3_7se61"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="3_ht8wu"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="3_ht8wu"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="4_uymdo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0rtdd"]
 shader = ExtResource("3_ht8wu")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/use_black_alpha = true
-shader_parameter/use_underlay = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sb2v7"]
 radius = 6.0
@@ -79,10 +77,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cuypb"]
 _data = {
-"RESET": SubResource("Animation_tnktm"),
-"idle": SubResource("Animation_c6cnp"),
-"idle_temp": SubResource("Animation_h3mmb"),
-"run": SubResource("Animation_53c1m")
+&"RESET": SubResource("Animation_tnktm"),
+&"idle": SubResource("Animation_c6cnp"),
+&"idle_temp": SubResource("Animation_h3mmb"),
+&"run": SubResource("Animation_53c1m")
 }
 
 [node name="ArcadePlayer" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer")]

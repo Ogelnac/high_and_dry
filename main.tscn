@@ -1,18 +1,18 @@
 [gd_scene load_steps=44 format=4 uid="uid://cjyisk7r6qf4c"]
 
-[ext_resource type="Script" path="res://hub_main.gd" id="1_6o7rn"]
+[ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://player.tscn" id="1_fvgh8"]
 [ext_resource type="PackedScene" uid="uid://cpphloewhd56b" path="res://counter.tscn" id="3_1j66b"]
 [ext_resource type="Texture2D" uid="uid://d0jlqa0xi17rs" path="res://textures/Frabric16.png" id="3_jpcof"]
-[ext_resource type="Script" path="res://scripts/custom_parallax.gd" id="3_objk6"]
+[ext_resource type="Script" uid="uid://c8o4tstn22f4m" path="res://scripts/custom_parallax.gd" id="3_objk6"]
 [ext_resource type="AudioStream" uid="uid://v1me7ftrrc3v" path="res://audio/Step.wav" id="3_yrfyw"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="4_bb06l"]
-[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_etw35"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="4_bb06l"]
+[ext_resource type="Script" uid="uid://bhiugfm5vkncc" path="res://scripts/camera_2d.gd" id="4_etw35"]
 [ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://shaders/tilemap_halftone.tres" id="4_o67ql"]
 [ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://shaders/bg_tilemap_halftone.tres" id="4_qkgjc"]
 [ext_resource type="PackedScene" uid="uid://djlds3w7gvaqy" path="res://npc.tscn" id="5_j3pii"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://main.tres" id="5_rhfmc"]
-[ext_resource type="Script" path="res://scripts/visibility.gd" id="5_x5q7x"]
+[ext_resource type="Script" uid="uid://i6hxyhuhp84d" path="res://scripts/visibility.gd" id="5_x5q7x"]
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://textures/SpriteSheet.png" id="5_yxj2o"]
 [ext_resource type="Texture2D" uid="uid://cathj5cibpo8v" path="res://textures/Flowing.png" id="7_ew3ap"]
 [ext_resource type="Texture2D" uid="uid://plmha61w7hhx" path="res://textures/Title.png" id="7_hdm0b"]
@@ -22,8 +22,8 @@
 [ext_resource type="AudioStream" uid="uid://by8c00akqg5i4" path="res://audio/Market.wav" id="11_2xfaf"]
 [ext_resource type="Texture2D" uid="uid://l8osgtemsh10" path="res://textures/Mask.png" id="16_a68v1"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="18_h2ws5"]
-[ext_resource type="Shader" path="res://shaders/noise_and_chromashift.gdshader" id="18_rtcbe"]
-[ext_resource type="Script" path="res://scripts/resource_manager.gd" id="20_a3i5d"]
+[ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://shaders/noise_and_chromashift.gdshader" id="18_rtcbe"]
+[ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://scripts/resource_manager.gd" id="20_a3i5d"]
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://bumper.tscn" id="25_i2igf"]
 [ext_resource type="Texture2D" uid="uid://p68uvx38ytqu" path="res://textures/Important.png" id="26_hgj3n"]
@@ -395,11 +395,11 @@ size = Vector2(54, 96)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w3oub"]
 shader = ExtResource("18_rtcbe")
+shader_parameter/overlay = ExtResource("18_h2ws5")
 shader_parameter/overlay_pixel_size = Vector2(4, 4)
 shader_parameter/chroma_offset_c = Vector2(0, 0)
 shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
-shader_parameter/overlay = ExtResource("18_h2ws5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m628m"]
 shader = ExtResource("4_bb06l")

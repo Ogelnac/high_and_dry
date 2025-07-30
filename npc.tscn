@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://djlds3w7gvaqy"]
 
-[ext_resource type="Script" path="res://scripts/npc.gd" id="1_qgw10"]
-[ext_resource type="Shader" path="res://shaders/cmyk_halftone.gdshader" id="2_7f2fa"]
+[ext_resource type="Script" uid="uid://fxl0hmdfwba3" path="res://scripts/npc.gd" id="1_qgw10"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_7f2fa"]
 [ext_resource type="Texture2D" uid="uid://sl4xikeaygm6" path="res://textures/Pesto.png" id="2_vv1cr"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="4_h8fl4"]
 
@@ -93,11 +93,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
 _data = {
-"Idle": SubResource("Animation_7stet"),
-"Jump": SubResource("Animation_wrya3"),
-"OpenPopup": SubResource("Animation_6kf0e"),
-"RESET": SubResource("Animation_ehjrk"),
-"Run": SubResource("Animation_55hhd")
+&"Idle": SubResource("Animation_7stet"),
+&"Jump": SubResource("Animation_wrya3"),
+&"OpenPopup": SubResource("Animation_6kf0e"),
+&"RESET": SubResource("Animation_ehjrk"),
+&"Run": SubResource("Animation_55hhd")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fvw3"]

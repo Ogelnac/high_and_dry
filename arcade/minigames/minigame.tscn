@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bo51xpsxkbltx"]
 
 [ext_resource type="Texture2D" uid="uid://b3lymjdkqpenn" path="res://arcade/icon.svg" id="1_uqdbr"]
-[ext_resource type="Script" path="res://minigames/mixing_pot.gd" id="2_jtpnl"]
-[ext_resource type="PackedScene" uid="uid://d1dw33jak7nsa" path="res://minigames/ingredient.tscn" id="2_qco0l"]
+[ext_resource type="Script" uid="uid://17c4xy4t8cr1" path="res://minigames/mixing_pot.gd" id="2_jtpnl"]
+[ext_resource type="PackedScene" uid="uid://d1dw33jak7nsa" path="res://arcade/minigames/ingredient.tscn" id="2_qco0l"]
 
 [node name="Minigame" type="Node2D"]
 
