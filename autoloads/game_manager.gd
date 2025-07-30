@@ -1,7 +1,7 @@
 extends Node
 
-var player_start_position: Vector2 = Vector2(0.0, -30.0)
-#var player_start_position: Vector2 = Vector2(-640.0, -447.0)
+#var player_start_position: Vector2 = Vector2(0.0, -30.0)
+var player_start_position: Vector2 = Vector2(-640.0, -447.0)
 
 var resources = Array()
 
@@ -19,9 +19,17 @@ var sand: int = 0
 
 @onready var stink_meter: float = 0.0
 @onready var UI: Node
+@onready var circle_fade: ColorRect
 
 var path = "user://highscore.save"
 var dropdown_active: bool = false;
+var fade_out: bool = false
+
+func _process(_delta: float) -> void:
+	if fade_out:
+		var trans_value = circle_fade.material.get_shader_parameter("transition_value") + 0.01
+		circle_fade.material.set_shader_parameter("transition_value", trans_value)
+		await get_tree().create_timer(0.5).timeout
 
 func get_ui_reference():
 	UI = get_node("/root/Main/CanvasLayer")
@@ -59,7 +67,10 @@ func arcade_UI():
 func hub_UI():
 	load_game()
 	display_normal_counter()
-	
+
+func whack_a_pesto_UI():
+	return
+
 func add_resources(collected: Array):
 	var resource_map := {
 		0: "red_resources", 8: "red_resources",
@@ -105,3 +116,12 @@ func display_normal_counter():
 
 	silk_sand_counter.text = (" [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]"+str(silk_worms)+
 " [img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]"+str(sand))
+
+func change_scene(scene_file: String):
+	var position = get_window().size / 2.0
+	circle_fade.material.set_shader_parameter("transition_location", position)
+	fade_out = true
+	circle_fade.show()
+	await get_tree().create_timer(3.0).timeout
+	circle_fade.material.set_shader_parameter("transition_value", 0)
+	get_tree().change_scene_to_file(scene_file)

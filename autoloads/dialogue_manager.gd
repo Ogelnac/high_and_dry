@@ -8,9 +8,12 @@ var player_progress := {}
 var current_dialogue := []
 var dialogue_index := 0
 var is_typing := false
+var has_input := false
 var typing_speed := 0.03
+var scene_change_name: String
 
-var dialogue_box: Node 
+var dialogue_box: Node
+var dialogue_input: Node 
 var player: CharacterBody2D 
 
 func _ready():
@@ -36,7 +39,9 @@ func load_npc_dialogue(npc_id: String) -> Array:
 			return result
 	return []
 
-func start_dialogue(npc_id: String):
+func start_dialogue(npc_id: String, input: bool):
+	has_input = input
+
 	if is_typing:
 		return
 	player.dialogue_mode = true
@@ -56,7 +61,10 @@ func show_next_line():
 	if dialogue_index < current_dialogue.size():
 		show_line(current_dialogue[dialogue_index])
 	else:
-		end_dialogue()
+		if has_input:
+			dialogue_input.visible = true
+		else:
+			end_dialogue()
 
 func show_line(dialogue_data: Dictionary):
 	var name_label = dialogue_box.get_node("NameLabel") as Label
@@ -110,3 +118,27 @@ func _yield_typing(text: String, label: RichTextLabel):
 		await get_tree().create_timer(typing_speed).timeout
 		i += 1
 	return null
+
+func set_input(query: String, answer_1: String, answer_2: String):
+	var text_box = dialogue_input.get_node("Text") as RichTextLabel
+	var option_1 = dialogue_input.get_node("Option1") as Button
+	var option_2 = dialogue_input.get_node("Option2") as Button
+
+	text_box.text = query
+	option_1.text = answer_1
+	option_2.text = answer_2
+
+func bind_input(scene_path: String):
+	var option_1 = dialogue_input.get_node("Option1") as Button
+	var option_2 = dialogue_input.get_node("Option2") as Button
+	scene_change_name = scene_path
+
+	option_1.pressed.connect(_on_option_1_pressed)
+	option_2.pressed.connect(_on_option_2_pressed)
+
+func _on_option_1_pressed():
+	GameManager.change_scene(scene_change_name)
+
+func _on_option_2_pressed():
+	dialogue_input.visible = false
+	end_dialogue()

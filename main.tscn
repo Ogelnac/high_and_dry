@@ -568,7 +568,7 @@ script = ExtResource("3_objk6")
 horizontal_motion_scale = 0.005
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(2.61, 2.61)
 position_smoothing_enabled = true
 script = ExtResource("4_etw35")
 min_y = -380.0

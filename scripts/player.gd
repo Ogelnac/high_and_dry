@@ -246,7 +246,6 @@ func _physics_process(delta: float) -> void:
 
 	update_state()
 
-
 func apply_squash_and_stretch(delta: float) -> void:
 	var target_stretch_x = 1.0
 	var target_stretch_y = 1.0

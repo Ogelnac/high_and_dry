@@ -40,5 +40,6 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(viewport, event, shape_idx):
 	if is_confirm_input(event):
-		DialogueManager.start_dialogue("pesto_welcome")
-		
+		DialogueManager.start_dialogue("pesto_welcome", true)
+		DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
+		DialogueManager.bind_input("res://whack_a_pesto.tscn")

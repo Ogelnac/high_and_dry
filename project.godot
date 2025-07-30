@@ -27,7 +27,6 @@ window/size/viewport_height=1150
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
-window/stretch/scale=0.8
 window/handheld/orientation=1
 
 [global_group]
