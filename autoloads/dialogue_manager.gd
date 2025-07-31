@@ -133,8 +133,11 @@ func bind_input(scene_path: String):
 	var option_2 = dialogue_input.get_node("Option2") as Button
 	scene_change_name = scene_path
 
-	option_1.pressed.connect(_on_option_1_pressed)
-	option_2.pressed.connect(_on_option_2_pressed)
+	if not option_1.pressed.is_connected(_on_option_1_pressed):
+		option_1.pressed.connect(_on_option_1_pressed)
+
+	if not option_2.pressed.is_connected(_on_option_2_pressed):
+		option_2.pressed.connect(_on_option_2_pressed)
 
 func _on_option_1_pressed():
 	GameManager.change_scene(scene_change_name)

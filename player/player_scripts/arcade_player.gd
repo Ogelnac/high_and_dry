@@ -54,41 +54,62 @@ func _process(delta: float) -> void:
 	if aiming:
 		if slowmo_count > 0.0:
 			slowmo_count -= delta
-			Engine.time_scale = 1.0 - pow(slowmo_count/slowmo_max, 4)
+			Engine.time_scale = 1.0 - pow(slowmo_count / slowmo_max, 4)
 		else:
 			Engine.time_scale = 1.0
-		
+	else:
+		Engine.time_scale = 1.0
+
 	if climbing_thread:
-		var collision = move_and_collide((climbing_target_location-global_position).normalized() * climb_velocity * delta, true)
+		var collision = move_and_collide((climbing_target_location - global_position).normalized() * climb_velocity * delta, true)
 		if collision:
 			climbing_thread = false
 			recall_needles.emit()
 		else:
-			velocity = (climbing_target_location-global_position).normalized() * climb_velocity;
+			velocity = (climbing_target_location - global_position).normalized() * climb_velocity
 			move_and_slide()
 	else:
 		move_and_slide()
 		apply_friction_and_gravity(delta)
-	
+
 	if get_slide_collision_count() > 0:
 		if touched_spikes():
 			print("Yeooowch!")
-	
+
 	handle_animation()
 	update_sprite_orientation(delta)
 	apply_squash_and_stretch(delta)
 	previous_velocity = velocity
 
-	
 	if touching and tap_timer.is_stopped():
 		# Aiming
 		release_displacement = tap_screen_pos - tap_initial_screen_pos
 		if aiming and release_displacement.length() > 64.0:
 			aim_ray.target_position = get_throw_velocity(release_displacement)
 			if aim_ray.is_colliding():
-				aim_line.points = [aim_line.to_local(Vector2(global_position.x, global_position.y - 4)), aim_line.to_local(aim_ray.get_collision_point())]
+				aim_line.points = [
+					aim_line.to_local(Vector2(global_position.x, global_position.y - 4)),
+					aim_line.to_local(aim_ray.get_collision_point())
+				]
 			else:
-				aim_line.points = [aim_line.to_local(Vector2(global_position.x, global_position.y - 4)), aim_line.to_local(global_position + get_throw_velocity(release_displacement))]
+				aim_line.points = [
+					aim_line.to_local(Vector2(global_position.x, global_position.y - 4)),
+					aim_line.to_local(global_position + get_throw_velocity(release_displacement))
+				]
+
+	var sprite := $Sprite2D
+
+	var local_aim_x = (-release_displacement).rotated(-current_angle).x
+	var wall_dir = get_wall_collision_direction()
+
+	if aiming:
+		sprite.flip_h = local_aim_x < 0
+	elif wall_dir != 0:
+		var local_wall_x = Vector2(wall_dir, 0).rotated(-current_angle).x
+		sprite.flip_h = local_wall_x > 0
+	elif abs(velocity.x) > 0.5:
+		var local_vel_x = velocity.rotated(-current_angle).x
+		sprite.flip_h = local_vel_x < 0
 
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
@@ -270,11 +291,6 @@ func update_sprite_orientation(delta: float) -> void:
 
 	sprite.rotation = current_angle
 	sprite.position = Vector2(0, -4).rotated(current_angle)
-
-	if aiming:
-		sprite.flip_h = release_displacement.x > 0
-	elif abs(velocity.x) > 0.5:
-		sprite.flip_h = velocity.x < 0
 
 func wrapf(value: float, min_val: float, max_val: float) -> float:
 	return fmod((value - min_val), (max_val - min_val)) + min_val
