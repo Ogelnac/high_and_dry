@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cn51vsxl4fti2"]
+
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="1_762re"]
+[ext_resource type="Script" uid="uid://wdhox5uavs7b" path="res://ingredient.gd" id="1_u8g6t"]
+[ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://textures/Ingredients.png" id="2_u8g6t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wbet3"]
+radius = 8.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_giwou"]
+shader = ExtResource("1_762re")
+shader_parameter/black_dot_transition = 0.5
+
+[node name="Ingredient" type="Area2D"]
+script = ExtResource("1_u8g6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wbet3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_giwou")
+texture = ExtResource("2_u8g6t")
+hframes = 8
+vframes = 2
+frame = 10
+region_filter_clip_enabled = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
