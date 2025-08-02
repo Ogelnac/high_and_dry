@@ -20,6 +20,12 @@ var player: Node2D = null
 @onready var track3: AudioStreamPlayer2D = $Track3
 @onready var ui: Control = $"../CanvasLayer/UI"
 
+@onready var parallax_array: Array[TileMapLayer] = [
+	$"../Background",
+	$"../MidBackground",
+	$"../ForeGround",
+	$"../Water"]
+
 var current_track: AudioStreamPlayer2D = null
 var active_timer: Timer = null
 
@@ -43,6 +49,7 @@ func _on_market_body_entered(body: Node2D) -> void:
 		is_in_market = true
 		player = body
 		transition_to_track(track2)
+		_reset_parallax(market.global_position)
 
 func _on_hub_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -50,6 +57,7 @@ func _on_hub_body_entered(body: Node2D) -> void:
 		is_in_market = false
 		player = null
 		transition_to_track(track1)
+		_reset_parallax(hub.global_position)
 
 func _on_landing_zone_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -57,6 +65,7 @@ func _on_landing_zone_body_entered(body: Node2D) -> void:
 		is_in_market = false
 		player = null
 		transition_to_track(track3)
+		_reset_parallax(landing_zone.global_position)
 
 func _on_trophy_room_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -64,6 +73,7 @@ func _on_trophy_room_body_entered(body: Node2D) -> void:
 		is_in_market = false
 		player = null
 		transition_to_track(track1)
+		_reset_parallax(trophy_room.global_position)
 
 func _on_weavers_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -71,6 +81,7 @@ func _on_weavers_body_entered(body: Node2D) -> void:
 		is_in_market = false
 		player = null
 		transition_to_track(track1)
+		_reset_parallax(weavers.global_position)
 
 func transition_to_track(new_track: AudioStreamPlayer2D) -> void:
 	if current_track == new_track:
@@ -148,3 +159,7 @@ func _on_ui_music_mute_toggled(new_state: bool) -> void:
 		_mute_all_tracks()
 	else:
 		_unmute_all_tracks()
+
+func _reset_parallax(new_position: Vector2):
+	for parallax in parallax_array:
+		parallax._reset_reference(new_position)

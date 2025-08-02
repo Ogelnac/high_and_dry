@@ -111,6 +111,7 @@ func _yield_typing(text: String, label: RichTextLabel):
 		label.append_text(output)
 		var audio_player := AudioStreamPlayer.new()
 		audio_player.stream = load(VOX_AUDIO)
+		audio_player.volume_db = -15.0
 		audio_player.pitch_scale = randf_range(0.9, 1.1)
 		add_child(audio_player)
 		audio_player.play()

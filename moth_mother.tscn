@@ -1,15 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://dp4tgkuytlhc6"]
+[gd_scene load_steps=14 format=3 uid="uid://chsimb172v0qv"]
 
-[ext_resource type="Script" uid="uid://dqf36t4gsnc1v" path="res://scripts/doorway.gd" id="1_6gsfp"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
-[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="3_stjff"]
-[ext_resource type="AudioStream" uid="uid://bmiv27ve11qv" path="res://audio/Door.wav" id="5_7otsf"]
+[ext_resource type="Texture2D" uid="uid://c0tqtuoq7v7j" path="res://textures/MothMother.png" id="2_3aboj"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_6v4sc"]
+[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="4_1gwex"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qaiqh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbkkn"]
+shader = ExtResource("2_6v4sc")
+shader_parameter/black_dot_transition = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fvw3"]
 size = Vector2(31, 29)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdoto"]
-shader = ExtResource("2_8bxks")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eds76"]
+shader = ExtResource("2_6v4sc")
 shader_parameter/black_dot_transition = 0.5
 
 [sub_resource type="Animation" id="Animation_7stet"]
@@ -103,24 +106,30 @@ _data = {
 &"Run": SubResource("Animation_55hhd")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_myiov"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r8lob"]
 size = Vector2(28, 31)
 
-[node name="Doorway" type="Node2D"]
-script = ExtResource("1_6gsfp")
+[node name="MothMother" type="Node2D"]
 
-[node name="DoorButton" type="Area2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
+texture_filter = 1
+material = SubResource("ShaderMaterial_xbkkn")
+texture = ExtResource("2_3aboj")
+hframes = 2
+vframes = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorButton"]
+[node name="TapButton" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
 position = Vector2(0.5, -34.5)
-shape = SubResource("RectangleShape2D_qaiqh")
+shape = SubResource("RectangleShape2D_5fvw3")
 
 [node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
 visible = false
 texture_filter = 1
-material = SubResource("ShaderMaterial_gdoto")
+material = SubResource("ShaderMaterial_eds76")
 position = Vector2(0, -35)
-texture = ExtResource("3_stjff")
+texture = ExtResource("4_1gwex")
 hframes = 3
 vframes = 2
 
@@ -134,12 +143,7 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(-1, -0.5)
-shape = SubResource("RectangleShape2D_myiov")
+shape = SubResource("RectangleShape2D_r8lob")
 
-[node name="Door" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_7otsf")
-volume_db = -5.0
-
-[connection signal="input_event" from="DoorButton" to="." method="_on_door_button_input_event"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
