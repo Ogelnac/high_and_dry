@@ -1,12 +1,16 @@
-[gd_scene load_steps=5 format=4 uid="uid://b1v52htitw8cp"]
+[gd_scene load_steps=6 format=4 uid="uid://b1v52htitw8cp"]
 
 [ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://shaders/bg_tilemap_halftone.tres" id="1_bifhb"]
 [ext_resource type="Script" uid="uid://dfn4gsn28iydf" path="res://whack_a_pesto.gd" id="1_hat8x"]
+[ext_resource type="PackedScene" uid="uid://ddystf5e4clwp" path="res://tailor_wap.tscn" id="2_bifhb"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://main.tres" id="2_hat8x"]
 [ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://shaders/mbg_tilemap_halftone.tres" id="3_rbtel"]
 
 [node name="WhackAPesto" type="Node2D"]
 script = ExtResource("1_hat8x")
+
+[node name="TailorWAP" parent="." instance=ExtResource("2_bifhb")]
+position = Vector2(0, 96)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
