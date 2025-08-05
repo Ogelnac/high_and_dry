@@ -31,7 +31,7 @@ func _input(event: InputEvent) -> void:
 		var world_position = canvas_transform.affine_inverse() * screen_position
 		tailor_wap.global_position = world_position
 		sprite_2d.frame = 22
-		var dir = randi_range(0,1)
+		var dir: int = tailor_wap.global_position.x > 0.0
 		sprite_2d.flip_h = dir
 		tailor_wap.global_position.x += 16.0 * dir
 		doinking = true
