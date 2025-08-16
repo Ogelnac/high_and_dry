@@ -14,6 +14,24 @@ var pink_resources: int = 0
 var brown_resources: int = 0
 var white_resources: int = 0
 
+var red_dye: int = 0
+var yellow_dye: int = 0
+var orange_dye: int = 0
+var green_dye: int = 0
+var blue_dye: int = 0
+var pink_dye: int = 0
+var brown_dye: int = 0
+var white_dye: int = 0
+
+var red_dye_bottle_size: int = 160
+var yellow_dye_bottle_size: int = 160
+var orange_dye_bottle_size: int = 160
+var green_dye_bottle_size: int = 160
+var blue_dye_bottle_size: int = 160
+var pink_dye_bottle_size: int = 160
+var brown_dye_bottle_size: int = 160
+var white_dye_bottle_size: int = 160
+
 var silk_worms: int = 0
 var sand: int = 0
 
@@ -125,3 +143,41 @@ func change_scene(scene_file: String):
 	await get_tree().create_timer(3.0).timeout
 	circle_fade.material.set_shader_parameter("transition_value", 0)
 	get_tree().change_scene_to_file(scene_file)
+
+func get_dye_value(dye_name: String):
+	match dye_name:
+		"Red":
+			return red_dye
+		"Yellow":
+			return yellow_dye
+		"Orange":
+			return orange_dye
+		"Green":
+			return green_dye
+		"Blue":
+			return blue_dye
+		"Pink":
+			return pink_dye
+		"White":
+			return white_dye
+		"Brown":
+			return brown_dye
+
+func get_bottle_size(dye_name: String):
+	match dye_name:
+		"Red":
+			return red_dye_bottle_size
+		"Yellow":
+			return yellow_dye_bottle_size
+		"Orange":
+			return orange_dye_bottle_size
+		"Green":
+			return green_dye_bottle_size
+		"Blue":
+			return blue_dye_bottle_size
+		"Pink":
+			return pink_dye_bottle_size
+		"White":
+			return white_dye_bottle_size
+		"Brown":
+			return brown_dye_bottle_size

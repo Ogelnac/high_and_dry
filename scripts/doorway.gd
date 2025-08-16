@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var teleport_point: Transform2D
+@export var connected_door: Node2D
 @export var player: Node2D
 @onready var popup: Sprite2D = $Popup
 @onready var popup_animation: AnimationPlayer = $Popup/AnimationPlayer
@@ -30,4 +30,4 @@ func _on_detection_area_body_exited(body):
 func _on_door_button_input_event(viewport, event, shape_idx):
 	if (event is InputEventScreenTouch and event.pressed) or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		door.play()
-		player.global_transform = teleport_point
+		player.global_transform = connected_door.transform

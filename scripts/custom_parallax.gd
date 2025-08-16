@@ -1,11 +1,11 @@
-extends TileMapLayer
+extends Node2D
 
 @export var horizontal_motion_scale: float = 0.5
 @export var vertical_motion_scale: float = 0.0
 @onready var player = null
 @onready var camera = null
 
-var initial_position: Vector2 = Vector2.ZERO
+var initial_position: Vector2 = Vector2(-8.0, 0.0)
 var reference_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:

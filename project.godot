@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="high_and_dry"
-run/main_scene="uid://b1v52htitw8cp"
+run/main_scene="uid://cjyisk7r6qf4c"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://textures/Thumbnail.png"
 
@@ -45,4 +45,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/screen_space_roughness_limiter/amount=4.0
-environment/defaults/default_clear_color=Color(0.0235294, 0.0235294, 0.027451, 1)
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
