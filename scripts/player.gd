@@ -48,6 +48,7 @@ var launch_end: bool = false
 var prev_velocity: float = 0.0
 var prev_sign: int = 0
 var change_sign: bool = false
+var carrying_silkworm: bool = false
 
 @onready var footstep_timer: Timer = $StepTimer
 @onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
@@ -94,7 +95,7 @@ func _input(event: InputEvent) -> void:
 			var swipe_length = swipe_vector.length()
 			var swipe_normalized = swipe_vector.normalized()
 
-			if swipe_length > 50 and abs(swipe_normalized.y) > 0.2:
+			if swipe_length > 50 and abs(swipe_normalized.y) > 0.2 and !carrying_silkworm:
 				if swipe_normalized.y < -0.5 and is_on_floor():
 					if inside_launch_zone:
 						hub_counter.visible = false

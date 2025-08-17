@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+@export var wall_bumper: bool = false
+@export_group("Bumper Behaviour")
 @export var bounce_amount: float = 7.0
 @export var scale_factor: float = 0.1
 @export var bounce_speed: float = 100.0

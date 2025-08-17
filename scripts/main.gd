@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
-	GameManager.resources = []
+	GameManager.new_arcade_reources = []
 	GameManager.stink_meter = 0.0
 
 func _process(delta: float) -> void:
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 			GameManager.stink_meter += 5.0 * stink_multiplier * delta
 		else:
 			GameManager.player_start_position = Vector2(-192.0, -575.0)
-			GameManager.add_resources(GameManager.resources)
+			GameManager.add_resources(GameManager.new_arcade_reources)
 			GameManager.save()
 			Engine.time_scale = 1.0
 			get_tree().change_scene_to_file("res://main.tscn")

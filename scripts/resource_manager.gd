@@ -25,10 +25,10 @@ var current_counter: int = 1
 var text_colour: String = ""
 
 func _ready():
-	if GameManager.resources.size() > 0:
-		_resource_count_start(GameManager.resources.size())
-		temp_resources = GameManager.resources
-		GameManager.resources = []
+	if GameManager.new_arcade_reources.size() > 0:
+		_resource_count_start(GameManager.new_arcade_reources.size())
+		temp_resources = GameManager.new_arcade_reources
+		GameManager.new_arcade_reources = []
 
 func _process(delta):
 	if temp_resources.size() > 0:

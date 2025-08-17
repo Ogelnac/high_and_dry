@@ -50,10 +50,10 @@ func _ready():
 
 func _process(_delta: float) -> void:
 	color_rect.size.x = 156.0 * GameManager.stink_meter / 100.0
-	arcade_counter.text = str(GameManager.resources.size())
-	if GameManager.resources.size() > 0:
-		arcade_counter.modulate = colours[GameManager.resources[GameManager.resources.size() - 1]]
-		
+	arcade_counter.text = str(GameManager.new_arcade_reources.size())
+	if GameManager.new_arcade_reources.size() > 0:
+		arcade_counter.modulate = colours[GameManager.new_arcade_reources[GameManager.new_arcade_reources.size() - 1]]
+
 	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a + 0.05, 0.0, 1.0)
 	elif not display_swipe_to_start and rich_text_label.modulate.a > 0.0:
