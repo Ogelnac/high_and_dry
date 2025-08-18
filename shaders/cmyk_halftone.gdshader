@@ -3,8 +3,7 @@ shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 uniform float black_dot_transition: hint_range(0.5, 2.0) = 0.5;
-
-varying float alpha;
+uniform float alpha_effect: hint_range(0.0, 1.0) = 1.0;
 
 vec3 colour_cbs_adjustment(vec3 colour, float contrast, float brightness, float saturation) {
 	colour += brightness;
@@ -65,7 +64,7 @@ void fragment() {
 
 	float k_dot = halftone(TEXTURE, UV, radians(45.0), black_dot_transition - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);
 
-	alpha = tex.a;
+	float alpha = tex.a;
 
 	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
 
@@ -77,5 +76,5 @@ void fragment() {
 
 	final_colour *= vec3(k_dot);
 
-    COLOR = vec4(final_colour, alpha);
+    COLOR = vec4(final_colour, alpha * alpha_effect);
 }

@@ -24,6 +24,8 @@ var spawn_max: int = 0
 var current_counter: int = 1
 var text_colour: String = ""
 
+const PUFF = preload("res://audio/puff.wav")
+
 func _ready():
 	if GameManager.new_arcade_reources.size() > 0:
 		_resource_count_start(GameManager.new_arcade_reources.size())

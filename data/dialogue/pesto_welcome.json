@@ -1,6 +1,8 @@
 [
   {
 	"name": "Pesto",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [1.1, 1.3],
 	"text": "[font_size=40]You're back![/font_size] Ready to process some collectables?"
   }
 ]

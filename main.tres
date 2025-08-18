@@ -259,6 +259,12 @@ texture = ExtResource("1_bqphi")
 9:9/0 = 0
 10:9/0 = 0
 11:9/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+14:6/0 = 0
+15:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7c63h"]
 texture = ExtResource("2_anxar")

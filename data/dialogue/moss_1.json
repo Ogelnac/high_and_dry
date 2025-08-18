@@ -1,0 +1,20 @@
+[
+  {
+	"name": "Moss",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [0.3, 0.5],
+	"text": "[moss_type intensity=1.2 wobble=1.0 seed=42]I am the Meso Omni Sewer Sentenial."
+  },
+  {
+	"name": "Tailor",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [0.9, 1.1],
+	"text": "That's a mouthful! What does it mean?"
+  },
+  {
+	"name": "Moss",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [0.3, 0.5],
+	"text": "[moss_type intensity=1.2 wobble=1.0 seed=42]It means I’ve been here a very long time..."
+  }
+]
