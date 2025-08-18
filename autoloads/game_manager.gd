@@ -2,7 +2,8 @@ extends Node
 
 var player_start_position: Vector2 = Vector2(0.0, -30.0)
 
-var new_arcade_reources: Array[int] = []
+var new_arcade_resources: Array[int] = []
+var unprocessed_resources: Array[int] = []
 
 var resources: Dictionary[String, int] = {
 	"Red": 0,
@@ -59,7 +60,7 @@ var path := "user://highscore.save"
 var dropdown_active: bool = false
 var fade_out: bool = false
 
-const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","Brown","White"]
+const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 const COLOR_HEX: Dictionary[String, String] = {
 	"Red": "ac3232",
 	"Orange": "df7126",
@@ -67,8 +68,8 @@ const COLOR_HEX: Dictionary[String, String] = {
 	"Green": "6abe30",
 	"Blue": "639bff",
 	"Pink": "d77bba",
-	"Brown": "8f563b",
-	"White": "ffffff"
+	"White": "ffffff",
+	"Brown": "8f563b"
 }
 const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"Red": Vector4i(1, 1, 16, 16),
@@ -77,9 +78,31 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"Green": Vector4i(55, 1, 16, 16),
 	"Blue": Vector4i(73, 1, 16, 16),
 	"Pink": Vector4i(91, 1, 16, 16),
-	"Brown": Vector4i(109, 1, 16, 16),
-	"White": Vector4i(127, 1, 16, 16)
+	"White": Vector4i(109, 1, 16, 16),
+	"Brown": Vector4i(127, 1, 16, 16)
 }
+
+#func _ready() -> void:
+	#unprocessed_resources = []
+	#resources = {
+		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	#}
+	#dye_value = {
+		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	#}
+	#bottle_sizes = {
+		#"Red": 160, "Orange": 160, "Yellow": 160, "Green": 160,
+		#"Blue": 160, "Pink": 160, "White": 160, "Brown": 160
+	#}
+	#silkworm_amount = {
+		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	#}
+	#silk_worms = 0
+	#sand = 0
+	#save()
 
 func _process(_delta: float) -> void:
 	if fade_out and circle_fade:
@@ -96,7 +119,8 @@ func save():
 		"dye_value": dye_value,
 		"bottle_sizes": bottle_sizes,
 		"silk_worms": silk_worms,
-		"sand": sand
+		"sand": sand,
+		"unprocessed_resources": unprocessed_resources
 	}
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_var(data)
@@ -113,9 +137,10 @@ func load_game():
 		if "bottle_sizes" in d: bottle_sizes = d["bottle_sizes"]
 		if "silk_worms" in d: silk_worms = int(d["silk_worms"])
 		if "sand" in d: sand = int(d["sand"])
+		if "unprocessed_resources" in d: unprocessed_resources = d["unprocessed_resources"]
 
 func add_resource(collectable_type: int):
-	new_arcade_reources.append(collectable_type)
+	new_arcade_resources.append(collectable_type)
 
 func arcade_UI():
 	UI.find_child("StinkMeter").show()

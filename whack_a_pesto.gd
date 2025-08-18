@@ -5,12 +5,21 @@ const INGREDIENT = preload("res://ingredient.tscn")
 @onready var tailor_wap: Node2D = $TailorWAP
 @onready var sprite_2d: Sprite2D = $TailorWAP/Sprite2D
 
-var max_spawn_timer = 0.1
+var resources_to_be_processed: Array[int]
+var current_resource: int
+var number_of_resources: int = 50
+
+var max_spawn_timer = 0.5
 var spawn_timer = max_spawn_timer
 
 var doinking = false
 var max_doink = 0.3
 var doink_timer = max_doink
+
+func _ready() -> void:
+	resources_to_be_processed = GameManager.unprocessed_resources.slice(0, number_of_resources)
+	current_resource = 0
+	print(resources_to_be_processed)
 
 func _process(delta: float) -> void:
 	spawn_timer -= delta
@@ -20,9 +29,13 @@ func _process(delta: float) -> void:
 		sprite_2d.frame = 21
 		doinking = false
 		doink_timer = max_doink
+
 	if spawn_timer < 0.0:
 		spawn_timer = max_spawn_timer
-		launch_ingredient(randi_range(0, 15))
+		if current_resource == number_of_resources:
+			return
+		launch_ingredient(resources_to_be_processed[current_resource])
+		current_resource += 1
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.is_pressed():
@@ -36,7 +49,6 @@ func _input(event: InputEvent) -> void:
 		tailor_wap.global_position.x += 16.0 * dir
 		doinking = true
 		doink_timer = max_doink
-
 
 func launch_ingredient(ingredient_type: int) -> void:
 	var ingredient_instance = INGREDIENT.instantiate()

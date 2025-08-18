@@ -40,6 +40,9 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(viewport, event, shape_idx):
 	if is_confirm_input(event) and player_in_area:
-		DialogueManager.start_dialogue("pesto_welcome", true)
-		DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
-		DialogueManager.bind_input("res://whack_a_pesto.tscn")
+		if GameManager.unprocessed_resources.size()>= 50:
+			DialogueManager.start_dialogue("pesto_start", true)
+			DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
+			DialogueManager.bind_input("res://whack_a_pesto.tscn")
+		else:
+			DialogueManager.start_dialogue("pesto_wait", false)

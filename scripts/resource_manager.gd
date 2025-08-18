@@ -27,10 +27,12 @@ var text_colour: String = ""
 const PUFF = preload("res://audio/puff.wav")
 
 func _ready():
-	if GameManager.new_arcade_reources.size() > 0:
-		_resource_count_start(GameManager.new_arcade_reources.size())
-		temp_resources = GameManager.new_arcade_reources
-		GameManager.new_arcade_reources = []
+	if GameManager.new_arcade_resources.size() > 0:
+		_resource_count_start(GameManager.new_arcade_resources.size())
+		temp_resources = GameManager.new_arcade_resources
+		GameManager.unprocessed_resources.append_array(GameManager.new_arcade_resources)
+		GameManager.save()
+		GameManager.new_arcade_resources = []
 
 func _process(delta):
 	if temp_resources.size() > 0:
