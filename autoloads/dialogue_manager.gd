@@ -10,8 +10,8 @@ var dialogue_index := 0
 var is_typing := false
 var has_input := false
 var typing_speed := 0.03
-var scene_change_name: String
 
+var scene_change_name: String
 var dialogue_box: Node
 var dialogue_input: Node
 var player: CharacterBody2D

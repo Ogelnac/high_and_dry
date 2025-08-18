@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://benp7kpvmacgv" path="res://audio/Collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://scripts/color_rect.gd" id="13_wugvg"]
+[ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
 
@@ -27,20 +28,38 @@ filter_clip = true
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iw0"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2cxs"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iabp7"]
 shader = ExtResource("12_uer7x")
 shader_parameter/transition_value = 0.0
 shader_parameter/transition_location = Vector2(292, 340)
 shader_parameter/colorrect_size = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ml53l"]
+shader = ExtResource("17_fkxa7")
+shader_parameter/total_resources = 50
+shader_parameter/red_resources = 0
+shader_parameter/orange_resources = 0
+shader_parameter/yellow_resources = 0
+shader_parameter/green_resources = 0
+shader_parameter/blue_resources = 0
+shader_parameter/pink_resources = 0
+shader_parameter/white_resources = 0
+shader_parameter/brown_resources = 0
+shader_parameter/wave_amp = 0.005
+shader_parameter/wave_freq = 1.0
+shader_parameter/wave_speed = 2.0
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -58,6 +77,61 @@ theme = ExtResource("1_kmbj5")
 script = ExtResource("2_l5iyv")
 line_edit = NodePath("DebugPanel/LineEdit")
 mute_music = NodePath("MenuPanel/MuteMusic")
+
+[node name="VirtualJoystick" type="Control" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(292, 633)
+mouse_filter = 2
+
+[node name="JoystickBase" type="TextureRect" parent="UI/VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
+modulate = Color(1, 1, 1, 0.784314)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(16, 16)
+mouse_filter = 2
+texture = ExtResource("2_77u76")
+script = ExtResource("3_nf0j4")
+joystick_handle = NodePath("../JoystickHandle")
+follow_weight = 0.85
+
+[node name="JoystickHandle" type="TextureRect" parent="UI/VirtualJoystick"]
+modulate = Color(1, 1, 1, 0.784314)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(8, 8)
+mouse_filter = 2
+texture = ExtResource("4_ccaf2")
+script = ExtResource("5_kk307")
 
 [node name="Click" type="AudioStreamPlayer" parent="UI"]
 stream = ExtResource("3_xqyrb")
@@ -395,6 +469,36 @@ frame = 1
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
 
+[node name="DialogueBox" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 200.0
+offset_right = -20.0
+offset_bottom = 357.0
+grow_horizontal = 2
+
+[node name="NameLabel" type="Label" parent="UI/DialogueBox"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 87.0
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 35
+
+[node name="TextLabel" type="RichTextLabel" parent="UI/DialogueBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 35.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+
 [node name="DialogueInput" type="Panel" parent="UI"]
 visible = false
 layout_mode = 1
@@ -491,61 +595,6 @@ text = "0
 "
 horizontal_alignment = 1
 
-[node name="VirtualJoystick" type="Control" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(292, 633)
-mouse_filter = 2
-
-[node name="JoystickBase" type="TextureRect" parent="UI/VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
-modulate = Color(1, 1, 1, 0.784314)
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3, 3)
-pivot_offset = Vector2(16, 16)
-mouse_filter = 2
-texture = ExtResource("2_77u76")
-script = ExtResource("3_nf0j4")
-joystick_handle = NodePath("../JoystickHandle")
-follow_weight = 0.85
-
-[node name="JoystickHandle" type="TextureRect" parent="UI/VirtualJoystick"]
-modulate = Color(1, 1, 1, 0.784314)
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3, 3)
-pivot_offset = Vector2(8, 8)
-mouse_filter = 2
-texture = ExtResource("4_ccaf2")
-script = ExtResource("5_kk307")
-
 [node name="StinkMeter" type="NinePatchRect" parent="UI"]
 visible = false
 texture_filter = 1
@@ -576,35 +625,58 @@ offset_right = 2.0
 offset_bottom = 13.0
 color = Color(0.239216, 0.607843, 0.282353, 1)
 
-[node name="DialogueBox" type="Panel" parent="UI"]
+[node name="WhackCounter" type="RichTextLabel" parent="UI"]
 visible = false
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 200.0
-offset_right = -20.0
-offset_bottom = 357.0
-grow_horizontal = 2
-
-[node name="NameLabel" type="Label" parent="UI/DialogueBox"]
-layout_mode = 0
-offset_left = 10.0
-offset_right = 87.0
-offset_bottom = 25.0
-theme_override_font_sizes/font_size = 35
-
-[node name="TextLabel" type="RichTextLabel" parent="UI/DialogueBox"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 35.0
-offset_right = -10.0
+anchor_bottom = 0.5
+offset_top = -551.0
+offset_right = -180.0
+offset_bottom = -482.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/normal_font_size = 100
 bbcode_enabled = true
+text = "[center]0[font_size=50]/50
+"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="WhackMeter" type="NinePatchRect" parent="UI"]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.087
+anchor_right = 0.5
+anchor_bottom = 0.087
+offset_left = -240.0
+offset_top = 49.95
+offset_right = -80.0
+offset_bottom = 65.95
+scale = Vector2(3, 3)
+texture = ExtResource("6_uoqhr")
+region_rect = Rect2(0, 16, 48, 16)
+patch_margin_left = 24
+patch_margin_top = 8
+patch_margin_right = 24
+patch_margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="UI/WhackMeter"]
+z_index = -1
+material = SubResource("ShaderMaterial_ml53l")
+layout_mode = 1
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 157.0
+offset_bottom = 13.0
+color = Color(0, 0, 0, 1)
 
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
 [connection signal="button_up" from="UI/Menu" to="UI" method="_on_menu_button_up"]

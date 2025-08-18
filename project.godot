@@ -29,6 +29,10 @@ window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 window/handheld/orientation=1
 
+[editor]
+
+movie_writer/movie_file="C:/Users/jbhug/Desktop/High&Dry Recording/capture.avi"
+
 [global_group]
 
 shader_objects=""

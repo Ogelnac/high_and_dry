@@ -1,6 +1,6 @@
 extends Node
 
-var player_start_position: Vector2 = Vector2(0.0, -30.0)
+var player_start_position: Vector2 = Vector2(-577.0, -447.0)
 
 var new_arcade_resources: Array[int] = []
 var unprocessed_resources: Array[int] = []
@@ -152,7 +152,16 @@ func hub_UI():
 	display_normal_counter()
 
 func whack_a_pesto_UI():
-	return
+	var whack_meter = UI.find_child("WhackMeter")
+	whack_meter.show()
+	for str in COLOR_ORDER:
+		var param = str.to_lower() + "_resources"
+		var colorrect: ColorRect = whack_meter.get_node("ColorRect")
+		colorrect.material.set_shader_parameter(param, 0)
+
+	UI.find_child("WhackMeter").show()
+	UI.find_child("WhackCounter").show()
+	UI.find_child("RichTextLabel").hide()
 
 func add_resources(collected: Array) -> void:
 	for resource in collected:
