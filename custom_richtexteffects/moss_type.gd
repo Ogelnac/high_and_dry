@@ -4,26 +4,26 @@ class_name MossTongueEffect
 var bbcode = "moss_type"
 
 func _process_custom_fx(char_fx: CharFXTransform) -> bool:
-	var seed := int(char_fx.env.get("seed", 0))
-	var intensity := float(char_fx.env.get("intensity", 1.0))
-	var wobble := float(char_fx.env.get("wobble", 1.0))
-
+	var seed: int = char_fx.env.get("seed", 0)
+	var size: Vector2i = char_fx.env.get("size", Vector2i(28, 28))
 	var idx := char_fx.relative_index + seed * 131
+	var glyph := char_fx.glyph_index
+	var ts := TextServerManager.get_primary_interface()
+	var font_rid := char_fx.font
+	var glyph_size := ts.font_get_glyph_size(font_rid, size, glyph)
 
-	var a := _hash01(idx) * 2.0 - 1.0
-	var angle := a * 0.9 * intensity
-	char_fx.transform = char_fx.transform.rotated_local(angle)
+	var flip_h := _hash01(idx) < 0.5
 
-	var t := char_fx.elapsed_time
-	var ox := (_hash01(idx + 17) - 0.5) * 8.0 * intensity + sin(t * 2.1 + float(idx)) * 3.0 * wobble
-	var oy := (_hash01(idx + 29) - 0.5) * 6.0 * intensity + cos(t * 1.8 + float(idx)) * 2.0 * wobble
-	char_fx.transform.origin += Vector2(ox, oy)
+	var xform := char_fx.transform
 
-	var s := 1.0 + (_hash01(idx + 53) - 0.5) * 0.5 * intensity
-	char_fx.transform = char_fx.transform.scaled_local(Vector2(s, s))
+	if flip_h:
+		xform = xform.scaled_local(Vector2(-1, 1))
+		xform = xform.translated(Vector2(glyph_size.x/1.75, 0.0))
+	else:
+		xform = xform.scaled_local(Vector2(1, -1))
+		xform = xform.translated(Vector2(0.0, -glyph_size.y/1.75))
 
-	var alpha := 0.85 + _hash01(idx + 71) * 0.15
-	char_fx.color.a *= alpha
+	char_fx.transform = xform
 	return true
 
 func _hash01(x: int) -> float:

@@ -1,6 +1,6 @@
 extends Node
 
-var player_start_position: Vector2 = Vector2(-577.0, -447.0)
+var player_start_position: Vector2 = Vector2(-192.0, 162.0)
 
 var new_arcade_resources: Array[int] = []
 var unprocessed_resources: Array[int] = []
@@ -56,6 +56,7 @@ var sand: int = 0
 @onready var UI: Node
 @onready var circle_fade: ColorRect
 
+#"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
 var path := "user://highscore.save"
 var dropdown_active: bool = false
 var fade_out: bool = false
@@ -82,6 +83,7 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"Brown": Vector4i(127, 1, 16, 16)
 }
 
+##UNCOMMENT TO CLEAR SAVE DATA
 #func _ready() -> void:
 	#unprocessed_resources = []
 	#resources = {
