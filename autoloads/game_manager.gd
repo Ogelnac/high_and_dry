@@ -1,9 +1,11 @@
 extends Node
 
-var player_start_position: Vector2 = Vector2(-192.0, 162.0)
+#var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
+#var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
+var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
 
-var new_arcade_resources: Array[int] = []
-var unprocessed_resources: Array[int] = []
+var new_arcade_resources: Array[int] = [] #used temporarily by arcade mode
+var unprocessed_resources: Array[int] = [] #the order resources were collected in
 
 var resources: Dictionary[String, int] = {
 	"Red": 0,
@@ -52,14 +54,13 @@ var silkworm_amount: Dictionary[String, int] = {
 var silk_worms: int = 0
 var sand: int = 0
 
-@onready var stink_meter: float = 0.0
-@onready var UI: Node
-@onready var circle_fade: ColorRect
-
-#"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
-var path := "user://highscore.save"
+var stink_meter: float = 0.0
+var UI: Node
+var circle_fade: ColorRect
+var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
 var dropdown_active: bool = false
 var fade_out: bool = false
+var trigger_pachinko: bool = false
 
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 const COLOR_HEX: Dictionary[String, String] = {
@@ -114,6 +115,7 @@ func _process(_delta: float) -> void:
 
 func get_ui_reference():
 	UI = get_node("/root/Main/CanvasLayer")
+	circle_fade = get_node("/root/Main/CanvasLayer/UI/CircleFade")
 
 func save():
 	var data := {
@@ -152,12 +154,13 @@ func arcade_UI():
 func hub_UI():
 	load_game()
 	display_normal_counter()
+	update_bottles()
 
 func whack_a_pesto_UI():
 	var whack_meter = UI.find_child("WhackMeter")
 	whack_meter.show()
-	for str in COLOR_ORDER:
-		var param = str.to_lower() + "_resources"
+	for string in COLOR_ORDER:
+		var param = string.to_lower() + "_resources"
 		var colorrect: ColorRect = whack_meter.get_node("ColorRect")
 		colorrect.material.set_shader_parameter(param, 0)
 
@@ -196,13 +199,18 @@ func display_normal_counter():
 	resource_counter.text = "[img width=48 region=32,0,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
 	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d [img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
 
+func update_bottles():
+	var dye_bottles = get_node("../Main/DyeBottles")
+	for child in dye_bottles.get_children():
+		child._sync_from_manager()
+
 func change_scene(scene_file: String):
+	circle_fade.material.set_shader_parameter("transition_value", 0)
 	var position: Vector2 = get_window().size / 2.0
 	circle_fade.material.set_shader_parameter("transition_location", position)
 	fade_out = true
 	circle_fade.show()
 	await get_tree().create_timer(3.0).timeout
-	circle_fade.material.set_shader_parameter("transition_value", 0)
 	get_tree().change_scene_to_file(scene_file)
 
 func get_dye_value(dye_name: String) -> int:

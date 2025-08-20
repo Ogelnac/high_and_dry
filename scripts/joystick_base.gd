@@ -21,5 +21,5 @@ func set_base_position(new_center_position: Vector2) -> void:
 	target_position = get_centered_position(new_center_position, size)
 	global_position = target_position
 
-func get_centered_position(ctr_position: Vector2, rect_size: Vector2) -> Vector2:
+func get_centered_position(ctr_position: Vector2, _rect_size: Vector2) -> Vector2:
 	return ctr_position - (size * scale * 0.5)

@@ -7,7 +7,7 @@ var spawn_cooldown = 0.15
 var spawn_time = 0.0
 var temp_resources = []
 
-@export var colours: Array[String] = [
+var colours: Array[String] = [
 	"#ac3232",
 	"#df7126",
 	"#fbf236",
@@ -23,25 +23,41 @@ var spawn_count: int = 0
 var spawn_max: int = 0
 var current_counter: int = 1
 var text_colour: String = ""
+var puff_spawn = false
+var puff_delay = 0.5
 
+const BURST_PARTICLE = preload("res://effects/burst_particle.tscn")
 const PUFF = preload("res://audio/puff.wav")
 
 func _ready():
-	if GameManager.new_arcade_resources.size() > 0:
-		_resource_count_start(GameManager.new_arcade_resources.size())
-		temp_resources = GameManager.new_arcade_resources
-		GameManager.unprocessed_resources.append_array(GameManager.new_arcade_resources)
-		GameManager.save()
-		GameManager.new_arcade_resources = []
+	if GameManager.trigger_pachinko:
+		GameManager.trigger_pachinko = false
+		if GameManager.new_arcade_resources.size() > 0:
+			_resource_count_start(GameManager.new_arcade_resources.size())
+			temp_resources = GameManager.new_arcade_resources
+			GameManager.unprocessed_resources.append_array(GameManager.new_arcade_resources)
+			GameManager.new_arcade_resources = []
+			GameManager.save()
+		else:
+			puff_spawn = true
 
 func _process(delta):
+	if puff_spawn:
+		if spawn_time <= puff_delay:
+			spawn_time += delta
+			return
+		else:
+			puff_spawn = false
+			spawn_time = 0.0
+			spawn_particles()
+	
 	if temp_resources.size() > 0:
 		if spawn_time <= spawn_cooldown:
 			spawn_time += delta
 		else:
 			spawn_time = 0.0
 			_spawn_rigidbody(temp_resources.pop_front())
-		
+
 	for instance in spawned_rigidbodies:
 		if instance and instance.global_position.y >= -290:
 			var counter_instance = counter.instantiate()
@@ -93,3 +109,23 @@ func _on_ui_clear_demo_pressed() -> void:
 			instance.queue_free()
 
 	spawned_rigidbodies.clear()
+
+func spawn_particles() -> void:
+	var sfx: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+	sfx.stream = PUFF
+	sfx.pitch_scale = 1.25
+	add_child(sfx)
+	sfx.play()
+
+	var count = randi_range(16, 18)
+	for i in count:
+		var p: RigidBody2D = BURST_PARTICLE.instantiate()
+		p.set_collision_mask_value(1, false)
+		p.set_collision_mask_value(2, false)
+		get_parent().add_child(p)
+		var offset = (float(count)/2.0 - float(i)) * 16.0 / float(count)
+		p.global_position = global_position + Vector2(offset, 10.0)
+		var angle = (PI / count) * i
+		p.linear_velocity = Vector2.RIGHT.rotated(angle) * randf_range(20.0, 30.0)
+		p.linear_velocity += Vector2.DOWN * randf_range(40.0, 80.0)
+		p.color_rect.color = Color(0.5, 0.5, 0.5, randf_range(0.5, 1.0))

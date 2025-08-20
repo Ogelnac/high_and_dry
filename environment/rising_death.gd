@@ -36,7 +36,7 @@ func _on_body_exited(_body: Node2D) -> void:
 	drip_time_left = drip_duration
 	drip_timer.start()
 
-func _spawn_splash(position: Vector2):
+func _spawn_splash(splash_position: Vector2):
 	var num_particles := 6
 	var base_angle := -PI / 2
 	var angle_spread := PI / 2
@@ -51,7 +51,7 @@ func _spawn_splash(position: Vector2):
 
 		var particle := burst_scene.instantiate()
 		get_tree().current_scene.add_child(particle)
-		particle.global_position = position
+		particle.global_position = splash_position
 
 		particle.collision_mask = 0
 		particle.gravity_scale = 0.75

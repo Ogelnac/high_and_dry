@@ -11,15 +11,18 @@ var bonked: bool
 var phase_shift: float = 0.0
 var phase_locked: bool = false
 
+var lock_self_retrigger = false
+
 @onready var main: Node2D = $".."
 
 func _process(delta: float) -> void:
 	if bonked:
 		delta *= 5.0
 	time -= delta
-	if global_position.y > start_height:
+	if global_position.y > start_height and not lock_self_retrigger:
 		main.retrigger = true
-		main.update_ui(sprite_2d.frame)
+		lock_self_retrigger = true
+		main.update_counters(sprite_2d.frame)
 		queue_free()
 	else:
 		var journey_percent: float = time / max_time

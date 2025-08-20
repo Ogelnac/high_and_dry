@@ -23,15 +23,9 @@ func _ready() -> void:
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 	tap_button.input_event.connect(_on_tap_button_input_event)
+
 	for worm in silkworms.get_children():
 		silkworm_sprites.append(worm)
-	var dye_amount := GameManager.get_dye_value(name)
-	var bottle_size := GameManager.get_bottle_size(name)
-	var mask_material: ShaderMaterial = mask.material
-	var fill_height: float = float(dye_amount) / float(bottle_size)
-	mask_material.set_shader_parameter("fill_height", fill_height)
-	rich_text_label.text = "[center]" + str(dye_amount) + "[font_size= 15][flip]pp"
-	_sync_from_manager()
 	_update_popup()
 	
 	rich_text_label.install_effect(FlipTextEffect.new())
@@ -50,6 +44,13 @@ func _sync_from_manager() -> void:
 	silkworm_amount = gm_amount
 	_cached_silkworm_amount = gm_amount
 	_update_silkworm_sprites()
+	
+	var dye_amount := GameManager.get_dye_value(name)
+	var bottle_size := GameManager.get_bottle_size(name)
+	var mask_material: ShaderMaterial = mask.material
+	var fill_height: float = float(dye_amount) / float(bottle_size)
+	mask_material.set_shader_parameter("fill_height", fill_height)
+	rich_text_label.text = "[center]" + str(dye_amount) + "[font_size= 15][flip]pp"
 
 func _update_silkworm_sprites() -> void:
 	var amount: int = clamp(silkworm_amount, 0, silkworm_sprites.size())

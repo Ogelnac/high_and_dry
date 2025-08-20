@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://chsimb172v0qv"]
+[gd_scene load_steps=18 format=3 uid="uid://chsimb172v0qv"]
 
+[ext_resource type="Script" uid="uid://5loxqwp72g3t" path="res://moth_mother.gd" id="1_uxyte"]
 [ext_resource type="Texture2D" uid="uid://c0tqtuoq7v7j" path="res://textures/MothMother.png" id="2_3aboj"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_6v4sc"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="4_1gwex"]
@@ -7,6 +8,44 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xbkkn"]
 shader = ExtResource("2_6v4sc")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+
+[sub_resource type="Animation" id="Animation_6v4sc"]
+resource_name = "cocoon_idle"
+length = 30.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.1, -0.293621, -0.004008, -0.1, -0.290701, 0.075, 0.225825, -0.0099794, -0.075, 0.231862, 0.125, -0.486669, -0.00102231, -0.125, 0.247813, 0.1, -0.25677, -0.00400801, -0.125, -0.0268713, 0.198448, 0.0656854, -0.0279275, -1.45993, 0.00301956, 1.98807, -0.00295184, -0.00102235, -2.4, 0.101514, 1.9, -0.0835996, 0, -5.6, 0.0467489, 0.319429, -0.004008),
+"times": PackedFloat32Array(0, 0.175, 0.325, 0.7, 1.1, 2.9, 8.7, 30)
+}
+
+[sub_resource type="Animation" id="Animation_xwos4"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1gwex"]
+_data = {
+&"RESET": SubResource("Animation_xwos4"),
+&"cocoon_idle": SubResource("Animation_6v4sc")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fvw3"]
 size = Vector2(31, 29)
@@ -14,6 +53,7 @@ size = Vector2(31, 29)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eds76"]
 shader = ExtResource("2_6v4sc")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -110,13 +150,21 @@ _data = {
 size = Vector2(28, 31)
 
 [node name="MothMother" type="Node2D"]
+script = ExtResource("1_uxyte")
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
 texture_filter = 1
 material = SubResource("ShaderMaterial_xbkkn")
+position = Vector2(0, 32)
 texture = ExtResource("2_3aboj")
 hframes = 2
 vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_1gwex")
+}
+autoplay = "cocoon_idle"
 
 [node name="TapButton" type="Area2D" parent="."]
 

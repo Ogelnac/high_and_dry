@@ -4,9 +4,8 @@ class_name MossTongueEffect
 var bbcode = "moss_type"
 
 func _process_custom_fx(char_fx: CharFXTransform) -> bool:
-	var seed: int = char_fx.env.get("seed", 0)
 	var size: Vector2i = char_fx.env.get("size", Vector2i(28, 28))
-	var idx := char_fx.relative_index + seed * 131
+	var idx := char_fx.relative_index + 131
 	var glyph := char_fx.glyph_index
 	var ts := TextServerManager.get_primary_interface()
 	var font_rid := char_fx.font
@@ -18,10 +17,10 @@ func _process_custom_fx(char_fx: CharFXTransform) -> bool:
 
 	if flip_h:
 		xform = xform.scaled_local(Vector2(-1, 1))
-		xform = xform.translated(Vector2(glyph_size.x/1.75, 0.0))
+		xform = xform.translated(Vector2(glyph_size.x/2.0, 0.0))
 	else:
 		xform = xform.scaled_local(Vector2(1, -1))
-		xform = xform.translated(Vector2(0.0, -glyph_size.y/1.75))
+		xform = xform.translated(Vector2(0.0, -glyph_size.y/2.0))
 
 	char_fx.transform = xform
 	return true

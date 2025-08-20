@@ -38,7 +38,7 @@ func is_confirm_input(event: InputEvent) -> bool:
 		and event.pressed \
 		and (not event is InputEventMouseButton or event.button_index == MOUSE_BUTTON_LEFT)
 
-func _on_tap_button_input_event(viewport, event, shape_idx):
+func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
 		if GameManager.unprocessed_resources.size()>= 50:
 			DialogueManager.start_dialogue("pesto_start", true)

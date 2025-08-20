@@ -15,6 +15,8 @@ signal in_launch_zone
 
 const SKID = preload("res://skid.tscn")
 const JUMP = preload("res://jump.tscn")
+const ONEWAY_LAYER := 1 << 3
+const DROP_TIME := 0.3
 
 var deceleration: float = 300.0
 var gravity: float = 500.0
@@ -49,6 +51,7 @@ var prev_velocity: float = 0.0
 var prev_sign: int = 0
 var change_sign: bool = false
 var carrying_silkworm: bool = false
+var _saved_mask := 0
 
 @onready var footstep_timer: Timer = $StepTimer
 @onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
@@ -113,7 +116,7 @@ func _input(event: InputEvent) -> void:
 							jump_instance.scale = Vector2(-1, 1)
 
 				elif swipe_normalized.y > 0.5 and is_on_floor():
-					fall_through_one_way_platform()
+					fall_through_one_way_platforms()
 
 	if launch_commence == false and (event is InputEventScreenDrag or event is InputEventMouseMotion) and virtual_joystick_active:
 		virtual_joystick_offset = virtual_joystick.get_local_mouse_position() - virtual_joystick_start
@@ -145,12 +148,7 @@ func _process(delta: float) -> void:
 			start_game()
 
 		move_and_slide()
-
 		return
-
-		if abs(position.x - target_x) < 5:
-			velocity.x = 0
-			start_game()
 
 	if wait_to_change_layer and position.y <= -80:
 		z_index = -1
@@ -299,34 +297,16 @@ func _on_step_timer_timeout() -> void:
 	step_sfx.pitch_scale = 2.0 + randf() * 0.5 - 0.05
 	step_sfx.play()
 
-func fall_through_one_way_platform() -> void:
+func fall_through_one_way_platforms() -> void:
 	if falling_through:
 		return
-	
-	var collision = get_last_slide_collision()
-	if not collision:
-		return
-	
-	var tile_pos = ground.local_to_map(collision.get_position())
-	var source_id = ground.get_cell_source_id(tile_pos)
-	
-	if source_id == -1:
-		return
-	
-	var tile_data = ground.get_cell_tile_data(tile_pos)
-	
-	if tile_data and tile_data.get_custom_data("one_way"):
-		falling_through = true
-		var collision_shape = $CollisionShape2D
-		if collision_shape:
-			collision_shape.set_deferred("disabled", true)
-		
-		await get_tree().create_timer(0.3).timeout
-		
-		if collision_shape:
-			collision_shape.set_deferred("disabled", false)
-
-		falling_through = false
+	falling_through = true
+	_saved_mask = collision_mask
+	collision_mask &= ~ONEWAY_LAYER
+	velocity.y = max(velocity.y, 50.0)
+	await get_tree().create_timer(DROP_TIME).timeout
+	collision_mask = _saved_mask
+	falling_through = false
 
 func _on_launch_zone_body_exited(body: Node2D) -> void:
 	if body == self:

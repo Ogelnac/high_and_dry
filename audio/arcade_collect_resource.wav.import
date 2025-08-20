@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bm3aoqj51thkd"
-path="res://.godot/imported/ArcadeCollectResource.wav-c83b25cfcb84d295c1a527ec2a9a0e18.sample"
+path="res://.godot/imported/arcade_collect_resource.wav-773b0ca874aef510699712d3c455b9c1.sample"
 
 [deps]
 
-source_file="res://audio/ArcadeCollectResource.wav"
-dest_files=["res://.godot/imported/ArcadeCollectResource.wav-c83b25cfcb84d295c1a527ec2a9a0e18.sample"]
+source_file="res://audio/arcade_collect_resource.wav"
+dest_files=["res://.godot/imported/arcade_collect_resource.wav-773b0ca874aef510699712d3c455b9c1.sample"]
 
 [params]
 

@@ -39,6 +39,8 @@ func _process(delta: float) -> void:
 			GameManager.player_start_position = Vector2(-192.0, -575.0)
 			GameManager.add_resources(GameManager.new_arcade_resources)
 			GameManager.save()
+
+			GameManager.trigger_pachinko = true
 			Engine.time_scale = 1.0
 			get_tree().change_scene_to_file("res://main.tscn")
 		

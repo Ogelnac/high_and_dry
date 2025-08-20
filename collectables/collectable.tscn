@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://gw2hrs0exhed" path="res://collectables/collectable.gd" id="1_wspct"]
 [ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://effects/burst_particle.tscn" id="2_qfbh6"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_xnjlc"]
-[ext_resource type="AudioStream" uid="uid://bm3aoqj51thkd" path="res://audio/ArcadeCollectResource.wav" id="4_mvtsp"]
+[ext_resource type="AudioStream" uid="uid://bm3aoqj51thkd" path="res://audio/arcade_collect_resource.wav" id="4_mvtsp"]
 [ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://textures/Ingredients.png" id="4_qv4on"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qx60i"]

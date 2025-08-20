@@ -9,7 +9,7 @@ const INGREDIENT = preload("res://ingredient.tscn")
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 
 var resources_to_be_processed: Array[int]
-var current_resource: int
+var current_resource = 0
 var number_of_resources: int = 50
 
 var max_spawn_timer = 5.0
@@ -20,11 +20,12 @@ var doinking = false
 var max_doink = 0.3
 var doink_timer = max_doink
 
+var resource_count = 0
+
 func _ready() -> void:
 	GameManager.get_ui_reference()
 	GameManager.whack_a_pesto_UI()
 	resources_to_be_processed = GameManager.unprocessed_resources.slice(0, number_of_resources)
-	current_resource = 0
 
 func _process(delta: float) -> void:
 	spawn_timer -= delta
@@ -38,9 +39,9 @@ func _process(delta: float) -> void:
 	if spawn_timer < 0.0 or retrigger:
 		if spawn_timer < 0.0:
 			spawn_timer = max_spawn_timer
-		retrigger = false
 		if current_resource == number_of_resources:
 			return
+		retrigger = false
 		launch_ingredient(resources_to_be_processed[current_resource])
 		current_resource += 1
 
@@ -66,7 +67,7 @@ func launch_ingredient(ingredient_type: int) -> void:
 	ingredient_instance.global_position = Vector2(randf_range(-46.0, 46.0), start_height)
 	ingredient_instance.sprite_2d.frame = ingredient_type
 
-func update_ui(new_resource: int):
+func update_counters(new_resource: int):
 	var whack_meter = UI.get_node("WhackMeter")
 	var colorrect: ColorRect = whack_meter.get_node("ColorRect")
 	var idx: int = int(new_resource) % 8
@@ -74,5 +75,18 @@ func update_ui(new_resource: int):
 	var inc: int = 2 if int(new_resource) >= 8 else 1
 	var current: int = int(colorrect.material.get_shader_parameter(key))
 	colorrect.material.set_shader_parameter(key, current + inc)
+	resource_count += 1
 
-	UI.get_node("WhackCounter").text = "[center]" + str(current_resource) + "[font_size=50]/50"
+	UI.get_node("WhackCounter").text = "[center]" + str(resource_count) + "[font_size=50]/50"
+	if resource_count == number_of_resources:
+		end_game()
+
+func end_game():
+	GameManager.unprocessed_resources = GameManager.unprocessed_resources.slice(number_of_resources, GameManager.unprocessed_resources.size())
+	for i in range(0, 15):
+		var idx: int = int(i) % 8
+		var key: String = COLOR_ORDER[idx]
+		GameManager.resources[key] -= resources_to_be_processed.count(i)
+		GameManager.dye_value[key] += resources_to_be_processed.count(i)
+	GameManager.save()
+	GameManager.change_scene("res://main.tscn")

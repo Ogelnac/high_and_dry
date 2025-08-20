@@ -28,7 +28,7 @@ var player: Node2D = null
 	$"../Background",
 	$"../MidBackground",
 	$"../ForeGround",
-	$"../Water"]
+	$"../TownBeauty"]
 
 var current_track: AudioStreamPlayer2D = null
 var active_timer: Timer = null
