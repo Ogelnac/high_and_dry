@@ -15,6 +15,7 @@ var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 @onready var rising_death: Area2D = $RisingDeath
 @export var stink_multiplier: float = 1.0
 
+var rich_text_label: RichTextLabel
 var tiles_in_scene: Array[Object] = []
 var is_playing: bool = false
 var current_tile: int = 1
@@ -23,10 +24,14 @@ var tile_counter: int = 0
 
 func _ready() -> void:
 	pattern_update(0, 1)
-	
+
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
 	GameManager.stink_meter = 0.0
+	rich_text_label = GameManager.UI.get_node("UI/RichTextLabel")
+
+	if not GameManager.game_progress["demo_played"]:
+		setup_demo()
 
 func _process(delta: float) -> void:
 	# CAMERA MOVEMENT
@@ -37,13 +42,7 @@ func _process(delta: float) -> void:
 		if GameManager.stink_meter <= 100.0:
 			GameManager.stink_meter += 5.0 * stink_multiplier * delta
 		else:
-			GameManager.player_start_position = Vector2(-192.0, -575.0)
-			GameManager.add_resources(GameManager.new_arcade_resources)
-			GameManager.save()
-
-			GameManager.trigger_pachinko = true
-			Engine.time_scale = 1.0
-			get_tree().change_scene_to_file("res://main.tscn")
+			end_game()
 		
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
@@ -76,3 +75,22 @@ func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
 		is_playing = true
 		rising_death.is_playing = 1;
+
+func end_game():
+	GameManager.player_start_position = Vector2(-192.0, -575.0)
+	GameManager.add_resources(GameManager.new_arcade_resources)
+	if not GameManager.game_progress["demo_played"]:
+		GameManager.game_progress["demo_played"] = true
+	GameManager.save()
+
+	GameManager.UI.get_node("UI").display_swipe_to_start = false
+	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 
+	to Play![/wave][/center]"
+	GameManager.trigger_pachinko = true
+	Engine.time_scale = 1.0
+	get_tree().change_scene_to_file("res://main.tscn")
+
+func setup_demo():
+	rich_text_label.visible = true
+	rich_text_label.text = "[rainbow][center][wave amp=25 freq=5]You are playing 
+	the Demo![/wave][/center]"

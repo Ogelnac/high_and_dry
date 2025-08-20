@@ -41,6 +41,10 @@ func _ready():
 		player = get_tree().get_root().get_node("Main/Player")
 		player.start_game_signal.connect(_on_player_start_game_signal)
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
+		if player.position.x > -80:
+			#rich_text_label.visible = false
+			#rich_text_label.modulate.a = 0.0
+			display_swipe_to_start = false
 	initialised = true
 	shader_objects = find_objects_with_shader()
 
@@ -165,8 +169,9 @@ func _on_player_start_game_signal() -> void:
 	scene_manager.show()
 
 func _on_player_in_launch_zone(in_zone):
-	rich_text_label.visible = true
-	display_swipe_to_start = in_zone
+	if player.position.x > -80:
+		rich_text_label.visible = true
+		display_swipe_to_start = in_zone
 
 func _on_resource_counter_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:

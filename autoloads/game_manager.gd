@@ -1,13 +1,9 @@
 extends Node
 
-var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
-
-#var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
-#var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
-
-var new_arcade_resources: Array[int] = [] #used temporarily by arcade mode
-var unprocessed_resources: Array[int] = [] #the order resources were collected in
-
+var game_progress: Dictionary[String, bool] = {
+	"demo_played": false,
+	"whack_a_pesto_played": false,
+}
 var resources: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
@@ -52,6 +48,13 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Brown": 0
 }
 
+var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
+#var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
+#var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
+
+var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
+var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in
+
 var silk_worms: int = 0
 var sand: int = 0
 
@@ -87,7 +90,9 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 
 ##UNCOMMENT TO CLEAR SAVE DATA
 #func _ready() -> void:
-	#unprocessed_resources = []
+	#game_progress = {
+		#"demo_played": false, "whack_a_pesto_played": false,
+	#}
 	#resources = {
 		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
 		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
@@ -104,6 +109,7 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
 		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
 	#}
+	#unprocessed_resources = []
 	#silk_worms = 0
 	#sand = 0
 	#save()
@@ -120,6 +126,7 @@ func get_ui_reference():
 
 func save():
 	var data := {
+		"game_progress": game_progress,
 		"resources": resources,
 		"dye_value": dye_value,
 		"bottle_sizes": bottle_sizes,
@@ -137,6 +144,7 @@ func load_game():
 	var data: Variant = file.get_var()
 	if typeof(data) == TYPE_DICTIONARY:
 		var d: Dictionary = data
+		if "game_progress" in d: game_progress = d["game_progress"]
 		if "resources" in d: resources = d["resources"]
 		if "dye_value" in d: dye_value = d["dye_value"]
 		if "bottle_sizes" in d: bottle_sizes = d["bottle_sizes"]
@@ -148,12 +156,15 @@ func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
 
 func arcade_UI():
+	load_game()
 	UI.find_child("StinkMeter").show()
 	UI.find_child("ArcadeCounter").show()
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
 	load_game()
+	if not game_progress["demo_played"]:
+		get_tree().change_scene_to_file("res://arcade_main.tscn")
 	display_normal_counter()
 	update_bottles()
 
