@@ -117,7 +117,7 @@ func spawn_particles() -> void:
 	add_child(sfx)
 	sfx.play()
 
-	var count = randi_range(16, 18)
+	var count = randi_range(8, 10)
 	for i in count:
 		var p: RigidBody2D = BURST_PARTICLE.instantiate()
 		p.set_collision_mask_value(1, false)

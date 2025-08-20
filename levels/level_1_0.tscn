@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=4 uid="uid://bkff3ip4jih0v"]
+[gd_scene load_steps=9 format=4 uid="uid://bkff3ip4jih0v"]
 
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="1_581a3"]
+[ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://levels/level.gd" id="1_nkje3"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="2_chcf0"]
+[ext_resource type="PackedScene" uid="uid://cnaermyxy5y37" path="res://collectables/special_collectable.tscn" id="3_arbjs"]
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://shaders/noise_and_chromashift.gdshader" id="3_dcqyk"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="4_dghav"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjjnm"]
 shader = ExtResource("1_581a3")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6qqmq"]
 shader = ExtResource("3_dcqyk")
@@ -18,6 +21,7 @@ shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
 
 [node name="level_0_0" type="Node2D"]
+script = ExtResource("1_nkje3")
 
 [node name="Background" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -41,6 +45,11 @@ tile_set = ExtResource("2_chcf0")
 collision_enabled = false
 
 [node name="Collectables" type="Node2D" parent="."]
+
+[node name="SpecialCollectables" type="Node2D" parent="."]
+
+[node name="SpecialCollectable" parent="SpecialCollectables" instance=ExtResource("3_arbjs")]
+position = Vector2(0, -298)
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dqf36t4gsnc1v" path="res://scripts/doorway.gd" id="1_6gsfp"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_8bxks"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="3_stjff"]
-[ext_resource type="AudioStream" uid="uid://bmiv27ve11qv" path="res://audio/Door.wav" id="5_7otsf"]
+[ext_resource type="AudioStream" uid="uid://dey75n5wb6y4g" path="res://audio/door.wav" id="4_aa16f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qaiqh"]
 size = Vector2(31, 29)
@@ -11,6 +11,7 @@ size = Vector2(31, 29)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gdoto"]
 shader = ExtResource("2_8bxks")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -137,7 +138,7 @@ position = Vector2(-1, -0.5)
 shape = SubResource("RectangleShape2D_myiov")
 
 [node name="Door" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_7otsf")
+stream = ExtResource("4_aa16f")
 volume_db = -5.0
 
 [connection signal="input_event" from="DoorButton" to="." method="_on_door_button_input_event"]

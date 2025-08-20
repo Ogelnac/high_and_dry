@@ -3,11 +3,12 @@
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="1_qjf5a"]
 [ext_resource type="Texture2D" uid="uid://cxx3jeifnes5n" path="res://textures/Jump.png" id="2_e2nl3"]
 [ext_resource type="Script" uid="uid://dhypse4kgch8u" path="res://scripts/jump.gd" id="3_etbbr"]
-[ext_resource type="AudioStream" uid="uid://df6kqfy1jtrrr" path="res://audio/Jump.wav" id="4_hpuhb"]
+[ext_resource type="AudioStream" uid="uid://b71ofp8ammgkx" path="res://audio/jump.wav" id="4_nwj67"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpt51"]
 shader = ExtResource("1_qjf5a")
 shader_parameter/black_dot_transition = 1.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="Animation" id="Animation_63htf"]
 length = 0.001
@@ -54,9 +55,9 @@ script = ExtResource("3_etbbr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_6mwum")
+&"": SubResource("AnimationLibrary_6mwum")
 }
 
 [node name="Jump" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_hpuhb")
+stream = ExtResource("4_nwj67")
 volume_db = -20.0

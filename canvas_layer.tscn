@@ -4,16 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
 [ext_resource type="Script" uid="uid://bxe7ya780ce1a" path="res://scripts/ui.gd" id="2_l5iyv"]
 [ext_resource type="Script" uid="uid://cichuc2niwycp" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
-[ext_resource type="AudioStream" uid="uid://38ca42d0swi2" path="res://audio/Click.wav" id="3_xqyrb"]
 [ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="4_ccaf2"]
-[ext_resource type="AudioStream" uid="uid://c6ke50m7khljo" path="res://audio/Pipe.wav" id="4_erl81"]
 [ext_resource type="FontFile" uid="uid://c4xxo6yj6rnct" path="res://Shutupandcode-Regular.ttf" id="5_0s3la"]
 [ext_resource type="Script" uid="uid://c7pgnj1ijije2" path="res://scripts/joystick_handle.gd" id="5_kk307"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="6_uoqhr"]
+[ext_resource type="AudioStream" uid="uid://c3u83f7ymu78a" path="res://audio/click.wav" id="7_fkxa7"]
 [ext_resource type="Script" uid="uid://dc465xi7eluxr" path="res://scripts/scene_manager.gd" id="8_0ogh3"]
+[ext_resource type="AudioStream" uid="uid://d3e8ywo5selxx" path="res://audio/pipe.wav" id="8_ml53l"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://textures/LevelSelect.png" id="10_gdo4b"]
-[ext_resource type="AudioStream" uid="uid://benp7kpvmacgv" path="res://audio/Collect50.wav" id="11_4mnhw"]
+[ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://audio/collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://scripts/color_rect.gd" id="13_wugvg"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
@@ -134,10 +134,10 @@ texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
 
 [node name="Click" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource("3_xqyrb")
+stream = ExtResource("7_fkxa7")
 
 [node name="Pipe" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource("4_erl81")
+stream = ExtResource("8_ml53l")
 
 [node name="HubCounter" type="HBoxContainer" parent="UI"]
 z_index = -1

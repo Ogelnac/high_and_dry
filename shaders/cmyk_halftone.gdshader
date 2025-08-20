@@ -60,7 +60,7 @@ void fragment() {
 
 	float k_dot = halftone(TEXTURE, UV, radians(45.0), black_dot_transition - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);
 
-	float alpha = tex.a;
+	float alpha = COLOR.a;
 
 	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
 

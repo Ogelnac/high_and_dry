@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://cnaermyxy5y37"]
+
+[ext_resource type="Script" uid="uid://b271mjrnhd4t7" path="res://collectables/special_collectable.gd" id="1_4c114"]
+[ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://effects/burst_particle.tscn" id="2_7nxko"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="3_2578d"]
+[ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="4_ahcp0"]
+[ext_resource type="AudioStream" uid="uid://bm3aoqj51thkd" path="res://audio/arcade_collect_resource.wav" id="5_2ytrl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qx60i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2626j"]
+shader = ExtResource("3_2578d")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+
+[node name="SpecialCollectable" type="Area2D"]
+collision_layer = 16
+collision_mask = 5
+script = ExtResource("1_4c114")
+collect_particles = ExtResource("2_7nxko")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qx60i")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_2626j")
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("4_ahcp0")
+hframes = 3
+vframes = 3
+frame = 7
+region_filter_clip_enabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_2ytrl")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

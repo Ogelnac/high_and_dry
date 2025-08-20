@@ -1,14 +1,17 @@
-[gd_scene load_steps=8 format=4 uid="uid://d2yys6p3i4ttj"]
+[gd_scene load_steps=10 format=4 uid="uid://d2yys6p3i4ttj"]
 
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="1_om4u4"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://levels/default.tres" id="2_rep7u"]
 [ext_resource type="PackedScene" uid="uid://dnmgttt3udqre" path="res://collectables/collectable.tscn" id="2_xighf"]
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://shaders/noise_and_chromashift.gdshader" id="4_5n5ui"]
+[ext_resource type="PackedScene" uid="uid://cnaermyxy5y37" path="res://collectables/special_collectable.tscn" id="4_ajymf"]
+[ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://levels/level.gd" id="5_1j67n"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="5_qycse"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n2fwb"]
 shader = ExtResource("1_om4u4")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cfr0f"]
 shader = ExtResource("4_5n5ui")
@@ -19,6 +22,7 @@ shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
 
 [node name="level_0_0" type="Node2D"]
+script = ExtResource("5_1j67n")
 
 [node name="Background" type="TileMapLayer" parent="."]
 material = SubResource("ShaderMaterial_n2fwb")
@@ -63,6 +67,17 @@ position = Vector2(-54, -580)
 
 [node name="Collectable8" parent="Collectables" instance=ExtResource("2_xighf")]
 position = Vector2(-33, -224)
+
+[node name="SpecialCollectables" type="Node2D" parent="."]
+
+[node name="SpecialCollectable" parent="SpecialCollectables" instance=ExtResource("4_ajymf")]
+position = Vector2(-77, -96)
+
+[node name="SpecialCollectable2" parent="SpecialCollectables" instance=ExtResource("4_ajymf")]
+position = Vector2(19, -225)
+
+[node name="SpecialCollectable3" parent="SpecialCollectables" instance=ExtResource("4_ajymf")]
+position = Vector2(-71, -452)
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -19,6 +19,7 @@ var tiles_in_scene: Array[Object] = []
 var is_playing: bool = false
 var current_tile: int = 1
 var prev_tile: int = 1
+var tile_counter: int = 0
 
 func _ready() -> void:
 	pattern_update(0, 1)
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)
+			tile_counter += 1
 			prev_tile = current_tile
 	
 	if tiles_in_scene.size() > 4:
@@ -62,6 +64,10 @@ func pattern_update(level: int, tile: int) -> void:
 	else:
 		# Add level from index
 		level_instance = levels[level].instantiate()
+
+	if tile_counter > 1 and tile_counter % 10 == 0:
+		print("Special Level Spawned")
+		level_instance.spawn_sc()
 	add_child(level_instance)
 	level_instance.global_position.y = float(608 * (tile - 1))
 	tiles_in_scene.insert(0, level_instance)
