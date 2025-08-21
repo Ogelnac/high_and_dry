@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0rtdd"]
 shader = ExtResource("3_ht8wu")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sb2v7"]
 radius = 6.0

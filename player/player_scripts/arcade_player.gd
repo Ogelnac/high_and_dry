@@ -15,6 +15,7 @@ extends CharacterBody2D
 @export var squash_intensity: float = 0.5
 @export var landing_squash_multiplier: float = 2.5
 @export var landing_squash_threshold: float = 200.0
+@onready var sprite:= $Sprite2D
 var landing_squash_timer: float = 0.0
 var previous_velocity: Vector2 = Vector2.ZERO
 
@@ -50,7 +51,7 @@ func _ready() -> void:
 	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
 	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if aiming:
 		if slowmo_count > 0.0:
 			slowmo_count -= delta
@@ -96,8 +97,6 @@ func _process(delta: float) -> void:
 					aim_line.to_local(Vector2(global_position.x, global_position.y - 4)),
 					aim_line.to_local(global_position + get_throw_velocity(release_displacement))
 				]
-
-	var sprite := $Sprite2D
 
 	var local_aim_x = (-release_displacement).rotated(-current_angle).x
 	var wall_dir = get_wall_collision_direction()
@@ -160,12 +159,14 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 	return normalised_displacement * throw_velocity
 
 func apply_friction_and_gravity(delta: float) -> void:
-	if is_on_floor():
-		velocity.x = move_toward(velocity.x, 0.0, friction)
-	else:
+	if not is_on_floor():
 		velocity.y += gravity * delta
-	if is_on_wall():
-		velocity.y = move_toward(velocity.y, 0.0, friction)
+	else:
+		var normal = get_floor_normal()
+		var tangential = Vector2(-normal.y, normal.x)
+		var tangential_velocity = velocity.dot(tangential)
+		tangential_velocity = move_toward(tangential_velocity, 0.0, friction)
+		velocity = tangential * tangential_velocity
 
 func touched_spikes() -> bool:
 	if (is_on_floor() or is_on_wall() or is_on_ceiling()):
@@ -274,7 +275,6 @@ func handle_animation() -> void:
 		anim.play("idle")
 
 func update_sprite_orientation(delta: float) -> void:
-	var sprite := $Sprite2D
 	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
 
 	if on_surface:

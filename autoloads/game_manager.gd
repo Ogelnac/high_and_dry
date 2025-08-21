@@ -47,7 +47,7 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
 	"Yellow": 0,
-	"Green": 0,
+	"Green": 3,
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
@@ -209,7 +209,7 @@ func display_normal_counter():
 	for key: String in COLOR_ORDER:
 		sum += int(resources.get(key, 0))
 	resource_counter.text = "[img width=48 region=32,0,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
-	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d [img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
+	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d [/font_size][img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
 
 func update_bottles():
 	var dye_bottles = get_node("../Main/DyeBottles")

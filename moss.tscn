@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bb5wo6nskardr"]
+[gd_scene load_steps=18 format=3 uid="uid://bb5wo6nskardr"]
 
 [ext_resource type="Script" uid="uid://qvm28w84poyn" path="res://moss.gd" id="1_7cf5m"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_35sx4"]
@@ -9,6 +9,45 @@
 shader = ExtResource("2_35sx4")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
+
+[sub_resource type="Animation" id="Animation_35sx4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(48, 112, 48, 47)]
+}
+
+[sub_resource type="Animation" id="Animation_7cf5m"]
+resource_name = "furnace"
+length = 5.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Rect2(48, 112, 48, 47), Rect2(96, 112, 48, 47), Rect2(144, 112, 48, 47)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ufhhs"]
+_data = {
+&"RESET": SubResource("Animation_35sx4"),
+&"furnace": SubResource("Animation_7cf5m")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b1qrp"]
 size = Vector2(31, 29)
@@ -119,9 +158,15 @@ script = ExtResource("1_7cf5m")
 material = SubResource("ShaderMaterial_d2t1y")
 texture = ExtResource("3_ufhhs")
 region_enabled = true
-region_rect = Rect2(48, 112, 48, 48)
+region_rect = Rect2(48, 112, 48, 47)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_ufhhs")
+}
 
 [node name="TapButton" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
@@ -143,6 +188,7 @@ libraries = {
 }
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
