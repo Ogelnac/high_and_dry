@@ -1,5 +1,11 @@
 extends Node
 
+
+#var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
+var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
+#var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
+
+
 var game_progress: Dictionary[String, bool] = {
 	"demo_played": false,
 	"whack_a_pesto_played": false,
@@ -47,10 +53,6 @@ var silkworm_amount: Dictionary[String, int] = {
 	"White": 0,
 	"Brown": 0
 }
-
-var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
-#var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
-#var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
 
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
 var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in
@@ -139,7 +141,7 @@ func save():
 
 func load_game():
 	if not FileAccess.file_exists(path):
-		return
+		save()
 	var file := FileAccess.open(path, FileAccess.READ)
 	var data: Variant = file.get_var()
 	if typeof(data) == TYPE_DICTIONARY:
@@ -156,13 +158,11 @@ func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
 
 func arcade_UI():
-	load_game()
 	UI.find_child("StinkMeter").show()
 	UI.find_child("ArcadeCounter").show()
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
-	load_game()
 	if not game_progress["demo_played"]:
 		get_tree().change_scene_to_file("res://arcade_main.tscn")
 	display_normal_counter()

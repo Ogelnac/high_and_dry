@@ -1,6 +1,7 @@
 extends Node2D
 
 const INGREDIENT = preload("res://ingredient.tscn")
+const KARAKARA = preload("res://audio/karakara.wav")
 
 @onready var tailor_wap: Node2D = $TailorWAP
 @onready var sprite_2d: Sprite2D = $TailorWAP/Sprite2D
@@ -21,6 +22,7 @@ var max_doink = 0.3
 var doink_timer = max_doink
 
 var resource_count = 0
+var music_started = false
 
 func _ready() -> void:
 	GameManager.get_ui_reference()
@@ -44,10 +46,20 @@ func _process(delta: float) -> void:
 		retrigger = false
 		launch_ingredient(resources_to_be_processed[current_resource])
 		current_resource += 1
+	
+	if resource_count == 3 and not music_started:
+		music_started = true
+		var bgm = AudioStreamPlayer.new()
+		bgm.stream = KARAKARA
+		bgm.autoplay = true
+		add_child(bgm)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch and event.is_pressed():
 		var screen_position = event.position
+		if screen_position.y < 100 or screen_position.y > 740:
+			return
+
 		var canvas_transform = get_viewport().get_canvas_transform()
 		var world_position = canvas_transform.affine_inverse() * screen_position
 		tailor_wap.global_position = world_position

@@ -6,10 +6,12 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sslyl"]
 shader = ExtResource("1_c6gli")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
 
 [node name="TailorWAP" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_sslyl")
 position = Vector2(-8, -12)
 texture = ExtResource("2_whrav")

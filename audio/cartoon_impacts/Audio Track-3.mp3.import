@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bijux7f37klj7"
+path="res://.godot/imported/Audio Track-3.mp3-0699d2cf2d3b2d52d697ca96399350eb.mp3str"
+
+[deps]
+
+source_file="res://audio/cartoon_impacts/Audio Track-3.mp3"
+dest_files=["res://.godot/imported/Audio Track-3.mp3-0699d2cf2d3b2d52d697ca96399350eb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,31 +1,26 @@
 extends Control
 
-signal music_mute_toggled(new_state)
 signal demo_resource_pressed(number_resources)
 signal clear_demo_pressed
 
-@onready var menu_panel: Panel = $MenuPanel
-@onready var debug_panel: Panel = $DebugPanel
 @onready var scene_manager: Panel = $SceneManager
 @onready var menu: Button = $Menu
 @onready var debug: Button = $Debug
 
-@onready var pipe: AudioStreamPlayer = $Pipe
-@onready var click: AudioStreamPlayer = $Click
+const CLICK = preload("res://audio/click.wav")
+const PIPE = preload("res://audio/pipe.wav")
+
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 @onready var player: CharacterBody2D
 @onready var color_rect: ColorRect = $"../UI/StinkMeter/ColorRect"
 @onready var arcade_counter: Label = $ArcadeCounter
 
 @export var line_edit: LineEdit
-@export var mute_music: CheckBox
 
-var music_mute: bool = false
-var initialised: bool = false
 var display_swipe_to_start: bool = true
 var shader_objects: Array = []
 
-@export var colours: Array[String] = [
+var colours: Array[String] = [
 	"#ac3232",
 	"#df7126",
 	"#fbf236",
@@ -42,12 +37,8 @@ func _ready():
 		player.start_game_signal.connect(_on_player_start_game_signal)
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
 		if player.position.x > -80:
-			#rich_text_label.visible = false
-			#rich_text_label.modulate.a = 0.0
 			display_swipe_to_start = false
-	initialised = true
 	shader_objects = find_objects_with_shader()
-
 	for obj in shader_objects:
 		if obj.material.get_shader_parameter("black_dot_transition") >= 2.0:
 			_fade_from_black()
@@ -57,67 +48,16 @@ func _process(_delta: float) -> void:
 	arcade_counter.text = str(GameManager.new_arcade_resources.size())
 	if GameManager.new_arcade_resources.size() > 0:
 		arcade_counter.modulate = colours[GameManager.new_arcade_resources[GameManager.new_arcade_resources.size() - 1]]
-
 	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a + 0.05, 0.0, 1.0)
 	elif not display_swipe_to_start and rich_text_label.modulate.a > 0.0:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a - 0.05, 0.0, 1.0)
 
-func linear_to_db(linear_value):
-	if linear_value <= 0:
-		return -80
-	return 20 * (log(linear_value) / log(10))
-
-func _on_h_slider_value_changed(value: float) -> void:
-	var normalized_value = value / 100.0
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Master"),
-		linear_to_db(normalized_value)
-	)
-
-func _on_check_box_toggled(toggled_on: bool) -> void:
-	if not initialised:
-		return
-	music_mute = toggled_on
-	emit_signal("music_mute_toggled", music_mute)
-
-func _on_camera_2d_start_music_mute(new_state: bool) -> void:
-	mute_music.button_pressed = new_state
-
-func _on_debug_button_up() -> void:
-	click.play()
-	if menu_panel.visible:
-		menu_panel.hide()
-
-	if debug_panel.visible:
-		debug_panel.hide()
-		get_tree().paused = false
-	else:
-
-		debug_panel.show()
-		get_tree().paused = true
-
-func _on_menu_button_up() -> void:
-	click.play()
-	if debug_panel.visible:
-		debug_panel.hide()
-
-	if menu_panel.visible:
-		menu_panel.hide()
-		get_tree().paused = false
-	else:
-		menu_panel.show()
-		get_tree().paused = true
-
 func _fade_to_black() -> void:
 	menu.hide()
-	menu_panel.hide()
 	debug.hide()
-	debug_panel.hide()
-
 	await get_tree().create_timer(0.5).timeout
-	pipe.play()
-
+	_play_one_shot(PIPE)
 	display_swipe_to_start = false
 	var transition_value = 0.5
 	while transition_value < 2.0:
@@ -132,7 +72,6 @@ func _fade_from_black() -> void:
 		transition_value -= 0.25
 		update_shader_black_dot_transition(transition_value)
 		await get_tree().create_timer(0.2).timeout
-
 	menu.show()
 	debug.show()
 
@@ -150,21 +89,18 @@ func find_objects_with_shader() -> Array:
 	return objects
 
 func _on_spawn_resources_button_down() -> void:
-	click.play()
+	_play_one_shot(CLICK)
 	get_tree().paused = false
-	debug_panel.hide()
 	emit_signal("demo_resource_pressed", int(line_edit.text))
 
 func _on_clear_resources_button_down() -> void:
-	click.play()
+	_play_one_shot(CLICK)
 	get_tree().paused = false
-	debug_panel.hide()
 	clear_demo_pressed.emit()
 
 func _on_player_start_game_signal() -> void:
 	_fade_to_black()
-	display_swipe_to_start = false;
-	emit_signal("music_mute_toggled", true)
+	display_swipe_to_start = false
 	await get_tree().create_timer(1.5).timeout
 	scene_manager.show()
 
@@ -179,3 +115,10 @@ func _on_resource_counter_gui_input(event: InputEvent) -> void:
 			GameManager.display_normal_counter()
 		else:
 			GameManager.display_dropdown()
+
+func _play_one_shot(stream: AudioStream) -> void:
+	var p := AudioStreamPlayer.new()
+	add_child(p)
+	p.stream = stream
+	p.finished.connect(p.queue_free)
+	p.play()

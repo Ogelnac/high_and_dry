@@ -1,6 +1,29 @@
 extends Area2D
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var main: Node2D = $".."
+
+const POW = preload("res://effects/pow.tscn")
+const IMPACT = [
+	preload("res://audio/cartoon_impacts/impact_1.wav"),
+	preload("res://audio/cartoon_impacts/impact_2.wav"),
+	preload("res://audio/cartoon_impacts/impact_3.wav"),
+	preload("res://audio/cartoon_impacts/impact_4.wav"),
+	preload("res://audio/cartoon_impacts/impact_5.wav"),
+	preload("res://audio/cartoon_impacts/impact_6.wav"),
+	preload("res://audio/cartoon_impacts/impact_7.wav"),
+	preload("res://audio/cartoon_impacts/impact_8.wav"),
+]
+const colours: Array[String] = [
+	"#ac3232",
+	"#df7126",
+	"#fbf236",
+	"#6abe30",
+	"#639bff",
+	"#d77bba",
+	"#ffffff",
+	"#8f563b"
+]
 
 var start_height: float
 var arc_size: float = 128.0
@@ -12,8 +35,6 @@ var phase_shift: float = 0.0
 var phase_locked: bool = false
 
 var lock_self_retrigger = false
-
-@onready var main: Node2D = $".."
 
 func _process(delta: float) -> void:
 	if bonked:
@@ -35,3 +56,13 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventScreenTouch and event.pressed:
 		bonked = true
 		phase_locked = false
+
+		var idx = sprite_2d.frame % 8
+		var audio_player = AudioStreamPlayer.new()
+		audio_player.stream = IMPACT[idx]
+		audio_player.autoplay = true
+		var pow = POW.instantiate()
+		pow.modulate = colours[idx]
+		pow.position = position
+		get_parent().add_child(audio_player)
+		get_parent().add_child(pow)

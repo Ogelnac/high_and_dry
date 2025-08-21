@@ -2,7 +2,7 @@ extends Node
 
 const SAVE_PATH := "user://player_progress.json"
 const DIALOGUE_PATH := "res://data/dialogue/"
-const VOX_AUDIO := "res://audio/Vox.wav"
+const VOX_AUDIO := "res://audio/vox.wav"
 
 var player_progress := {}
 var current_dialogue := []

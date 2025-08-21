@@ -37,10 +37,12 @@ func adjust_pitch():
 	collect_resource.pitch_scale = 1.0 + (min(number_value / 200.0, 1.0) * 0.85) + randf_range(-0.05, 0.05)
 
 func animate_entry():
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "scale", scale * 1.2, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "scale", scale, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	if get_tree() != null:
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "scale", scale * 1.2, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "scale", scale, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 
 func animate_exit():
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+	if get_tree() != null:
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)

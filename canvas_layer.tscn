@@ -1,16 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=22 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
 [ext_resource type="Script" uid="uid://bxe7ya780ce1a" path="res://scripts/ui.gd" id="2_l5iyv"]
 [ext_resource type="Script" uid="uid://cichuc2niwycp" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
 [ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="4_ccaf2"]
-[ext_resource type="FontFile" uid="uid://c4xxo6yj6rnct" path="res://Shutupandcode-Regular.ttf" id="5_0s3la"]
 [ext_resource type="Script" uid="uid://c7pgnj1ijije2" path="res://scripts/joystick_handle.gd" id="5_kk307"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="6_uoqhr"]
-[ext_resource type="AudioStream" uid="uid://c3u83f7ymu78a" path="res://audio/click.wav" id="7_fkxa7"]
 [ext_resource type="Script" uid="uid://dc465xi7eluxr" path="res://scripts/scene_manager.gd" id="8_0ogh3"]
-[ext_resource type="AudioStream" uid="uid://d3e8ywo5selxx" path="res://audio/pipe.wav" id="8_ml53l"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://textures/LevelSelect.png" id="10_gdo4b"]
 [ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://audio/collect50.wav" id="11_4mnhw"]
@@ -63,7 +60,7 @@ shader_parameter/wave_speed = 2.0
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("line_edit", "mute_music")]
+[node name="UI" type="Control" parent="."]
 process_mode = 3
 texture_filter = 1
 layout_mode = 3
@@ -75,8 +72,6 @@ grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("1_kmbj5")
 script = ExtResource("2_l5iyv")
-line_edit = NodePath("DebugPanel/LineEdit")
-mute_music = NodePath("MenuPanel/MuteMusic")
 
 [node name="VirtualJoystick" type="Control" parent="UI"]
 visible = false
@@ -133,12 +128,6 @@ mouse_filter = 2
 texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
 
-[node name="Click" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource("7_fkxa7")
-
-[node name="Pipe" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource("8_ml53l")
-
 [node name="HubCounter" type="HBoxContainer" parent="UI"]
 z_index = -1
 layout_mode = 1
@@ -187,61 +176,6 @@ offset_bottom = 81.0
 grow_horizontal = 0
 text = "MENU"
 
-[node name="MenuPanel" type="Panel" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 100.0
-offset_right = -10.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Label2" type="Label" parent="UI/MenuPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_bottom = 51.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 45
-text = "Audio"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MuteMusic" type="CheckBox" parent="UI/MenuPanel"]
-layout_mode = 0
-offset_left = 54.0
-offset_top = 72.0
-offset_right = 217.0
-offset_bottom = 114.0
-theme_override_fonts/font = ExtResource("5_0s3la")
-theme_override_font_sizes/font_size = 30
-text = "MUTE MUSIC"
-
-[node name="HSlider" type="HSlider" parent="UI/MenuPanel"]
-layout_mode = 0
-offset_left = 191.0
-offset_top = 134.0
-offset_right = 508.0
-offset_bottom = 150.0
-value = 85.0
-
-[node name="Label" type="Label" parent="UI/MenuPanel"]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 132.0
-offset_right = 184.0
-offset_bottom = 153.0
-theme_override_fonts/font = ExtResource("5_0s3la")
-theme_override_font_sizes/font_size = 30
-text = "VOLUME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Debug" type="Button" parent="UI"]
 visible = false
 material = SubResource("ShaderMaterial_lptq8")
@@ -256,68 +190,6 @@ offset_bottom = 81.0
 grow_horizontal = 0
 text = "Debug"
 icon = SubResource("AtlasTexture_qens6")
-
-[node name="DebugPanel" type="Panel" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 100.0
-offset_right = -10.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Label2" type="Label" parent="UI/DebugPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_bottom = 51.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 45
-text = "Debug"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FadeToBlack" type="Button" parent="UI/DebugPanel"]
-layout_mode = 0
-offset_left = 200.0
-offset_top = 69.0
-offset_right = 369.0
-offset_bottom = 111.0
-text = "Fade to black"
-
-[node name="SpawnResources" type="Button" parent="UI/DebugPanel"]
-layout_mode = 0
-offset_left = 180.0
-offset_top = 160.0
-offset_right = 391.0
-offset_bottom = 202.0
-text = "Spawn Resources"
-
-[node name="ClearResources" type="Button" parent="UI/DebugPanel"]
-layout_mode = 0
-offset_left = 417.335
-offset_top = 160.0
-offset_right = 520.715
-offset_bottom = 202.0
-text = "Clear"
-flat = true
-
-[node name="LineEdit" type="LineEdit" parent="UI/DebugPanel"]
-layout_mode = 0
-offset_left = 43.605
-offset_top = 160.0
-offset_right = 123.605
-offset_bottom = 200.0
-mouse_filter = 1
-text = "50"
-alignment = 1
-context_menu_enabled = false
-virtual_keyboard_type = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI"]
 visible = false
@@ -679,11 +551,4 @@ offset_bottom = 13.0
 color = Color(0, 0, 0, 1)
 
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
-[connection signal="button_up" from="UI/Menu" to="UI" method="_on_menu_button_up"]
-[connection signal="toggled" from="UI/MenuPanel/MuteMusic" to="UI" method="_on_check_box_toggled"]
-[connection signal="value_changed" from="UI/MenuPanel/HSlider" to="UI" method="_on_h_slider_value_changed"]
-[connection signal="button_up" from="UI/Debug" to="UI" method="_on_debug_button_up"]
-[connection signal="button_up" from="UI/DebugPanel/FadeToBlack" to="UI" method="_on_fade_to_black_button_up"]
-[connection signal="button_down" from="UI/DebugPanel/SpawnResources" to="UI" method="_on_spawn_resources_button_down"]
-[connection signal="button_down" from="UI/DebugPanel/ClearResources" to="UI" method="_on_clear_resources_button_down"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]

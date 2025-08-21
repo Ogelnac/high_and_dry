@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://cjyisk7r6qf4c"]
+[gd_scene load_steps=78 format=4 uid="uid://cjyisk7r6qf4c"]
 
 [ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://player.tscn" id="1_fvgh8"]
@@ -16,10 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://textures/SpriteSheet.png" id="5_yxj2o"]
 [ext_resource type="Texture2D" uid="uid://cathj5cibpo8v" path="res://textures/Flowing.png" id="7_ew3ap"]
 [ext_resource type="Texture2D" uid="uid://plmha61w7hhx" path="res://textures/Title.png" id="7_hdm0b"]
-[ext_resource type="AudioStream" uid="uid://dtq53ud2rbuhf" path="res://audio/hub.wav" id="9_3dtan"]
 [ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://shaders/mbg_tilemap_halftone.tres" id="9_xnmlj"]
-[ext_resource type="AudioStream" uid="uid://ql5hj6ewtuop" path="res://audio/LandingZone.wav" id="10_mca43"]
-[ext_resource type="AudioStream" uid="uid://cm31twv3p7qc6" path="res://audio/market.wav" id="11_2xfaf"]
 [ext_resource type="Texture2D" uid="uid://l8osgtemsh10" path="res://textures/Mask.png" id="16_a68v1"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="18_h2ws5"]
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://shaders/noise_and_chromashift.gdshader" id="18_rtcbe"]
@@ -1206,19 +1203,6 @@ position = Vector2(-8, 0)
 zoom = Vector2(2.61, 2.61)
 position_smoothing_enabled = true
 script = ExtResource("4_etw35")
-music_mute = true
-
-[node name="Track1" type="AudioStreamPlayer2D" parent="Camera2D"]
-stream = ExtResource("9_3dtan")
-panning_strength = 0.0
-
-[node name="Track2" type="AudioStreamPlayer2D" parent="Camera2D"]
-stream = ExtResource("11_2xfaf")
-panning_strength = 0.0
-
-[node name="Track3" type="AudioStreamPlayer2D" parent="Camera2D"]
-stream = ExtResource("10_mca43")
-panning_strength = 0.0
 
 [node name="LandingZone" type="Area2D" parent="."]
 position = Vector2(-385, 8)

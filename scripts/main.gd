@@ -18,6 +18,7 @@ var levels = [LEVEL_1_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2]
 var rich_text_label: RichTextLabel
 var tiles_in_scene: Array[Object] = []
 var is_playing: bool = false
+var game_ended: bool = false
 var current_tile: int = 1
 var prev_tile: int = 1
 var tile_counter: int = 0
@@ -34,6 +35,9 @@ func _ready() -> void:
 		setup_demo()
 
 func _process(delta: float) -> void:
+	if game_ended:
+		return
+
 	# CAMERA MOVEMENT
 	camera_2d.global_position.y = player.global_position.y - 120.0
 	camera_2d.global_position.x = player.global_position.x * 0.01
@@ -58,14 +62,13 @@ func pattern_update(level: int, tile: int) -> void:
 	var level_instance
 	if level < 0:
 		# Add random level
-		var rand_level = randi_range(1, levels.size()-1)
+		var rand_level = randi_range(1, levels.size() - 1)
 		level_instance = levels[rand_level].instantiate()
 	else:
 		# Add level from index
 		level_instance = levels[level].instantiate()
 
 	if tile_counter > 1 and tile_counter % 10 == 0:
-		print("Special Level Spawned")
 		level_instance.spawn_sc()
 	add_child(level_instance)
 	level_instance.global_position.y = float(608 * (tile - 1))
@@ -77,6 +80,7 @@ func _input(event: InputEvent):
 		rising_death.is_playing = 1;
 
 func end_game():
+	game_ended = true
 	GameManager.player_start_position = Vector2(-192.0, -575.0)
 	GameManager.add_resources(GameManager.new_arcade_resources)
 	if not GameManager.game_progress["demo_played"]:
