@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 			phase_locked = true
 		global_position.y = start_height - arc_size * sin((journey_percent + phase_shift) * PI)
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch and event.pressed:
 		bonked = true
 		phase_locked = false
@@ -61,8 +61,8 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		var audio_player = AudioStreamPlayer.new()
 		audio_player.stream = IMPACT[idx]
 		audio_player.autoplay = true
-		var pow = POW.instantiate()
-		pow.modulate = colours[idx]
-		pow.position = position
+		var pow_ins = POW.instantiate()
+		pow_ins.modulate = colours[idx]
+		pow_ins.position = position
 		get_parent().add_child(audio_player)
-		get_parent().add_child(pow)
+		get_parent().add_child(pow_ins)

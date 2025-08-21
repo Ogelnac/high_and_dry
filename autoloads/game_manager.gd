@@ -1,8 +1,8 @@
 extends Node
 
 
-#var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
-var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
+var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
+#var player_start_position: Vector2 = Vector2(-586.0, -446.0) #pesto's
 #var player_start_position: Vector2 = Vector2(-192.0, -575.0) #landing zone
 
 

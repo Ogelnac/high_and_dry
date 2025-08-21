@@ -68,9 +68,9 @@ func pattern_update(level: int, tile: int) -> void:
 		# Add level from index
 		level_instance = levels[level].instantiate()
 
+	add_child(level_instance)
 	if tile_counter > 1 and tile_counter % 10 == 0:
 		level_instance.spawn_sc()
-	add_child(level_instance)
 	level_instance.global_position.y = float(608 * (tile - 1))
 	tiles_in_scene.insert(0, level_instance)
 

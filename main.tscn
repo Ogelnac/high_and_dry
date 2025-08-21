@@ -1,25 +1,24 @@
-[gd_scene load_steps=78 format=4 uid="uid://cjyisk7r6qf4c"]
+[gd_scene load_steps=76 format=4 uid="uid://cjyisk7r6qf4c"]
 
 [ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://player.tscn" id="1_fvgh8"]
 [ext_resource type="PackedScene" uid="uid://cpphloewhd56b" path="res://counter.tscn" id="3_1j66b"]
+[ext_resource type="Material" uid="uid://d05pn1d2oquk2" path="res://materials/overlay.tres" id="3_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://d0jlqa0xi17rs" path="res://textures/Frabric16.png" id="3_jpcof"]
 [ext_resource type="Script" uid="uid://c8o4tstn22f4m" path="res://scripts/custom_parallax.gd" id="3_objk6"]
 [ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://audio/step.wav" id="3_yrfyw"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="4_bb06l"]
 [ext_resource type="Script" uid="uid://bhiugfm5vkncc" path="res://scripts/camera_2d.gd" id="4_etw35"]
-[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://shaders/tilemap_halftone.tres" id="4_o67ql"]
-[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://shaders/bg_tilemap_halftone.tres" id="4_qkgjc"]
+[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://materials/tilemap_halftone.tres" id="4_o67ql"]
+[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://materials/bg_tilemap_halftone.tres" id="4_qkgjc"]
 [ext_resource type="PackedScene" uid="uid://djlds3w7gvaqy" path="res://pesto.tscn" id="5_j3pii"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://main.tres" id="5_rhfmc"]
 [ext_resource type="Script" uid="uid://i6hxyhuhp84d" path="res://scripts/visibility.gd" id="5_x5q7x"]
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://textures/SpriteSheet.png" id="5_yxj2o"]
 [ext_resource type="Texture2D" uid="uid://cathj5cibpo8v" path="res://textures/Flowing.png" id="7_ew3ap"]
 [ext_resource type="Texture2D" uid="uid://plmha61w7hhx" path="res://textures/Title.png" id="7_hdm0b"]
-[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://shaders/mbg_tilemap_halftone.tres" id="9_xnmlj"]
+[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://materials/mbg_tilemap_halftone.tres" id="9_xnmlj"]
 [ext_resource type="Texture2D" uid="uid://l8osgtemsh10" path="res://textures/Mask.png" id="16_a68v1"]
-[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://textures/Overlay.png" id="18_h2ws5"]
-[ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://shaders/noise_and_chromashift.gdshader" id="18_rtcbe"]
 [ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://scripts/resource_manager.gd" id="20_a3i5d"]
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://chsimb172v0qv" path="res://moth_mother.tscn" id="24_kq58d"]
@@ -35,14 +34,6 @@
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="35_0rl1p"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="36_b1qrp"]
 [ext_resource type="Texture2D" uid="uid://byslko3nn77gj" path="res://textures/silkworm.png" id="36_facbu"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w3oub"]
-shader = ExtResource("18_rtcbe")
-shader_parameter/overlay = ExtResource("18_h2ws5")
-shader_parameter/overlay_pixel_size = Vector2(4, 4)
-shader_parameter/chroma_offset_c = Vector2(0, 0)
-shader_parameter/chroma_offset_m = Vector2(0, 0)
-shader_parameter/chroma_offset_y = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_facbu"]
 size = Vector2(48, 16)
@@ -985,9 +976,9 @@ offset_bottom = 256.0
 texture = ExtResource("16_a68v1")
 expand_mode = 1
 
-[node name="NoiseChromashift" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="."]
 z_index = 11
-material = SubResource("ShaderMaterial_w3oub")
+material = ExtResource("3_4k2k6")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

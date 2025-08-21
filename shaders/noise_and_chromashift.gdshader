@@ -2,6 +2,8 @@ shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D overlay : source_color;
+uniform sampler2D paper_overlay : source_color;
+
 uniform vec2 overlay_pixel_size = vec2(2048, 2048);
 
 uniform vec2 chroma_offset_c = vec2(0.0, 0.0);
@@ -23,8 +25,10 @@ void fragment() {
 
 	vec2 overlay_uv = fract(UV * overlay_pixel_size);
 	vec3 overlay_sample = texture(overlay, overlay_uv).rgb;
+	vec3 paper_sample = texture(paper_overlay, overlay_uv).rgb;
+	vec3 tinted_chroma = mix(chroma_mixed, paper_sample, 0.1);
 
-	vec3 final_colour = remap(overlay_sample + chroma_mixed, vec3(0.0), vec3(1.0));
+	vec3 final_colour = remap(overlay_sample + tinted_chroma, vec3(0.0), vec3(1.0));
 
 	COLOR = vec4(final_colour, 1.0);
 }
