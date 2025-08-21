@@ -155,8 +155,22 @@ func _input(event: InputEvent):
 		tap_screen_pos = event.position
 
 func get_throw_velocity(released_displacement: Vector2) -> Vector2:
-	var normalised_displacement = -released_displacement.normalized()
-	return normalised_displacement * throw_velocity
+	var direction = -released_displacement.normalized()
+	var vel = direction * throw_velocity
+
+	if is_on_wall() or is_on_ceiling() or is_on_floor():
+		var normal = get_contact_normal()
+
+		if direction.dot(normal) > 0.0:
+			var parallel = vel - normal * vel.dot(normal)
+			if parallel.length() < 0.0:
+				vel = parallel * throw_velocity
+		else:
+			var tangent = Vector2(-normal.y, normal.x).normalized()
+			if direction.dot(tangent) < 0.0:
+				tangent = -tangent
+			vel = tangent * throw_velocity
+	return vel
 
 func apply_friction_and_gravity(delta: float) -> void:
 	if not is_on_floor():
@@ -190,6 +204,13 @@ func get_wall_collision_direction() -> float:
 		elif collision.get_normal().x < 0:
 			return -1.0
 	return 0.0
+
+func get_contact_normal() -> Vector2:
+	if is_on_wall():
+		return get_wall_normal()
+	if is_on_floor():
+		return get_floor_normal()
+	return Vector2.ZERO
 
 func throw_needle(thrown_velocity: Vector2) -> void:
 	var needle_instance = NEEDLE.instantiate()
@@ -296,7 +317,6 @@ func wrapf(value: float, min_val: float, max_val: float) -> float:
 	return fmod((value - min_val), (max_val - min_val)) + min_val
 
 func apply_squash_and_stretch(delta: float) -> void:
-	var sprite := $Sprite2D
 	var target_stretch_x = 1.0
 	var target_stretch_y = 1.0
 
