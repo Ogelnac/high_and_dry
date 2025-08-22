@@ -166,7 +166,6 @@ libraries = {
 }
 
 [node name="TapButton" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
@@ -188,7 +187,6 @@ libraries = {
 }
 
 [node name="DetectionArea" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]

@@ -3,6 +3,8 @@ extends CharacterBody2D
 # WORLD
 @export var gravity: float = 200.0
 @export var friction: float = 1.0
+var damping: float = 0.0
+var in_water := false
 
 # VELOCITIES
 @export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
@@ -119,7 +121,7 @@ func _input(event: InputEvent):
 			tap_screen_pos = tap_initial_screen_pos
 			tap_timer.start()
 			recall_needles.emit()
-		
+
 		# Touch release
 		elif event.is_released():
 			# Reset variables
@@ -173,6 +175,12 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 	return vel
 
 func apply_friction_and_gravity(delta: float) -> void:
+	if in_water:
+		velocity.y += gravity * delta
+		if damping > 0.0:
+			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
+		return
+
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
@@ -295,8 +303,13 @@ func handle_animation() -> void:
 		anim.play("idle")
 
 func update_sprite_orientation(delta: float) -> void:
-	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
+	if in_water:
+		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
+		sprite.rotation = current_angle
+		sprite.position = Vector2(0, -4).rotated(current_angle)
+		return
 
+	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
 	if on_surface:
 		var surface_normal = Vector2.ZERO
 		for i in range(get_slide_collision_count()):
