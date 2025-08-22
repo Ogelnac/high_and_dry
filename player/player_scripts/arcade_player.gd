@@ -206,11 +206,10 @@ func get_wall_collision_direction() -> float:
 	return 0.0
 
 func get_contact_normal() -> Vector2:
-	if is_on_wall():
-		return get_wall_normal()
-	if is_on_floor():
-		return get_floor_normal()
-	return Vector2.ZERO
+	var normal := Vector2.ZERO
+	for i in range(get_slide_collision_count()):
+		normal += get_slide_collision(i).get_normal()
+	return normal.normalized()
 
 func throw_needle(thrown_velocity: Vector2) -> void:
 	var needle_instance = NEEDLE.instantiate()
