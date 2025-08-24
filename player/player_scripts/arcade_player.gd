@@ -252,7 +252,6 @@ func _on_tap_timer_timeout() -> void:
 	pass
 
 func handle_animation() -> void:
-	var sprite := $Sprite2D
 	var anim := $AnimationPlayer
 
 	if aiming:

@@ -31,6 +31,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	spawn_timer -= delta
+
 	if doinking:
 		doink_timer -= delta
 	if doink_timer < 0.0:
@@ -44,9 +45,12 @@ func _process(delta: float) -> void:
 		if current_resource == number_of_resources:
 			return
 		retrigger = false
-		launch_ingredient(resources_to_be_processed[current_resource])
+		if Debug.infinite_resources:
+			launch_ingredient(randi_range(0, 7))
+		else:
+			launch_ingredient(resources_to_be_processed[current_resource])
 		current_resource += 1
-	
+
 	if resource_count == 3 and not music_started:
 		music_started = true
 		var bgm = AudioStreamPlayer.new()
@@ -94,6 +98,9 @@ func update_counters(new_resource: int):
 		end_game()
 
 func end_game():
+	if Debug.infinite_resources:
+		return
+
 	GameManager.unprocessed_resources = GameManager.unprocessed_resources.slice(number_of_resources, GameManager.unprocessed_resources.size())
 	for i in range(0, 15):
 		var idx: int = int(i) % 8

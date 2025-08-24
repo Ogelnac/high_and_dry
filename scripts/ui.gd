@@ -4,8 +4,6 @@ signal demo_resource_pressed(number_resources)
 signal clear_demo_pressed
 
 @onready var scene_manager: Panel = $SceneManager
-@onready var menu: Button = $Menu
-@onready var debug: Button = $Debug
 
 const CLICK = preload("res://audio/click.wav")
 const PIPE = preload("res://audio/pipe.wav")
@@ -54,8 +52,6 @@ func _process(_delta: float) -> void:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a - 0.05, 0.0, 1.0)
 
 func _fade_to_black() -> void:
-	menu.hide()
-	debug.hide()
 	await get_tree().create_timer(0.5).timeout
 	_play_one_shot(PIPE)
 	display_swipe_to_start = false
@@ -72,8 +68,6 @@ func _fade_from_black() -> void:
 		transition_value -= 0.25
 		update_shader_black_dot_transition(transition_value)
 		await get_tree().create_timer(0.2).timeout
-	menu.show()
-	debug.show()
 
 func update_shader_black_dot_transition(value: float) -> void:
 	for obj in shader_objects:

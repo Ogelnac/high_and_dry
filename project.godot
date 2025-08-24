@@ -20,6 +20,7 @@ config/icon="res://textures/Thumbnail.png"
 
 GameManager="*res://autoloads/game_manager.gd"
 DialogueManager="*res://autoloads/dialogue_manager.gd"
+Debug="*res://autoloads/debug.gd"
 
 [display]
 

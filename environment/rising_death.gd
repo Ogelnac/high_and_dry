@@ -19,7 +19,7 @@ func _ready() -> void:
 	drip_timer.timeout.connect(_spawn_drip)
 
 func _process(delta: float) -> void:
-	if is_playing:
+	if is_playing and not Debug.disable_rising_death:
 		var offset = 0.0
 		if player.global_position.y <= global_position.y + offset:
 			global_position.y = player.global_position.y - offset

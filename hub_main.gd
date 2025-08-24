@@ -3,7 +3,7 @@ extends Node2D
 func _ready() -> void:
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.player = $Player
-	DialogueManager.dialogue_input = $CanvasLayer/UI/DialogueInput
+	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
 
 	GameManager.get_ui_reference()
 	GameManager.hub_UI()

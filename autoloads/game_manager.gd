@@ -10,6 +10,7 @@ var game_progress: Dictionary[String, bool] = {
 	"demo_played": false,
 	"whack_a_pesto_played": false,
 }
+
 var resources: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
@@ -47,7 +48,7 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
 	"Yellow": 0,
-	"Green": 3,
+	"Green": 0,
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
@@ -89,32 +90,6 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"White": Vector4i(109, 1, 16, 16),
 	"Brown": Vector4i(127, 1, 16, 16)
 }
-
-##UNCOMMENT TO CLEAR SAVE DATA
-#func _ready() -> void:
-	#game_progress = {
-		#"demo_played": false, "whack_a_pesto_played": false,
-	#}
-	#resources = {
-		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
-		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
-	#}
-	#dye_value = {
-		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
-		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
-	#}
-	#bottle_sizes = {
-		#"Red": 160, "Orange": 160, "Yellow": 160, "Green": 160,
-		#"Blue": 160, "Pink": 160, "White": 160, "Brown": 160
-	#}
-	#silkworm_amount = {
-		#"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
-		#"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
-	#}
-	#unprocessed_resources = []
-	#silk_worms = 0
-	#sand = 0
-	#save()
 
 func _process(_delta: float) -> void:
 	if fade_out and circle_fade:
@@ -239,3 +214,29 @@ func increase_silkworm_amount(dye_name: String):
 
 func decrease_silkworm_amount(dye_name: String):
 	silkworm_amount[dye_name] -= 1
+
+func _reset_progress() -> void:
+	game_progress = {
+		"demo_played": false, "whack_a_pesto_played": false,
+	}
+	resources = {
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	}
+	dye_value = {
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	}
+	bottle_sizes = {
+		"Red": 160, "Orange": 160, "Yellow": 160, "Green": 160,
+		"Blue": 160, "Pink": 160, "White": 160, "Brown": 160
+	}
+	silkworm_amount = {
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	}
+	unprocessed_resources = []
+	silk_worms = 0
+	sand = 0
+	save()
+	get_tree().change_scene_to_file("res://start_scene.tscn")

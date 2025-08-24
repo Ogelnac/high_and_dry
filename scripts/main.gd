@@ -23,13 +23,21 @@ var current_tile: int = 1
 var prev_tile: int = 1
 var tile_counter: int = 0
 
+#DEBUG
+var end_game_button
+
 func _ready() -> void:
 	pattern_update(0, 1)
+
+	Debug.arcade_main_node_id = get_tree().get_current_scene()
 
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
 	GameManager.stink_meter = 0.0
 	rich_text_label = GameManager.UI.get_node("UI/RichTextLabel")
+	if Debug.infinite_health:
+		end_game_button = GameManager.UI.get_node("HBoxContainer/EndGame")
+		end_game_button.show()
 
 	if not GameManager.game_progress["demo_played"]:
 		setup_demo()
@@ -38,16 +46,21 @@ func _process(delta: float) -> void:
 	if game_ended:
 		return
 
+	if Debug.game_ended:
+		end_game()
+
 	# CAMERA MOVEMENT
 	camera_2d.global_position.y = player.global_position.y - 120.0
 	camera_2d.global_position.x = player.global_position.x * 0.01
 	
 	if is_playing:
-		if GameManager.stink_meter <= 100.0:
+		if Debug.infinite_health:
+			GameManager.stink_meter = 0
+		elif GameManager.stink_meter <= 100.0:
 			GameManager.stink_meter += 5.0 * stink_multiplier * delta
 		else:
 			end_game()
-		
+ 
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)
@@ -81,6 +94,7 @@ func _input(event: InputEvent):
 
 func end_game():
 	game_ended = true
+	Debug.game_ended = false
 	GameManager.player_start_position = Vector2(-192.0, -575.0)
 	GameManager.add_resources(GameManager.new_arcade_resources)
 	if not GameManager.game_progress["demo_played"]:
@@ -88,6 +102,9 @@ func end_game():
 	GameManager.save()
 
 	GameManager.UI.get_node("UI").display_swipe_to_start = false
+	if end_game_button != null:
+		end_game_button.hide()
+
 	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 
 	to Play![/wave][/center]"
 	GameManager.trigger_pachinko = true

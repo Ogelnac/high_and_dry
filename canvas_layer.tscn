@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=24 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
+[ext_resource type="Script" uid="uid://ba2nqal7o1od6" path="res://debug_panel.gd" id="2_86mtp"]
 [ext_resource type="Script" uid="uid://bxe7ya780ce1a" path="res://scripts/ui.gd" id="2_l5iyv"]
 [ext_resource type="Script" uid="uid://cichuc2niwycp" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
 [ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="4_ccaf2"]
@@ -13,14 +14,8 @@
 [ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://audio/collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://scripts/color_rect.gd" id="13_wugvg"]
+[ext_resource type="Script" uid="uid://cmmya6v463hjb" path="res://end_game.gd" id="16_lrj6d"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qens6"]
-atlas = ExtResource("6_uoqhr")
-region = Rect2(0, 0, 16, 16)
-filter_clip = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
@@ -57,6 +52,13 @@ shader_parameter/brown_resources = 0
 shader_parameter/wave_amp = 0.005
 shader_parameter/wave_freq = 1.0
 shader_parameter/wave_speed = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qens6"]
+atlas = ExtResource("6_uoqhr")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -162,34 +164,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
-
-[node name="Menu" type="Button" parent="UI"]
-material = SubResource("ShaderMaterial_lptq8")
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -82.0
-offset_top = 39.0
-offset_right = -10.0
-offset_bottom = 81.0
-grow_horizontal = 0
-text = "MENU"
-
-[node name="Debug" type="Button" parent="UI"]
-visible = false
-material = SubResource("ShaderMaterial_lptq8")
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -188.0
-offset_top = 39.0
-offset_right = -97.0
-offset_bottom = 81.0
-grow_horizontal = 0
-text = "Debug"
-icon = SubResource("AtlasTexture_qens6")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI"]
 visible = false
@@ -371,68 +345,6 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 
-[node name="DialogueInput" type="Panel" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 200.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/DialogueInput"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 15.0
-offset_top = -60.0
-offset_right = -15.0
-grow_horizontal = 2
-grow_vertical = 2
-bbcode_enabled = true
-text = "[center]This is what a lot of text looks like when written in this dialogue box"
-fit_content = true
-
-[node name="Option1" type="Button" parent="UI/DialogueInput"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 11.0
-offset_top = -66.0
-offset_right = -229.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Yes"
-
-[node name="Option2" type="Button" parent="UI/DialogueInput"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 230.0
-offset_top = -66.0
-offset_right = -14.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "NO"
-
-[node name="LevelSelect" type="AudioStreamPlayer" parent="UI/DialogueInput"]
-stream = ExtResource("11_4mnhw")
-volume_db = -20.0
-
 [node name="CircleFade" type="ColorRect" parent="UI"]
 visible = false
 z_index = 10
@@ -549,6 +461,157 @@ offset_top = 3.0
 offset_right = 157.0
 offset_bottom = 13.0
 color = Color(0, 0, 0, 1)
+
+[node name="DebugPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 207.0
+offset_right = -21.0
+offset_bottom = -631.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kmbj5")
+script = ExtResource("2_86mtp")
+
+[node name="Label" type="Label" parent="DebugPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "DEBUG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 43.0
+offset_right = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="CheckBox" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Disable Rising Death"
+alignment = 2
+
+[node name="CheckBox2" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Infinte Health"
+alignment = 2
+
+[node name="CheckBox3" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Infinite Resources"
+alignment = 2
+
+[node name="Button" type="Button" parent="DebugPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Restart Progress"
+
+[node name="DialogueInput" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kmbj5")
+
+[node name="Text" type="RichTextLabel" parent="DialogueInput"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 15.0
+offset_top = -60.0
+offset_right = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]This is what a lot of text looks like when written in this dialogue box"
+fit_content = true
+
+[node name="Option1" type="Button" parent="DialogueInput"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -66.0
+offset_right = -229.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Yes"
+
+[node name="Option2" type="Button" parent="DialogueInput"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 230.0
+offset_top = -66.0
+offset_right = -14.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "NO"
+
+[node name="LevelSelect" type="AudioStreamPlayer" parent="DialogueInput"]
+stream = ExtResource("11_4mnhw")
+volume_db = -20.0
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 412.0
+offset_top = 38.0
+offset_right = 524.0
+offset_bottom = 182.0
+theme = ExtResource("1_kmbj5")
+theme_override_constants/separation = 20
+
+[node name="Menu" type="Button" parent="HBoxContainer"]
+material = SubResource("ShaderMaterial_lptq8")
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "MENU"
+
+[node name="Debug" type="Button" parent="HBoxContainer"]
+material = SubResource("ShaderMaterial_lptq8")
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Debug"
+icon = SubResource("AtlasTexture_qens6")
+
+[node name="EndGame" type="Button" parent="HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme = ExtResource("1_kmbj5")
+text = "End game"
+script = ExtResource("16_lrj6d")
 
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]
