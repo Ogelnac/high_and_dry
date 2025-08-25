@@ -56,6 +56,7 @@ func _process(delta: float) -> void:
 		var bgm = AudioStreamPlayer.new()
 		bgm.stream = KARAKARA
 		bgm.autoplay = true
+		bgm.volume_linear = 0.3
 		add_child(bgm)
 
 func _input(event: InputEvent) -> void:

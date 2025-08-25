@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dey75n5wb6y4g"
-path="res://.godot/imported/door.wav-1fd8a7c6c1529fce90de7b2743c87d51.sample"
+path="res://.godot/imported/Door.wav-d50ab0910da747e0e40db3bef0f02c64.sample"
 
 [deps]
 
-source_file="res://audio/door.wav"
-dest_files=["res://.godot/imported/door.wav-1fd8a7c6c1529fce90de7b2743c87d51.sample"]
+source_file="res://audio/Door.wav"
+dest_files=["res://.godot/imported/Door.wav-d50ab0910da747e0e40db3bef0f02c64.sample"]
 
 [params]
 

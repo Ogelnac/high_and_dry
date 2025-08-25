@@ -12,8 +12,23 @@ shader = ExtResource("1_mydvi")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
 
-[node name="level_0_0" type="Node2D"]
+[node name="level_0_1" type="Node2D"]
 script = ExtResource("1_42xlk")
+
+[node name="Overlay" type="ColorRect" parent="."]
+z_index = 10
+material = ExtResource("6_42xlk")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -608.0
+offset_right = 142.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.05, 0.0225, 0.0225, 1)
 
 [node name="Background" type="TileMapLayer" parent="."]
 material = SubResource("ShaderMaterial_bmdcp")
@@ -62,27 +77,12 @@ position = Vector2(-33, -224)
 [node name="SpecialCollectables" type="Node2D" parent="."]
 
 [node name="SpecialCollectable" parent="SpecialCollectables" instance=ExtResource("5_r4ps6")]
-position = Vector2(-77, -96)
+position = Vector2(-87, -104)
 
 [node name="SpecialCollectable2" parent="SpecialCollectables" instance=ExtResource("5_r4ps6")]
-position = Vector2(73, -282)
+position = Vector2(85, -298)
 
 [node name="SpecialCollectable3" parent="SpecialCollectables" instance=ExtResource("5_r4ps6")]
-position = Vector2(-76, -480)
+position = Vector2(-88, -486)
 
 [node name="Enemies" type="Node2D" parent="."]
-
-[node name="Overlay" type="ColorRect" parent="."]
-z_index = 10
-material = ExtResource("6_42xlk")
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -142.0
-offset_top = -608.0
-offset_right = 142.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.05, 0.0225, 0.0225, 1)

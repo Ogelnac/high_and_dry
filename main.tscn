@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://d05pn1d2oquk2" path="res://materials/overlay.tres" id="3_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://d0jlqa0xi17rs" path="res://textures/Frabric16.png" id="3_jpcof"]
 [ext_resource type="Script" uid="uid://c8o4tstn22f4m" path="res://scripts/custom_parallax.gd" id="3_objk6"]
-[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://audio/step.wav" id="3_yrfyw"]
+[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://audio/Step.wav" id="3_yrfyw"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="4_bb06l"]
 [ext_resource type="Script" uid="uid://bhiugfm5vkncc" path="res://scripts/camera_2d.gd" id="4_etw35"]
 [ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://materials/tilemap_halftone.tres" id="4_o67ql"]

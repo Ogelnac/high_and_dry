@@ -60,6 +60,7 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		var idx = sprite_2d.frame % 8
 		var audio_player = AudioStreamPlayer.new()
 		audio_player.stream = IMPACT[idx]
+		audio_player.volume_linear = 0.3
 		audio_player.autoplay = true
 		var pow_ins = POW.instantiate()
 		pow_ins.modulate = colours[idx]

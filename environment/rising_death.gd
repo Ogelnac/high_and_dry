@@ -33,7 +33,7 @@ func _on_body_entered(_body: Node2D) -> void:
 	player.gravity = -150.0
 	player.damping = 0.0
 	player.in_water = true
-	player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	#player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	main.stink_multiplier = 4.0
 	call_deferred("_spawn_splash", player.global_position)
 
