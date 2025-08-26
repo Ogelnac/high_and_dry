@@ -6,12 +6,13 @@ const LEVEL_0_1 = preload("res://levels/level_0_1.tscn")
 #const LEVEL_1_0 = preload("res://levels/level_1_0.tscn")
 const LEVEL_1_1 = preload("res://levels/level_1_1.tscn")
 const LEVEL_1_2 = preload("res://levels/level_1_2.tscn")
+const LEVEL_1_3 = preload("res://levels/level_1_3.tscn")
 
 #const LEVEL_2_0 = preload("res://levels/level_2_0.tscn")
 const LEVEL_2_1 = preload("res://levels/level_2_1.tscn")
 const LEVEL_2_2 = preload("res://levels/level_2_2.tscn")
 
-var levels = [LEVEL_0_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2, LEVEL_2_1, LEVEL_2_2]
+var levels = [LEVEL_0_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, LEVEL_2_2]
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: CharacterBody2D = $ArcadePlayer
