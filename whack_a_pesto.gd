@@ -99,14 +99,12 @@ func update_counters(new_resource: int):
 		end_game()
 
 func end_game():
-	if Debug.infinite_resources:
-		return
-
-	GameManager.unprocessed_resources = GameManager.unprocessed_resources.slice(number_of_resources, GameManager.unprocessed_resources.size())
-	for i in range(0, 15):
-		var idx: int = int(i) % 8
-		var key: String = COLOR_ORDER[idx]
-		GameManager.resources[key] -= resources_to_be_processed.count(i)
-		GameManager.dye_value[key] += resources_to_be_processed.count(i)
-	GameManager.save()
+	if !Debug.infinite_resources:
+		GameManager.unprocessed_resources = GameManager.unprocessed_resources.slice(number_of_resources, GameManager.unprocessed_resources.size())
+		for i in range(0, 15):
+			var idx: int = int(i) % 8
+			var key: String = COLOR_ORDER[idx]
+			GameManager.resources[key] -= resources_to_be_processed.count(i)
+			GameManager.dye_value[key] += resources_to_be_processed.count(i)
+		GameManager.save()
 	GameManager.change_scene("res://main.tscn")
