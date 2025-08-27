@@ -21,9 +21,9 @@ script = ExtResource("1_2hcpo")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_c74ds")
 texture = ExtResource("3_ck7jp")
-hframes = 16
-vframes = 16
-frame = 61
+hframes = 32
+vframes = 32
+frame = 111
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rxslp")

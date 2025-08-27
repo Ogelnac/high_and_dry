@@ -5,12 +5,14 @@ extends Node2D
 @onready var player = null
 @onready var camera = null
 
-var initial_position: Vector2 = Vector2(-8.0, 0.0)
+var initial_position: Vector2
 var reference_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	player = get_node("/root/Main/Player")
 	camera = get_node("/root/Main/Camera2D")
+
+	initial_position = position
 
 func _process(_delta):
 	if not player or not camera:

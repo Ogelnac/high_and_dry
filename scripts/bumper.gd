@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-@export var wall_bumper: bool = false
-@export_group("Bumper Behaviour")
 @export var bounce_amount: float = 7.0
 @export var scale_factor: float = 0.1
 @export var bounce_speed: float = 100.0
@@ -20,17 +18,17 @@ func _ready():
 	target_position = initial_position
 	area.area_entered.connect(_on_area_entered)
 
-	var random_frame = randi_range(61, 63)
+	var random_frame = randi_range(109, 111)
 	sprite.frame = random_frame
 	
 	match random_frame:
-		61: 
+		109: 
 			collision_shape.shape.radius = 5
 			bumper.pitch_scale = 1.5
-		62: 
+		110: 
 			collision_shape.shape.radius = 6
 			bumper.pitch_scale = 1.25
-		63: 
+		111: 
 			collision_shape.shape.radius = 7
 			bumper.pitch_scale = 1
 

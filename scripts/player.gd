@@ -151,7 +151,7 @@ func _process(delta: float) -> void:
 		return
 
 	if wait_to_change_layer and position.y <= -80:
-		z_index = -1
+		z_index = -110
 		start_game_signal.emit()
 		wait_to_change_layer = false
 
