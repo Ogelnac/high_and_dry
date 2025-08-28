@@ -2,16 +2,29 @@
 
 [ext_resource type="Script" uid="uid://b271mjrnhd4t7" path="res://collectables/special_collectable.gd" id="1_4c114"]
 [ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://effects/burst_particle.tscn" id="2_7nxko"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="3_2578d"]
+[ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="3_4c114"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="4_ahcp0"]
 [ext_resource type="AudioStream" uid="uid://bm3aoqj51thkd" path="res://audio/arcade_collect_resource.wav" id="5_2ytrl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qx60i"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2626j"]
-shader = ExtResource("3_2578d")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nxko"]
+shader = ExtResource("3_4c114")
+shader_parameter/source_tex = ExtResource("4_ahcp0")
+shader_parameter/paper_colour = Color(0.99, 0.98, 0.95, 1)
+shader_parameter/ink_bleed_px = 0.8
+shader_parameter/fray_amount_px = 0.5
+shader_parameter/fray_scale_px = 18.0
+shader_parameter/fray_octaves = 2.0
+shader_parameter/edge_softness = 1.0
+shader_parameter/r_offset_px = Vector2(0.01, -0.01)
+shader_parameter/g_offset_px = Vector2(0, 0)
+shader_parameter/b_offset_px = Vector2(0, 0)
+shader_parameter/r_rot_deg = 0.15
+shader_parameter/g_rot_deg = -0.1
+shader_parameter/b_rot_deg = 0.0
+shader_parameter/black_grey_floor = 0.06
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
 
 [node name="SpecialCollectable" type="Area2D"]
 collision_layer = 16
@@ -25,7 +38,7 @@ disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_2626j")
+material = SubResource("ShaderMaterial_7nxko")
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("4_ahcp0")
 hframes = 3

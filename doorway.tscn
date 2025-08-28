@@ -111,6 +111,7 @@ size = Vector2(28, 31)
 script = ExtResource("1_6gsfp")
 
 [node name="DoorButton" type="Area2D" parent="."]
+z_index = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorButton"]
 position = Vector2(0.5, -34.5)
@@ -131,7 +132,6 @@ libraries = {
 }
 
 [node name="DetectionArea" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(-1, -0.5)

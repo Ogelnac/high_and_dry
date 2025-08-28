@@ -1,14 +1,42 @@
-[gd_scene load_steps=18 format=3 uid="uid://chsimb172v0qv"]
+[gd_scene load_steps=19 format=3 uid="uid://chsimb172v0qv"]
 
 [ext_resource type="Script" uid="uid://5loxqwp72g3t" path="res://moth_mother.gd" id="1_uxyte"]
 [ext_resource type="Texture2D" uid="uid://c0tqtuoq7v7j" path="res://textures/MothMother.png" id="2_3aboj"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_6v4sc"]
+[ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="2_xwos4"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="4_1gwex"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbkkn"]
-shader = ExtResource("2_6v4sc")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1gwex"]
+shader = ExtResource("2_xwos4")
+shader_parameter/source_tex = ExtResource("2_3aboj")
+shader_parameter/paper_colour = Color(0.99, 0.98, 0.95, 1)
+shader_parameter/ink_bleed_px = 0.8
+shader_parameter/fray_amount_px = 0.5
+shader_parameter/fray_scale_px = 18.0
+shader_parameter/fray_octaves = 2.0
+shader_parameter/edge_softness = 1.0
+shader_parameter/r_offset_px = Vector2(0.2, -0.15)
+shader_parameter/g_offset_px = Vector2(-0.1, 0.1)
+shader_parameter/b_offset_px = Vector2(0, 0)
+shader_parameter/r_rot_deg = 0.15
+shader_parameter/g_rot_deg = -0.1
+shader_parameter/b_rot_deg = 0.0
+shader_parameter/black_grey_floor = 0.06
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
+
+[sub_resource type="Animation" id="Animation_xwos4"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_6v4sc"]
 resource_name = "cocoon_idle"
@@ -25,20 +53,6 @@ tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.1, -0.293621, -0.004008, -0.1, -0.290701, 0.075, 0.225825, -0.0099794, -0.075, 0.231862, 0.125, -0.486669, -0.00102231, -0.125, 0.247813, 0.1, -0.25677, -0.00400801, -0.125, -0.0268713, 0.198448, 0.0656854, -0.0279275, -1.45993, 0.00301956, 1.98807, -0.00295184, -0.00102235, -2.4, 0.101514, 1.9, -0.0835996, 0, -5.6, 0.0467489, 0.319429, -0.004008),
 "times": PackedFloat32Array(0, 0.175, 0.325, 0.7, 1.1, 2.9, 8.7, 30)
-}
-
-[sub_resource type="Animation" id="Animation_xwos4"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1gwex"]
@@ -154,7 +168,7 @@ script = ExtResource("1_uxyte")
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
 texture_filter = 1
-material = SubResource("ShaderMaterial_xbkkn")
+material = SubResource("ShaderMaterial_1gwex")
 position = Vector2(0, 32)
 texture = ExtResource("2_3aboj")
 hframes = 2

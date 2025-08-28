@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpt51"]
 shader = ExtResource("1_qj5wa")
-shader_parameter/black_dot_transition = 1.5
+shader_parameter/black_dot_transition = 1.1
 shader_parameter/alpha_effect = 1.0
 
 [sub_resource type="Animation" id="Animation_63htf"]
