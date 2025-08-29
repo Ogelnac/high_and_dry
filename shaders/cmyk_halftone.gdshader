@@ -3,14 +3,6 @@ shader_type canvas_item;
 uniform float black_dot_transition: hint_range(0.5, 2.0) = 0.5;
 uniform float alpha_effect: hint_range(0.0, 1.0) = 1.0;
 
-vec3 colour_cbs_adjustment(vec3 colour, float contrast, float brightness, float saturation) {
-	colour += brightness;
-	colour = (colour - 0.5) * contrast + 0.5;
-	float lum = dot(colour, vec3(0.299, 0.587, 0.114));
-	colour = mix(vec3(lum), colour, saturation);
-	return clamp(colour, 0.0, 1.0);
-}
-
 vec2 fix_aspect(sampler2D tex, vec2 uv) {
 	ivec2 tex_size = textureSize (tex, 0);
 	vec2 screen_size = vec2(1.0, (1.0 / float(tex_size.x)) /(1.0 / float(tex_size.y)));
@@ -63,12 +55,6 @@ void fragment() {
 	float alpha = COLOR.a;
 
 	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
-
-	float contrast = 1.0;
-	float brightness = 0.0;
-	float saturation = 1.0;
-
-	final_colour = colour_cbs_adjustment(final_colour, contrast, brightness, saturation);
 
 	final_colour *= vec3(k_dot);
     COLOR = vec4(final_colour, alpha * alpha_effect);

@@ -61,7 +61,8 @@ var unprocessed_resources: Array[int] = [] #the order unprocessed resources were
 var silk_worms: int = 0
 var sand: int = 0
 
-var stink_meter: float = 0.0
+var stink_metre: float = 0.0
+var combo_metre: float = 0.0
 var UI: Node
 var circle_fade: ColorRect
 var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
@@ -133,7 +134,7 @@ func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
 
 func arcade_UI():
-	UI.find_child("StinkMeter").show()
+	UI.find_child("StinkMetre").show()
 	UI.find_child("ArcadeCounter").show()
 	UI.find_child("RichTextLabel").hide()
 
@@ -144,14 +145,14 @@ func hub_UI():
 	update_bottles()
 
 func whack_a_pesto_UI():
-	var whack_meter = UI.find_child("WhackMeter")
-	whack_meter.show()
+	var whack_metre = UI.find_child("WhackMetre")
+	whack_metre.show()
 	for string in COLOR_ORDER:
 		var param = string.to_lower() + "_resources"
-		var colorrect: ColorRect = whack_meter.get_node("ColorRect")
+		var colorrect: ColorRect = whack_metre.get_node("ColorRect")
 		colorrect.material.set_shader_parameter(param, 0)
 
-	UI.find_child("WhackMeter").show()
+	UI.find_child("WhackMetre").show()
 	UI.find_child("WhackCounter").show()
 	UI.find_child("RichTextLabel").hide()
 

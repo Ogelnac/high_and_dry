@@ -380,7 +380,7 @@ text = "0
 "
 horizontal_alignment = 1
 
-[node name="StinkMeter" type="NinePatchRect" parent="UI"]
+[node name="StinkMetre" type="NinePatchRect" parent="UI"]
 visible = false
 texture_filter = 1
 layout_mode = 1
@@ -401,13 +401,26 @@ patch_margin_top = 8
 patch_margin_right = 24
 patch_margin_bottom = 8
 
-[node name="ColorRect" type="ColorRect" parent="UI/StinkMeter"]
+[node name="ColorRect" type="ColorRect" parent="UI/StinkMetre"]
 z_index = -1
 layout_mode = 1
 offset_left = 2.0
 offset_top = 3.0
 offset_right = 2.0
 offset_bottom = 13.0
+color = Color(0.239216, 0.607843, 0.282353, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="UI/StinkMetre"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -2.0
+offset_top = 3.0
+offset_right = -2.0
+offset_bottom = 13.0
+grow_horizontal = 0
 color = Color(0.239216, 0.607843, 0.282353, 1)
 
 [node name="WhackCounter" type="RichTextLabel" parent="UI"]
@@ -432,7 +445,7 @@ text = "[center]0[font_size=50]/50
 fit_content = true
 horizontal_alignment = 1
 
-[node name="WhackMeter" type="NinePatchRect" parent="UI"]
+[node name="WhackMetre" type="NinePatchRect" parent="UI"]
 visible = false
 texture_filter = 1
 layout_mode = 1
@@ -453,7 +466,7 @@ patch_margin_top = 8
 patch_margin_right = 24
 patch_margin_bottom = 8
 
-[node name="ColorRect" type="ColorRect" parent="UI/WhackMeter"]
+[node name="ColorRect" type="ColorRect" parent="UI/WhackMetre"]
 z_index = -1
 material = SubResource("ShaderMaterial_ml53l")
 layout_mode = 1

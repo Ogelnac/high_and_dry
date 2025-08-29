@@ -37,7 +37,7 @@ func _ready() -> void:
 
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
-	GameManager.stink_meter = 0.0
+	GameManager.stink_metre = 0.0
 	rich_text_label = GameManager.UI.get_node("UI/RichTextLabel")
 	if Debug.infinite_health:
 		end_game_button = GameManager.UI.get_node("HBoxContainer/EndGame")
@@ -59,12 +59,12 @@ func _process(delta: float) -> void:
 	
 	if is_playing:
 		if Debug.infinite_health:
-			GameManager.stink_meter = 0
-		elif GameManager.stink_meter <= 100.0:
-			GameManager.stink_meter += 5.0 * stink_multiplier * delta
+			GameManager.stink_metre = 0
+		elif GameManager.stink_metre <= 100.0:
+			GameManager.stink_metre += 5.0 * stink_multiplier * delta
 		else:
 			end_game()
- 
+
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)

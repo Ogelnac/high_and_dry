@@ -13,7 +13,7 @@ size = Vector2(298, 849)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jluea"]
 shader = ExtResource("5_7umgu")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 0.5
+shader_parameter/alpha_effect = 0.75
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h4xiv")
