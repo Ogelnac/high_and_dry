@@ -33,16 +33,12 @@ func _on_body_entered(_body: Node2D) -> void:
 	player.gravity = -150.0
 	player.damping = 0.0
 	player.in_water = true
-	#player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
-	main.stink_multiplier = 4.0
 	call_deferred("_spawn_splash", player.global_position)
 
 func _on_body_exited(_body: Node2D) -> void:
 	player.gravity = 200.0
 	player.damping = 0.0
 	player.in_water = false
-	player.motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
-	main.stink_multiplier = 1.0
 	drip_time_left = drip_duration
 	if drip_timer.is_inside_tree():
 		drip_timer.start()

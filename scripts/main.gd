@@ -17,7 +17,6 @@ var levels = [LEVEL_0_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: CharacterBody2D = $ArcadePlayer
 @onready var rising_death: Area2D = $RisingDeath
-@export var stink_multiplier: float = 1.0
 
 var rich_text_label: RichTextLabel
 var tiles_in_scene: Array[Object] = []
@@ -37,7 +36,6 @@ func _ready() -> void:
 
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
-	GameManager.stink_metre = 0.0
 	rich_text_label = GameManager.UI.get_node("UI/RichTextLabel")
 	if Debug.infinite_health:
 		end_game_button = GameManager.UI.get_node("HBoxContainer/EndGame")
@@ -58,13 +56,6 @@ func _process(delta: float) -> void:
 	camera_2d.global_position.x = player.global_position.x * 0.01
 	
 	if is_playing:
-		if Debug.infinite_health:
-			GameManager.stink_metre = 0
-		elif GameManager.stink_metre <= 100.0:
-			GameManager.stink_metre += 5.0 * stink_multiplier * delta
-		else:
-			end_game()
-
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
 			pattern_update(-1, current_tile)

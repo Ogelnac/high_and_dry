@@ -61,7 +61,6 @@ var unprocessed_resources: Array[int] = [] #the order unprocessed resources were
 var silk_worms: int = 0
 var sand: int = 0
 
-var stink_metre: float = 0.0
 var combo_metre: float = 0.0
 var UI: Node
 var circle_fade: ColorRect
@@ -134,8 +133,6 @@ func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
 
 func arcade_UI():
-	UI.find_child("StinkMetre").show()
-	UI.find_child("ArcadeCounter").show()
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():

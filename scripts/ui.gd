@@ -10,8 +10,6 @@ const PIPE = preload("res://audio/pipe.wav")
 
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 @onready var player: CharacterBody2D
-@onready var color_rect: ColorRect = $"../UI/StinkMetre/ColorRect"
-@onready var arcade_counter: Label = $ArcadeCounter
 
 @export var line_edit: LineEdit
 
@@ -42,10 +40,6 @@ func _ready():
 			_fade_from_black()
 
 func _process(_delta: float) -> void:
-	color_rect.size.x = 156.0 * GameManager.stink_metre / 100.0
-	arcade_counter.text = str(GameManager.new_arcade_resources.size())
-	if GameManager.new_arcade_resources.size() > 0:
-		arcade_counter.modulate = colours[GameManager.new_arcade_resources[GameManager.new_arcade_resources.size() - 1]]
 	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a + 0.05, 0.0, 1.0)
 	elif not display_swipe_to_start and rich_text_label.modulate.a > 0.0:
