@@ -30,14 +30,10 @@ func _process(delta: float) -> void:
 			drip_timer.stop()
 
 func _on_body_entered(_body: Node2D) -> void:
-	player.gravity = -150.0
-	player.damping = 0.0
 	player.in_water = true
 	call_deferred("_spawn_splash", player.global_position)
 
 func _on_body_exited(_body: Node2D) -> void:
-	player.gravity = 200.0
-	player.damping = 0.0
 	player.in_water = false
 	drip_time_left = drip_duration
 	if drip_timer.is_inside_tree():

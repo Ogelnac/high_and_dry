@@ -16,13 +16,13 @@ shader_parameter/fray_amount_px = 0.5
 shader_parameter/fray_scale_px = 18.0
 shader_parameter/fray_octaves = 2.0
 shader_parameter/edge_softness = 1.0
-shader_parameter/r_offset_px = Vector2(0.2, -0.15)
-shader_parameter/g_offset_px = Vector2(-0.1, 0.1)
+shader_parameter/r_offset_px = Vector2(0.01, -0.01)
+shader_parameter/g_offset_px = Vector2(0, 0)
 shader_parameter/b_offset_px = Vector2(0, 0)
 shader_parameter/r_rot_deg = 0.15
 shader_parameter/g_rot_deg = -0.1
 shader_parameter/b_rot_deg = 0.0
-shader_parameter/black_grey_floor = 0.06
+shader_parameter/black_grey_floor = 0.0
 shader_parameter/black_dot_transition = 0.5
 
 [node name="Ingredient" type="Area2D"]

@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal needle_stuck(needle: CharacterBody2D, location: Vector2)
 signal needle_collected(needle: CharacterBody2D)
 
+@export var max_thread_distance: float = 400.0
 @onready var thread: Line2D = $Thread
 var thread_target: CharacterBody2D
 
@@ -23,6 +24,11 @@ func _ready() -> void:
 	thread_target.recall_needles.connect(_on_recall_needles)
 
 func _physics_process(delta: float) -> void:
+	if thread_target and thread_target.is_inside_tree():
+		if thread_target.global_position.distance_to(global_position) > max_thread_distance:
+			recalled = true
+			stuck = false
+
 	if recalled:
 		global_position = global_position.move_toward(thread_target.global_position, 300.0 * delta)
 		rotation = (global_position - thread_target.global_position).normalized().angle()

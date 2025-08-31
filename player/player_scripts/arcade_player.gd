@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 # WORLD
-@export var gravity: float = 200.0
 @export var friction: float = 1.0
-var damping: float = 0.0
-var in_water := false
+var gravity = 200.0
+var damping = 0.0
+var in_water = false
+var prev_resources = 0
 
 # VELOCITIES
 @export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
@@ -54,6 +55,11 @@ func _ready() -> void:
 	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
 func _physics_process(delta: float) -> void:
+	var arcade_resources = GameManager.new_arcade_resources.size()
+	if  arcade_resources != prev_resources:
+		gravity = 200.0 + arcade_resources * 2.0
+	prev_resources = GameManager.new_arcade_resources.size()
+
 	if aiming:
 		if slowmo_count > 0.0:
 			slowmo_count -= delta
@@ -176,7 +182,7 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 
 func apply_friction_and_gravity(delta: float) -> void:
 	if in_water:
-		velocity.y += gravity * delta
+		velocity.y -= 100 * delta
 		if damping > 0.0:
 			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
 		return

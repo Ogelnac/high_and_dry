@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var backdrop: Sprite2D = $Backdrop
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @export var collect_particles: PackedScene
@@ -10,11 +11,9 @@ var collectable_type
 var phase_offset := randf() * TAU
 var t := 0.0
 var collected := false
+var hue := 0.0
 
 func _ready() -> void:
-	if collectable_type != null:
-		set_active()
-
 	match collectable_type:
 		"Silkworm":
 			sprite_2d.frame = 7
@@ -27,6 +26,13 @@ func _process(delta: float) -> void:
 	t += delta * 2.0
 	var wave := sin(t + phase_offset) + 0.3 * sin(5 * (t + phase_offset))
 	rotation = wave * 0.25
+	backdrop.rotation = wave * -1.0
+
+	if hue >= 1.0:
+		hue = 0.0
+	else:
+		hue += 0.01
+	modulate = Color.from_hsv(hue, 0.9, 1.0)
 
 func _on_body_entered(_body: Node2D) -> void:
 	if collected:
@@ -43,7 +49,6 @@ func _on_body_entered(_body: Node2D) -> void:
 			GameManager.sand += 1
 
 	GameManager.save()
-	GameManager.stink_meter = clamp(GameManager.stink_meter - 10.0, 0.0, 100.0)
 
 	audio_player.play()
 
@@ -78,4 +83,5 @@ func animate_and_destroy() -> void:
 
 func set_active():
 	collision_shape_2d.set_disabled(false)
+	backdrop.visible = true
 	sprite_2d.visible = true

@@ -17,7 +17,7 @@ uniform float r_rot_deg =  0.15;
 uniform float g_rot_deg = -0.10;
 uniform float b_rot_deg =  0.00;
 
-uniform float black_grey_floor = 0.06;
+uniform float black_grey_floor = 0.0;
 uniform float black_dot_transition : hint_range(0.5,2.0) = 0.5;
 
 vec2 rot2(vec2 p, float a){ float s=sin(a), c=cos(a); return vec2(c*p.x - s*p.y, s*p.x + c*p.y); }

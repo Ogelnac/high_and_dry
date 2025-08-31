@@ -1,6 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://busmpycjb5vsd"]
+[gd_scene load_steps=14 format=3 uid="uid://busmpycjb5vsd"]
 
 [ext_resource type="Script" uid="uid://bc13dhll8e5s3" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
+[ext_resource type="Script" uid="uid://dncv44ovu1kof" path="res://player/resource_trail.gd" id="2_qnqhn"]
+[ext_resource type="PackedScene" uid="uid://djr7fvvk6jg6e" path="res://resource_bead.tscn" id="3_07mc3"]
 [ext_resource type="Texture2D" uid="uid://krfgmtng4jn" path="res://player/needle/aim_line.png" id="3_7se61"]
 [ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="3_10gey"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="4_uymdo"]
@@ -20,7 +22,7 @@ shader_parameter/b_offset_px = Vector2(0, 0)
 shader_parameter/r_rot_deg = 0.15
 shader_parameter/g_rot_deg = -0.1
 shader_parameter/b_rot_deg = 0.0
-shader_parameter/black_grey_floor = 0.06
+shader_parameter/black_grey_floor = 0.0
 shader_parameter/black_dot_transition = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sb2v7"]
@@ -103,6 +105,16 @@ collision_mask = 74
 script = ExtResource("1_qxev7")
 tap_timer = NodePath("TapTimer")
 
+[node name="ResourceTrail" type="Line2D" parent="."]
+z_index = 10
+width = 1.0
+script = ExtResource("2_qnqhn")
+bead_scene = ExtResource("3_07mc3")
+initial_bead_capacity = 5
+segment_length = 12.0
+gravity = Vector2(0, 490)
+bead_slide_speed = 120.0
+
 [node name="AimRay" type="RayCast2D" parent="."]
 target_position = Vector2(300, 0)
 collision_mask = 2
@@ -115,6 +127,7 @@ texture = ExtResource("3_7se61")
 texture_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 15
 texture_filter = 1
 material = SubResource("ShaderMaterial_qnqhn")
 position = Vector2(0, -4)

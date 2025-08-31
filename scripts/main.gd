@@ -3,7 +3,7 @@ extends Node2D
 const LEVEL_0_0 = preload("res://levels/level_0_0.tscn")
 const LEVEL_0_1 = preload("res://levels/level_0_1.tscn")
 
-#const LEVEL_1_0 = preload("res://levels/level_1_0.tscn")
+const LEVEL_1_0 = preload("res://levels/level_1_0.tscn")
 const LEVEL_1_1 = preload("res://levels/level_1_1.tscn")
 const LEVEL_1_2 = preload("res://levels/level_1_2.tscn")
 const LEVEL_1_3 = preload("res://levels/level_1_3.tscn")
@@ -12,7 +12,7 @@ const LEVEL_1_3 = preload("res://levels/level_1_3.tscn")
 const LEVEL_2_1 = preload("res://levels/level_2_1.tscn")
 const LEVEL_2_2 = preload("res://levels/level_2_2.tscn")
 
-var levels = [LEVEL_0_0, LEVEL_0_1, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, LEVEL_2_2]
+var levels = [LEVEL_1_0, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, LEVEL_2_2]
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: CharacterBody2D = $ArcadePlayer
@@ -100,6 +100,7 @@ func end_game():
 	if end_game_button != null:
 		end_game_button.hide()
 
+	rich_text_label.position = Vector2(0.0, 750.0)
 	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 
 	to Play![/wave][/center]"
 	GameManager.trigger_pachinko = true
@@ -107,6 +108,8 @@ func end_game():
 	get_tree().change_scene_to_file("res://main.tscn")
 
 func setup_demo():
+	levels = [LEVEL_0_0, LEVEL_0_1]
 	rich_text_label.visible = true
+	rich_text_label.position = Vector2(0.0, 250.0)
 	rich_text_label.text = "[rainbow][center][wave amp=25 freq=5]You are playing 
 	the Demo![/wave][/center]"
