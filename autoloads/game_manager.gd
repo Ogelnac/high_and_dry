@@ -61,7 +61,6 @@ var unprocessed_resources: Array[int] = [] #the order unprocessed resources were
 var silk_worms: int = 0
 var sand: int = 0
 
-var combo_metre: float = 0.0
 var UI: Node
 var circle_fade: ColorRect
 var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
@@ -181,8 +180,8 @@ func display_normal_counter():
 	var sum: int = 0
 	for key: String in COLOR_ORDER:
 		sum += int(resources.get(key, 0))
-	resource_counter.text = "[img width=48 region=32,0,16,16]res://textures/Sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
-	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d [/font_size][img width=48 region=32,32,16,16]res://textures/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
+	resource_counter.text = "[img width=48 region=32,0,16,16]res://textures/ui/Sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
+	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/ui/Sprites.png[/img]x[font_size=60]%d [/font_size][img width=48 region=32,32,16,16]res://textures/ui/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
 
 func update_bottles():
 	var dye_bottles = get_node("../Main/DyeBottles")

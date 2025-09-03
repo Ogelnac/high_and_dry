@@ -37,7 +37,7 @@ void fragment() {
 	vec3 combined_filter = mix(overlay_sample, paper_sample, 0.2);
 
 	vec3 final_colour = remap(chroma_mixed + combined_filter, vec3(0.0), vec3(1.0));
-	final_colour = colour_cbs_adjustment(final_colour, 1.1, 0.0, 1.5);
+	final_colour = colour_cbs_adjustment(final_colour, 1.0, 0.0, 1.0);
 
 	COLOR = vec4(final_colour, 1.0);
 }

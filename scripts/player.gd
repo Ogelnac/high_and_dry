@@ -56,9 +56,10 @@ var _saved_mask := 0
 @onready var footstep_timer: Timer = $StepTimer
 @onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
 @onready var step_sfx: AudioStreamPlayer2D = $StepSFX
-@onready var ground: TileMapLayer = $"../Ground"
 @onready var sprite: Node2D = $Sprite2D
-@onready var launch_zone: Area2D = $"../LaunchZone"
+
+@onready var ground: TileMapLayer
+@onready var launch_zone: Area2D
 
 @onready var hub_counter: Control = $"../CanvasLayer/UI/HubCounter"
 @onready var virtual_joystick: Control = $"../CanvasLayer/UI/VirtualJoystick"
@@ -66,18 +67,21 @@ var _saved_mask := 0
 @onready var joystick_handle: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickHandle"
 
 func _ready():
+	ground = get_node_or_null("../Ground")
+	launch_zone = get_node_or_null("../LaunchZone")
 	position = GameManager.player_start_position
+	footstep_timer.timeout.connect(_on_step_timer_timeout)
 
 func _input(event: InputEvent) -> void:
-	if event.position.y < 100:
+	if (event is InputEventScreenTouch or event is InputEventMouseButton) and event.position.y < 100:
 		return
-	
+
 	if dialogue_mode:
 		if event is InputEventScreenTouch or event is InputEventMouseButton:
 			if event.pressed:
 				DialogueManager.show_next_line()
 		return
-	
+
 	if event is InputEventScreenTouch or event is InputEventMouseButton:
 		if event.pressed:
 			virtual_joystick_active = true

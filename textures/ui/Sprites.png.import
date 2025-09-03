@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://krfgmtng4jn"
-path="res://.godot/imported/aim_line.png-6fff098519a565f156a6497a3a943a0d.ctex"
+uid="uid://dyts0j2w4qv8n"
+path="res://.godot/imported/Sprites.png-e7046325667496b83098abf473f1fd11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/needle/aim_line.png"
-dest_files=["res://.godot/imported/aim_line.png-6fff098519a565f156a6497a3a943a0d.ctex"]
+source_file="res://textures/ui/Sprites.png"
+dest_files=["res://.godot/imported/Sprites.png-e7046325667496b83098abf473f1fd11.ctex"]
 
 [params]
 

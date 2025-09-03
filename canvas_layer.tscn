@@ -1,13 +1,13 @@
 [gd_scene load_steps=24 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
-[ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/JoystickBase.png" id="2_77u76"]
+[ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/ui/JoystickBase.png" id="2_77u76"]
 [ext_resource type="Script" uid="uid://ba2nqal7o1od6" path="res://debug_panel.gd" id="2_86mtp"]
 [ext_resource type="Script" uid="uid://bxe7ya780ce1a" path="res://scripts/ui.gd" id="2_l5iyv"]
 [ext_resource type="Script" uid="uid://cichuc2niwycp" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
-[ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/JoystickHandle.png" id="4_ccaf2"]
+[ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/ui/JoystickHandle.png" id="4_ccaf2"]
 [ext_resource type="Script" uid="uid://c7pgnj1ijije2" path="res://scripts/joystick_handle.gd" id="5_kk307"]
-[ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/Sprites.png" id="6_uoqhr"]
+[ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://textures/ui/Sprites.png" id="6_uoqhr"]
 [ext_resource type="Script" uid="uid://dc465xi7eluxr" path="res://scripts/scene_manager.gd" id="8_0ogh3"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://textures/LevelSelect.png" id="10_gdo4b"]
@@ -21,16 +21,19 @@
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iw0"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
 shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2cxs"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
 shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iabp7"]
 shader = ExtResource("12_uer7x")

@@ -25,7 +25,10 @@ var player: Node2D = null
 	$"../Pachinko",
 	$"../TownBeauty",
 	$"../Title",
-	$"../Liquid"]
+	$"../Water",
+	$"../Ink",
+	$"../Lava",
+	$"../Sewage"]
 
 func _on_market_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 uniform float black_dot_transition: hint_range(0.5, 2.0) = 0.5;
 uniform float alpha_effect: hint_range(0.0, 1.0) = 1.0;
+uniform float mix_scale: hint_range(0.0, 1.0) = 0.0;
 
 vec2 fix_aspect(sampler2D tex, vec2 uv) {
 	ivec2 tex_size = textureSize (tex, 0);
@@ -41,6 +42,7 @@ void fragment() {
 	vec2 padded_uv = clamp(UV, subpixel_padding, vec2(1.0) - subpixel_padding);
 
 	vec4 tex = texture(TEXTURE, padded_uv);
+
 	vec3 colour = COLOR.rgb;
 
 	float max_CMY_dot_radius = 0.75;
@@ -52,10 +54,14 @@ void fragment() {
 
 	float k_dot = halftone(TEXTURE, UV, radians(45.0), black_dot_transition - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);
 
-	float alpha = COLOR.a;
+	vec3 cmyk_rgb = vec3(c_dot, m_dot, y_dot) * vec3(k_dot);
+	float cmyk_a = COLOR.a * alpha_effect;
 
-	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
+	vec3 tex_rgb = tex.rgb * COLOR.rgb;
+	float tex_a = tex.a * COLOR.a * alpha_effect;
 
-	final_colour *= vec3(k_dot);
-    COLOR = vec4(final_colour, alpha * alpha_effect);
+	vec3 out_rgb = mix(cmyk_rgb, tex_rgb, mix_scale);
+	float out_a = mix(cmyk_a, tex_a, mix_scale);
+
+	COLOR = vec4(out_rgb, out_a);
 }

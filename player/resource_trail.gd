@@ -1,37 +1,55 @@
 extends Line2D
 
 @export var bead_scene: PackedScene
-@export var initial_bead_capacity: int = 20
+@export var initial_bead_capacity: int = 5
 @export var top_slack_segments: int = 3
-@export var segment_length: float = 16.0
-@export var gravity: Vector2 = Vector2(0.0, 980.0)
+@export var segment_length: float = 12.0
+@export var gravity: Vector2 = Vector2(0.0, 490.0)
 @export var constraint_iterations: int = 4
-@export var bead_slide_speed: float = 240.0
-@export var bead_face_tangent: bool = false
+@export var bead_slide_speed: float = 120.0
+@export var bead_face_tangent: bool = true
+@export var remove_max_rate: float = 5.0
+@export var remove_start_rate: float = 1.0
+@export var remove_accel: float = 2.5
+
+@onready var knot: Sprite2D = $Knot
 
 const EPS: float = 0.0001
 
 var wpos: PackedVector2Array
 var wprev: PackedVector2Array
+var zero_hold_time: float = 0.0
+var remove_cooldown: float = 0.0
 
 class BeadRec:
 	var node: Node2D
 	var current_d: float
 	var target_d: float
 
+class RemovingRec:
+	var node: Node2D
+	var t: float
+	var start: Vector2
+	var mid: Vector2
+
 var beads: Array[BeadRec] = []
+var removing: Array[RemovingRec] = []
 var last_resources_count: int = -1
 
 func _ready() -> void:
 	_build_rope_world()
 	_refresh_line2d_points()
 	_sync_beads(true)
+	_update_knot()
 
 func _physics_process(delta: float) -> void:
 	_simulate_rope(delta)
 	_refresh_line2d_points()
 	_update_bead_inventory()
 	_update_bead_animation(delta)
+	_update_knot()
+	_update_zero_hold(delta)
+	_animate_removals(delta)
 
 func _build_rope_world() -> void:
 	var anchor: Vector2 = global_position
@@ -118,6 +136,7 @@ func _sync_beads(force: bool = false) -> void:
 		if i < resources.size():
 			_set_bead_frame(beads[i].node, resources[i])
 		beads[i].target_d = _top_fill_slot_distance_for_index(i)
+	_shrink_capacity(_get_resources().size())
 
 func _ensure_capacity(required_beads: int) -> void:
 	var need_segments: int = max(required_beads + top_slack_segments, 1)
@@ -177,6 +196,17 @@ func _update_bead_animation(delta: float) -> void:
 			var tangent: Vector2 = _rope_world_tangent_at_distance(rec.current_d)
 			rec.node.global_rotation = tangent.angle()
 
+func _update_knot() -> void:
+	if not is_instance_valid(knot) or wpos.size() == 0:
+		return
+	var last_idx: int = _total_segments()
+	var wp: Vector2 = wpos[last_idx]
+	knot.position = to_local(wp)
+	var t: Vector2 = wp - wpos[max(last_idx - 1, 0)]
+	if t.length() <= EPS:
+		t = Vector2(0.0, 1.0).rotated(global_rotation)
+	knot.rotation = t.angle() - PI / 2.0
+
 func _rope_world_pos_at_distance(d: float) -> Vector2:
 	var total_len: float = float(_total_segments()) * segment_length
 	var dd: float = clampf(d, 0.0, total_len)
@@ -196,6 +226,73 @@ func _rope_world_tangent_at_distance(d: float) -> Vector2:
 	var tangent: Vector2 = wpos[seg_idx + 1] - wpos[seg_idx]
 	var nlen: float = max(tangent.length(), EPS)
 	return tangent / nlen
+
+func _update_zero_hold(delta: float) -> void:
+	var held = Debug.expell_res
+	if held:
+		zero_hold_time += delta
+		var rate = min(remove_max_rate, remove_start_rate + remove_accel * zero_hold_time)
+		remove_cooldown -= delta
+		while remove_cooldown <= 0.0:
+			if beads.size() > 0:
+				_begin_remove_one()
+				remove_cooldown += 1.0 / max(rate, EPS)
+			else:
+				Debug.res_expelled = true
+				remove_cooldown = 0.0
+				break
+	else:
+		zero_hold_time = 0.0
+
+func _begin_remove_one() -> void:
+	if beads.is_empty():
+		return
+	var rec: BeadRec = beads.pop_back()
+	if rec and is_instance_valid(rec.node):
+		var start := rec.node.global_position
+		var parent2d := get_parent() as Node2D
+		var player_pos := parent2d.global_position if parent2d else global_position
+		var fly_to := player_pos + Vector2(0.0, -50.0)
+		var rr := RemovingRec.new()
+		rr.node = rec.node
+		rr.t = 0.0
+		rr.start = start
+		rr.mid = fly_to
+		removing.append(rr)
+	var res := _get_resources()
+	if res.size() > 0:
+		res.pop_back()
+		GameManager.new_arcade_resources = res
+	last_resources_count = -1
+
+func _animate_removals(delta: float) -> void:
+	if removing.is_empty():
+		return
+	for i in range(removing.size() - 1, -1, -1):
+		var rr := removing[i]
+		if not is_instance_valid(rr.node):
+			removing.remove_at(i)
+			continue
+		rr.t += delta * 2.0
+		var t := clampf(rr.t, 0.0, 1.0)
+		var pos := rr.start.lerp(rr.mid, t)
+		rr.node.global_position = pos
+		rr.node.modulate.a = 1.0 - t
+		if t >= 1.0:
+			rr.node.queue_free()
+			removing.remove_at(i)
+
+func _shrink_capacity(required_beads: int) -> void:
+	var min_segments: int = max(initial_bead_capacity + top_slack_segments, 1)
+	var need_segments: int = max(required_beads + top_slack_segments, min_segments)
+	var have_segments: int = _total_segments()
+	if have_segments <= need_segments:
+		return
+	var to_trim := have_segments - need_segments
+	for _i in range(to_trim):
+		if wpos.size() > 1:
+			wpos.resize(wpos.size() - 1)
+			wprev.resize(wprev.size() - 1)
 
 func _total_segments() -> int:
 	return max(wpos.size() - 1, 0)

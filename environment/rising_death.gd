@@ -2,10 +2,11 @@ extends Area2D
 
 @onready var player: CharacterBody2D = $"../ArcadePlayer"
 @onready var main: Node2D = $".."
-var drip_timer: Timer
 @onready var burst_scene: PackedScene = preload("res://effects/burst_particle.tscn")
 
+var drip_timer: Timer
 var is_playing: bool = false
+var interim: bool = false
 var drip_duration := 3.0
 var drip_time_left := 0.0
 
@@ -19,25 +20,31 @@ func _ready() -> void:
 	drip_timer.timeout.connect(_spawn_drip)
 
 func _process(delta: float) -> void:
-	if is_playing and not Debug.disable_rising_death:
+	if is_playing and player and not interim and not Debug.disable_rising_death:
 		var offset = 0.0
 		if player.global_position.y <= global_position.y + offset:
 			global_position.y = player.global_position.y - offset
 		global_position.y -= 50.0 * delta
+
 	if drip_time_left > 0.0:
 		drip_time_left -= delta
 		if drip_time_left <= 0.0:
 			drip_timer.stop()
 
-func _on_body_entered(_body: Node2D) -> void:
-	player.in_water = true
-	call_deferred("_spawn_splash", player.global_position)
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("stop_rising_death"):
+		interim = true
 
-func _on_body_exited(_body: Node2D) -> void:
-	player.in_water = false
-	drip_time_left = drip_duration
-	if drip_timer.is_inside_tree():
-		drip_timer.start()
+	if body.is_in_group("player"):
+		player.in_water = true
+		call_deferred("_spawn_splash", player.global_position)
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player.in_water = false
+		drip_time_left = drip_duration
+		if drip_timer.is_inside_tree():
+			drip_timer.start()
 
 func _spawn_splash(splash_position: Vector2) -> void:
 	var num_particles := 6

@@ -2,9 +2,10 @@ extends CharacterBody2D
 
 # WORLD
 @export var friction: float = 1.0
-var gravity = 200.0
+@export var lung_capacity: float = 150.0
 var damping = 0.0
 var in_water = false
+var breath = 1.0
 var prev_resources = 0
 
 # VELOCITIES
@@ -55,11 +56,6 @@ func _ready() -> void:
 	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
 func _physics_process(delta: float) -> void:
-	var arcade_resources = GameManager.new_arcade_resources.size()
-	if  arcade_resources != prev_resources:
-		gravity = 200.0 + arcade_resources * 2.0
-	prev_resources = GameManager.new_arcade_resources.size()
-
 	if aiming:
 		if slowmo_count > 0.0:
 			slowmo_count -= delta
@@ -117,6 +113,17 @@ func _physics_process(delta: float) -> void:
 	elif abs(velocity.x) > 0.5:
 		var local_vel_x = velocity.rotated(-current_angle).x
 		sprite.flip_h = local_vel_x < 0
+
+func _process(_delta: float) -> void:
+	if in_water and breath > 0.0:
+		breath -= 1.0 / lung_capacity
+	elif in_water:
+		breath = 0.0
+
+	if not in_water and breath < 1.0:
+		breath += 1.0 / lung_capacity
+	elif not in_water:
+		breath = 1.0
 
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
@@ -181,14 +188,15 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 	return vel
 
 func apply_friction_and_gravity(delta: float) -> void:
+	var arcade_resources = GameManager.new_arcade_resources.size()
 	if in_water:
-		velocity.y -= 100 * delta
+		velocity.y -= (100 - (arcade_resources * 5.0)) * delta
 		if damping > 0.0:
 			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
 		return
 
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += (200.0 + (arcade_resources * 5.0)) * delta
 	else:
 		var normal = get_floor_normal()
 		var tangential = Vector2(-normal.y, normal.x)
@@ -311,7 +319,7 @@ func update_sprite_orientation(delta: float) -> void:
 	if in_water:
 		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
 		sprite.rotation = current_angle
-		sprite.position = Vector2(0, -4).rotated(current_angle)
+		sprite.position = Vector2(0, -6).rotated(current_angle)
 		return
 
 	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
@@ -328,7 +336,7 @@ func update_sprite_orientation(delta: float) -> void:
 		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
 
 	sprite.rotation = current_angle
-	sprite.position = Vector2(0, -4).rotated(current_angle)
+	sprite.position = Vector2(0, -6).rotated(current_angle)
 
 func wrapf(value: float, min_val: float, max_val: float) -> float:
 	return fmod((value - min_val), (max_val - min_val)) + min_val

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyts0j2w4qv8n"
-path="res://.godot/imported/Sprites.png-c8bdb4f7609deba140453cfdeb4567a8.ctex"
+uid="uid://jmio6njje7xr"
+path="res://.godot/imported/air_metre.png-e18857a766286d5fe03214d40687b839.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Sprites.png"
-dest_files=["res://.godot/imported/Sprites.png-c8bdb4f7609deba140453cfdeb4567a8.ctex"]
+source_file="res://textures/ui/air_metre.png"
+dest_files=["res://.godot/imported/air_metre.png-e18857a766286d5fe03214d40687b839.ctex"]
 
 [params]
 

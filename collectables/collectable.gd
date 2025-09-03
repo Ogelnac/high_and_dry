@@ -33,22 +33,23 @@ func _process(delta: float) -> void:
 	var wave := sin(t + phase_offset) + 0.3 * sin(5 * (t + phase_offset))
 	rotation = wave * 0.25
 
-func _on_body_entered(_body: Node2D) -> void:
-	if collected:
-		return
-	collected = true
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		if collected:
+			return
+		collected = true
 
-	set_deferred("monitoring", false)
-	collision_shape_2d.set_deferred("disabled", true)
+		set_deferred("monitoring", false)
+		collision_shape_2d.set_deferred("disabled", true)
 
-	GameManager.add_resource(collectable_type)
+		GameManager.add_resource(collectable_type)
 
-	audio_player.play()
+		audio_player.play()
 
-	await get_tree().process_frame
-	spawn_particles()
+		await get_tree().process_frame
+		spawn_particles()
 
-	await animate_and_destroy()
+		await animate_and_destroy()
 
 func spawn_particles() -> void:
 	if collect_particles:

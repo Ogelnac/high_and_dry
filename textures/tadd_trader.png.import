@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwmsnsj851i5w"
-path="res://.godot/imported/JoystickHandle.png-fa1ddecf491aa8adde86b77b2dc39a53.ctex"
+uid="uid://cpbemfbxybidh"
+path="res://.godot/imported/tadd_trader.png-3d35b3b239055505ae1ae060cf6a3dcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/JoystickHandle.png"
-dest_files=["res://.godot/imported/JoystickHandle.png-fa1ddecf491aa8adde86b77b2dc39a53.ctex"]
+source_file="res://textures/tadd_trader.png"
+dest_files=["res://.godot/imported/tadd_trader.png-3d35b3b239055505ae1ae060cf6a3dcf.ctex"]
 
 [params]
 

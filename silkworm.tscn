@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dhw77tfxqxkhq"]
 
 [ext_resource type="Script" uid="uid://c26f03y5t1cv1" path="res://silkworm.gd" id="1_fssyy"]
-[ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="2_fssyy"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_fssyy"]
 [ext_resource type="Texture2D" uid="uid://byslko3nn77gj" path="res://textures/silkworm.png" id="3_31vkt"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fssyy"]
@@ -13,21 +13,9 @@ height = 16.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kdg66"]
 shader = ExtResource("2_fssyy")
-shader_parameter/source_tex = ExtResource("3_31vkt")
-shader_parameter/paper_colour = Color(0.99, 0.98, 0.95, 1)
-shader_parameter/ink_bleed_px = 0.8
-shader_parameter/fray_amount_px = 0.5
-shader_parameter/fray_scale_px = 18.0
-shader_parameter/fray_octaves = 2.0
-shader_parameter/edge_softness = 1.0
-shader_parameter/r_offset_px = Vector2(0.01, -0.01)
-shader_parameter/g_offset_px = Vector2(0, 0)
-shader_parameter/b_offset_px = Vector2(0, 0)
-shader_parameter/r_rot_deg = 0.15
-shader_parameter/g_rot_deg = -0.1
-shader_parameter/b_rot_deg = 0.0
-shader_parameter/black_grey_floor = 0.06
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/scale = 0.25
 
 [sub_resource type="Animation" id="Animation_b1qrp"]
 length = 0.001

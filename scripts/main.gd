@@ -7,16 +7,18 @@ const LEVEL_1_0 = preload("res://levels/level_1_0.tscn")
 const LEVEL_1_1 = preload("res://levels/level_1_1.tscn")
 const LEVEL_1_2 = preload("res://levels/level_1_2.tscn")
 const LEVEL_1_3 = preload("res://levels/level_1_3.tscn")
+const LEVEL_1_01 = preload("res://levels/level_1_01.tscn")
 
 #const LEVEL_2_0 = preload("res://levels/level_2_0.tscn")
 const LEVEL_2_1 = preload("res://levels/level_2_1.tscn")
 const LEVEL_2_2 = preload("res://levels/level_2_2.tscn")
 
-var levels = [LEVEL_1_0, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, LEVEL_2_2]
+var levels = [LEVEL_1_0, LEVEL_1_01, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1, LEVEL_2_2]
 
-@onready var camera_2d: Camera2D = $Camera2D
-@onready var player: CharacterBody2D = $ArcadePlayer
+@onready var player: Node2D = $PlayerHost
 @onready var rising_death: Area2D = $RisingDeath
+@onready var arcade_player: CharacterBody2D = $ArcadePlayer
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
 
 var rich_text_label: RichTextLabel
 var tiles_in_scene: Array[Object] = []
@@ -44,17 +46,13 @@ func _ready() -> void:
 	if not GameManager.game_progress["demo_played"]:
 		setup_demo()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if game_ended:
 		return
 
-	if Debug.game_ended:
+	if (arcade_player and arcade_player.breath == 0.0) or Debug.game_ended:
 		end_game()
 
-	# CAMERA MOVEMENT
-	camera_2d.global_position.y = player.global_position.y - 120.0
-	camera_2d.global_position.x = player.global_position.x * 0.01
-	
 	if is_playing:
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
@@ -69,15 +67,21 @@ func _process(delta: float) -> void:
 func pattern_update(level: int, tile: int) -> void:
 	var level_instance
 	if level < 0:
-		# Add random level
-		var rand_level = randi_range(1, levels.size() - 1)
-		level_instance = levels[rand_level].instantiate()
+		if tile_counter > 0 and tile_counter % 5 == 0:
+			# Add interim level
+			level_instance = levels[1].instantiate()
+			level_instance.interim = true
+		else:
+			# Add random level
+			var rand_level = randi_range(2, levels.size() - 1)
+			level_instance = levels[rand_level].instantiate()
 	else:
 		# Add level from index
 		level_instance = levels[level].instantiate()
 
 	add_child(level_instance)
-	if tile_counter > 1 and tile_counter % 10 == 0:
+	# Every 5 levels has a Special Collectable (SC)
+	if tile_counter > 1 and tile_counter % 5 == 0:
 		level_instance.spawn_sc()
 	level_instance.global_position.y = float(608 * (tile - 1))
 	tiles_in_scene.insert(0, level_instance)
@@ -108,7 +112,7 @@ func end_game():
 	get_tree().change_scene_to_file("res://main.tscn")
 
 func setup_demo():
-	levels = [LEVEL_0_0, LEVEL_0_1]
+	levels = [LEVEL_0_0, LEVEL_1_01, LEVEL_0_1]
 	rich_text_label.visible = true
 	rich_text_label.position = Vector2(0.0, 250.0)
 	rich_text_label.text = "[rainbow][center][wave amp=25 freq=5]You are playing 

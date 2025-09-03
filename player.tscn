@@ -1,26 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhv16y778i1e2"]
+[gd_scene load_steps=12 format=3 uid="uid://bhv16y778i1e2"]
 
 [ext_resource type="Script" uid="uid://crly0a8s7fa74" path="res://scripts/player.gd" id="1_dyp2x"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="1_qowkf"]
-[ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="2_i3pqv"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_hqtel"]
+[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://audio/step.wav" id="4_hqtel"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kqtmo"]
-shader = ExtResource("2_i3pqv")
-shader_parameter/source_tex = ExtResource("1_qowkf")
-shader_parameter/paper_colour = Color(0.99, 0.98, 0.95, 1)
-shader_parameter/ink_bleed_px = 0.8
-shader_parameter/fray_amount_px = 0.5
-shader_parameter/fray_scale_px = 18.0
-shader_parameter/fray_octaves = 2.0
-shader_parameter/edge_softness = 1.0
-shader_parameter/r_offset_px = Vector2(0.01, -0.01)
-shader_parameter/g_offset_px = Vector2(0, 0)
-shader_parameter/b_offset_px = Vector2(0, 0)
-shader_parameter/r_rot_deg = 0.15
-shader_parameter/g_rot_deg = -0.1
-shader_parameter/b_rot_deg = 0.0
-shader_parameter/black_grey_floor = 0.06
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqtel"]
+shader = ExtResource("2_hqtel")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.5
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -96,16 +85,17 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lqj7t"]
-radius = 7.0
+radius = 6.0
 height = 24.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 9
 script = ExtResource("1_dyp2x")
 jump_force = -260.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
-texture_filter = 1
-material = SubResource("ShaderMaterial_kqtmo")
+material = SubResource("ShaderMaterial_hqtel")
+position = Vector2(0, -6)
 texture = ExtResource("1_qowkf")
 hframes = 5
 vframes = 5
@@ -116,4 +106,15 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -6)
 shape = SubResource("CapsuleShape2D_lqj7t")
+
+[node name="StepSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hqtel")
+volume_db = -10.0
+pitch_scale = 1.86
+panning_strength = 0.5
+
+[node name="StepTimer" type="Timer" parent="."]
+wait_time = 0.3

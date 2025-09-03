@@ -11,7 +11,7 @@ size = Vector2(0.5, 1.25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h3b5s"]
 size = Vector2(37, 12.5)
 
-[node name="Needle" type="CharacterBody2D"]
+[node name="Needle" type="CharacterBody2D" groups=["player"]]
 top_level = true
 collision_layer = 4
 collision_mask = 2
@@ -29,7 +29,9 @@ position = Vector2(-6.25, -0.375)
 shape = SubResource("RectangleShape2D_7x3n0")
 
 [node name="Thread" type="Line2D" parent="."]
+z_index = -1
 width = 1.0
+joint_mode = 2
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 64

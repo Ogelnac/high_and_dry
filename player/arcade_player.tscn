@@ -1,32 +1,172 @@
-[gd_scene load_steps=14 format=3 uid="uid://busmpycjb5vsd"]
+[gd_scene load_steps=20 format=3 uid="uid://busmpycjb5vsd"]
 
 [ext_resource type="Script" uid="uid://bc13dhll8e5s3" path="res://player/player_scripts/arcade_player.gd" id="1_qxev7"]
 [ext_resource type="Script" uid="uid://dncv44ovu1kof" path="res://player/resource_trail.gd" id="2_qnqhn"]
+[ext_resource type="Texture2D" uid="uid://cfrkxe2qibxcw" path="res://textures/ui/bubble.png" id="2_tt4ve"]
 [ext_resource type="PackedScene" uid="uid://djr7fvvk6jg6e" path="res://resource_bead.tscn" id="3_07mc3"]
-[ext_resource type="Texture2D" uid="uid://krfgmtng4jn" path="res://player/needle/aim_line.png" id="3_7se61"]
-[ext_resource type="Shader" uid="uid://bwek14idm3gek" path="res://shaders/risograph.gdshader" id="3_10gey"]
+[ext_resource type="Texture2D" uid="uid://du5rvjj4acp4s" path="res://textures/Particles.png" id="4_tt4ve"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://textures/Tailor.png" id="4_uymdo"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="6_tt4ve"]
+[ext_resource type="Script" uid="uid://cpwim52iwibmb" path="res://air_metre.gd" id="7_jatp4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnqhn"]
-shader = ExtResource("3_10gey")
-shader_parameter/source_tex = ExtResource("4_uymdo")
-shader_parameter/paper_colour = Color(0.99, 0.98, 0.95, 1)
-shader_parameter/ink_bleed_px = 0.8
-shader_parameter/fray_amount_px = 0.5
-shader_parameter/fray_scale_px = 18.0
-shader_parameter/fray_octaves = 2.0
-shader_parameter/edge_softness = 1.0
-shader_parameter/r_offset_px = Vector2(0.01, -0.01)
-shader_parameter/g_offset_px = Vector2(0, 0)
-shader_parameter/b_offset_px = Vector2(0, 0)
-shader_parameter/r_rot_deg = 0.15
-shader_parameter/g_rot_deg = -0.1
-shader_parameter/b_rot_deg = 0.0
-shader_parameter/black_grey_floor = 0.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tt4ve"]
+shader = ExtResource("6_tt4ve")
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_jatp4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bubble:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bubble2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bubble:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bubble2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bubble3:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kul7w"]
+resource_name = "fill"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bubble:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.1, 0.166667, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bubble2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.4, 0.466667, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bubble3:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.766667, 0.8, 0.866667, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bubble:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [true, true, false, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bubble2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bubble3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82sa7"]
+_data = {
+&"RESET": SubResource("Animation_jatp4"),
+&"fill": SubResource("Animation_kul7w")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sb2v7"]
 radius = 6.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kul7w"]
+shader = ExtResource("6_tt4ve")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.5
 
 [sub_resource type="Animation" id="Animation_tnktm"]
 length = 0.001
@@ -99,44 +239,75 @@ _data = {
 &"run": SubResource("Animation_53c1m")
 }
 
-[node name="ArcadePlayer" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer")]
-z_index = 1
+[node name="ArcadePlayer" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer") groups=["player"]]
 collision_mask = 74
 script = ExtResource("1_qxev7")
 tap_timer = NodePath("TapTimer")
 
+[node name="AirMetre" type="Node2D" parent="."]
+position = Vector2(0, -32)
+script = ExtResource("7_jatp4")
+
+[node name="Bubble" type="Sprite2D" parent="AirMetre"]
+z_index = 400
+material = SubResource("ShaderMaterial_tt4ve")
+position = Vector2(-17, 0)
+texture = ExtResource("2_tt4ve")
+hframes = 2
+vframes = 2
+
+[node name="Bubble2" type="Sprite2D" parent="AirMetre"]
+z_index = 400
+material = SubResource("ShaderMaterial_tt4ve")
+texture = ExtResource("2_tt4ve")
+hframes = 2
+vframes = 2
+
+[node name="Bubble3" type="Sprite2D" parent="AirMetre"]
+z_index = 400
+material = SubResource("ShaderMaterial_tt4ve")
+position = Vector2(17, 0)
+texture = ExtResource("2_tt4ve")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AirMetre"]
+libraries = {
+&"": SubResource("AnimationLibrary_82sa7")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 20
+shape = SubResource("CircleShape2D_sb2v7")
+
 [node name="ResourceTrail" type="Line2D" parent="."]
-z_index = 10
+texture_filter = 1
 width = 1.0
+joint_mode = 2
 script = ExtResource("2_qnqhn")
 bead_scene = ExtResource("3_07mc3")
-initial_bead_capacity = 5
-segment_length = 12.0
-gravity = Vector2(0, 490)
-bead_slide_speed = 120.0
+
+[node name="Knot" type="Sprite2D" parent="ResourceTrail"]
+texture_filter = 1
+texture = ExtResource("4_tt4ve")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
 
 [node name="AimRay" type="RayCast2D" parent="."]
 target_position = Vector2(300, 0)
 collision_mask = 2
 
 [node name="AimLine" type="Line2D" parent="."]
-texture_repeat = 2
 position = Vector2(0, -4)
-width = 2.0
-texture = ExtResource("3_7se61")
-texture_mode = 1
+width = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 15
-texture_filter = 1
-material = SubResource("ShaderMaterial_qnqhn")
-position = Vector2(0, -4)
+material = SubResource("ShaderMaterial_kul7w")
+position = Vector2(0, -6)
 texture = ExtResource("4_uymdo")
 hframes = 5
 vframes = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_sb2v7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

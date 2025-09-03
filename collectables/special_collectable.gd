@@ -34,28 +34,29 @@ func _process(delta: float) -> void:
 		hue += 0.01
 	modulate = Color.from_hsv(hue, 0.9, 1.0)
 
-func _on_body_entered(_body: Node2D) -> void:
-	if collected:
-		return
-	collected = true
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		if collected:
+			return
+		collected = true
 
-	set_deferred("monitoring", false)
-	collision_shape_2d.set_deferred("disabled", true)
+		set_deferred("monitoring", false)
+		collision_shape_2d.set_deferred("disabled", true)
 
-	match collectable_type:
-		"Silkworm":
-			GameManager.silk_worms += 1
-		"Sand":
-			GameManager.sand += 1
+		match collectable_type:
+			"Silkworm":
+				GameManager.silk_worms += 1
+			"Sand":
+				GameManager.sand += 1
 
-	GameManager.save()
+		GameManager.save()
 
-	audio_player.play()
+		audio_player.play()
 
-	await get_tree().process_frame
-	spawn_particles()
+		await get_tree().process_frame
+		spawn_particles()
 
-	await animate_and_destroy()
+		await animate_and_destroy()
 
 func spawn_particles() -> void:
 	if collect_particles:
