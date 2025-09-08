@@ -20,7 +20,6 @@ var levels = [LEVEL_1_0, LEVEL_1_01, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_2_1,
 @onready var arcade_player: CharacterBody2D = $ArcadePlayer
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 
-var rich_text_label: RichTextLabel
 var tiles_in_scene: Array[Object] = []
 var is_playing: bool = false
 var game_ended: bool = false
@@ -28,16 +27,23 @@ var current_tile: int = 1
 var prev_tile: int = 1
 var tile_counter: int = 0
 
-#DEBUG
-var end_game_button
+# UI
+var end_game_button #Debug
+var rich_text_label: RichTextLabel
+var dialogue_input: Panel
+var ui: Control 
 
 func _ready() -> void:
-	pattern_update(0, 1)
-
 	Debug.arcade_main_node_id = get_tree().get_current_scene()
+
+	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
+	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
 
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
+
+	ui = GameManager.UI.get_node("UI")
+	dialogue_input = GameManager.UI.get_node("DialogueInput")
 	rich_text_label = GameManager.UI.get_node("UI/RichTextLabel")
 	if Debug.infinite_health:
 		end_game_button = GameManager.UI.get_node("HBoxContainer/EndGame")
@@ -46,12 +52,14 @@ func _ready() -> void:
 	if not GameManager.game_progress["demo_played"]:
 		setup_demo()
 
+	pattern_update(0, 1)
+
 func _process(_delta: float) -> void:
 	if game_ended:
 		return
 
 	if (arcade_player and arcade_player.breath == 0.0) or Debug.game_ended:
-		end_game()
+		end_run()
 
 	if is_playing:
 		current_tile = round(player.global_position.y / 608.0)
@@ -67,7 +75,7 @@ func _process(_delta: float) -> void:
 func pattern_update(level: int, tile: int) -> void:
 	var level_instance
 	if level < 0:
-		if tile_counter > 0 and tile_counter % 5 == 0:
+		if tile_counter > 0 and tile_counter % 10 == 0:
 			# Add interim level
 			level_instance = levels[1].instantiate()
 			level_instance.interim = true
@@ -89,26 +97,67 @@ func pattern_update(level: int, tile: int) -> void:
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
 		is_playing = true
-		rising_death.is_playing = 1;
+		rising_death.is_playing = true;
 
-func end_game():
+func end_run():
 	game_ended = true
 	Debug.game_ended = false
-	GameManager.player_start_position = Vector2(-192.0, -575.0)
-	GameManager.add_resources(GameManager.new_arcade_resources)
+
+	rising_death.is_playing = false
+	arcade_player.scale = Vector2.ONE
+	arcade_player.velocity = Vector2.ZERO
+
+	await player_end_animation_sequence()
+	
+	ui.shader_objects = ui.find_objects_with_shader()
+	ui._fade_to_black(0.02)
+	arcade_player.get_node("Sprite2D").z_index = 50
+	arcade_player.get_node("ResourceTrail").z_index = 50
+	
 	if not GameManager.game_progress["demo_played"]:
 		GameManager.game_progress["demo_played"] = true
-	GameManager.save()
+		leave_arcade()
+		return
 
+	end_game_dialogue()
+
+func end_game_dialogue():
+	var option_1 = dialogue_input.get_node("Option1") as Button
+	var option_2 = dialogue_input.get_node("Option2") as Button
+	if not option_1.pressed.is_connected(reload_scene):
+		option_1.pressed.connect(reload_scene)
+	if not option_2.pressed.is_connected(leave_arcade):
+		option_2.pressed.connect(leave_arcade)
+
+	dialogue_input.get_node("Text").text = "[center]Try Again?"
+	dialogue_input.show()
+
+func reload_scene():
+	GameManager.cached_new_arcade_resources.append_array(GameManager.new_arcade_resources)
+	GameManager.new_arcade_resources = []
+	ui.update_shader_black_dot_transition(0.5)
+	get_tree().reload_current_scene()
+
+func player_end_animation_sequence() -> void:
+	arcade_player.kill()
+	Engine.time_scale = 0.25
+	var t := get_tree().create_timer(0.5)
+	await t.timeout
+
+func leave_arcade():
+	GameManager.player_start_position = Vector2(-192.0, -575.0)
 	GameManager.UI.get_node("UI").display_swipe_to_start = false
-	if end_game_button != null:
-		end_game_button.hide()
-
+	GameManager.trigger_pachinko = true
 	rich_text_label.position = Vector2(0.0, 750.0)
 	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 
 	to Play![/wave][/center]"
-	GameManager.trigger_pachinko = true
+
+	if end_game_button != null:
+		end_game_button.hide()
+
 	Engine.time_scale = 1.0
+	GameManager.save()
+	ui.update_shader_black_dot_transition(0.5)
 	get_tree().change_scene_to_file("res://main.tscn")
 
 func setup_demo():

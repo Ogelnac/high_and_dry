@@ -7,6 +7,7 @@ var damping = 0.0
 var in_water = false
 var breath = 1.0
 var prev_resources = 0
+var dead = false
 
 # VELOCITIES
 @export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
@@ -51,18 +52,25 @@ var tap_screen_pos: Vector2 = Vector2.ZERO
 # TIMERS
 @export var tap_timer: Timer
 
+#AUDIO
+const TAILOR_DEATH = preload("res://audio/tailor_death.wav")
+
 func _ready() -> void:
 	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
 	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
 func _physics_process(delta: float) -> void:
+	if dead:
+		move_and_slide()
+		return
+
 	if aiming:
 		if slowmo_count > 0.0:
 			slowmo_count -= delta
 			Engine.time_scale = 1.0 - pow(slowmo_count / slowmo_max, 4)
 		else:
 			Engine.time_scale = 1.0
-	else:
+	elif not dead:
 		Engine.time_scale = 1.0
 
 	if climbing_thread:
@@ -115,6 +123,10 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = local_vel_x < 0
 
 func _process(_delta: float) -> void:
+	if Debug.infinite_health:
+		breath = 1.0
+		return
+
 	if in_water and breath > 0.0:
 		breath -= 1.0 / lung_capacity
 	elif in_water:
@@ -126,7 +138,10 @@ func _process(_delta: float) -> void:
 		breath = 1.0
 
 func _input(event: InputEvent):
-	if event is InputEventScreenTouch:
+	if dead:
+		return
+
+	if event is InputEventScreenTouch and not dead:
 		# Initial touch
 		if event.is_pressed():
 			touching = true
@@ -365,3 +380,16 @@ func apply_squash_and_stretch(delta: float) -> void:
 
 	sprite.scale.x = lerp(sprite.scale.x, target_stretch_x, delta * 10)
 	sprite.scale.y = lerp(sprite.scale.y, target_stretch_y, delta * 10)
+
+func kill():
+	dead = true
+	aiming = false
+	climbing_thread = false
+	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
+	$AnimationPlayer.stop()
+	sprite.frame = 23
+	var sfx := AudioStreamPlayer.new()
+	sfx.stream = TAILOR_DEATH
+	sfx.volume_db = -20.0
+	add_child(sfx)
+	sfx.play()

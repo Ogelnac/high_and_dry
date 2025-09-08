@@ -13,13 +13,13 @@
 shader = ExtResource("3_2578d")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ahcp0"]
 shader = ExtResource("3_2578d")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.25
+shader_parameter/mix_scale = 0.0
 
 [node name="SpecialCollectable" type="Area2D"]
 collision_layer = 16
@@ -31,7 +31,7 @@ collect_particles = ExtResource("2_7nxko")
 shape = SubResource("CircleShape2D_qx60i")
 disabled = true
 
-[node name="Backdrop" type="Sprite2D" parent="."]
+[node name="Backdrop" type="Sprite2D" parent="." groups=["shader_objects"]]
 visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_7nxko")
@@ -41,7 +41,7 @@ region_enabled = true
 region_rect = Rect2(16, 0, 16, 16)
 region_filter_clip_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
 visible = false
 material = SubResource("ShaderMaterial_ahcp0")
 texture = ExtResource("4_ahcp0")

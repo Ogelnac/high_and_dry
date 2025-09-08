@@ -3,12 +3,12 @@ shader_type canvas_item;
 uniform sampler2D wave_mask;
 
 uniform vec4 fill_colour: source_color = vec4(1.0);
-uniform float fill_height: hint_range(0.0, 1.0) = 0.5;
+uniform float fill_height: hint_range(0.0, 1.0) = 0.2;
 uniform float max_offset = 0.175;
 uniform float min_offset = 0.75;
-uniform float wave_freq = 4.0;
+uniform float wave_freq = 8.0;
 uniform float wave_band = 0.05;
-uniform float wave_speed = 0.4;
+uniform float wave_speed = 0.8;
 
 varying float alpha;
 

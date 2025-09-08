@@ -85,7 +85,7 @@ func launch_ingredient(ingredient_type: int) -> void:
 	ingredient_instance.sprite_2d.frame = ingredient_type
 
 func update_counters(new_resource: int):
-	var whack_meter = UI.get_node("WhackMeter")
+	var whack_meter = UI.get_node("WhackMetre")
 	var colorrect: ColorRect = whack_meter.get_node("ColorRect")
 	var idx: int = int(new_resource) % 8
 	var key: String = COLOR_ORDER[idx].to_lower() + "_resources"

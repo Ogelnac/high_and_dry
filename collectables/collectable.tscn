@@ -12,7 +12,7 @@
 shader = ExtResource("3_1l1se")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.25
+shader_parameter/mix_scale = 0.0
 
 [node name="Collectable" type="Area2D"]
 collision_layer = 16
@@ -23,7 +23,7 @@ collect_particles = ExtResource("2_qfbh6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qx60i")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
 material = SubResource("ShaderMaterial_rtexj")
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("4_qv4on")

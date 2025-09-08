@@ -6,6 +6,8 @@ var disable_rising_death: bool = false
 
 var game_ended: bool = false
 
+# Add a cache for resources between runs not seperate by hub. should fix resource string
+
 #Demo tadd trader
 var expell_res: bool = false
 var res_expelled: bool = false
@@ -20,6 +22,8 @@ func end_game_button_visibility():
 
 func _process(_delta: float) -> void:
 	if res_expelled:
+		GameManager.cached_new_arcade_resources.append_array(GameManager.new_arcade_resources)
+		GameManager.new_arcade_resources = []
 		expell_res = false
 		switch_player = true
 		res_expelled = false

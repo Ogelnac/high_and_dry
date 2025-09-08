@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	modulate = Color.from_hsv(hue, 0.9, 1.0)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and not body.dead:
 		if collected:
 			return
 		collected = true

@@ -8,8 +8,7 @@ var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
 
 var game_progress: Dictionary[String, bool] = {
 	"demo_played": false,
-	"whack_a_pesto_played": false,
-}
+	"whack_a_pesto_played": false,}
 
 var resources: Dictionary[String, int] = {
 	"Red": 0,
@@ -19,8 +18,7 @@ var resources: Dictionary[String, int] = {
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
-	"Brown": 0
-}
+	"Brown": 0}
 
 var dye_value: Dictionary[String, int] = {
 	"Red": 0,
@@ -30,8 +28,7 @@ var dye_value: Dictionary[String, int] = {
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
-	"Brown": 0
-}
+	"Brown": 0}
 
 var bottle_sizes: Dictionary[String, int] = {
 	"Red": 160,
@@ -41,8 +38,7 @@ var bottle_sizes: Dictionary[String, int] = {
 	"Blue": 160,
 	"Pink": 160,
 	"White": 160,
-	"Brown": 160
-}
+	"Brown": 160}
 
 var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
@@ -52,10 +48,10 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
-	"Brown": 0
-}
+	"Brown": 0}
 
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
+var cached_new_arcade_resources: Array[int] = []
 var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in
 
 var silk_worms: int = 0
@@ -69,6 +65,7 @@ var fade_out: bool = false
 var trigger_pachinko: bool = false
 
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
+
 const COLOR_HEX: Dictionary[String, String] = {
 	"Red": "ac3232",
 	"Orange": "df7126",
@@ -77,8 +74,8 @@ const COLOR_HEX: Dictionary[String, String] = {
 	"Blue": "639bff",
 	"Pink": "d77bba",
 	"White": "ffffff",
-	"Brown": "8f563b"
-}
+	"Brown": "8f563b"}
+
 const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"Red": Vector4i(1, 1, 16, 16),
 	"Orange": Vector4i(19, 1, 16, 16),
@@ -87,8 +84,7 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"Blue": Vector4i(73, 1, 16, 16),
 	"Pink": Vector4i(91, 1, 16, 16),
 	"White": Vector4i(109, 1, 16, 16),
-	"Brown": Vector4i(127, 1, 16, 16)
-}
+	"Brown": Vector4i(127, 1, 16, 16)}
 
 func _process(_delta: float) -> void:
 	if fade_out and circle_fade:

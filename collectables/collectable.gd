@@ -14,8 +14,7 @@ extends Area2D
 	"#639bff",
 	"#d77bba",
 	"#ffffff",
-	"#8f563b"
-]
+	"#8f563b"]
 
 var collectable_type
 var phase_offset := randf() * TAU
@@ -35,6 +34,9 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		if body.name == "arcade_player":
+			if body.dead:
+				return
 		if collected:
 			return
 		collected = true

@@ -1,13 +1,6 @@
 extends Control
 
-signal demo_resource_pressed(number_resources)
-signal clear_demo_pressed
-
 @onready var scene_manager: Panel = $SceneManager
-
-const CLICK = preload("res://audio/click.wav")
-const PIPE = preload("res://audio/pipe.wav")
-
 @onready var rich_text_label: RichTextLabel = $RichTextLabel
 @onready var player: CharacterBody2D
 
@@ -15,6 +8,9 @@ const PIPE = preload("res://audio/pipe.wav")
 
 var display_swipe_to_start: bool = true
 var shader_objects: Array = []
+
+const CLICK = preload("res://audio/click.wav")
+const PIPE = preload("res://audio/pipe.wav")
 
 var colours: Array[String] = [
 	"#ac3232",
@@ -24,8 +20,7 @@ var colours: Array[String] = [
 	"#639bff",
 	"#d77bba",
 	"#ffffff",
-	"#8f563b"
-]
+	"#8f563b"]
 
 func _ready():
 	if get_node_or_null("../../Player"):
@@ -45,15 +40,13 @@ func _process(_delta: float) -> void:
 	elif not display_swipe_to_start and rich_text_label.modulate.a > 0.0:
 		rich_text_label.modulate.a = clamp(rich_text_label.modulate.a - 0.05, 0.0, 1.0)
 
-func _fade_to_black() -> void:
-	await get_tree().create_timer(0.5).timeout
-	_play_one_shot(PIPE)
+func _fade_to_black(interval: float) -> void:
 	display_swipe_to_start = false
 	var transition_value = 0.5
 	while transition_value < 2.0:
 		transition_value += 0.25
 		update_shader_black_dot_transition(transition_value)
-		await get_tree().create_timer(0.2).timeout
+		await get_tree().create_timer(interval).timeout
 
 func _fade_from_black() -> void:
 	display_swipe_to_start = true
@@ -76,20 +69,12 @@ func find_objects_with_shader() -> Array:
 			objects.append(node)
 	return objects
 
-func _on_spawn_resources_button_down() -> void:
-	_play_one_shot(CLICK)
-	get_tree().paused = false
-	emit_signal("demo_resource_pressed", int(line_edit.text))
-
-func _on_clear_resources_button_down() -> void:
-	_play_one_shot(CLICK)
-	get_tree().paused = false
-	clear_demo_pressed.emit()
-
 func _on_player_start_game_signal() -> void:
-	_fade_to_black()
+	_fade_to_black(0.2)
+	_play_one_shot(PIPE)
+
 	display_swipe_to_start = false
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.0).timeout
 	scene_manager.show()
 
 func _on_player_in_launch_zone(in_zone):

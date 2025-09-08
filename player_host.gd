@@ -54,6 +54,8 @@ func _replace_with(to_arcade: bool):
 	if not scene_to_use:
 		return
 	var n: CharacterBody2D = scene_to_use.instantiate()
+	if not to_arcade:
+		DialogueManager.player = n
 	n.global_position = pos
 	n.velocity = vel
 	n.get_node("Sprite2D").material.set_shader_parameter("black_dot_transition", 0.5)

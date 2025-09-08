@@ -287,6 +287,8 @@ width = 1.0
 joint_mode = 2
 script = ExtResource("2_qnqhn")
 bead_scene = ExtResource("3_07mc3")
+vel_bias_gain = -0.01
+accel_drive_gain = 0.02
 
 [node name="Knot" type="Sprite2D" parent="ResourceTrail"]
 texture_filter = 1
