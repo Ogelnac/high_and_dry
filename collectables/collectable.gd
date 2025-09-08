@@ -39,8 +39,8 @@ func _on_body_entered(body: Node2D) -> void:
 				return
 		if collected:
 			return
-		collected = true
 
+		collected = true
 		set_deferred("monitoring", false)
 		collision_shape_2d.set_deferred("disabled", true)
 

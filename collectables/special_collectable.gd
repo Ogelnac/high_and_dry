@@ -32,14 +32,17 @@ func _process(delta: float) -> void:
 		hue = 0.0
 	else:
 		hue += 0.01
-	modulate = Color.from_hsv(hue, 0.9, 1.0)
+	backdrop.modulate = Color.from_hsv(hue, 0.9, 1.0)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and not body.dead:
+	if body.is_in_group("player"):
+		if body.name == "arcade_player":
+			if body.dead:
+				return
 		if collected:
 			return
-		collected = true
 
+		collected = true
 		set_deferred("monitoring", false)
 		collision_shape_2d.set_deferred("disabled", true)
 
@@ -48,8 +51,6 @@ func _on_body_entered(body: Node2D) -> void:
 				GameManager.silk_worms += 1
 			"Sand":
 				GameManager.sand += 1
-
-		GameManager.save()
 
 		audio_player.play()
 
