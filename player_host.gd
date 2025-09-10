@@ -6,6 +6,7 @@ extends Node2D
 
 var current: CharacterBody2D
 var player_parent: Node
+var launch_zone: Area2D
 
 func _ready():
 	if not existing_player:
@@ -43,6 +44,10 @@ func switch_to_platform():
 		return
 	call_deferred("_replace_with", false)
 
+	Engine.time_scale = 1.0
+	if launch_zone:
+		launch_zone.searching = true
+
 func _replace_with(to_arcade: bool):
 	if not current:
 		return
@@ -59,6 +64,12 @@ func _replace_with(to_arcade: bool):
 	n.global_position = pos
 	n.velocity = vel
 	n.get_node("Sprite2D").material.set_shader_parameter("black_dot_transition", 0.5)
+
+	var sm = get_node("../CanvasLayer/UI/SceneManager")
+	var pp = get_node("../CanvasLayer/PlayerPos")
+	pp.player = n
+	n.start_game_signal.connect(sm._on_start_game_signal_merchant)
+
 	parent.call_deferred("add_child", n)
 	await get_tree().process_frame
 	if idx >= 0:

@@ -1,9 +1,11 @@
 extends Area2D
 
 @onready var player: CharacterBody2D = $"../ArcadePlayer"
+@onready var player_host: Node2D = $"../PlayerHost"
 @onready var main: Node2D = $".."
 @onready var burst_scene: PackedScene = preload("res://effects/burst_particle.tscn")
 
+var boat: Node2D
 var drip_timer: Timer
 var is_playing: bool = false
 var interim: bool = false
@@ -20,10 +22,13 @@ func _ready() -> void:
 	drip_timer.timeout.connect(_spawn_drip)
 
 func _process(delta: float) -> void:
-	if is_playing and not interim and not player.dead and not Debug.disable_rising_death:
+	if is_playing and not interim and not Debug.disable_rising_death:
+		if player:
+			if player.dead:
+				return
 		var offset = 0.0
-		if player.global_position.y <= global_position.y + offset:
-			global_position.y = player.global_position.y - offset
+		if player_host.global_position.y <= global_position.y + offset:
+			global_position.y = player_host.global_position.y - offset
 		global_position.y -= 50.0 * delta
 
 	if drip_time_left > 0.0:
@@ -34,6 +39,8 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("stop_rising_death"):
 		interim = true
+		boat = body.get_node_or_null("../Boat")
+		boat.moving = true
 
 	if body.is_in_group("player"):
 		player.in_water = true
@@ -66,7 +73,8 @@ func _spawn_drip() -> void:
 	var velocity := Vector2(randf_range(-20.0, 20.0), randf_range(40.0, 60.0))
 	var particle := burst_scene.instantiate()
 	get_tree().current_scene.add_child(particle)
-	particle.global_position = player.position
+	if player:
+		particle.global_position = player.position
 	particle.linear_velocity = velocity
 	particle.collision_mask = 0
 	particle.z_index = 5

@@ -24,7 +24,9 @@ var colours: Array[String] = [
 
 func _ready():
 	if get_node_or_null("../../Player"):
-		player = get_tree().get_root().get_node("Main/Player")
+		player = get_tree().get_root().get_node_or_null("Main/Player")
+		if player == null: # Tadd Trader
+			return
 		player.start_game_signal.connect(_on_player_start_game_signal)
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
 		if player.position.x > -80:

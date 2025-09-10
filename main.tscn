@@ -1036,7 +1036,7 @@ counter = ExtResource("3_1j66b")
 
 [node name="Player" parent="." instance=ExtResource("1_fvgh8")]
 z_index = 1
-position = Vector2(0, -30)
+position = Vector2(0, -23)
 floor_stop_on_slope = false
 
 [node name="Background" type="TileMapLayer" parent="." groups=["shader_objects"]]
@@ -1237,7 +1237,6 @@ script = ExtResource("3_objk6")
 horizontal_motion_scale = 0.005
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-8, 0)
 zoom = Vector2(2.61, 2.61)
 position_smoothing_enabled = true
 script = ExtResource("4_etw35")
@@ -1254,6 +1253,7 @@ script = ExtResource("5_x5q7x")
 position = Vector2(0, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hub"]
+visible = false
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_jqtky")
 script = ExtResource("5_x5q7x")

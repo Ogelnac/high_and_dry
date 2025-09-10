@@ -64,6 +64,8 @@ func _process(_delta: float) -> void:
 	if is_playing:
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
+			if tile_counter > 1:
+				return
 			pattern_update(-1, current_tile)
 			tile_counter += 1
 			prev_tile = current_tile
@@ -75,7 +77,7 @@ func _process(_delta: float) -> void:
 func pattern_update(level: int, tile: int) -> void:
 	var level_instance
 	if level < 0:
-		if tile_counter > 0 and tile_counter % 10 == 0:
+		if tile_counter > 0 and tile_counter == 1:
 			# Add interim level
 			level_instance = levels[1].instantiate()
 			level_instance.interim = true

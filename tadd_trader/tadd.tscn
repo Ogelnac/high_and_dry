@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://ckp6bwvi0tej0"]
 
-[ext_resource type="Script" uid="uid://co2rtugwva2h5" path="res://tadd.gd" id="1_u2dtp"]
+[ext_resource type="Script" uid="uid://co2rtugwva2h5" path="res://tadd_trader/tadd.gd" id="1_u2dtp"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://shaders/cmyk_halftone.gdshader" id="2_kyl20"]
 [ext_resource type="Texture2D" uid="uid://cpbemfbxybidh" path="res://textures/tadd_trader.png" id="3_ram37"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://textures/Popup.png" id="4_w5o2f"]
@@ -9,7 +9,7 @@
 shader = ExtResource("2_kyl20")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.416
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb22k"]
 size = Vector2(31, 29)
@@ -121,6 +121,7 @@ script = ExtResource("1_u2dtp")
 z_index = -15
 material = SubResource("ShaderMaterial_8e7xq")
 texture = ExtResource("3_ram37")
+flip_h = true
 
 [node name="TapButton" type="Area2D" parent="."]
 position = Vector2(0, -3)

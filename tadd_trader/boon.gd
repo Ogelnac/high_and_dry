@@ -1,15 +1,27 @@
 extends Node2D
 
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
+@export var speed: float = 5.0
+@export var float_distance: float = 2.0
+@export var phase: float = 1.0
+
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var tap_button: Area2D = $TapButton
 @onready var popup: Sprite2D = $Popup
 @onready var popup_animation: AnimationPlayer = $Popup/AnimationPlayer
+@onready var detection_area: Area2D = $DetectionArea
 
+var theta: float = 0.0
 var player_in_area: bool = false
 
-func _ready():
-	animation_player.play("Idle")
+func _ready() -> void:
 	popup.visible = false
+	detection_area.body_entered.connect(_on_detection_area_body_entered)
+	detection_area.body_exited.connect(_on_detection_area_body_exited)
+	tap_button.input_event.connect(_on_tap_button_input_event)
+
+func _process(delta: float) -> void:
+	theta += speed * delta
+	sprite_2d.position.y =  sin(theta + phase * PI) * float_distance
 
 func _on_detection_area_body_entered(body):
 	if body.is_in_group("player"):
@@ -33,9 +45,4 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
-		if GameManager.unprocessed_resources.size()>= 50 or Debug.infinite_resources:
-			DialogueManager.start_dialogue("pesto_start", true)
-			DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
-			DialogueManager.bind_input("res://whack_a_pesto.tscn")
-		else:
-			DialogueManager.start_dialogue("pesto_wait", false)
+		print("interacted with this")

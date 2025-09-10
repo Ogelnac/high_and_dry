@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/ui/JoystickBase.png" id="2_77u76"]
 [ext_resource type="Script" uid="uid://ba2nqal7o1od6" path="res://debug_panel.gd" id="2_86mtp"]
 [ext_resource type="Script" uid="uid://bxe7ya780ce1a" path="res://scripts/ui.gd" id="2_l5iyv"]
+[ext_resource type="Script" uid="uid://d1q05xihu1pmk" path="res://player_pos.gd" id="3_fkxa7"]
 [ext_resource type="Script" uid="uid://cichuc2niwycp" path="res://scripts/joystick_base.gd" id="3_nf0j4"]
 [ext_resource type="Texture2D" uid="uid://bwmsnsj851i5w" path="res://textures/ui/JoystickHandle.png" id="4_ccaf2"]
 [ext_resource type="Script" uid="uid://c7pgnj1ijije2" path="res://scripts/joystick_handle.gd" id="5_kk307"]
@@ -563,6 +564,12 @@ layout_mode = 2
 theme = ExtResource("1_kmbj5")
 text = "End game"
 script = ExtResource("16_lrj6d")
+
+[node name="PlayerPos" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("3_fkxa7")
 
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]

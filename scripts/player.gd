@@ -58,7 +58,6 @@ var _saved_mask := 0
 @onready var step_sfx: AudioStreamPlayer2D = $StepSFX
 @onready var sprite: Node2D = $Sprite2D
 
-@onready var ground: TileMapLayer
 @onready var launch_zone: Area2D
 
 @onready var hub_counter: Control = $"../CanvasLayer/UI/HubCounter"
@@ -67,7 +66,6 @@ var _saved_mask := 0
 @onready var joystick_handle: TextureRect = $"../CanvasLayer/UI/VirtualJoystick/JoystickHandle"
 
 func _ready():
-	ground = get_node_or_null("../Ground")
 	launch_zone = get_node_or_null("../LaunchZone")
 	position = GameManager.player_start_position
 	footstep_timer.timeout.connect(_on_step_timer_timeout)
@@ -128,6 +126,10 @@ func _input(event: InputEvent) -> void:
 		joystick_handle.position = virtual_joystick.get_local_mouse_position()
 
 func _process(delta: float) -> void:
+	if launch_zone and not launch_zone.body_entered.is_connected(_on_launch_zone_body_entered):
+		launch_zone.body_entered.connect(_on_launch_zone_body_entered)
+		launch_zone.body_exited.connect(_on_launch_zone_body_exited)
+
 	if movement_locked:
 		movement_start_timer += delta
 		if movement_start_timer >= movement_delay:
@@ -142,7 +144,7 @@ func _process(delta: float) -> void:
 	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
-		var target_x = 0
+		var target_x = launch_zone.global_position.x
 		var direction_to_center = sign(target_x - position.x)
 
 		if abs(position.x - target_x) > 5:
@@ -154,7 +156,7 @@ func _process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	if wait_to_change_layer and position.y <= -80:
+	if wait_to_change_layer and position.y <= launch_zone.global_position.y -55.0:
 		z_index = -110
 		start_game_signal.emit()
 		wait_to_change_layer = false
@@ -198,7 +200,7 @@ func _physics_process(delta: float) -> void:
 	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
-		var target_x = 0
+		var target_x = launch_zone.global_position.x
 		var direction_to_center = sign(target_x - position.x)
 
 		if abs(position.x - target_x) > 5:
