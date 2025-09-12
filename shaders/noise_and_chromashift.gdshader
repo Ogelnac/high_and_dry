@@ -10,6 +10,8 @@ uniform vec2 chroma_offset_c = vec2(0.0, 0.0);
 uniform vec2 chroma_offset_m = vec2(0.0, 0.0);
 uniform vec2 chroma_offset_y = vec2(0.0, 0.0);
 
+uniform vec2 scroll_speed = vec2(0.0, 0.0);
+
 vec3 colour_cbs_adjustment(vec3 colour, float contrast, float brightness, float saturation) {
 	colour += brightness;
 	colour = (colour - 0.5) * contrast + 0.5;
@@ -31,7 +33,7 @@ void fragment() {
 
 	vec3 chroma_mixed = vec3(y_shift, c_shift, m_shift);
 
-	vec2 overlay_uv = fract(UV * overlay_pixel_size);
+	vec2 overlay_uv = fract((UV + (TIME * scroll_speed)) * overlay_pixel_size);
 	vec3 overlay_sample = texture(overlay, overlay_uv).rgb;
 	vec3 paper_sample = texture(paper_overlay, overlay_uv).rgb;
 	vec3 combined_filter = mix(overlay_sample, paper_sample, 0.2);

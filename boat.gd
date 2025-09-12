@@ -9,7 +9,6 @@ extends Node2D
 @onready var cpu_particles_2d: CPUParticles2D = $SubViewport/Offset/CPUParticles2D
 
 var _centre: Vector2
-var _gpu_centre: Vector2
 var _theta: float = 0.0
 var moving: bool = false
 

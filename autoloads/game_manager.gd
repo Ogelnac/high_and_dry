@@ -51,8 +51,17 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Brown": 0}
 
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
-var cached_new_arcade_resources: Array[int] = []
-var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in
+var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in arcade mode
+
+var resource_cache: Dictionary[String, int] = {
+	"Red": 0,
+	"Orange": 0,
+	"Yellow": 0,
+	"Green": 0,
+	"Blue": 0,
+	"Pink": 0,
+	"White": 0,
+	"Brown": 0}
 
 var silk_worms: int = 0
 var sand: int = 0
@@ -61,6 +70,7 @@ var UI: Node
 var circle_fade: ColorRect
 var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
 var dropdown_active: bool = false
+var cached_counter: bool = false
 var fade_out: bool = false
 var trigger_pachinko: bool = false
 
@@ -131,10 +141,12 @@ func arcade_UI():
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
-	if not game_progress["demo_played"]:
-		get_tree().change_scene_to_file("res://arcade_main.tscn")
 	display_normal_counter()
 	update_bottles()
+
+func shop_UI():
+	cached_counter = true
+	display_normal_counter()
 
 func whack_a_pesto_UI():
 	var whack_metre = UI.find_child("WhackMetre")
@@ -156,6 +168,14 @@ func add_resources(collected: Array) -> void:
 		var current: int = int(resources.get(key, 0))
 		resources[key] = current + inc
 
+func add_resources_to_cache(collected: Array) -> void:
+	for resource in collected:
+		var idx: int = int(resource) % 8
+		var key: String = COLOR_ORDER[idx]
+		var inc: int = 2 if int(resource) >= 8 else 1
+		var current: int = int(resource_cache.get(key, 0))
+		resource_cache[key] = current + inc
+
 func display_dropdown():
 	dropdown_active = true
 	var hub_counter: Node = UI.find_child("HubCounter")
@@ -164,7 +184,11 @@ func display_dropdown():
 	for key: String in COLOR_ORDER:
 		var r: Vector4i = INGREDIENT_REGIONS[key]
 		var hex: String = COLOR_HEX[key]
-		var count: int = int(resources.get(key, 0))
+		var count: int
+		if cached_counter:
+			count = int(resource_cache.get(key, 0))	
+		else:
+			count = int(resources.get(key, 0))
 		lines += "[img width=48 region=%d,%d,%d,%d]res://textures/Ingredients.png[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [r.x, r.y, r.z, r.w, hex, count]
 	resource_counter.text = lines
 
@@ -175,7 +199,10 @@ func display_normal_counter():
 	var silk_sand_counter: RichTextLabel = hub_counter.find_child("SilkSandCounter")
 	var sum: int = 0
 	for key: String in COLOR_ORDER:
-		sum += int(resources.get(key, 0))
+		if cached_counter:
+			sum += int(resource_cache.get(key, 0))
+		else:
+			sum += int(resources.get(key, 0))
 	resource_counter.text = "[img width=48 region=32,0,16,16]res://textures/ui/Sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
 	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://textures/ui/Sprites.png[/img]x[font_size=60]%d [/font_size][img width=48 region=32,32,16,16]res://textures/ui/Sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
 

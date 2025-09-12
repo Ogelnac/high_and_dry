@@ -1,6 +1,11 @@
 extends Node2D
 
 func _ready() -> void:
+	await get_tree().process_frame
+	if not GameManager.game_progress["demo_played"]:
+		get_tree().change_scene_to_file("res://arcade_main.tscn")
+		return
+
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.player = $Player
 	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput

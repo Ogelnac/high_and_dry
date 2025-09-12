@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="high_and_dry"
-run/main_scene="uid://o3icrd55w7ci"
+run/main_scene="uid://cw2sf1bh5vj78"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://textures/Thumbnail.png"
@@ -21,6 +21,7 @@ config/icon="res://textures/Thumbnail.png"
 GameManager="*res://autoloads/game_manager.gd"
 DialogueManager="*res://autoloads/dialogue_manager.gd"
 Debug="*res://autoloads/debug.gd"
+ShopManager="*res://autoloads/shop_manager.gd"
 
 [display]
 

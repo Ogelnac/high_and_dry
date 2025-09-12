@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://textures/ui/JoystickBase.png" id="2_77u76"]
@@ -16,6 +16,7 @@
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://scripts/color_rect.gd" id="13_wugvg"]
 [ext_resource type="Script" uid="uid://cmmya6v463hjb" path="res://end_game.gd" id="16_lrj6d"]
+[ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://textures/boons.png" id="16_ml53l"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
@@ -535,6 +536,110 @@ text = "NO"
 [node name="LevelSelect" type="AudioStreamPlayer" parent="DialogueInput"]
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
+
+[node name="ShopBox" type="Panel" parent="."]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 200.0
+offset_right = -20.0
+offset_bottom = 521.0
+grow_horizontal = 2
+theme = ExtResource("1_kmbj5")
+
+[node name="Control" type="Control" parent="ShopBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 22.0
+offset_right = 60.0
+offset_bottom = 142.0
+grow_horizontal = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="ShopBox/Control"]
+texture_filter = 1
+position = Vector2(60, 60)
+scale = Vector2(7.5, 7.5)
+texture = ExtResource("16_ml53l")
+hframes = 3
+vframes = 3
+
+[node name="NameLabel" type="Label" parent="ShopBox"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -1.5
+offset_right = -10.0
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 35
+text = "Shop Item Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="ShopBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 192.0
+offset_right = -10.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]This is the description of the item, not very long."
+vertical_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="ShopBox"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -64.0
+offset_right = -9.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Buy" type="Button" parent="ShopBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+icon_alignment = 2
+expand_icon = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ShopBox/Options/Buy"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[center]100[img width=25 region=1,1,16,16]res://textures/Ingredients.png[/img]"
+fit_content = true
+
+[node name="Cancel" type="Button" parent="ShopBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 35
+text = "No Thanks"
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 412.0

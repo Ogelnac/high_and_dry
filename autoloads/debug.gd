@@ -22,8 +22,6 @@ func end_game_button_visibility():
 
 func _process(_delta: float) -> void:
 	if res_expelled:
-		GameManager.cached_new_arcade_resources.append_array(GameManager.new_arcade_resources)
-		GameManager.new_arcade_resources = []
 		expell_res = false
 		switch_player = true
 		res_expelled = false

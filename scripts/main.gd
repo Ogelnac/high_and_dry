@@ -25,7 +25,6 @@ var is_playing: bool = false
 var game_ended: bool = false
 var current_tile: int = 1
 var prev_tile: int = 1
-var tile_counter: int = 0
 
 # UI
 var end_game_button #Debug
@@ -64,10 +63,7 @@ func _process(_delta: float) -> void:
 	if is_playing:
 		current_tile = round(player.global_position.y / 608.0)
 		if prev_tile > current_tile:
-			if tile_counter > 1:
-				return
 			pattern_update(-1, current_tile)
-			tile_counter += 1
 			prev_tile = current_tile
 	
 	if tiles_in_scene.size() > 4:
@@ -77,7 +73,7 @@ func _process(_delta: float) -> void:
 func pattern_update(level: int, tile: int) -> void:
 	var level_instance
 	if level < 0:
-		if tile_counter > 0 and tile_counter == 1:
+		if tile < 0 and tile == -10:
 			# Add interim level
 			level_instance = levels[1].instantiate()
 			level_instance.interim = true
@@ -91,7 +87,7 @@ func pattern_update(level: int, tile: int) -> void:
 
 	add_child(level_instance)
 	# Every 5 levels has a Special Collectable (SC)
-	if tile_counter > 1 and tile_counter % 5 == 0:
+	if tile < 0 and tile % 5 == 0:
 		level_instance.spawn_sc()
 	level_instance.global_position.y = float(608 * (tile - 1))
 	tiles_in_scene.insert(0, level_instance)
@@ -135,8 +131,6 @@ func end_game_dialogue():
 	dialogue_input.show()
 
 func reload_scene():
-	GameManager.cached_new_arcade_resources.append_array(GameManager.new_arcade_resources)
-	GameManager.new_arcade_resources = []
 	ui.update_shader_black_dot_transition(0.5)
 	get_tree().reload_current_scene()
 
@@ -150,6 +144,7 @@ func leave_arcade():
 	GameManager.player_start_position = Vector2(-192.0, -575.0)
 	GameManager.UI.get_node("UI").display_swipe_to_start = false
 	GameManager.trigger_pachinko = true
+
 	rich_text_label.position = Vector2(0.0, 750.0)
 	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 
 	to Play![/wave][/center]"

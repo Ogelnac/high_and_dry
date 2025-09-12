@@ -57,6 +57,16 @@ func start_dialogue(npc_id: String, input: bool):
 	if current_dialogue.size() > 0:
 		show_line(current_dialogue[0])
 
+func open_shop(input: bool):
+	has_input = input
+	if is_typing:
+		return
+	player.dialogue_mode = true
+	player.virtual_joystick_active = false
+	player.virtual_joystick_offset = Vector2.ZERO
+	player.virtual_joystick.visible = false
+	return
+
 func show_next_line():
 	if is_typing:
 		return

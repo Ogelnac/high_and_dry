@@ -23,6 +23,7 @@ func _process(_delta: float) -> void:
 func start_interim_seq(body: Node2D):
 	if body.is_in_group("player"):
 		camera_2d.interim = true
+		GameManager.add_resources_to_cache(GameManager.new_arcade_resources)
 		Debug.expell_res = true
 
 func spawn_sc():

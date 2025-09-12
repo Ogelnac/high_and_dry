@@ -32,13 +32,11 @@ const PUFF = preload("res://audio/puff.wav")
 func _ready():
 	if GameManager.trigger_pachinko:
 		GameManager.trigger_pachinko = false
-		GameManager.new_arcade_resources.append_array(GameManager.cached_new_arcade_resources)
 		GameManager.add_resources(GameManager.new_arcade_resources)
 		if GameManager.new_arcade_resources.size() > 0:
 			_resource_count_start(GameManager.new_arcade_resources.size())
 			temp_resources = GameManager.new_arcade_resources
 			GameManager.unprocessed_resources.append_array(GameManager.new_arcade_resources)
-			GameManager.cached_new_arcade_resources = []
 			GameManager.new_arcade_resources = []
 			GameManager.save()
 		else:
