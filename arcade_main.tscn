@@ -23,12 +23,11 @@ shader_parameter/mix_scale = 0.0
 script = ExtResource("1_h4xiv")
 metadata/_edit_horizontal_guides_ = [-399.0]
 
-[node name="PlayerHost" type="Node2D" parent="." node_paths=PackedStringArray("existing_player")]
+[node name="PlayerHost" type="Node2D" parent="."]
 position = Vector2(0, -150)
 script = ExtResource("7_f8fp5")
 platform_player_scene = ExtResource("7_ihlov")
 arcade_player_scene = ExtResource("3_0nopa")
-existing_player = NodePath("../ArcadePlayer")
 
 [node name="ArcadePlayer" parent="." instance=ExtResource("3_0nopa")]
 position = Vector2(0, -150)

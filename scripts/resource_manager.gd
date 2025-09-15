@@ -15,8 +15,7 @@ var colours: Array[String] = [
 	"#639bff",
 	"#d77bba",
 	"#ffffff",
-	"#8f563b"
-]
+	"#8f563b"]
 
 var spawned_rigidbodies: Array = []
 var spawn_count: int = 0

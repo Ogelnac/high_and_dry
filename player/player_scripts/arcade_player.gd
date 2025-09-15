@@ -205,7 +205,7 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 func apply_friction_and_gravity(delta: float) -> void:
 	var arcade_resources = GameManager.new_arcade_resources.size()
 	if in_water:
-		velocity.y -= (100 - (arcade_resources * 5.0)) * delta
+		velocity.y -= (100 - (arcade_resources * 0.0)) * delta
 		if damping > 0.0:
 			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
 		return

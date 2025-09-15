@@ -4,6 +4,7 @@ extends Node2D
 @onready var popup: Sprite2D = $Popup
 @onready var popup_animation: AnimationPlayer = $Popup/AnimationPlayer
 @onready var tap_button: Area2D = $TapButton
+@onready var main: Node2D = $".."
 
 var player_in_area: bool = false
 var exited_for_the_first_time: bool = false
@@ -37,4 +38,4 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
-		print("Tapped")
+		main.leave_shop()

@@ -51,7 +51,8 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Brown": 0}
 
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
-var unprocessed_resources: Array[int] = [] #the order unprocessed resources were collected in arcade mode
+var cached_resources: Array[int] = []
+var unprocessed_resources: Array[int] = [] #TEMPORARY FOR WHACK-A-PESTO the order unprocessed resources were collected
 
 var resource_cache: Dictionary[String, int] = {
 	"Red": 0,
@@ -69,10 +70,12 @@ var sand: int = 0
 var UI: Node
 var circle_fade: ColorRect
 var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
+
 var dropdown_active: bool = false
 var cached_counter: bool = false
 var fade_out: bool = false
 var trigger_pachinko: bool = false
+var stage_level: Vector2i = Vector2i(0, 0)
 
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 
@@ -141,6 +144,7 @@ func arcade_UI():
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
+	cached_counter = false
 	display_normal_counter()
 	update_bottles()
 
@@ -169,12 +173,19 @@ func add_resources(collected: Array) -> void:
 		resources[key] = current + inc
 
 func add_resources_to_cache(collected: Array) -> void:
+	cached_resources.append_array(collected)
 	for resource in collected:
 		var idx: int = int(resource) % 8
 		var key: String = COLOR_ORDER[idx]
 		var inc: int = 2 if int(resource) >= 8 else 1
 		var current: int = int(resource_cache.get(key, 0))
 		resource_cache[key] = current + inc
+
+func clear_resource_cache():
+	cached_resources = []
+	GameManager.resource_cache = {
+			"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+			"Blue": 0, "Pink": 0, "White": 0, "Brown": 0}
 
 func display_dropdown():
 	dropdown_active = true

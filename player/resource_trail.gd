@@ -56,6 +56,8 @@ var _theta: float = 0.0
 var _omega: float = 0.0
 
 func _ready() -> void:
+	Debug.expell_res = false
+	Debug.res_expelled = false
 	_build_rope_world()
 	_prev_anchor = global_position
 	_refresh_line2d_points()

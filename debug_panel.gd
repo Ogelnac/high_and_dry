@@ -6,8 +6,11 @@ extends Panel
 @onready var check_box_2: CheckBox = $VBoxContainer/CheckBox2
 @onready var check_box_3: CheckBox = $VBoxContainer/CheckBox3
 @onready var button: Button = $VBoxContainer/Button
+@onready var line_edit: LineEdit = $VBoxContainer/HBoxContainer/LineEdit
 
 @onready var dialogue_input: Panel = $"../DialogueInput"
+
+var previous_value: int = 5
 
 func _ready() -> void:
 	debug.pressed.connect(_toggle_panel_visibility)
@@ -19,6 +22,10 @@ func _ready() -> void:
 	check_box.button_pressed = Debug.disable_rising_death
 	check_box_2.button_pressed = Debug.infinite_health
 	check_box_3.button_pressed = Debug.infinite_resources
+
+	line_edit.text = str(previous_value)
+	line_edit.text_submitted.connect(_validate_line_edit)
+	line_edit.focus_exited.connect(_validate_line_edit_on_focus_exit)
 
 func _toggle_panel_visibility():
 	visible = !visible
@@ -51,3 +58,16 @@ func _confirm():
 
 func _deny():
 	dialogue_input.hide()
+
+func _validate_line_edit(new_text: String) -> void:
+	var num = new_text.to_int()
+	if str(num) != new_text.strip_edges() and not new_text.is_valid_int():
+		line_edit.text = str(previous_value)
+		return
+	num = clamp(num, 1, 100)
+	line_edit.text = str(num)
+	previous_value = num
+	Debug.number_of_levels = -(num + 1)
+
+func _validate_line_edit_on_focus_exit() -> void:
+	_validate_line_edit(line_edit.text)

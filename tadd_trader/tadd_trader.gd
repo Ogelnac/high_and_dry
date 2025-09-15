@@ -66,9 +66,9 @@ func _init_item_defs() -> void:
 	normal_defs.append(_mk_boon(4,1,"Resource Magnet","Attract nearby resources.",100,[0,1,2,3,4,5,6,7],3,false))
 	normal_defs.append(_mk_boon(5,1,"2x","Each resource is worth double. Lasts 60s.",100,[0,1,2,3,4,5,6,7],4,false))
 	normal_defs.append(_mk_boon(6,1,"4x","Each resource is worth quadrouple! Lasts 60s.",200,[0,1,2,3,4,5,6,7],5,false))
-	normal_defs.append(_mk_boon(7,1,"Square Px","Undetermined.",100,[0,1,2,3,4,5,6,7],6,false))
-	normal_defs.append(_mk_boon(8,1,"Triangle Px","Undetermined.",100,[0,1,2,3,4,5,6,7],7,false))
-	normal_defs.append(_mk_boon(9,1,"Circle Px","Undetermined.",100,[0,1,2,3,4,5,6,7],8,false))
+	normal_defs.append(_mk_boon(7,0,"Square Px","Undetermined.",100,[0,1,2,3,4,5,6,7],6,false))
+	normal_defs.append(_mk_boon(8,0,"Triangle Px","Undetermined.",100,[0,1,2,3,4,5,6,7],7,false))
+	normal_defs.append(_mk_boon(9,0,"Circle Px","Undetermined.",100,[0,1,2,3,4,5,6,7],8,false))
 	boost_defs = []
 	for t in range(8):
 		var b := BoostBoonDef.new()
@@ -183,3 +183,7 @@ func _apply_shop_selection(items:Array[ShopManager.ShopItem]) -> void:
 			boon_node.visible = true
 		else:
 			boon_node.visible = false
+
+func leave_shop():
+	Debug.switch_player = false
+	get_tree().change_scene_to_file("res://arcade_main.tscn")

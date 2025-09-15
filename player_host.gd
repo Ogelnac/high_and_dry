@@ -2,16 +2,13 @@ extends Node2D
 
 @export var platform_player_scene: PackedScene
 @export var arcade_player_scene: PackedScene
-@export var existing_player: CharacterBody2D
 
 var current: CharacterBody2D
 var player_parent: Node
 var launch_zone: Area2D
 
 func _ready():
-	if not existing_player:
-		return
-	current = existing_player
+	current = get_node("../ArcadePlayer")
 	player_parent = get_parent()
 
 func _process(_delta: float) -> void:
