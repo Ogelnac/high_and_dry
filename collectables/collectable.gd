@@ -45,6 +45,8 @@ func _on_body_entered(body: Node2D) -> void:
 		collision_shape_2d.set_deferred("disabled", true)
 
 		GameManager.add_resource(collectable_type)
+		var main = get_node("../../../")
+		main.restart_timer(global_position)
 
 		audio_player.play()
 

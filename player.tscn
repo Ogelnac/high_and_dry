@@ -93,7 +93,7 @@ collision_mask = 9
 script = ExtResource("1_dyp2x")
 jump_force = -260.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." groups=["shader_objects"]]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_hqtel")
 position = Vector2(0, -6)
 texture = ExtResource("1_qowkf")

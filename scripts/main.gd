@@ -33,6 +33,12 @@ var rich_text_label: RichTextLabel
 var dialogue_input: Panel
 var ui: Control 
 
+# Combo
+var combo_timer: Timer
+var combo_window: float = 1.0
+var combo_counter: int = 0
+const COUNTER = preload("res://effects/counter.tscn")
+
 func _ready() -> void:
 	Debug.arcade_main_node_id = get_tree().get_current_scene()
 
@@ -52,8 +58,30 @@ func _ready() -> void:
 	if not GameManager.game_progress["demo_played"]:
 		GameManager.stage_level = Vector2i(0, 0)
 
+	combo_timer = Timer.new()
+	combo_timer.one_shot = true
+	add_child(combo_timer)
+	combo_timer.timeout.connect(_end_combo)
+
 	setup_levels(GameManager.stage_level)
 	pattern_update(0)
+
+func _end_combo():
+	combo_counter = 0
+
+func restart_timer(at: Vector2):
+	if combo_timer:
+		combo_timer.stop()
+	combo_counter += 1
+	combo_timer.start(combo_window)
+	spawn_counter(at)
+
+func spawn_counter(pos: Vector2):
+	var instance = COUNTER.instantiate()
+	instance.number_value = combo_counter
+	instance.lifetime = combo_window
+	instance.global_position = pos
+	add_child(instance)
 
 func _process(_delta: float) -> void:
 	if game_ended:

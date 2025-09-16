@@ -26,6 +26,7 @@ func _ready() -> void:
 	line_edit.text = str(previous_value)
 	line_edit.text_submitted.connect(_validate_line_edit)
 	line_edit.focus_exited.connect(_validate_line_edit_on_focus_exit)
+	_validate_line_edit(line_edit.text)
 
 func _toggle_panel_visibility():
 	visible = !visible

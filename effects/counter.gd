@@ -9,7 +9,8 @@ extends Node2D
 @export var number_value: int = 0
 
 func _ready():
-	randomize_appearance()
+	label.text = "[center]" + str(number_value)
+	randomise_appearance()
 	adjust_pitch()
 	animate_entry()
 	if number_value % 50 == 0:
@@ -21,7 +22,7 @@ func _ready():
 	await get_tree().create_timer(0.25).timeout
 	queue_free()
 
-func randomize_appearance():
+func randomise_appearance():
 	rotation_degrees = randf_range(-15, 15)
 	label.position.y = randf_range(-25, -20)
 	var scale_multiplier = base_scale

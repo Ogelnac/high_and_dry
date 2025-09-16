@@ -22,10 +22,13 @@ var colours: Array[String] = [
 	"#ffffff",
 	"#8f563b"]
 
+var master_baseline := 0.5
+var black_dot_offsets := {}
+
 func _ready():
 	if get_node_or_null("../../Player"):
 		player = get_tree().get_root().get_node_or_null("Main/Player")
-		if player == null: # Tadd Trader
+		if player == null:
 			return
 		player.start_game_signal.connect(_on_player_start_game_signal)
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
@@ -33,8 +36,13 @@ func _ready():
 			display_swipe_to_start = false
 	shader_objects = find_objects_with_shader()
 	for obj in shader_objects:
+		if obj.material is ShaderMaterial:
+			var v: float = obj.material.get_shader_parameter("black_dot_transition")
+			black_dot_offsets[obj.get_instance_id()] = v - master_baseline
+	for obj in shader_objects:
 		if obj.material.get_shader_parameter("black_dot_transition") >= 2.0:
 			_fade_from_black()
+			break
 
 func _process(_delta: float) -> void:
 	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
@@ -61,7 +69,9 @@ func _fade_from_black() -> void:
 func update_shader_black_dot_transition(value: float) -> void:
 	for obj in shader_objects:
 		if obj.material is ShaderMaterial:
-			obj.material.set_shader_parameter("black_dot_transition", value)
+			var off = black_dot_offsets.get(obj.get_instance_id(), 0.0)
+			var v = clamp(value + off, 0.0, 2.0)
+			obj.material.set_shader_parameter("black_dot_transition", v)
 
 func find_objects_with_shader() -> Array:
 	var objects = []
@@ -74,7 +84,6 @@ func find_objects_with_shader() -> Array:
 func _on_player_start_game_signal() -> void:
 	_fade_to_black(0.2)
 	_play_one_shot(PIPE)
-
 	display_swipe_to_start = false
 	await get_tree().create_timer(1.0).timeout
 	scene_manager.show()

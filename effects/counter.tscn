@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cpphloewhd56b"]
 
-[ext_resource type="Script" uid="uid://ld5dc83px7ok" path="res://scripts/counter.gd" id="1_c0gdl"]
+[ext_resource type="Script" uid="uid://ld5dc83px7ok" path="res://effects/counter.gd" id="1_c0gdl"]
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://theme/theme_test.tres" id="1_v1kn5"]
 [ext_resource type="AudioStream" uid="uid://b1d7fhuqrwljs" path="res://audio/collect_resource.wav" id="3_cr1nf"]
 [ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://audio/collect50.wav" id="4_8fso8"]
@@ -27,7 +27,7 @@ theme = ExtResource("1_v1kn5")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 bbcode_enabled = true
-text = "[center]69"
+text = "69"
 autowrap_mode = 0
 
 [node name="CollectResource" type="AudioStreamPlayer2D" parent="."]
