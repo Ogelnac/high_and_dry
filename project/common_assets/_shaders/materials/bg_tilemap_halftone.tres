@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c01vyjpllrclc"]
+
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_7ryty"]
+
+[resource]
+shader = ExtResource("1_7ryty")
+shader_parameter/black_dot_transition = 0.8
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0

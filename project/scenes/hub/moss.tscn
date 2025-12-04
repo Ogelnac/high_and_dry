@@ -1,0 +1,225 @@
+[gd_scene load_steps=20 format=4 uid="uid://bb5wo6nskardr"]
+
+[ext_resource type="Script" uid="uid://qvm28w84poyn" path="res://project/scenes/hub/moss.gd" id="1_7cf5m"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_35sx4"]
+[ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="3_ufhhs"]
+[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="4_jh38f"]
+[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/mbg_tilemap_halftone.tres" id="5_jh38f"]
+[ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://project/scenes/hub/main.tres" id="6_erenm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2t1y"]
+shader = ExtResource("2_35sx4")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_35sx4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(48, 112, 48, 47)]
+}
+
+[sub_resource type="Animation" id="Animation_7cf5m"]
+resource_name = "furnace"
+length = 5.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Rect2(48, 112, 48, 47), Rect2(96, 112, 48, 47), Rect2(144, 112, 48, 47)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ufhhs"]
+_data = {
+&"RESET": SubResource("Animation_35sx4"),
+&"furnace": SubResource("Animation_7cf5m")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b1qrp"]
+size = Vector2(31, 29)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnost"]
+shader = ExtResource("2_35sx4")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_7stet"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_wrya3"]
+resource_name = "Jump"
+length = 0.02
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_6kf0e"]
+resource_name = "OpenPopup"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_ehjrk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_55hhd"]
+resource_name = "Run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
+_data = {
+&"Idle": SubResource("Animation_7stet"),
+&"Jump": SubResource("Animation_wrya3"),
+&"OpenPopup": SubResource("Animation_6kf0e"),
+&"RESET": SubResource("Animation_ehjrk"),
+&"Run": SubResource("Animation_55hhd")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnkbs"]
+size = Vector2(28, 31)
+
+[node name="Moss" type="Node2D"]
+script = ExtResource("1_7cf5m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_d2t1y")
+texture = ExtResource("3_ufhhs")
+region_enabled = true
+region_rect = Rect2(48, 112, 48, 47)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_ufhhs")
+}
+
+[node name="TapButton" type="Area2D" parent="."]
+position = Vector2(0, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
+position = Vector2(0.5, -34.5)
+shape = SubResource("RectangleShape2D_b1qrp")
+
+[node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_qnost")
+position = Vector2(0, -32)
+texture = ExtResource("4_jh38f")
+hframes = 3
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup"]
+libraries = {
+&"": SubResource("AnimationLibrary_tamwi")
+}
+
+[node name="DetectionArea" type="Area2D" parent="."]
+position = Vector2(0, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_wnkbs")
+
+[node name="Torso" type="TileMapLayer" parent="." groups=["shader_objects"]]
+z_index = -200
+material = ExtResource("5_jh38f")
+position = Vector2(10.4, 2.6)
+scale = Vector2(1.3, 1.3)
+tile_map_data = PackedByteArray("AAD6/wIAAAAQAAIAAAD6/wMAAAAQAAMAAAD6/wQAAAAQAAQAAAD6/wUAAAAQAAUAAAD6/wYAAAAQAAYAAAD6/wcAAAAQAAcAAAD6/wgAAAAQAAgAAAD7/wIAAAARAAIAAAD7/wMAAAARAAMAAAD7/wQAAAARAAQAAAD7/wUAAAARAAUAAAD7/wYAAAARAAYAAAD7/wcAAAARAAcAAAD7/wgAAAARAAgAAAD8/wEAAAASAAEAAAD8/wIAAAASAAIAAAD8/wMAAAATAAMAAAD8/wQAAAATAAMAAAD8/wUAAAASAAUAAAD8/wYAAAASAAYAAAD8/wcAAAASAAcAAAD8/wgAAAASAAgAAAD8/wkAAAASAAkAAAD8/woAAAASAAoAAAD9/wEAAAATAAEAAAD9/wIAAAATAAIAAAD9/wMAAAATAAMAAAD9/wQAAAATAAMAAAD9/wUAAAATAAUAAAD9/wYAAAATAAYAAAD9/wcAAAATAAcAAAD9/wgAAAATAAgAAAD9/wkAAAATAAkAAAD9/woAAAATAAoAAAD+/wEAAAAUAAEAAAD+/wIAAAAUAAIAAAD+/wMAAAATAAMAAAD+/wQAAAATAAMAAAD+/wUAAAAUAAUAAAD+/wYAAAAUAAYAAAD+/wcAAAAUAAcAAAD+/wgAAAAUAAgAAAD+/wkAAAAUAAkAAAD+/woAAAAUAAoAAAD+/wsAAAAUAAsAAAD//wEAAAAVAAEAAAD//wIAAAAVAAIAAAD//wMAAAAVAAMAAAD//wQAAAAVAAQAAAD//wUAAAAVAAUAAAD//wYAAAAVAAYAAAD//wcAAAAVAAcAAAD//wgAAAAVAAgAAAD//wkAAAAVAAkAAAD//woAAAAVAAoAAAD//wsAAAAVAAsAAAAAAAEAAAAWAAEAAAAAAAIAAAAWAAIAAAAAAAMAAAATAAMAAAAAAAQAAAATAAMAAAAAAAUAAAAWAAUAAAAAAAYAAAAWAAYAAAAAAAcAAAAWAAcAAAAAAAgAAAAWAAgAAAAAAAkAAAAWAAkAAAAAAAoAAAAWAAoAAAAAAAsAAAAWAAsAAAABAAEAAAAXAAEAAAABAAIAAAAXAAIAAAABAAMAAAATAAMAAAABAAQAAAATAAMAAAABAAUAAAAXAAUAAAABAAYAAAAXAAYAAAABAAcAAAAXAAcAAAABAAgAAAAXAAgAAAABAAkAAAAXAAkAAAABAAoAAAAXAAoAAAACAAEAAAAYAAEAAAACAAIAAAAYAAIAAAACAAMAAAATAAMAAAACAAQAAAATAAMAAAACAAUAAAAYAAUAAAACAAYAAAAYAAYAAAACAAcAAAAYAAcAAAACAAgAAAAYAAgAAAACAAkAAAAYAAkAAAACAAoAAAAYAAoAAAADAAIAAAAZAAIAAAADAAMAAAAZAAMAAAADAAQAAAAZAAQAAAADAAUAAAAZAAUAAAADAAYAAAAZAAYAAAADAAcAAAAZAAcAAAADAAgAAAAZAAgAAAAEAAIAAAAaAAIAAAAEAAMAAAAaAAMAAAAEAAQAAAAaAAQAAAAEAAUAAAAaAAUAAAAEAAYAAAAaAAYAAAAEAAcAAAAaAAcAAAAEAAgAAAAaAAgAAAA=")
+tile_set = ExtResource("6_erenm")
+collision_enabled = false
+
+[node name="Legs" type="TileMapLayer" parent="." groups=["shader_objects"]]
+z_index = -200
+material = ExtResource("5_jh38f")
+position = Vector2(10.4, 2.6)
+scale = Vector2(1.3, 1.3)
+tile_map_data = PackedByteArray("AAD7/woAAAARAAwAAAD7/wsAAAARAA0AAAD7/wwAAAARAA4AAAD7/w0AAAARAA8AAAD7/w4AAAARABAAAAD7/w8AAAARABEAAAD8/woAAAASAAwAAAD8/wsAAAASAA0AAAD8/wwAAAASAA4AAAD8/w0AAAASAA8AAAD8/w4AAAASABAAAAD8/w8AAAASABEAAAD8/xAAAAASABIAAAD8/xEAAAASABMAAAD8/xIAAAASABQAAAD8/xMAAAASABUAAAD9/woAAAATAAwAAAD9/wsAAAATAA0AAAD9/wwAAAATAA4AAAD9/w0AAAATAA8AAAD9/w4AAAATABAAAAD9/w8AAAATABEAAAD9/xAAAAATABIAAAD9/xEAAAATABMAAAD9/xIAAAATABQAAAD9/xMAAAATABUAAAD+/wsAAAAUAA0AAAD+/wwAAAAUAA4AAAD+/w0AAAAUAA8AAAD+/w4AAAAUABAAAAD//wsAAAAVAA0AAAD//wwAAAAVAA4AAAD//w0AAAAVAA8AAAD//w4AAAAVABAAAAD//w8AAAAVABEAAAD//xAAAAAVABIAAAD//xEAAAAVABMAAAAAAAsAAAAWAA0AAAAAAAwAAAAWAA4AAAAAAA0AAAAWAA8AAAAAAA4AAAAWABAAAAAAAA8AAAAWABEAAAAAABAAAAAWABIAAAAAABEAAAAWABMAAAAAABIAAAAWABQAAAABAAsAAAAXAA0AAAABAAwAAAAXAA4AAAABAA0AAAAXAA8AAAABAA4AAAAXABAAAAABAA8AAAAXABEAAAABABAAAAAXABIAAAABABEAAAAXABMAAAABABIAAAAXABQAAAACAAsAAAAYAA0AAAACAAwAAAAYAA4AAAACAA0AAAAYAA8AAAACAA4AAAAYABAAAAACAA8AAAAYABEAAAACABAAAAAYABIAAAACABEAAAAYABMAAAACABIAAAAYABQAAAADAA0AAAAZAA8AAAADAA4AAAAZABAAAAADAA8AAAAZABEAAAADABAAAAAZABIAAAADABEAAAAZABMAAAD7/wkAAAARAAsAAAD7/xMAAAARABUAAAD8/wkAAAASAAsAAAD9/wkAAAATAAsAAAD+/woAAAAUAAwAAAD+/xMAAAAUABUAAAD//woAAAAVAAwAAAAAAAoAAAAWAAwAAAABAAoAAAAXAAwAAAACAAoAAAAYAAwAAAADAAwAAAAZAA4AAAA=")
+tile_set = ExtResource("6_erenm")
+collision_enabled = false
+
+[node name="TorsoOverlap" type="TileMapLayer" parent="." groups=["shader_objects"]]
+z_index = -200
+material = ExtResource("5_jh38f")
+position = Vector2(10.4, 2.6)
+scale = Vector2(1.3, 1.3)
+tile_map_data = PackedByteArray("AAD+/wsAAAAUAAsAAAD//wsAAAAVAAsAAAAAAAsAAAAWAAsAAAA=")
+tile_set = ExtResource("6_erenm")
+collision_enabled = false

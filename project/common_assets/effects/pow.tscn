@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbu1mtwo6ccdo"]
+
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_b206x"]
+[ext_resource type="Texture2D" uid="uid://du5rvjj4acp4s" path="res://project/common_assets/_textures/particles.png" id="2_g5otr"]
+[ext_resource type="Script" uid="uid://ba33mbw652i4o" path="res://project/common_assets/effects/pow.gd" id="3_g5otr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_giwou"]
+shader = ExtResource("1_b206x")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+
+[node name="Pow" type="Sprite2D"]
+z_index = -1
+material = SubResource("ShaderMaterial_giwou")
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_g5otr")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+region_filter_clip_enabled = true
+script = ExtResource("3_g5otr")

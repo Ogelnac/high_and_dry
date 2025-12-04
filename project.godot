@@ -14,14 +14,14 @@ config/name="high_and_dry"
 run/main_scene="uid://cw2sf1bh5vj78"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://textures/Thumbnail.png"
+config/icon="res://project/icon.png"
 
 [autoload]
 
-GameManager="*res://autoloads/game_manager.gd"
-DialogueManager="*res://autoloads/dialogue_manager.gd"
-Debug="*res://autoloads/debug.gd"
-ShopManager="*res://autoloads/shop_manager.gd"
+GameManager="*res://project/common_assets/_autoloads/game_manager.gd"
+DialogueManager="*res://project/common_assets/_autoloads/dialogue_manager.gd"
+Debug="*res://project/common_assets/_autoloads/debug.gd"
+ShopManager="*res://project/common_assets/_autoloads/shop_manager.gd"
 
 [display]
 
@@ -52,6 +52,10 @@ ui_switch_controller={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+jolt_physics_3d/collision/draw_2d_outlines=false
 
 [rendering]
 

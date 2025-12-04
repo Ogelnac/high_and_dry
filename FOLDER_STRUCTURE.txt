@@ -1,0 +1,33 @@
+i18n/ (shorthand for internationalisation) holds CSVs for translations of language
+raw_assets/ # Aesprite and paint.net files 
+project/
+	icon.png
+	common_assets/ # Files shared between several scenes.
+		_audio/
+		_autoloads/
+		_classes/
+		_fonts/
+		_managers/
+		_resources/
+		_shaders/
+			materials/
+		_ui/
+		common_assetA/ # Put everything specific to a common asset inside.
+			sceneA_folder/
+			_sceneA.tscn
+			sceneA_script.gd
+			some_image.png
+		common_assetB/
+		common_assetC/
+	scenes/
+		main_menu/
+		levels/ # Put similar scenes inside enclosing folder.
+			level1/
+			level2/
+		sceneA/ # Put everything specific to a scene inside.
+			sceneA_folder/
+			_sceneA.tscn
+			sceneA_script.gd
+			some_image.png
+		sceneB/
+		sceneC/
