@@ -36,6 +36,6 @@ func _on_tap_button_input_event(_viewport, event, _shape_idx):
 		if GameManager.unprocessed_resources.size()>= 50 or Debug.infinite_resources:
 			DialogueManager.start_dialogue("pesto_start", true)
 			DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
-			DialogueManager.bind_input("res://whack_a_pesto.tscn")
+			DialogueManager.bind_input("uid://b1v52htitw8cp")
 		else:
 			DialogueManager.start_dialogue("pesto_wait", false)

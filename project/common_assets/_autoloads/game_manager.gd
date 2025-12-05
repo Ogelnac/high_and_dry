@@ -203,7 +203,7 @@ func display_dropdown():
 			count = int(resource_cache.get(key, 0))	
 		else:
 			count = int(resources.get(key, 0))
-		lines += "[img width=48 region=%d,%d,%d,%d]res://textures/ingredients.png[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [r.x, r.y, r.z, r.w, hex, count]
+		lines += "[img width=48 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [r.x, r.y, r.z, r.w, hex, count]
 	resource_counter.text = lines
 
 func display_normal_counter():

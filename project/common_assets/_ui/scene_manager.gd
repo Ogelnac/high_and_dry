@@ -33,7 +33,7 @@ func _on_level_1_button_up() -> void:
 	level_select.play()
 	rich_text_label.text = "[center][rainbow][wave amp=100 freq=5]LVL 1[/wave][/rainbow][/center]"
 	await fade_from_control(rich_text_label, 3.0)
-	get_tree().change_scene_to_file("res://project/scenes/stages/_arcade_main.tscn")
+	get_tree().change_scene_to_file("uid://dxc74hnt0exva")
 
 func _on_start_game_signal_merchant() -> void:
 	GameManager.stage_level += Vector2i(0, 1)

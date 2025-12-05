@@ -1,7 +1,7 @@
 extends Node2D
 
-const INGREDIENT = preload("res://ingredient.tscn")
-const KARAKARA = preload("res://audio/karakara.wav")
+const INGREDIENT = preload("uid://cn51vsxl4fti2")
+const KARAKARA = preload("uid://qcu637dsm4xw")
 
 @onready var tailor_wap: Node2D = $TailorWAP
 @onready var sprite_2d: Sprite2D = $TailorWAP/Sprite2D
@@ -107,4 +107,4 @@ func end_game():
 			GameManager.resources[key] -= resources_to_be_processed.count(i)
 			GameManager.dye_value[key] += resources_to_be_processed.count(i)
 		GameManager.save()
-	GameManager.change_scene("res://main.tscn")
+	GameManager.change_scene("uid://cjyisk7r6qf4c")

@@ -7,6 +7,6 @@ func _ready() -> void:
 
 func _switch_scene(demo_played: bool) -> void:
 	if demo_played:
-		get_tree().change_scene_to_file("res://project/scenes/hub/_hub_main.tscn")
+		get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")
 	else:
-		get_tree().change_scene_to_file("res://project/scenes/stages/_arcade_main.tscn")
+		get_tree().change_scene_to_file("uid://dxc74hnt0exva")

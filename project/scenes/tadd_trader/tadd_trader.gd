@@ -61,7 +61,7 @@ func _ready() -> void:
 func _init_item_defs() -> void:
 	normal_defs = []
 	normal_defs.append(_mk_boon(1,1,"Multi Needle","Throw two needles at once.",100,[0,1,2,3,4,5,6,7],0,false))
-	normal_defs.append(_mk_boon(2,1,"Jetpack","Fly for a while, great when your're in a pinch.",100,[0,1,2,3,4,5,6,7],1,false))
+	normal_defs.append(_mk_boon(2,1,"Jetpack","Fly for a while, great when you're in a pinch.",100,[0,1,2,3,4,5,6,7],1,false))
 	normal_defs.append(_mk_boon(3,1,"Deep Breath","Last longer without air.",100,[0,1,2,3,4,5,6,7],2,false))
 	normal_defs.append(_mk_boon(4,1,"Resource Magnet","Attract nearby resources.",100,[0,1,2,3,4,5,6,7],3,false))
 	normal_defs.append(_mk_boon(5,1,"2x","Each resource is worth double. Lasts 60s.",100,[0,1,2,3,4,5,6,7],4,false))
