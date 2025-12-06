@@ -654,7 +654,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 35
 bbcode_enabled = true
-text = "[center]100[img width=25 region=1,1,16,16]res://textures/Ingredients.png[/img]"
+text = "[center]100[img width=25 region=1,1,16,16]res://project/common_assets/_textures/ingredients.png[/img]"
 fit_content = true
 
 [node name="Cancel" type="Button" parent="ShopBox/Options"]

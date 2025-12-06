@@ -273,4 +273,4 @@ func _reset_progress() -> void:
 	silk_worms = 0
 	sand = 0
 	save()
-	get_tree().change_scene_to_file("res://start_scene.tscn")
+	get_tree().change_scene_to_file("uid://cw2sf1bh5vj78")
