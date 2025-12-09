@@ -45,9 +45,9 @@ region_filter_clip_enabled = true
 visible = false
 material = SubResource("ShaderMaterial_ahcp0")
 texture = ExtResource("4_ahcp0")
-hframes = 3
-vframes = 3
-frame = 7
+hframes = 4
+vframes = 4
+frame = 9
 region_filter_clip_enabled = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

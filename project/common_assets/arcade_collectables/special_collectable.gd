@@ -16,9 +16,9 @@ var hue := 0.0
 func _ready() -> void:
 	match collectable_type:
 		"Silkworm":
-			sprite_2d.frame = 7
-		"Sand":
 			sprite_2d.frame = 8
+		"Sand":
+			sprite_2d.frame = 9
 
 func _process(delta: float) -> void:
 	if collected:
