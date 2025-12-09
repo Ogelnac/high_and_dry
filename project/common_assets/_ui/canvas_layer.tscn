@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://project/common_assets/_ui/sprites/joystick_base.png" id="2_77u76"]
@@ -59,11 +59,6 @@ shader_parameter/wave_freq = 1.0
 shader_parameter/wave_speed = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qens6"]
-atlas = ExtResource("6_uoqhr")
-region = Rect2(0, 0, 16, 16)
-filter_clip = true
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -135,20 +130,36 @@ mouse_filter = 2
 texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
 
-[node name="HubCounter" type="HBoxContainer" parent="UI"]
+[node name="HubCounter" type="VBoxContainer" parent="UI"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 30.0
 offset_top = 40.0
-offset_right = -116.0
+offset_right = -150.0
 offset_bottom = 140.0
 grow_horizontal = 2
+theme_override_constants/separation = 0
+
+[node name="Bag" type="RichTextLabel" parent="UI/HubCounter"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[img width=64 region=32,32,24,24]res://project/common_assets/_ui/sprites/sprites.png"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+meta_underlined = false
 
 [node name="ResourceCounter" type="RichTextLabel" parent="UI/HubCounter"]
 z_index = 1
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/normal_font_size = 32
@@ -158,9 +169,10 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="SilkSandCounter" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="FabricCounter" type="RichTextLabel" parent="UI/HubCounter"]
 z_index = 1
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/normal_font_size = 32
@@ -168,6 +180,48 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+meta_underlined = false
+
+[node name="SilkwormCounter" type="RichTextLabel" parent="UI/HubCounter"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+meta_underlined = false
+
+[node name="SandCounter" type="RichTextLabel" parent="UI/HubCounter"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+meta_underlined = false
+
+[node name="Arrow" type="RichTextLabel" parent="UI/HubCounter"]
+z_index = 1
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[img width=24 region=56,32,8,8]res://project/common_assets/_ui/sprites/sprites.png"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
 meta_underlined = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI"]
@@ -281,8 +335,8 @@ frame = 1
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
-hframes = 3
-vframes = 2
+hframes = 4
+vframes = 4
 frame = 1
 
 [node name="Level3" type="Button" parent="UI/SceneManager"]
@@ -311,8 +365,8 @@ frame = 2
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
-hframes = 3
-vframes = 2
+hframes = 4
+vframes = 4
 frame = 1
 
 [node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager"]
@@ -678,11 +732,11 @@ layout_mode = 2
 text = "MENU"
 
 [node name="Debug" type="Button" parent="HBoxContainer"]
-material = SubResource("ShaderMaterial_lptq8")
+texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Debug"
-icon = SubResource("AtlasTexture_qens6")
+expand_icon = true
 
 [node name="EndGame" type="Button" parent="HBoxContainer"]
 visible = false
@@ -721,5 +775,8 @@ text = "[color=#ff9f3d]                         ◢■■■■◤      ◢■�
 [color=#231310]   ◥■■■■◣       ◥■■■■◣"
 vertical_alignment = 1
 
+[connection signal="gui_input" from="UI/HubCounter/Bag" to="UI" method="_on_bag_gui_input"]
 [connection signal="gui_input" from="UI/HubCounter/ResourceCounter" to="UI" method="_on_resource_counter_gui_input"]
+[connection signal="gui_input" from="UI/HubCounter/FabricCounter" to="UI" method="_on_fabric_counter_gui_input"]
+[connection signal="gui_input" from="UI/HubCounter/Arrow" to="UI" method="_on_arrow_gui_input"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]

@@ -23,7 +23,6 @@ var player: Node2D = null
 	$"../ForeGround",
 	$"../ForeGround",
 	$"../Pachinko",
-	$"../TownBeauty",
 	$"../Title",
 	$"../Water",
 	$"../Ink",

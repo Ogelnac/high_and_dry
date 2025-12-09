@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://cjyisk7r6qf4c"]
+[gd_scene load_steps=68 format=4 uid="uid://cjyisk7r6qf4c"]
 
 [ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://project/scenes/hub/hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://project/common_assets/player_hub/player.tscn" id="1_fvgh8"]
@@ -508,37 +508,8 @@ texture = ExtResource("5_yxj2o")
 4:16/0 = 0
 3:16/0 = 0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3klb4"]
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a32pt"]
 texture = ExtResource("3_jpcof")
-1:0/next_alternative_id = 8
-1:0/animation_columns = 6
-1:0/animation_mode = 1
-1:0/animation_frame_0/duration = 0.3
-1:0/animation_frame_1/duration = 0.3
-1:0/animation_frame_2/duration = 0.2
-1:0/animation_frame_3/duration = 0.2
-1:0/animation_frame_4/duration = 0.2
-1:0/animation_frame_5/duration = 0.2
-1:0/0 = 0
-1:0/0/material = SubResource("ShaderMaterial_3klb4")
-1:0/1 = 1
-1:0/1/modulate = Color(0.807843, 0.164706, 0.164706, 1)
-1:0/2 = 2
-1:0/2/modulate = Color(0.560784, 0.337255, 0.231373, 1)
-1:0/3 = 3
-1:0/3/modulate = Color(0.87451, 0.443137, 0.14902, 1)
-1:0/4 = 4
-1:0/4/modulate = Color(0.415686, 0.745098, 0.188235, 1)
-1:0/5 = 5
-1:0/5/modulate = Color(0.984314, 0.94902, 0.211765, 1)
-1:0/6 = 6
-1:0/6/modulate = Color(0.843137, 0.482353, 0.729412, 1)
-1:0/7 = 7
-1:0/7/modulate = Color(0.388235, 0.607843, 1, 1)
-0:0/0 = 0
-0:0/0/probability = 8.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r2ark"]
 texture = ExtResource("7_hdm0b")
@@ -1057,33 +1028,6 @@ texture = ExtResource("5_yxj2o")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7lvc3"]
 texture = ExtResource("3_jpcof")
-1:0/next_alternative_id = 8
-1:0/animation_columns = 6
-1:0/animation_mode = 1
-1:0/animation_frame_0/duration = 0.3
-1:0/animation_frame_1/duration = 0.3
-1:0/animation_frame_2/duration = 0.2
-1:0/animation_frame_3/duration = 0.2
-1:0/animation_frame_4/duration = 0.2
-1:0/animation_frame_5/duration = 0.2
-1:0/0 = 0
-1:0/0/material = SubResource("ShaderMaterial_3klb4")
-1:0/1 = 1
-1:0/1/modulate = Color(0.807843, 0.164706, 0.164706, 1)
-1:0/2 = 2
-1:0/2/modulate = Color(0.560784, 0.337255, 0.231373, 1)
-1:0/3 = 3
-1:0/3/modulate = Color(0.87451, 0.443137, 0.14902, 1)
-1:0/4 = 4
-1:0/4/modulate = Color(0.415686, 0.745098, 0.188235, 1)
-1:0/5 = 5
-1:0/5/modulate = Color(0.984314, 0.94902, 0.211765, 1)
-1:0/6 = 6
-1:0/6/modulate = Color(0.843137, 0.482353, 0.729412, 1)
-1:0/7 = 7
-1:0/7/modulate = Color(0.388235, 0.607843, 1, 1)
-0:0/0 = 0
-0:0/0/probability = 8.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3ijpa"]
 texture = ExtResource("7_hdm0b")
@@ -1543,15 +1487,6 @@ scale_factor = 0.5
 position = Vector2(-141, -355)
 bounce_amount = 10.0
 scale_factor = 0.5
-
-[node name="TownBeauty" type="TileMapLayer" parent="." groups=["shader_objects"]]
-material = SubResource("ShaderMaterial_d2t1y")
-position = Vector2(-8, 0)
-tile_map_data = PackedByteArray("AAD8//P/AgAAAAAAAAD9//P/AgAAAAAAAAD///P/AgAAAAAAAAACAPP/AgAAAAAAAAD8//T/AgAAAAAAAAD9//T/AgAAAAAAAAD+//T/AgAAAAAAAAD///T/AgAAAAAAAAABAPT/AgAAAAAAAAACAPT/AgAAAAAAAADj//3/AgAAAAAAAADk//3/AgAAAAAAAADl//3/AgAAAAAAAADm//3/AgAAAAAAAADn//3/AgAAAAAAAADo//3/AgAAAAAAAADp//3/AgAAAAAAAADq//3/AgAAAAAAAADr//3/AgAAAAAAAADs//3/AgAAAAAAAADt//3/AgAAAAAAAADj//X/AgAAAAAAAADj//f/AgAAAAAAAADj//j/AgAAAAAAAADk//X/AgAAAAAAAADk//f/AgAAAAAAAADk//j/AgAAAAAAAADl//X/AgAAAAAAAADl//f/AgAAAAAAAADl//j/AgAAAAAAAADm//X/AgAAAAAAAADm//f/AgAAAAAAAADm//j/AgAAAAAAAADn//X/AgAAAAAAAADn//f/AgAAAAAAAADn//j/AgAAAAAAAADo//X/AgAAAAAAAADo//f/AgAAAAAAAADo//j/AgAAAAAAAADp//X/AgAAAAAAAADp//f/AgAAAAAAAADp//j/AgAAAAAAAADq//X/AgAAAAAAAADq//f/AgAAAAAAAADq//j/AgAAAAAAAADr//X/AgAAAAAAAADr//f/AgAAAAAAAADr//j/AgAAAAAAAADs//X/AgAAAAAAAADs//f/AgAAAAAAAADs//j/AgAAAAAAAADt//X/AgAAAAAAAADt//f/AgAAAAAAAADt//j/AgAAAAAAAAD8//X/AgAAAAAAAAD9//X/AgAAAAAAAAD+//X/AgAAAAAAAAACAPX/AgAAAAAAAAADAPX/AgAAAAAAAAAEAPX/AgAAAAAAAAAAAPX/AgAAAAAAAAABAPX/AgAAAAAAAAD///X/AgAAAAAAAAADAPP/AgAAAAAAAAAEAPP/AgAAAAAAAAAEAPT/AgAAAAAAAAAAAPP/AgAAAAAAAAABAPP/AgAAAAAAAAD+//P/AgAAAAAAAAAAAPT/AgAAAAAAAAADAPT/AgAAAAAAAAD8/wEAAgAAAAAAAAD8/wIAAgAAAAAAAAD9/wEAAgAAAAAAAAD9/wIAAgAAAAAAAAD+/wEAAgAAAAAAAAD+/wIAAgAAAAAAAAD//wEAAgAAAAAAAAD//wIAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAEAAgAAAAAAAAABAAIAAgAAAAAAAAACAAEAAgAAAAAAAAACAAIAAgAAAAAAAAADAAEAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAA=")
-tile_set = ExtResource("5_rhfmc")
-collision_enabled = false
-script = ExtResource("3_objk6")
-horizontal_motion_scale = 0.005
 
 [node name="Title" type="TileMapLayer" parent="." groups=["shader_objects"]]
 z_index = -110

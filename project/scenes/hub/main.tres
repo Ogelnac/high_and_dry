@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://ch5wc7uujkf88"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://ch5wc7uujkf88"]
 
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="1_kksmg"]
 [ext_resource type="Texture2D" uid="uid://d0jlqa0xi17rs" path="res://project/common_assets/_textures/fabric.png" id="2_kksmg"]
@@ -479,37 +479,8 @@ texture = ExtResource("1_kksmg")
 4:16/0 = 0
 3:16/0 = 0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3klb4"]
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0u5sr"]
 texture = ExtResource("2_kksmg")
-1:0/next_alternative_id = 8
-1:0/animation_columns = 6
-1:0/animation_mode = 1
-1:0/animation_frame_0/duration = 0.3
-1:0/animation_frame_1/duration = 0.3
-1:0/animation_frame_2/duration = 0.2
-1:0/animation_frame_3/duration = 0.2
-1:0/animation_frame_4/duration = 0.2
-1:0/animation_frame_5/duration = 0.2
-1:0/0 = 0
-1:0/0/material = SubResource("ShaderMaterial_3klb4")
-1:0/1 = 1
-1:0/1/modulate = Color(0.807843, 0.164706, 0.164706, 1)
-1:0/2 = 2
-1:0/2/modulate = Color(0.560784, 0.337255, 0.231373, 1)
-1:0/3 = 3
-1:0/3/modulate = Color(0.87451, 0.443137, 0.14902, 1)
-1:0/4 = 4
-1:0/4/modulate = Color(0.415686, 0.745098, 0.188235, 1)
-1:0/5 = 5
-1:0/5/modulate = Color(0.984314, 0.94902, 0.211765, 1)
-1:0/6 = 6
-1:0/6/modulate = Color(0.843137, 0.482353, 0.729412, 1)
-1:0/7 = 7
-1:0/7/modulate = Color(0.388235, 0.607843, 1, 1)
-0:0/0 = 0
-0:0/0/probability = 8.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_407c2"]
 texture = ExtResource("3_kksmg")

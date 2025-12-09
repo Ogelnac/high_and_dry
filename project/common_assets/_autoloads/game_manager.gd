@@ -52,6 +52,16 @@ var silkworm_amount: Dictionary[String, int] = {
 	"White": 0,
 	"Brown": 0}
 
+var fabric: Dictionary[String, int] = {
+	"Red": 0,
+	"Orange": 0,
+	"Yellow": 0,
+	"Green": 0,
+	"Blue": 0,
+	"Pink": 0,
+	"White": 0,
+	"Brown": 0}
+
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
 var cached_resources: Array[int] = []
 var unprocessed_resources: Array[int] = [] #TEMPORARY FOR WHACK-A-PESTO the order unprocessed resources were collected
@@ -71,7 +81,7 @@ var sand: int = 0
 
 var UI: Node
 var circle_fade: ColorRect
-var path := "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
+var path = "user://highscore.save" #"%AppData%\Roaming\Godot\app_userdata\high_and_dry"
 
 var dropdown_active: bool = false
 var cached_counter: bool = false
@@ -101,6 +111,16 @@ const INGREDIENT_REGIONS: Dictionary[String, Vector4i] = {
 	"White": Vector4i(109, 1, 16, 16),
 	"Brown": Vector4i(127, 1, 16, 16)}
 
+const FABRIC_REGIONS: Dictionary[String, Vector4i] = {
+	"Red": Vector4i(0, 0, 16, 16),
+	"Orange": Vector4i(16, 0, 16, 16),
+	"Yellow": Vector4i(32, 0, 16, 16),
+	"Green": Vector4i(0, 16, 16, 16),
+	"Blue": Vector4i(16, 16, 16, 16),
+	"Pink": Vector4i(32, 16, 16, 16),
+	"White": Vector4i(0, 32, 16, 16),
+	"Brown": Vector4i(16, 32, 16, 16)}
+
 func _process(_delta: float) -> void:
 	if fade_out and circle_fade:
 		var trans_value: float = circle_fade.material.get_shader_parameter("transition_value") + 0.01
@@ -119,7 +139,8 @@ func save():
 		"bottle_sizes": bottle_sizes,
 		"silk_worms": silk_worms,
 		"sand": sand,
-		"unprocessed_resources": unprocessed_resources
+		"unprocessed_resources": unprocessed_resources,
+		"fabric": fabric
 	}
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_var(data)
@@ -138,6 +159,7 @@ func load_game():
 		if "silk_worms" in d: silk_worms = int(d["silk_worms"])
 		if "sand" in d: sand = int(d["sand"])
 		if "unprocessed_resources" in d: unprocessed_resources = d["unprocessed_resources"]
+		if "fabric" in d: fabric = d["fabric"]
 
 func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
@@ -147,12 +169,10 @@ func arcade_UI():
 
 func hub_UI():
 	cached_counter = false
-	display_normal_counter()
 	update_bottles()
 
 func shop_UI():
 	cached_counter = true
-	display_normal_counter()
 
 func whack_a_pesto_UI():
 	var whack_metre = UI.find_child("WhackMetre")
@@ -190,35 +210,10 @@ func clear_resource_cache():
 			"Blue": 0, "Pink": 0, "White": 0, "Brown": 0}
 
 func display_dropdown():
-	dropdown_active = true
-	var hub_counter: Node = UI.find_child("HubCounter")
-	var resource_counter: RichTextLabel = hub_counter.find_child("ResourceCounter")
-	var lines: String = ""
-	print(INGREDIENTS.load_path)
-	for key: String in COLOR_ORDER:
-		var r: Vector4i = INGREDIENT_REGIONS[key]
-		var hex: String = COLOR_HEX[key]
-		var count: int
-		if cached_counter:
-			count = int(resource_cache.get(key, 0))	
-		else:
-			count = int(resources.get(key, 0))
-		lines += "[img width=48 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [r.x, r.y, r.z, r.w, hex, count]
-	resource_counter.text = lines
+	dropdown_active = false
 
 func display_normal_counter():
 	dropdown_active = false
-	var hub_counter: Node = UI.find_child("HubCounter")
-	var resource_counter: RichTextLabel = hub_counter.find_child("ResourceCounter")
-	var silk_sand_counter: RichTextLabel = hub_counter.find_child("SilkSandCounter")
-	var sum: int = 0
-	for key: String in COLOR_ORDER:
-		if cached_counter:
-			sum += int(resource_cache.get(key, 0))
-		else:
-			sum += int(resources.get(key, 0))
-	resource_counter.text = "[img width=48 region=32,0,16,16]res://project/common_assets/_ui/sprites/sprites.png[/img][color=ffffff]x[font_size=60]%d" % sum
-	silk_sand_counter.text = " [img width=48 region=16,32,16,16]res://project/common_assets/_ui/sprites/sprites.png[/img]x[font_size=60]%d [/font_size][img width=48 region=32,32,16,16]res://project/common_assets/_ui/sprites/sprites.png[/img]x[font_size=60]%d" % [silk_worms, sand]
 
 func update_bottles():
 	var dye_bottles = get_node("../Main/DyeBottles")
@@ -249,6 +244,17 @@ func increase_silkworm_amount(dye_name: String):
 func decrease_silkworm_amount(dye_name: String):
 	silkworm_amount[dye_name] -= 1
 
+func get_fabric_amount(color_name: String) -> int:
+	return int(fabric.get(color_name, 0))
+
+func increase_fabric_amount(color_name: String, amount: int = 1) -> void:
+	var current: int = int(fabric.get(color_name, 0))
+	fabric[color_name] = current + amount
+
+func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
+	var current: int = int(fabric.get(color_name, 0))
+	fabric[color_name] = current - amount
+
 func _reset_progress() -> void:
 	game_progress = {
 		"demo_played": false, "whack_a_pesto_played": false,
@@ -266,6 +272,10 @@ func _reset_progress() -> void:
 		"Blue": 160, "Pink": 160, "White": 160, "Brown": 160
 	}
 	silkworm_amount = {
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	}
+	fabric = {
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
 		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
 	}

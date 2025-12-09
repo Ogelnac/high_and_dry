@@ -9,7 +9,7 @@
 shader = ExtResource("2_6v4sc")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.25
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_xwos4"]
 length = 0.001
@@ -55,7 +55,7 @@ size = Vector2(31, 29)
 shader = ExtResource("2_6v4sc")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -161,6 +161,7 @@ position = Vector2(0, 32)
 texture = ExtResource("2_3aboj")
 hframes = 2
 vframes = 2
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
