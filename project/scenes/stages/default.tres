@@ -239,15 +239,23 @@ texture = ExtResource("1_arwl4")
 16:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
 12:7/0 = 0
 12:7/0/modulate = Color(0, 1, 0, 0.5882353)
+12:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.1583042, -8, -2.1583042)
+12:7/0/custom_data_0 = true
 12:7/0/custom_data_1 = true
 13:7/0 = 0
 13:7/0/modulate = Color(0, 1, 0, 0.5882353)
+13:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.1583042, -8, -2.1583042)
+13:7/0/custom_data_0 = true
 13:7/0/custom_data_1 = true
 14:7/0 = 0
 14:7/0/modulate = Color(0, 1, 0, 0.5882353)
+14:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.1583042, -8, -2.1583042)
+14:7/0/custom_data_0 = true
 14:7/0/custom_data_1 = true
 15:7/0 = 0
 15:7/0/modulate = Color(0, 1, 0, 0.5882353)
+15:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.1583042, -8, -2.1583042)
+15:7/0/custom_data_0 = true
 15:7/0/custom_data_1 = true
 
 [resource]
