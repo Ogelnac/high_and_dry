@@ -181,7 +181,7 @@ func leave_arcade():
 	Engine.time_scale = 1.0
 	GameManager.save()
 	ui.update_shader_black_dot_transition(0.5)
-	get_tree().change_scene_to_file("uid://bbttaetv3js80")
+	get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")
 
 func player_end_animation_sequence() -> void:
 	arcade_player.kill()

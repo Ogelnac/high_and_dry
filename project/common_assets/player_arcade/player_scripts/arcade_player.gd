@@ -2,15 +2,22 @@ extends CharacterBody2D
 
 # WORLD
 @export var friction: float = 1.0
-@export var lung_capacity: float = 150.0
+@export var lung_capacity: float = 3.0
 var damping = 0.0
 var in_water = false
 var breath = 1.0
 var prev_resources = 0
 var dead = false
 
+# SLIME
+const BURST_PARTICLE = preload("uid://bhjo78s7o0ca2")
+var slime_count_max = 5.0
+var slime_count = 0.0
+var drip_delay_max = 0.15
+var drip_delay = drip_delay_max
+
 # VELOCITIES
-@export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
+@export var hop_velocity: Vector2 = Vector2(60.0, -175.0)
 @export var climb_velocity: float = 250.0
 @export var climb_stop_velocity: float = 0.0 #150.0
 @export var throw_velocity: float = 800.0
@@ -87,7 +94,7 @@ func _physics_process(delta: float) -> void:
 
 	if get_slide_collision_count() > 0:
 		if touched_spikes():
-			print("Yeooowch!")
+			slime_count = slime_count_max
 
 	handle_animation()
 	update_sprite_orientation(delta)
@@ -122,20 +129,36 @@ func _physics_process(delta: float) -> void:
 		var local_vel_x = velocity.rotated(-current_angle).x
 		sprite.flip_h = local_vel_x < 0
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Debug.infinite_health:
 		breath = 1.0
 		return
 
 	if in_water and breath > 0.0:
-		breath -= 1.0 / lung_capacity
+		breath -= 1.0 / lung_capacity * delta
 	elif in_water:
 		breath = 0.0
 
 	if not in_water and breath < 1.0:
-		breath += 1.0 / lung_capacity
+		breath += 1.0 / lung_capacity * delta
 	elif not in_water:
 		breath = 1.0
+	
+	if slime_count > 0.0:
+		slime_count -= delta
+		drip_delay -= delta
+		if drip_delay <= 0.0:
+			drip_delay = drip_delay_max
+			var particle_velocity := Vector2(randf_range(-15.0, 15.0), randf_range(20.0, 30.0))
+			var particle := BURST_PARTICLE.instantiate()
+			get_tree().current_scene.add_child(particle)
+			particle.global_position = position
+			particle.linear_velocity = particle_velocity
+			particle.collision_mask = 0
+			particle.z_index = 5
+			particle.gravity_scale = 0.75
+	else:
+		slime_count = 0.0
 
 func _input(event: InputEvent):
 	if dead:
@@ -211,7 +234,7 @@ func apply_friction_and_gravity(delta: float) -> void:
 		return
 
 	if not is_on_floor():
-		velocity.y += (200.0 + (arcade_resources * 5.0)) * delta
+		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 5.0 * 0.0)) * delta
 	else:
 		var normal = get_floor_normal()
 		var tangential = Vector2(-normal.y, normal.x)
