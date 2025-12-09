@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # WORLD
 @export var friction: float = 1.0
-@export var lung_capacity: float = 150.0
+@export var lung_capacity: float = 3.0
 var damping = 0.0
 var in_water = false
 var breath = 1.0
@@ -10,7 +10,7 @@ var prev_resources = 0
 var dead = false
 
 # VELOCITIES
-@export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
+@export var hop_velocity: Vector2 = Vector2(60.0, -175.0)
 @export var climb_velocity: float = 250.0
 @export var climb_stop_velocity: float = 0.0 #150.0
 @export var throw_velocity: float = 800.0
@@ -122,18 +122,18 @@ func _physics_process(delta: float) -> void:
 		var local_vel_x = velocity.rotated(-current_angle).x
 		sprite.flip_h = local_vel_x < 0
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Debug.infinite_health:
 		breath = 1.0
 		return
 
 	if in_water and breath > 0.0:
-		breath -= 1.0 / lung_capacity
+		breath -= 1.0 / lung_capacity * delta
 	elif in_water:
 		breath = 0.0
 
 	if not in_water and breath < 1.0:
-		breath += 1.0 / lung_capacity
+		breath += 1.0 / lung_capacity * delta
 	elif not in_water:
 		breath = 1.0
 
@@ -211,7 +211,7 @@ func apply_friction_and_gravity(delta: float) -> void:
 		return
 
 	if not is_on_floor():
-		velocity.y += (200.0 + (arcade_resources * 5.0)) * delta
+		velocity.y += (200.0 + (arcade_resources * 5.0 * 0.0)) * delta
 	else:
 		var normal = get_floor_normal()
 		var tangential = Vector2(-normal.y, normal.x)
