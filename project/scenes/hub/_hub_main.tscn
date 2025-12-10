@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://cjyisk7r6qf4c"]
+[gd_scene load_steps=83 format=4 uid="uid://cjyisk7r6qf4c"]
 
 [ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://project/scenes/hub/hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://project/common_assets/player_hub/player.tscn" id="1_fvgh8"]
@@ -18,10 +18,11 @@
 [ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://project/scenes/hub/resource_manager.gd" id="20_a3i5d"]
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://project/scenes/hub/rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://chsimb172v0qv" path="res://project/scenes/hub/moth_mother.tscn" id="24_kq58d"]
+[ext_resource type="Shader" uid="uid://cuvq7gnith2sg" path="res://project/scenes/hub/thread.gdshader" id="25_8i1rr"]
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://project/scenes/hub/bumper.tscn" id="25_i2igf"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="26_j17sk"]
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://project/scenes/hub/doorway.tscn" id="27_3nqyi"]
-[ext_resource type="Texture2D" uid="uid://b6gb778ybbvbe" path="res://project/scenes/hub/bottles.png" id="30_seu75"]
+[ext_resource type="Texture2D" uid="uid://fyel6mixdgos" path="res://project/scenes/hub/bottles.png" id="30_seu75"]
 [ext_resource type="Script" uid="uid://badhbpujbe3dj" path="res://project/scenes/hub/bottle_fill.gd" id="31_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://dcctse7b7qwbn" path="res://project/scenes/hub/bottles_masks.png" id="31_htxhm"]
 [ext_resource type="Shader" uid="uid://dgwv0sy64jj4j" path="res://project/common_assets/_shaders/dye_fill.gdshader" id="31_jq2sk"]
@@ -1093,6 +1094,9 @@ shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a32pt"]
+load_path = "res://.godot/imported/bottles.png-4a552e7c1042008c54fb2f2a84df6a8c.ctex"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
 shader = ExtResource("31_jq2sk")
 shader_parameter/wave_mask = ExtResource("33_4k2k6")
@@ -1109,6 +1113,83 @@ shader = ExtResource("4_bb06l")
 shader_parameter/black_dot_transition = 0.8
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_r2ark"]
+resource_name = "active_loom"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_nxt8p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lvc3"]
+_data = {
+&"RESET": SubResource("Animation_nxt8p"),
+&"active_loom": SubResource("Animation_r2ark")
+}
+
+[sub_resource type="Shader" id="Shader_8i1rr"]
+code = "shader_type canvas_item;
+
+uniform vec4 fill_colour: source_color = vec4(1.0);
+uniform float thread1_slider: hint_range(0.0, 1.0, 0.01);
+uniform float thread2_slider: hint_range(0.0, 1.0, 0.01);
+uniform float thread3_slider: hint_range(0.0, 1.0, 0.01);
+
+uniform vec4 region_rect = vec4(128.0, 0.0, 64.0, 128.0);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV) * fill_colour;
+
+	vec2 tex_size = 1.0 / TEXTURE_PIXEL_SIZE;
+	vec2 pixel = UV * tex_size;
+	vec2 uv_region = (pixel - region_rect.xy) / region_rect.zw;
+
+	float mask = 0.0;
+
+	if (uv_region.x < 1.0 / 3.0) {
+		mask = step(uv_region.y, thread1_slider);
+	} else if (uv_region.x < 2.0 / 3.0) {
+		mask = step(uv_region.y, thread2_slider);
+	} else {
+		mask = step(uv_region.y, thread3_slider);
+	}
+
+	COLOR = tex * mask;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ijpa"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.6745098, 0.19607843, 0.19607843, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_come4"]
 size = Vector2(31, 29)
@@ -1214,6 +1295,10 @@ _data = {
 size = Vector2(28, 31)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0n3wm"]
+shader = ExtResource("4_bb06l")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0rl1p"]
 shader = ExtResource("31_jq2sk")
@@ -1226,6 +1311,14 @@ shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a32pt"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.8745098, 0.44313726, 0.14901961, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok6jj"]
 shader = ExtResource("31_jq2sk")
 shader_parameter/wave_mask = ExtResource("33_4k2k6")
@@ -1236,6 +1329,14 @@ shader_parameter/min_offset = 0.75
 shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r2ark"]
+shader = ExtResource("25_8i1rr")
+shader_parameter/fill_colour = Color(0.9843137, 0.9490196, 0.21176471, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_facbu"]
 shader = ExtResource("31_jq2sk")
@@ -1248,6 +1349,14 @@ shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxt8p"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.41568628, 0.74509805, 0.1882353, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_come4"]
 shader = ExtResource("31_jq2sk")
 shader_parameter/wave_mask = ExtResource("33_4k2k6")
@@ -1258,6 +1367,14 @@ shader_parameter/min_offset = 0.75
 shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7lvc3"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.3882353, 0.60784316, 1, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h8e4i"]
 shader = ExtResource("31_jq2sk")
@@ -1270,6 +1387,14 @@ shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_coxxa"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.84313726, 0.48235294, 0.7294118, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4lmeg"]
 shader = ExtResource("31_jq2sk")
 shader_parameter/wave_mask = ExtResource("33_4k2k6")
@@ -1281,6 +1406,14 @@ shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5jbf"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(1, 1, 1, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0cp0l"]
 shader = ExtResource("31_jq2sk")
 shader_parameter/wave_mask = ExtResource("33_4k2k6")
@@ -1291,6 +1424,14 @@ shader_parameter/min_offset = 0.75
 shader_parameter/wave_freq = 8.0
 shader_parameter/wave_band = 0.05
 shader_parameter/wave_speed = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryhy8"]
+shader = SubResource("Shader_8i1rr")
+shader_parameter/fill_colour = Color(0.56078434, 0.3372549, 0.23137255, 1)
+shader_parameter/thread1_slider = 0.999999977648
+shader_parameter/thread2_slider = 0.999999977648
+shader_parameter/thread3_slider = 1.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nwj2w"]
 size = Vector2(58, 16)
@@ -1597,7 +1738,7 @@ shape = SubResource("RectangleShape2D_suy4b")
 [node name="Red" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(138, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -1614,8 +1755,21 @@ z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
 texture = ExtResource("30_seu75")
+hframes = 3
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Red/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Red"]
+material = SubResource("ShaderMaterial_3ijpa")
+position = Vector2(0, 104)
+texture = ExtResource("30_seu75")
+region_enabled = true
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Red"]
 texture_filter = 1
@@ -1665,7 +1819,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Red"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Red/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -1674,7 +1827,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Red/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -1683,7 +1835,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Red/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -1695,7 +1846,7 @@ frame = 3
 [node name="Orange" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(206, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -1712,8 +1863,21 @@ z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
 texture = ExtResource("30_seu75")
+hframes = 3
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Orange/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Orange"]
+material = SubResource("ShaderMaterial_a32pt")
+position = Vector2(0, 104)
+texture = ExtResource("30_seu75")
+region_enabled = true
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Orange"]
 texture_filter = 1
@@ -1763,7 +1927,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Orange"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Orange/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -1772,7 +1935,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Orange/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -1781,7 +1943,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Orange/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -1793,7 +1954,7 @@ frame = 3
 [node name="Yellow" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(274, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -1809,9 +1970,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Yellow/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Yellow"]
+material = SubResource("ShaderMaterial_r2ark")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Yellow"]
 texture_filter = 1
@@ -1861,7 +2035,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Yellow"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Yellow/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -1870,7 +2043,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Yellow/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -1879,7 +2051,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Yellow/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -1891,7 +2062,7 @@ frame = 3
 [node name="Green" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(342, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -1907,9 +2078,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Green/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Green"]
+material = SubResource("ShaderMaterial_nxt8p")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Green"]
 texture_filter = 1
@@ -1959,7 +2143,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Green"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Green/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -1968,7 +2151,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Green/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -1977,7 +2159,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Green/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -1989,7 +2170,7 @@ frame = 3
 [node name="Blue" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(457, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -2005,9 +2186,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Blue/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Blue"]
+material = SubResource("ShaderMaterial_7lvc3")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Blue"]
 texture_filter = 1
@@ -2057,7 +2251,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Blue"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Blue/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -2066,7 +2259,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Blue/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -2075,7 +2267,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Blue/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -2087,7 +2278,7 @@ frame = 3
 [node name="Pink" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(525, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -2103,9 +2294,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Pink/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Pink"]
+material = SubResource("ShaderMaterial_coxxa")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Pink"]
 texture_filter = 1
@@ -2155,7 +2359,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Pink"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Pink/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -2164,7 +2367,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Pink/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -2173,7 +2375,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Pink/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -2185,7 +2386,7 @@ frame = 3
 [node name="White" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(593, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -2201,9 +2402,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/White/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/White"]
+material = SubResource("ShaderMaterial_v5jbf")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/White"]
 texture_filter = 1
@@ -2253,7 +2467,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/White"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/White/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -2262,7 +2475,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/White/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -2271,7 +2483,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/White/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")
@@ -2283,7 +2494,7 @@ frame = 3
 [node name="Brown" type="Sprite2D" parent="DyeBottles"]
 material = SubResource("ShaderMaterial_jq2sk")
 position = Vector2(661, -616)
-texture = ExtResource("30_seu75")
+texture = SubResource("CompressedTexture2D_a32pt")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 128)
 script = ExtResource("31_4k2k6")
@@ -2299,9 +2510,22 @@ region_rect = Rect2(0, 0, 64, 128)
 z_index = -1
 material = SubResource("ShaderMaterial_b1qrp")
 position = Vector2(0, 135)
+texture = SubResource("CompressedTexture2D_a32pt")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DyeBottles/Brown/Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Thread" type="Sprite2D" parent="DyeBottles/Brown"]
+material = SubResource("ShaderMaterial_ryhy8")
+position = Vector2(0, 104)
 texture = ExtResource("30_seu75")
 region_enabled = true
-region_rect = Rect2(64, 64, 64, 64)
+region_rect = Rect2(128, 0, 64, 128)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DyeBottles/Brown"]
 texture_filter = 1
@@ -2320,6 +2544,7 @@ theme_override_constants/outline_size = 10
 bbcode_enabled = true
 text = "[center]100[font_size= 15]pp"
 fit_content = true
+metadata/_edit_use_anchors_ = true
 
 [node name="TapButton" type="Area2D" parent="DyeBottles/Brown"]
 position = Vector2(0, 69)
@@ -2351,7 +2576,6 @@ shape = SubResource("RectangleShape2D_0n3wm")
 [node name="Silkworms" type="Node2D" parent="DyeBottles/Brown"]
 
 [node name="Left" type="Sprite2D" parent="DyeBottles/Brown/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(-22, 58)
 texture = ExtResource("36_facbu")
@@ -2360,7 +2584,6 @@ vframes = 2
 frame = 3
 
 [node name="Center" type="Sprite2D" parent="DyeBottles/Brown/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(0, 63)
 texture = ExtResource("36_facbu")
@@ -2369,7 +2592,6 @@ vframes = 2
 frame = 2
 
 [node name="Right" type="Sprite2D" parent="DyeBottles/Brown/Silkworms"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_0n3wm")
 position = Vector2(22, 58)
 texture = ExtResource("36_facbu")

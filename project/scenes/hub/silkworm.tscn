@@ -78,7 +78,6 @@ rotation = 1.5708
 shape = SubResource("CircleShape2D_klaic")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
 material = SubResource("ShaderMaterial_kdg66")
 texture = ExtResource("3_31vkt")
 hframes = 2

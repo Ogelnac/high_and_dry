@@ -9,7 +9,6 @@ extends Node2D
 var moth_mother_hatched: bool = false
 
 func _ready() -> void:
-	print(GameManager.game_progress.get("moth_mother_hatched"))
 	moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
 	
 	if moth_mother_hatched:
@@ -30,8 +29,6 @@ func _input(event: InputEvent) -> void:
 			moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
 			GameManager.save()
 			_ready()
-		if event.pressed and event.keycode == KEY_N:
-			print(GameManager.game_progress.get("moth_mother_hatched"))
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

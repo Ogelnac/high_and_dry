@@ -47,7 +47,7 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
 	"Yellow": 0,
-	"Green": 3,
+	"Green": 0,
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
