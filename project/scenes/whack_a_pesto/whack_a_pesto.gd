@@ -54,6 +54,7 @@ func _process(delta: float) -> void:
 	if resource_count == 3 and not music_started:
 		music_started = true
 		var bgm = AudioStreamPlayer.new()
+		bgm.set_bus("Bgm")
 		bgm.stream = KARAKARA
 		bgm.autoplay = true
 		bgm.volume_linear = 0.3

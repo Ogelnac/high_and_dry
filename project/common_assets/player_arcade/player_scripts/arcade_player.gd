@@ -51,6 +51,10 @@ var climbing_target: CharacterBody2D
 var release_displacement: Vector2 = Vector2.ZERO
 var last_surface_angle := 0.0
 
+# WALL JUMP
+@onready var right_wall_ray: RayCast2D = $CollisionShape2D/RightWallRay
+@onready var left_wall_ray: RayCast2D = $CollisionShape2D/LeftWallRay
+
 # TOUCH
 var touching: bool = false
 var tap_initial_screen_pos: Vector2 = Vector2.ZERO
@@ -83,8 +87,18 @@ func _physics_process(delta: float) -> void:
 	if climbing_thread:
 		var collision = move_and_collide((climbing_target_location - global_position).normalized() * climb_velocity * delta, true)
 		if collision:
-			climbing_thread = false
-			recall_needles.emit()
+			var oneway: bool = false
+			var tilemap: TileMapLayer = collision.get_collider()
+			var rid: RID = collision.get_collider_rid()
+			if tilemap:
+				var cell: Vector2i = tilemap.get_coords_for_body_rid(rid)
+				var data: TileData = tilemap.get_cell_tile_data(cell)
+				
+				if data:
+					oneway = data.get_custom_data("oneway")
+			if !oneway or position.y - 12.0 < collision.get_position().y:
+				climbing_thread = false
+				recall_needles.emit()
 		else:
 			velocity = (climbing_target_location - global_position).normalized() * climb_velocity
 			move_and_slide()
@@ -140,7 +154,7 @@ func _process(delta: float) -> void:
 		breath = 0.0
 
 	if not in_water and breath < 1.0:
-		breath += 1.0 / lung_capacity * delta
+		breath += 2.0 / lung_capacity * delta
 	elif not in_water:
 		breath = 1.0
 	
@@ -185,10 +199,13 @@ func _input(event: InputEvent):
 					climbing_thread = false
 					velocity += (climbing_target_location - global_position).normalized() * climb_stop_velocity
 					recall_needles.emit()
-				elif is_on_wall():
+				elif right_wall_ray.is_colliding() or left_wall_ray.is_colliding():
 					# Wall jump
 					velocity.y = hop_velocity.y
-					velocity.x = get_wall_collision_direction() * hop_velocity.x
+					if right_wall_ray.is_colliding():
+						velocity.x = -hop_velocity.x
+					else:
+						velocity.x = hop_velocity.x
 				elif is_on_floor():
 					# Hop
 					velocity.y = hop_velocity.y
@@ -234,7 +251,7 @@ func apply_friction_and_gravity(delta: float) -> void:
 		return
 
 	if not is_on_floor():
-		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 5.0 * 0.0)) * delta
+		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
 	else:
 		var normal = get_floor_normal()
 		var tangential = Vector2(-normal.y, normal.x)
@@ -412,6 +429,7 @@ func kill():
 	$AnimationPlayer.stop()
 	sprite.frame = 23
 	var sfx := AudioStreamPlayer.new()
+	sfx.set_bus("Sfx")
 	sfx.stream = TAILOR_DEATH
 	sfx.volume_db = -20.0
 	add_child(sfx)

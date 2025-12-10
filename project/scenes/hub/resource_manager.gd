@@ -112,6 +112,7 @@ func _on_ui_clear_demo_pressed() -> void:
 
 func spawn_particles() -> void:
 	var sfx: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+	sfx.set_bus("Sfx")
 	sfx.stream = PUFF
 	sfx.pitch_scale = 1.25
 	add_child(sfx)

@@ -14,8 +14,10 @@ func _ready():
 	adjust_pitch()
 	animate_entry()
 	if number_value % 50 == 0:
+		collect_resource_2.set_bus("Sfx")
 		collect_resource_2.play()
 	else:
+		collect_resource.set_bus("Sfx")
 		collect_resource.play()
 	await get_tree().create_timer(lifetime - 0.25).timeout
 	animate_exit()

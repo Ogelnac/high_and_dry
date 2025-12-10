@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal needle_stuck(needle: CharacterBody2D, location: Vector2)
 signal needle_collected(needle: CharacterBody2D)
 
-@export var max_thread_distance: float = 400.0
+@export var max_thread_distance: float = 560.0
 @onready var thread: Line2D = $Thread
 var thread_target: CharacterBody2D
 
