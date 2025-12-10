@@ -9,6 +9,7 @@
 shader = ExtResource("1_qj5wa")
 shader_parameter/black_dot_transition = 1.1
 shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_63htf"]
 length = 0.001
@@ -61,3 +62,4 @@ libraries = {
 [node name="Skid" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_0jyq5")
 volume_db = -20.0
+bus = &"Sfx"

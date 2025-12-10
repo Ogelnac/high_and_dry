@@ -106,6 +106,7 @@ func _on_player_in_launch_zone(in_zone):
 
 func _play_one_shot(stream: AudioStream) -> void:
 	var p = AudioStreamPlayer.new()
+	p.set_bus("Sfx")
 	add_child(p)
 	p.stream = stream
 	p.finished.connect(p.queue_free)

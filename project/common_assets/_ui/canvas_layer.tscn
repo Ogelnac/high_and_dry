@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://project/common_assets/_ui/sprites/joystick_base.png" id="2_77u76"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://project/common_assets/_shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://project/common_assets/_ui/circle_fade.gd" id="13_wugvg"]
+[ext_resource type="Script" uid="uid://dy5hmvrmgogkk" path="res://project/common_assets/_ui/menu_panel.gd" id="15_yo1el"]
 [ext_resource type="Script" uid="uid://cmmya6v463hjb" path="res://project/common_assets/_ui/end_game.gd" id="16_lrj6d"]
 [ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="16_ml53l"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://project/common_assets/_shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
@@ -372,6 +373,7 @@ frame = 1
 [node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager"]
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
+bus = &"Sfx"
 
 [node name="DialogueBox" type="Panel" parent="UI"]
 visible = false
@@ -468,6 +470,77 @@ offset_top = 3.0
 offset_right = 157.0
 offset_bottom = 13.0
 color = Color(0, 0, 0, 1)
+
+[node name="MenuPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 207.0
+offset_right = -21.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kmbj5")
+script = ExtResource("15_yo1el")
+
+[node name="Label" type="Label" parent="MenuPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 45
+text = "MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 43.0
+offset_right = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="CheckBox" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "MUTE BGM"
+alignment = 2
+
+[node name="CheckBox2" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "MUTE SFX"
+alignment = 2
+
+[node name="CheckBox3" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "GIVE ALL YOUR MONEY TO THE DEVS"
+alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="MenuPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "TEST BGM"
+
+[node name="Button2" type="Button" parent="MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "TEST SFX"
+
+[node name="HSeparator2" type="HSeparator" parent="MenuPanel/VBoxContainer"]
+layout_mode = 2
 
 [node name="DebugPanel" type="Panel" parent="."]
 visible = false
@@ -730,6 +803,7 @@ material = SubResource("ShaderMaterial_lptq8")
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "MENU"
+expand_icon = true
 
 [node name="Debug" type="Button" parent="HBoxContainer"]
 texture_filter = 1

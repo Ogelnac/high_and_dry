@@ -300,6 +300,7 @@ func change_state(new_state: String) -> void:
 			footstep_timer.stop()
 
 func _on_step_timer_timeout() -> void:
+	step_sfx.set_bus("Sfx")
 	step_sfx.pitch_scale = 2.0 + randf() * 0.5 - 0.05
 	step_sfx.play()
 

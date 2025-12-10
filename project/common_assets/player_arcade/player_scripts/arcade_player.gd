@@ -429,6 +429,7 @@ func kill():
 	$AnimationPlayer.stop()
 	sprite.frame = 23
 	var sfx := AudioStreamPlayer.new()
+	sfx.set_bus("Sfx")
 	sfx.stream = TAILOR_DEATH
 	sfx.volume_db = -20.0
 	add_child(sfx)

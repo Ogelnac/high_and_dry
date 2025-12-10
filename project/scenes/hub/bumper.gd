@@ -63,4 +63,5 @@ func _on_hit(collision_normal: Vector2):
 	target_position = initial_position + (collision_normal * bounce_amount)
 	is_bouncing = true
 
+	bumper.set_bus("Sfx")
 	bumper.play()

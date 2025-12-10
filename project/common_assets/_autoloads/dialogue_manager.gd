@@ -116,6 +116,7 @@ func _typing_effect(label: RichTextLabel, full_text: String) -> void:
 	while label.visible_characters < total:
 		label.visible_characters += 1
 		var p := AudioStreamPlayer.new()
+		p.set_bus("Sfx")
 		p.stream = _current_vox_stream
 		p.volume_db = -15.0
 		p.pitch_scale = randf_range(_current_pitch_min, _current_pitch_max)
@@ -150,6 +151,7 @@ func _yield_typing(text: String, label: RichTextLabel):
 		label.clear()
 		label.append_text(output)
 		var audio_player := AudioStreamPlayer.new()
+		audio_player.set_bus("Sfx")
 		audio_player.stream = _current_vox_stream
 		audio_player.volume_db = -15.0
 		audio_player.pitch_scale = randf_range(_current_pitch_min, _current_pitch_max)

@@ -48,6 +48,7 @@ func _on_body_entered(body: Node2D) -> void:
 		var main = get_node("../../../")
 		main.restart_timer(global_position)
 
+		audio_player.set_bus("Sfx")
 		audio_player.play()
 
 		await get_tree().process_frame
