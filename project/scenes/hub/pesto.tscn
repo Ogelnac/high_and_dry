@@ -9,7 +9,7 @@
 shader = ExtResource("2_7f2fa")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.25
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -109,7 +109,7 @@ size = Vector2(31, 29)
 shader = ExtResource("2_7f2fa")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/scale = 0.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8lob"]
 size = Vector2(28, 31)

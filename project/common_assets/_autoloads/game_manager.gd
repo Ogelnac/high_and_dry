@@ -10,7 +10,8 @@ const INGREDIENTS = preload("uid://bdfnifowl2amv")
 
 var game_progress: Dictionary[String, bool] = {
 	"demo_played": false,
-	"whack_a_pesto_played": false,}
+	"whack_a_pesto_played": false,
+	"moth_mother_hatched": false}
 
 var resources: Dictionary[String, int] = {
 	"Red": 0,
@@ -46,7 +47,7 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
 	"Yellow": 0,
-	"Green": 0,
+	"Green": 3,
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
@@ -257,7 +258,7 @@ func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
 
 func _reset_progress() -> void:
 	game_progress = {
-		"demo_played": false, "whack_a_pesto_played": false,
+		"demo_played": false, "whack_a_pesto_played": false, "moth_mother_hatched": false,
 	}
 	resources = {
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,

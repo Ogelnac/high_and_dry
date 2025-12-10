@@ -10,6 +10,7 @@ extends Sprite2D
 @onready var player: CharacterBody2D = $"../../Player"
 
 const SILKWORM = preload("uid://dhw77tfxqxkhq")
+const Silkworm = preload("uid://c26f03y5t1cv1")
 
 var silkworm_sprites: Array[Sprite2D] = []
 var player_in_area: bool = false
