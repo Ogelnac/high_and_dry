@@ -5,7 +5,7 @@
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_veaxr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wbet3"]
-radius = 8.0
+radius = 12.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8app"]
 shader = ExtResource("2_veaxr")
