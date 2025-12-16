@@ -36,6 +36,12 @@ var black_dot_offsets = {}
 var hub_state: int = 0 # 0 = hidden, 1 = summary, 2 = resource detail, 3 = fabric detail
 
 func _ready():
+	GameManager.load_presets()
+	if GameManager.bag_open:
+		hub_state = 1
+	else:
+		hub_state = 0
+	
 	if get_node_or_null("../../Player"):
 		player = get_tree().get_root().get_node_or_null("Main/Player")
 		if player == null:
@@ -113,6 +119,8 @@ func _play_one_shot(stream: AudioStream) -> void:
 
 func _set_hub_state(new_state: int) -> void:
 	hub_state = clamp(new_state, 0, 3)
+	GameManager.bag_open = hub_state > 0
+	GameManager.save_presets()
 	_update_hub_display()
 
 func _update_hub_display() -> void:
