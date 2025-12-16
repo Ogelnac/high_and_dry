@@ -86,7 +86,7 @@ func _input(event: InputEvent) -> void:
 func launch_ingredient(ingredient_type: int) -> void:
 	var ingredient_instance = INGREDIENT.instantiate()
 	var start_height = 80.0
-	var height = randf_range(128.0, 192.0)
+	var height = randf_range(64.0, 192.0)
 	var gravity = 9.8*5.0
 	var y_vel = -sqrt(2.0 * height * gravity)
 	var airtime = y_vel * 2.0 / gravity
