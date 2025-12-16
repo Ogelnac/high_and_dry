@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2w86wklvb75l"]
+
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_mt3ff"]
+[ext_resource type="Script" uid="uid://cp2nbbf0evi0n" path="res://project/scenes/whack_a_pesto/pesto_wap.gd" id="1_mvkko"]
+[ext_resource type="Texture2D" uid="uid://sl4xikeaygm6" path="res://project/scenes/hub/pesto.png" id="2_mvkko"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cegjv"]
+radius = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6qke"]
+shader = ExtResource("1_mt3ff")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[node name="Pesto_WAP" type="CharacterBody2D"]
+z_index = 1
+input_pickable = true
+script = ExtResource("1_mvkko")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cegjv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_y6qke")
+texture = ExtResource("2_mvkko")
+hframes = 2
+region_filter_clip_enabled = true
+
+[connection signal="input_event" from="." to="." method="_pesto_tapped"]

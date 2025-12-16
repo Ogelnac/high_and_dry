@@ -13,7 +13,8 @@ shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0
 
-[node name="Ingredient" type="Area2D"]
+[node name="Ingredient" type="CharacterBody2D"]
+input_pickable = true
 script = ExtResource("1_u8g6t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -26,4 +27,4 @@ hframes = 8
 vframes = 2
 region_filter_clip_enabled = true
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="input_event" from="." to="." method="_ingredient_tapped"]
