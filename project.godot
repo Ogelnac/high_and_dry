@@ -22,6 +22,7 @@ GameManager="*res://project/common_assets/_autoloads/game_manager.gd"
 DialogueManager="*res://project/common_assets/_autoloads/dialogue_manager.gd"
 Debug="*res://project/common_assets/_autoloads/debug.gd"
 ShopManager="*res://project/common_assets/_autoloads/shop_manager.gd"
+TimeManager="*res://project/common_assets/_autoloads/time_manager.gd"
 
 [display]
 

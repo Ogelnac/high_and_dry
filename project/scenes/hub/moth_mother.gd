@@ -10,25 +10,27 @@ var moth_mother_hatched: bool = false
 
 func _ready() -> void:
 	moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
-	
 	if moth_mother_hatched:
-		cocoon.frame = 1
-		cocoon.get_node("AnimationPlayer").stop()
-		moth.visible = true
-		moth.get_node("AnimationPlayer").play("cloaked_idle")
-		detection_area.visible = true
+		_hatched()
 	else:
 		cocoon.frame = 0
 		cocoon.get_node("AnimationPlayer").play("cocoon_idle")
+		detection_area.monitoring = false
 
-# remove and make game work
-func _input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:# remove and make game work
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_M:
 			GameManager.game_progress.set("moth_mother_hatched", true)
 			moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
 			GameManager.save()
-			_ready()
+			_hatched()
+
+func _hatched() -> void:
+	cocoon.frame = 1
+	cocoon.get_node("AnimationPlayer").stop()
+	moth.visible = true
+	moth.get_node("AnimationPlayer").play("cloaked_idle")
+	detection_area.monitoring = true
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

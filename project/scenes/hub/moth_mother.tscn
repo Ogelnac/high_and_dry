@@ -228,9 +228,9 @@ libraries = {
 
 [node name="DetectionArea" type="Area2D" parent="."]
 position = Vector2(-8, 130)
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-visible = false
 position = Vector2(-1, 45)
 shape = SubResource("RectangleShape2D_r8lob")
 
