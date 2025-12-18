@@ -1,6 +1,7 @@
 extends Node2D
 
 const INGREDIENT = preload("uid://cn51vsxl4fti2")
+const PESTO = preload("uid://b2w86wklvb75l")
 const KARAKARA = preload("uid://qcu637dsm4xw")
 
 @onready var tailor_wap: Node2D = $TailorWAP
@@ -13,7 +14,10 @@ var resources_to_be_processed: Array[int]
 var current_resource = 0
 var number_of_resources: int = 50
 
-var max_spawn_timer = 5.0
+var pesto_chance = 0.15
+var pesto_active = false
+
+var max_spawn_timer = 2.5
 var spawn_timer = max_spawn_timer
 var retrigger = true
 
@@ -45,11 +49,14 @@ func _process(delta: float) -> void:
 		if current_resource == number_of_resources:
 			return
 		retrigger = false
-		if Debug.infinite_resources:
-			launch_ingredient(randi_range(0, 7))
+		if randf() < pesto_chance and !pesto_active:
+			launch_pesto()
 		else:
-			launch_ingredient(resources_to_be_processed[current_resource])
-		current_resource += 1
+			if Debug.infinite_resources:
+				launch_ingredient(randi_range(0, 7))
+			else:
+				launch_ingredient(resources_to_be_processed[current_resource])
+			current_resource += 1
 
 	if resource_count == 3 and not music_started:
 		music_started = true
@@ -78,12 +85,47 @@ func _input(event: InputEvent) -> void:
 
 func launch_ingredient(ingredient_type: int) -> void:
 	var ingredient_instance = INGREDIENT.instantiate()
-	add_child(ingredient_instance)
-	var start_height = 80
+	var start_height = 80.0
+	var height = randf_range(64.0, 192.0)
+	var gravity = 9.8*5.0
+	var y_vel = -sqrt(2.0 * height * gravity)
+	var airtime = y_vel * 2.0 / gravity
+	var x_offset = randf_range(-58.0, 58.0)
+	var target = randf_range(-58.0, 58.0)
+	var x_vel = -(target - x_offset) / airtime
+	var r_vel = (randf()+0.4)*2.0*PI * rand_sign()
 	ingredient_instance.start_height = start_height
-	ingredient_instance.arc_size = randf_range(128.0, 192.0)
-	ingredient_instance.global_position = Vector2(randf_range(-46.0, 46.0), start_height)
+	ingredient_instance.height = height
+	ingredient_instance.gravity = gravity
+	ingredient_instance.airtime = airtime
+	ingredient_instance.global_position = Vector2(x_offset, start_height)
+	ingredient_instance.velocity = Vector2(x_vel, y_vel)
+	ingredient_instance.r_vel = r_vel
+	ingredient_instance.angle = r_vel
+	add_child(ingredient_instance)
 	ingredient_instance.sprite_2d.frame = ingredient_type
+
+func launch_pesto() -> void:
+	pesto_active = true
+	var pesto_instance = PESTO.instantiate()
+	var start_height = 80.0
+	var height = randf_range(128.0, 192.0)
+	var gravity = 9.8*12.0
+	var y_vel = -sqrt(2.0 * height * gravity)
+	var airtime = y_vel * 2.0 / gravity
+	var x_offset = randf_range(-54.0, 54.0)
+	var target = randf_range(-54.0, 54.0)
+	var x_vel = -(target - x_offset) / airtime
+	var r_vel = (randf()+0.8)*2.0*PI * rand_sign()
+	pesto_instance.start_height = start_height
+	pesto_instance.height = height
+	pesto_instance.gravity = gravity
+	pesto_instance.airtime = airtime
+	pesto_instance.global_position = Vector2(x_offset, start_height)
+	pesto_instance.velocity = Vector2(x_vel, y_vel)
+	pesto_instance.r_vel = r_vel
+	pesto_instance.angle = r_vel
+	add_child(pesto_instance)
 
 func update_counters(new_resource: int):
 	var whack_meter = UI.get_node("WhackMetre")
@@ -109,3 +151,10 @@ func end_game():
 			GameManager.dye_value[key] += resources_to_be_processed.count(i)
 		GameManager.save()
 	GameManager.change_scene("uid://cjyisk7r6qf4c")
+
+func rand_sign() -> float:
+	var r = randf()
+	if r > 0.5:
+		return 1.0
+	else:
+		return -1.0
