@@ -22,7 +22,7 @@ func _ready() -> void:
 	freeze = held
 	_set_friction(0.5)
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if held and player:
 		freeze = true
 		sprite2d.z_index = 1
@@ -109,9 +109,9 @@ func find_nearest_bottle() -> Node2D:
 
 func _ensure_material() -> PhysicsMaterial:
 	var mat := physics_material_override
-	if mat == null:
-		mat = PhysicsMaterial.new()
-		physics_material_override = mat
+	mat = PhysicsMaterial.new()
+	mat.bounce = 0.5
+	physics_material_override = mat
 	return mat
 
 func _set_friction(v: float) -> void:

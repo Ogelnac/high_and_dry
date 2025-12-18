@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=4 uid="uid://dxc74hnt0exva"]
 
-[ext_resource type="Script" uid="uid://bkobh7wvl5ub4" path="res://project/scenes/stages/main.gd" id="1_h4xiv"]
+[ext_resource type="Script" uid="uid://bkobh7wvl5ub4" path="res://project/scenes/stages/arcade_main.gd" id="1_h4xiv"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="2_t5ymh"]
 [ext_resource type="PackedScene" uid="uid://busmpycjb5vsd" path="res://project/common_assets/player_arcade/arcade_player.tscn" id="3_0nopa"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="5_7umgu"]

@@ -10,7 +10,8 @@ const INGREDIENTS = preload("uid://bdfnifowl2amv")
 
 var game_progress: Dictionary[String, bool] = {
 	"demo_played": false,
-	"whack_a_pesto_played": false,}
+	"whack_a_pesto_played": false,
+	"moth_mother_hatched": false}
 
 var resources: Dictionary[String, int] = {
 	"Red": 0,
@@ -121,6 +122,12 @@ const FABRIC_REGIONS: Dictionary[String, Vector4i] = {
 	"White": Vector4i(0, 32, 16, 16),
 	"Brown": Vector4i(16, 32, 16, 16)}
 
+var presets_path: String = "user://playerpresets.save"
+
+var bag_open: bool = false
+var sfx_volume: float = 1.0
+var music_volume: float = 1.0
+
 func _process(_delta: float) -> void:
 	if fade_out and circle_fade:
 		var trans_value: float = circle_fade.material.get_shader_parameter("transition_value") + 0.01
@@ -132,7 +139,7 @@ func get_ui_reference():
 	circle_fade = get_node("/root/Main/CanvasLayer/UI/CircleFade")
 
 func save():
-	var data := {
+	var data = {
 		"game_progress": game_progress,
 		"resources": resources,
 		"dye_value": dye_value,
@@ -142,13 +149,13 @@ func save():
 		"unprocessed_resources": unprocessed_resources,
 		"fabric": fabric
 	}
-	var file := FileAccess.open(path, FileAccess.WRITE)
+	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_var(data)
 
 func load_game():
 	if not FileAccess.file_exists(path):
 		save()
-	var file := FileAccess.open(path, FileAccess.READ)
+	var file = FileAccess.open(path, FileAccess.READ)
 	var data: Variant = file.get_var()
 	if typeof(data) == TYPE_DICTIONARY:
 		var d: Dictionary = data
@@ -160,6 +167,28 @@ func load_game():
 		if "sand" in d: sand = int(d["sand"])
 		if "unprocessed_resources" in d: unprocessed_resources = d["unprocessed_resources"]
 		if "fabric" in d: fabric = d["fabric"]
+
+func save_presets():
+	var data = {
+		"bag_open": bag_open,
+		"sfx_volume": sfx_volume,
+		"music_volume": music_volume
+	}
+	var file = FileAccess.open(presets_path, FileAccess.WRITE)
+	if file:
+		file.store_var(data)
+
+func load_presets():
+	if not FileAccess.file_exists(presets_path):
+		save_presets()
+	var file = FileAccess.open(presets_path, FileAccess.READ)
+	if file:
+		var data: Variant = file.get_var()
+		if typeof(data) == TYPE_DICTIONARY:
+			var d: Dictionary = data
+			if "bag_open" in d: bag_open = bool(d["bag_open"])
+			if "sfx_volume" in d: sfx_volume = float(d["sfx_volume"])
+			if "music_volume" in d: music_volume = float(d["music_volume"])
 
 func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
@@ -206,8 +235,8 @@ func add_resources_to_cache(collected: Array) -> void:
 func clear_resource_cache():
 	cached_resources = []
 	GameManager.resource_cache = {
-			"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
-			"Blue": 0, "Pink": 0, "White": 0, "Brown": 0}
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0}
 
 func display_dropdown():
 	dropdown_active = false
@@ -257,7 +286,7 @@ func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
 
 func _reset_progress() -> void:
 	game_progress = {
-		"demo_played": false, "whack_a_pesto_played": false,
+		"demo_played": false, "whack_a_pesto_played": false, "moth_mother_hatched": false,
 	}
 	resources = {
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,

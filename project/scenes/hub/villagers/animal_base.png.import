@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fyel6mixdgos"
-path="res://.godot/imported/bottles.png-4a552e7c1042008c54fb2f2a84df6a8c.ctex"
+uid="uid://de8njmevxmwd4"
+path="res://.godot/imported/animal_base.png-07f44e0545a31f7a412dfd593494a21a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://project/scenes/hub/bottles.png"
-dest_files=["res://.godot/imported/bottles.png-4a552e7c1042008c54fb2f2a84df6a8c.ctex"]
+source_file="res://project/scenes/hub/villagers/animal_base.png"
+dest_files=["res://.godot/imported/animal_base.png-07f44e0545a31f7a412dfd593494a21a.ctex"]
 
 [params]
 
