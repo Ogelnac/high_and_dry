@@ -14,7 +14,7 @@ var resources_to_be_processed: Array[int]
 var current_resource = 0
 var number_of_resources: int = 50
 
-var pesto_chance = 0.05
+var pesto_chance = 0.15
 var pesto_active = false
 
 var max_spawn_timer = 2.5

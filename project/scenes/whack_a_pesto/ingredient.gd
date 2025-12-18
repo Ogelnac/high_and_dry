@@ -66,7 +66,7 @@ func _process(delta: float) -> void:
 		velocity.y += gravity * 0.5 * delta
 
 func _ingredient_tapped(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventScreenTouch and event.pressed:
+	if event is InputEventScreenTouch and event.pressed and !bonked:
 		bonked = true
 
 		var idx = sprite_2d.frame % 8
