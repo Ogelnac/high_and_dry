@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://project/scenes/hub/resource_manager.gd" id="20_a3i5d"]
 [ext_resource type="PackedScene" uid="uid://ci3qtnux1in3p" path="res://project/scenes/hub/rigid_body.tscn" id="21_3hmti"]
 [ext_resource type="PackedScene" uid="uid://chsimb172v0qv" path="res://project/scenes/hub/moth_mother.tscn" id="24_kq58d"]
-[ext_resource type="Shader" uid="uid://cuvq7gnith2sg" path="res://project/scenes/hub/thread.gdshader" id="25_8i1rr"]
+[ext_resource type="Shader" path="res://project/scenes/hub/thread.gdshader" id="25_8i1rr"]
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://project/scenes/hub/bumper.tscn" id="25_i2igf"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="26_j17sk"]
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://project/scenes/hub/doorway.tscn" id="27_3nqyi"]

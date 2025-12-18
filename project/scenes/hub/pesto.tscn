@@ -9,7 +9,7 @@
 shader = ExtResource("2_7f2fa")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/mix_scale = 0.50000002375
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
