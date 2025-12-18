@@ -9,7 +9,10 @@ extends Node2D
 var moth_mother_hatched: bool = false
 
 func _ready() -> void:
-	moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
+	if GameManager.game_progress:
+		GameManager.load_game()
+		moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
+
 	if moth_mother_hatched:
 		_hatched()
 	else:
@@ -21,7 +24,6 @@ func _input(event: InputEvent) -> void:# remove and make game work
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_M:
 			GameManager.game_progress.set("moth_mother_hatched", true)
-			moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
 			GameManager.save()
 			_hatched()
 
