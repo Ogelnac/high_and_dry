@@ -2,15 +2,22 @@ extends CharacterBody2D
 
 # WORLD
 @export var friction: float = 1.0
-@export var lung_capacity: float = 150.0
+@export var lung_capacity: float = 3.0
 var damping = 0.0
 var in_water = false
 var breath = 1.0
 var prev_resources = 0
 var dead = false
 
+# SLIME
+const BURST_PARTICLE = preload("uid://bhjo78s7o0ca2")
+var slime_count_max = 5.0
+var slime_count = 0.0
+var drip_delay_max = 0.15
+var drip_delay = drip_delay_max
+
 # VELOCITIES
-@export var hop_velocity: Vector2 = Vector2(50.0, -150.0)
+@export var hop_velocity: Vector2 = Vector2(60.0, -175.0)
 @export var climb_velocity: float = 250.0
 @export var climb_stop_velocity: float = 0.0 #150.0
 @export var throw_velocity: float = 800.0
@@ -44,6 +51,10 @@ var climbing_target: CharacterBody2D
 var release_displacement: Vector2 = Vector2.ZERO
 var last_surface_angle := 0.0
 
+# WALL JUMP
+@onready var right_wall_ray: RayCast2D = $CollisionShape2D/RightWallRay
+@onready var left_wall_ray: RayCast2D = $CollisionShape2D/LeftWallRay
+
 # TOUCH
 var touching: bool = false
 var tap_initial_screen_pos: Vector2 = Vector2.ZERO
@@ -76,8 +87,18 @@ func _physics_process(delta: float) -> void:
 	if climbing_thread:
 		var collision = move_and_collide((climbing_target_location - global_position).normalized() * climb_velocity * delta, true)
 		if collision:
-			climbing_thread = false
-			recall_needles.emit()
+			var oneway: bool = false
+			var tilemap: TileMapLayer = collision.get_collider()
+			var rid: RID = collision.get_collider_rid()
+			if tilemap:
+				var cell: Vector2i = tilemap.get_coords_for_body_rid(rid)
+				var data: TileData = tilemap.get_cell_tile_data(cell)
+				
+				if data:
+					oneway = data.get_custom_data("oneway")
+			if !oneway or position.y - 12.0 < collision.get_position().y:
+				climbing_thread = false
+				recall_needles.emit()
 		else:
 			velocity = (climbing_target_location - global_position).normalized() * climb_velocity
 			move_and_slide()
@@ -87,7 +108,7 @@ func _physics_process(delta: float) -> void:
 
 	if get_slide_collision_count() > 0:
 		if touched_spikes():
-			print("Yeooowch!")
+			slime_count = slime_count_max
 
 	handle_animation()
 	update_sprite_orientation(delta)
@@ -122,20 +143,36 @@ func _physics_process(delta: float) -> void:
 		var local_vel_x = velocity.rotated(-current_angle).x
 		sprite.flip_h = local_vel_x < 0
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Debug.infinite_health:
 		breath = 1.0
 		return
 
 	if in_water and breath > 0.0:
-		breath -= 1.0 / lung_capacity
+		breath -= 1.0 / lung_capacity * delta
 	elif in_water:
 		breath = 0.0
 
 	if not in_water and breath < 1.0:
-		breath += 1.0 / lung_capacity
+		breath += 2.0 / lung_capacity * delta
 	elif not in_water:
 		breath = 1.0
+	
+	if slime_count > 0.0:
+		slime_count -= delta
+		drip_delay -= delta
+		if drip_delay <= 0.0:
+			drip_delay = drip_delay_max
+			var particle_velocity := Vector2(randf_range(-15.0, 15.0), randf_range(20.0, 30.0))
+			var particle := BURST_PARTICLE.instantiate()
+			get_tree().current_scene.add_child(particle)
+			particle.global_position = position
+			particle.linear_velocity = particle_velocity
+			particle.collision_mask = 0
+			particle.z_index = 5
+			particle.gravity_scale = 0.75
+	else:
+		slime_count = 0.0
 
 func _input(event: InputEvent):
 	if dead:
@@ -162,10 +199,13 @@ func _input(event: InputEvent):
 					climbing_thread = false
 					velocity += (climbing_target_location - global_position).normalized() * climb_stop_velocity
 					recall_needles.emit()
-				elif is_on_wall():
+				elif right_wall_ray.is_colliding() or left_wall_ray.is_colliding():
 					# Wall jump
 					velocity.y = hop_velocity.y
-					velocity.x = get_wall_collision_direction() * hop_velocity.x
+					if right_wall_ray.is_colliding():
+						velocity.x = -hop_velocity.x
+					else:
+						velocity.x = hop_velocity.x
 				elif is_on_floor():
 					# Hop
 					velocity.y = hop_velocity.y
@@ -205,13 +245,13 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 func apply_friction_and_gravity(delta: float) -> void:
 	var arcade_resources = GameManager.new_arcade_resources.size()
 	if in_water:
-		velocity.y -= (100 - (arcade_resources * 0.0)) * delta
+		velocity.y -= 100.0 * delta
 		if damping > 0.0:
 			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
 		return
 
 	if not is_on_floor():
-		velocity.y += (200.0 + (arcade_resources * 5.0)) * delta
+		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
 	else:
 		var normal = get_floor_normal()
 		var tangential = Vector2(-normal.y, normal.x)
@@ -389,6 +429,7 @@ func kill():
 	$AnimationPlayer.stop()
 	sprite.frame = 23
 	var sfx := AudioStreamPlayer.new()
+	sfx.set_bus("Sfx")
 	sfx.stream = TAILOR_DEATH
 	sfx.volume_db = -20.0
 	add_child(sfx)

@@ -30,4 +30,5 @@ func _on_detection_area_body_exited(body):
 func _on_door_button_input_event(_viewport, event, _shape_idx):
 	if (event is InputEventScreenTouch and event.pressed) or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		door.play()
+		door.set_bus("Sfx")
 		player.global_transform = connected_door.transform
