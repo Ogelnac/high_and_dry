@@ -5,6 +5,7 @@ extends Panel
 @onready var check_box: CheckBox = $VBoxContainer/CheckBox
 @onready var check_box_2: CheckBox = $VBoxContainer/CheckBox2
 @onready var check_box_3: CheckBox = $VBoxContainer/CheckBox3
+@onready var check_box_4: CheckBox = $VBoxContainer/CheckBox4
 @onready var button: Button = $VBoxContainer/Button
 @onready var line_edit: LineEdit = $VBoxContainer/HBoxContainer/LineEdit
 
@@ -17,6 +18,7 @@ func _ready() -> void:
 	check_box.toggled.connect(_pass_toggle_disable_rising_death)
 	check_box_2.toggled.connect(_pass_toggle_infinite_health)
 	check_box_3.toggled.connect(_pass_toggle_infinite_resources)
+	check_box_4.toggled.connect(_pass_toggle_infinite_silkworms)
 	button.pressed.connect(show_dialogue_box)
 
 	check_box.button_pressed = Debug.disable_rising_death
@@ -40,6 +42,9 @@ func _pass_toggle_infinite_health(toggled_on: bool):
 
 func _pass_toggle_infinite_resources(toggled_on: bool):
 	Debug.infinite_resources = toggled_on
+
+func _pass_toggle_infinite_silkworms(toggled_on: bool):
+	Debug.infinite_silkworms = toggled_on
 
 func show_dialogue_box():
 	dialogue_input.get_node("Text").text = "Are you sure you want to reset your progress?"

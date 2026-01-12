@@ -1,6 +1,7 @@
 extends Node
 
 var infinite_resources: bool = false
+var infinite_silkworms: bool = false
 var infinite_health: bool = false
 var disable_rising_death: bool = false
 var number_of_levels: int = -2 # one level

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2lkn4x63rrm6"
-path="res://.godot/imported/animal_base.png-07f44e0545a31f7a412dfd593494a21a.ctex"
+uid="uid://ctp5fcayfn62k"
+path="res://.godot/imported/fabric.png-9201343e7e2ee258de5279584ff2bf58.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://project/scenes/hub/villagers/animal_base.png"
-dest_files=["res://.godot/imported/animal_base.png-07f44e0545a31f7a412dfd593494a21a.ctex"]
+source_file="res://project/scenes/hub/fabric.png"
+dest_files=["res://.godot/imported/fabric.png-9201343e7e2ee258de5279584ff2bf58.ctex"]
 
 [params]
 

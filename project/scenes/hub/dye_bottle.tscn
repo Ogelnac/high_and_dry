@@ -1,0 +1,424 @@
+[gd_scene load_steps=31 format=3 uid="uid://dcbqhtv80rquh"]
+
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_lknwk"]
+[ext_resource type="Script" uid="uid://badhbpujbe3dj" path="res://project/scenes/hub/bottle_fill.gd" id="2_6v68p"]
+[ext_resource type="Shader" uid="uid://dgwv0sy64jj4j" path="res://project/common_assets/_shaders/dye_fill.gdshader" id="3_fsv54"]
+[ext_resource type="Texture2D" uid="uid://08uhq76e0s0t" path="res://project/scenes/hub/wave_mask.png" id="4_fh0p5"]
+[ext_resource type="Texture2D" uid="uid://dcctse7b7qwbn" path="res://project/scenes/hub/bottles_masks.png" id="5_5558v"]
+[ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="6_8fpsj"]
+[ext_resource type="Texture2D" uid="uid://fyel6mixdgos" path="res://project/scenes/hub/bottles.png" id="7_ssxh2"]
+[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="8_6jl7j"]
+[ext_resource type="Shader" uid="uid://cuvq7gnith2sg" path="res://project/scenes/hub/thread.gdshader" id="9_6v68p"]
+[ext_resource type="Texture2D" uid="uid://byslko3nn77gj" path="res://project/scenes/hub/silkworm.png" id="9_vwh3j"]
+[ext_resource type="Texture2D" uid="uid://ctp5fcayfn62k" path="res://project/scenes/hub/fabric.png" id="10_fsv54"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
+shader = ExtResource("3_fsv54")
+shader_parameter/wave_mask = ExtResource("4_fh0p5")
+shader_parameter/fill_colour = Color(0.67451, 0.196078, 0.196078, 1)
+shader_parameter/fill_height = 0.10000000475
+shader_parameter/max_offset = 0.14
+shader_parameter/min_offset = 0.84
+shader_parameter/wave_freq = 4.0
+shader_parameter/wave_band = 0.05
+shader_parameter/wave_speed = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b1qrp"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 0.8
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_nxt8p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_r2ark"]
+resource_name = "active_loom"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lvc3"]
+_data = {
+&"RESET": SubResource("Animation_nxt8p"),
+&"active_loom": SubResource("Animation_r2ark")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gngh3"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="Animation" id="Animation_f6a44"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_0cbny"]
+resource_name = "Jump"
+length = 0.02
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_hrvbo"]
+resource_name = "OpenPopup"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_uypp3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_blkrb"]
+resource_name = "Run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_abqjc"]
+_data = {
+&"Idle": SubResource("Animation_f6a44"),
+&"Jump": SubResource("Animation_0cbny"),
+&"OpenPopup": SubResource("Animation_hrvbo"),
+&"RESET": SubResource("Animation_uypp3"),
+&"Run": SubResource("Animation_blkrb")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6v68p"]
+shader = ExtResource("9_6v68p")
+shader_parameter/fill_colour = Color(1, 1, 1, 1)
+shader_parameter/thread1_slider = 0.0
+shader_parameter/thread2_slider = 0.0
+shader_parameter/thread3_slider = 0.0
+shader_parameter/region_rect = Vector4(128, 0, 64, 128)
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fh0p5"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8i1rr"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_come4"]
+size = Vector2(31, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0n3wm"]
+size = Vector2(28, 31)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0n3wm"]
+shader = ExtResource("1_lknwk")
+shader_parameter/black_dot_transition = 1.1000000285
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+
+[node name="DyeBottle" type="Node2D"]
+material = SubResource("ShaderMaterial_jq2sk")
+script = ExtResource("2_6v68p")
+
+[node name="Mask" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_4k2k6")
+position = Vector2(0, -32)
+texture = ExtResource("5_5558v")
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="Loom" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_b1qrp")
+position = Vector2(0, 135)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 128, 192, 64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Loom"]
+libraries = {
+&"": SubResource("AnimationLibrary_7lvc3")
+}
+
+[node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
+visible = false
+z_index = 2
+texture_filter = 1
+material = SubResource("ShaderMaterial_gngh3")
+position = Vector2(0, 35)
+texture = ExtResource("8_6jl7j")
+hframes = 3
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup"]
+libraries = {
+&"": SubResource("AnimationLibrary_abqjc")
+}
+
+[node name="Popup2" type="Sprite2D" parent="." groups=["shader_objects"]]
+visible = false
+z_index = 2
+texture_filter = 1
+material = SubResource("ShaderMaterial_gngh3")
+position = Vector2(0, 195)
+texture = ExtResource("8_6jl7j")
+hframes = 3
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup2"]
+libraries = {
+&"": SubResource("AnimationLibrary_abqjc")
+}
+
+[node name="Thread" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6v68p")
+position = Vector2(0, 104)
+texture = ExtResource("7_ssxh2")
+region_enabled = true
+region_rect = Rect2(128, 0, 64, 128)
+
+[node name="Fabric" type="Sprite2D" parent="."]
+modulate = Color(0.6745098, 0.19607843, 0.19607843, 1)
+material = SubResource("ShaderMaterial_fh0p5")
+position = Vector2(0, 200)
+texture = ExtResource("10_fsv54")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="BottleLabel" type="RichTextLabel" parent="."]
+z_index = 3
+texture_filter = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -23.0
+offset_right = 32.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_8fpsj")
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[center]100[font_size= 15]pp"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FabricLabel" type="RichTextLabel" parent="."]
+z_index = 3
+texture_filter = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 159.0
+offset_right = 32.0
+offset_bottom = 191.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_8fpsj")
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[center]100[font_size= 15]f"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bottle" type="Node2D" parent="."]
+
+[node name="Bottom" type="Sprite2D" parent="Bottle"]
+z_index = 1
+material = SubResource("ShaderMaterial_8i1rr")
+position = Vector2(0, 32)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+vframes = 3
+frame = 3
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="MiddleBottom" type="Sprite2D" parent="Bottle"]
+z_index = 1
+material = SubResource("ShaderMaterial_8i1rr")
+position = Vector2(0, -16)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+vframes = 6
+frame = 3
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="Middle" type="Sprite2D" parent="Bottle"]
+z_index = 1
+material = SubResource("ShaderMaterial_8i1rr")
+position = Vector2(0, -48)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+vframes = 6
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="MiddleTop" type="Sprite2D" parent="Bottle"]
+z_index = 1
+material = SubResource("ShaderMaterial_8i1rr")
+position = Vector2(0, -80)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+vframes = 6
+frame = 1
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="Top" type="Sprite2D" parent="Bottle"]
+z_index = 1
+material = SubResource("ShaderMaterial_8i1rr")
+position = Vector2(0, -112)
+texture = ExtResource("7_ssxh2")
+hframes = 3
+vframes = 6
+frame = 1
+region_rect = Rect2(0, 0, 64, 128)
+
+[node name="TapButton" type="Area2D" parent="."]
+position = Vector2(0, 69)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
+position = Vector2(0, -34.5)
+shape = SubResource("RectangleShape2D_come4")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(0, 56.145)
+shape = SubResource("RectangleShape2D_0n3wm")
+
+[node name="TapButton2" type="Area2D" parent="."]
+position = Vector2(0, 228)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton2"]
+position = Vector2(0, -34.5)
+shape = SubResource("RectangleShape2D_come4")
+
+[node name="DetectionArea2" type="Area2D" parent="."]
+position = Vector2(0, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2"]
+position = Vector2(0, 56.145)
+shape = SubResource("RectangleShape2D_0n3wm")
+
+[node name="Silkworms" type="Node2D" parent="."]
+z_index = 2
+
+[node name="Left" type="Sprite2D" parent="Silkworms"]
+material = SubResource("ShaderMaterial_0n3wm")
+position = Vector2(-22, 58)
+texture = ExtResource("9_vwh3j")
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="Center" type="Sprite2D" parent="Silkworms"]
+material = SubResource("ShaderMaterial_0n3wm")
+position = Vector2(0, 63)
+texture = ExtResource("9_vwh3j")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="Right" type="Sprite2D" parent="Silkworms"]
+material = SubResource("ShaderMaterial_0n3wm")
+position = Vector2(22, 58)
+texture = ExtResource("9_vwh3j")
+flip_h = true
+hframes = 2
+vframes = 2
+frame = 3

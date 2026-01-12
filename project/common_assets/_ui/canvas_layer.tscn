@@ -550,7 +550,7 @@ anchor_bottom = 1.0
 offset_left = 21.0
 offset_top = 207.0
 offset_right = -21.0
-offset_bottom = -534.0
+offset_bottom = -504.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_kmbj5")
@@ -616,8 +616,11 @@ layout_mode = 2
 text = "Infinite Resources"
 alignment = 2
 
-[node name="Control" type="Control" parent="DebugPanel/VBoxContainer"]
+[node name="CheckBox4" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+text = "Infinite Silkworms"
+alignment = 2
 
 [node name="Button" type="Button" parent="DebugPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)

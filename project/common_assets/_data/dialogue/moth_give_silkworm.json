@@ -1,0 +1,8 @@
+[
+  {
+	"name": "Moth Mother",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [0.9, 1.1],
+	"text": "Oh, you found one of my silkworms? I'll look after them if you leave them here with me."
+  }
+]
