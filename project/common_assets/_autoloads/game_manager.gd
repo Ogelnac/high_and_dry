@@ -44,14 +44,14 @@ var bottle_sizes: Dictionary[String, int] = {
 	"Brown": 160}
 
 var silkworm_amount: Dictionary[String, int] = {
-	"Red": 2,
-	"Orange": 3,
-	"Yellow": 1,
-	"Green": 2,
-	"Blue": 3,
-	"Pink": 2,
-	"White": 1,
-	"Brown": 3}
+	"Red": 0,
+	"Orange": 0,
+	"Yellow": 0,
+	"Green": 0,
+	"Blue": 0,
+	"Pink": 0,
+	"White": 0,
+	"Brown": 0}
 
 var fabric: Dictionary[String, int] = {
 	"Red": 0,
@@ -77,6 +77,7 @@ var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
 var cached_resources: Array[int] = []
 var unprocessed_resources: Array[int] = [] #TEMPORARY FOR WHACK-A-PESTO the order unprocessed resources were collected
 var fabric_pile_max: int = 100
+var fabric_pile_storage_max: int = 9999
 var resource_cache: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
@@ -235,7 +236,7 @@ func stash_held_fabric_into_piles() -> void:
 		var held: int = int(fabric.get(color_name, 0))
 		if held > 0:
 			var pile_current: int = int(fabric_pile.get(color_name, 0))
-			fabric_pile[color_name] = min(pile_current + held, fabric_pile_max)
+			fabric_pile[color_name] = min(pile_current + held, fabric_pile_storage_max)
 			fabric[color_name] = 0
 			_save_dirty = true
 
@@ -250,9 +251,11 @@ func arcade_UI():
 func hub_UI():
 	cached_counter = false
 	update_bottles()
+	TimeManager.set_active(true)
 
 func shop_UI():
 	cached_counter = true
+	TimeManager.set_active(false)
 
 func whack_a_pesto_UI():
 	var whack_metre = UI.find_child("WhackMetre")
@@ -326,7 +329,7 @@ func get_fabric_pile_amount(color_name: String) -> int:
 
 func increase_fabric_pile_amount(color_name: String, amount: int = 1) -> void:
 	var current: int = int(fabric_pile.get(color_name, 0))
-	fabric_pile[color_name] = min(current + amount, fabric_pile_max)
+	fabric_pile[color_name] = min(current + amount, fabric_pile_storage_max)
 	_save_dirty = true
 
 func decrease_fabric_pile_amount(color_name: String, amount: int = 1) -> void:
@@ -346,10 +349,20 @@ func get_fabric_amount(color_name: String) -> int:
 func increase_fabric_amount(color_name: String, amount: int = 1) -> void:
 	var current: int = int(fabric.get(color_name, 0))
 	fabric[color_name] = current + amount
+	UI.get_node("UI")._update_fabric_counter_text()
 
 func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
 	var current: int = int(fabric.get(color_name, 0))
 	fabric[color_name] = current - amount
+	UI.get_node("UI")._update_fabric_counter_text()
+
+func get_dye_amount(color_name: String) -> int:
+	return int(dye_value.get(color_name, 0))
+
+func decrease_dye_amount(color_name: String, amount: int) -> void:
+	var current: int = int(dye_value.get(color_name, 0))
+	dye_value[color_name] = max(current - amount, 0)
+	_save_dirty = true
 
 func _reset_progress() -> void:
 	game_progress = {

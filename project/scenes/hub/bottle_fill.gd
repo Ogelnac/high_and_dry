@@ -5,8 +5,6 @@ var bottle_colour: String = "Red":
 	set(value):
 		bottle_colour = value
 
-@export var threading_time: float = 2.0
-
 @onready var mask: Sprite2D = $Mask
 @onready var bottle_label: RichTextLabel = $BottleLabel
 @onready var popup: Sprite2D = $Popup
@@ -32,9 +30,11 @@ const THREAD_OFF := 0
 const THREAD_TURNING_ON := 1
 const THREAD_ON := 2
 
+var threading_time: float = 2.0
 var silkworm_sprites: Array[Sprite2D] = []
 var player_in_area: bool = false
 var player_in_area_2: bool = false
+var producing: bool = false
 var silkworm_amount: int = 0
 var _cached_silkworm_amount: int = -1
 var _cached_dye_amount: int = -1
@@ -61,6 +61,10 @@ func _ready() -> void:
 	else:
 		thread_material = null
 
+	if fabric.material is ShaderMaterial:
+		fabric.material = fabric.material.duplicate(true)
+		fabric.modulate = Color(GameManager.COLOR_HEX[bottle_colour])
+	
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 	tap_button.input_event.connect(_on_tap_button_input_event)
@@ -90,13 +94,18 @@ func _process(delta: float) -> void:
 
 func _sync_from_manager() -> void:
 	var gm_silkworms: int = max(0, GameManager.get_silkworm_amount(bottle_colour))
-	if gm_silkworms != _cached_silkworm_amount:
+	var new_producing: bool = _compute_producing()
+	var producing_changed: bool = new_producing != producing
+	producing = new_producing
+
+	if gm_silkworms != _cached_silkworm_amount or producing_changed:
 		var previous_amount: int = max(0, _cached_silkworm_amount)
 		silkworm_amount = gm_silkworms
 		_cached_silkworm_amount = gm_silkworms
 		_update_loom()
 		_update_silkworm_sprites()
-		_update_threads(previous_amount, silkworm_amount)
+		var visual_thread_amount: int = silkworm_amount if producing else 0
+		_update_threads(previous_amount if producing else 0, visual_thread_amount)
 	else:
 		silkworm_amount = gm_silkworms
 
@@ -130,7 +139,10 @@ func _sync_from_manager() -> void:
 		fabric.region_rect = Rect2(0.0, 0.0, 64.0, h)
 		fabric.offset = Vector2(0.0, y)
 
+		fabric_label.visible = pile_amount > 0
 		fabric_label.text = "[center]" + str(pile_amount) + "[font_size= 15]f"
+
+	thread.visible = producing
 
 func _update_silkworm_sprites() -> void:
 	var amount: int = clamp(silkworm_amount, 0, silkworm_sprites.size())
@@ -138,7 +150,7 @@ func _update_silkworm_sprites() -> void:
 		silkworm_sprites[i].visible = i < amount
 
 func _update_loom() -> void:
-	if silkworm_amount > 0:
+	if producing:
 		if animation_player.current_animation != "active_loom" or not animation_player.is_playing():
 			animation_player.play("active_loom")
 	else:
@@ -250,7 +262,6 @@ func _on_tap_button_2_input_event(_viewport, event, _shape_idx) -> void:
 	await get_tree().process_frame
 	_taking_fabric = false
 
-
 func _update_threads(previous_amount: int, current_amount: int) -> void:
 	var prev: int = clamp(previous_amount, 0, 3)
 	var curr: int = clamp(current_amount, 0, 3)
@@ -299,3 +310,12 @@ func _update_thread_shader() -> void:
 	thread_material.set_shader_parameter("thread1_slider", thread_values[0])
 	thread_material.set_shader_parameter("thread2_slider", thread_values[1])
 	thread_material.set_shader_parameter("thread3_slider", thread_values[2])
+
+func _compute_producing() -> bool:
+	if not TimeManager.active:
+		return false
+	if GameManager.get_dye_amount(bottle_colour) < TimeManager.dye_cost_per_fabric:
+		return false
+	var worms: int = GameManager.get_silkworm_amount(bottle_colour)
+	var rate_per_minute: int = int(float(worms) / 3.0)
+	return rate_per_minute > 0
