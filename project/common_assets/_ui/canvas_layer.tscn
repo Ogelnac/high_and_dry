@@ -226,15 +226,14 @@ horizontal_alignment = 1
 meta_underlined = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="UI"]
-visible = false
 z_index = -1
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 175.0
-offset_bottom = 266.0
+offset_top = 393.99994
+offset_bottom = 485.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.0523599

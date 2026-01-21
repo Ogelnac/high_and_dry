@@ -1,19 +1,22 @@
 extends Camera2D
 
-@export var market_min_y: float = -396.0
-@export var market_max_y: float = 70.0
+@export var pestos_min_y: float = -396.0
+@export var pestos_max_y: float = 70.0
 @export var weavers_min_x: float = 190.0
 @export var weavers_max_x: float = 610.0
 
-var is_in_market: bool = false
+var is_in_pestos: bool = false
 var is_in_weavers: bool = false
 var player: Node2D = null
 
-@onready var landing_zone: Area2D = $"../LandingZone"
-@onready var hub: Area2D = $"../Hub"
-@onready var trophy_room: Area2D = $"../TrophyRoom"
+@onready var pestos: Area2D = $"../Pestos"
 @onready var weavers: Area2D = $"../Weavers"
-@onready var market: Area2D = $"../Market"
+
+@onready var left: Area2D = $"../Left"
+@onready var mid_left: Area2D = $"../MidLeft"
+@onready var middle: Area2D = $"../Middle"
+@onready var mid_right: Area2D = $"../MidRight"
+@onready var right: Area2D = $"../Right"
 
 @onready var ui: Control = $"../CanvasLayer/UI"
 
@@ -29,49 +32,78 @@ var player: Node2D = null
 	$"../Lava",
 	$"../Sewage"]
 
-func _on_market_body_entered(body: Node2D) -> void:
+func _ready() -> void:
+	pestos.body_entered.connect(_on_pestos_body_entered)
+	weavers.body_entered.connect(_on_weavers_body_entered)
+
+	left.body_entered.connect(_on_left_body_entered)
+	mid_left.body_entered.connect(_on_mid_left_body_entered)
+	middle.body_entered.connect(_on_middle_body_entered)
+	mid_right.body_entered.connect(_on_mid_right_body_entered)
+	right.body_entered.connect(_on_right_body_entered)
+
+func _on_left_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		global_position.x = market.global_position.x
-		is_in_market = true
+		global_position = left.global_position
+		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(market.global_position)
+		_reset_parallax(left.global_position)
 
-func _on_hub_body_entered(body: Node2D) -> void:
+func _on_mid_left_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		global_position = hub.global_position
-		is_in_market = false
+		global_position = mid_left.global_position
+		is_in_pestos = false
 		is_in_weavers = false
-		player = null
-		_reset_parallax(hub.global_position)
+		player = body
+		_reset_parallax(mid_left.global_position)
 
-func _on_landing_zone_body_entered(body: Node2D) -> void:
+func _on_middle_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		global_position = landing_zone.global_position
-		is_in_market = false
+		global_position = middle.global_position
+		is_in_pestos = false
 		is_in_weavers = false
-		player = null
-		_reset_parallax(landing_zone.global_position)
+		player = body
+		_reset_parallax(middle.global_position)
 
-func _on_trophy_room_body_entered(body: Node2D) -> void:
+func _on_mid_right_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		global_position = trophy_room.global_position
-		is_in_market = false
+		global_position = mid_right.global_position
+		is_in_pestos = false
 		is_in_weavers = false
-		player = null
-		_reset_parallax(trophy_room.global_position)
+		player = body
+		_reset_parallax(mid_right.global_position)
+
+func _on_right_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		global_position = right.global_position
+		is_in_pestos = false
+		is_in_weavers = false
+		player = body
+		_reset_parallax(right.global_position)
+
+func _on_pestos_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		global_position = pestos.global_position
+		is_in_pestos = true
+		is_in_weavers = false
+		player = body
+		_reset_parallax(pestos.global_position)
 
 func _on_weavers_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		global_position = weavers.global_position
-		is_in_market = false
+		is_in_pestos = false
 		is_in_weavers = true
 		player = body
 		_reset_parallax(weavers.global_position)
 
 func _physics_process(_delta: float) -> void:
-	if is_in_market and player:
-		global_position.y = clamp(player.global_position.y - 160, market_min_y, market_max_y)
+	if player:
+		global_position.y = player.global_position.y - 120.0
+
+	if is_in_pestos and player:
+		global_position.y = clamp(player.global_position.y - 160, pestos_min_y, pestos_max_y)
 
 	if is_in_weavers and player:
 		global_position.x = clamp(player.global_position.x, weavers_min_x, weavers_max_x)
