@@ -8,8 +8,12 @@ var player_start_position: Vector2 = Vector2(0.0, -30.0) #launch zone
 const SPRITES = preload("uid://dyts0j2w4qv8n")
 const INGREDIENTS = preload("uid://bdfnifowl2amv")
 
+# Arcade
+var arcade_level: int = 0
+var legs_completed: int = 0
+
 var game_progress: Dictionary[String, bool] = {
-	"demo_played": false,
+	"tutorial_played": false,
 	"whack_a_pesto_played": false,
 	"moth_mother_hatched": false}
 
@@ -88,7 +92,6 @@ var dropdown_active: bool = false
 var cached_counter: bool = false
 var fade_out: bool = false
 var trigger_pachinko: bool = false
-var stage_level: Vector2i = Vector2i(0, 0)
 
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 
@@ -286,7 +289,7 @@ func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
 
 func _reset_progress() -> void:
 	game_progress = {
-		"demo_played": false, "whack_a_pesto_played": false, "moth_mother_hatched": false,
+		"tutorial_played": false, "whack_a_pesto_played": false, "moth_mother_hatched": false,
 	}
 	resources = {
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,

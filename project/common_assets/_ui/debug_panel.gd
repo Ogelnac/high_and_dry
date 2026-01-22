@@ -10,7 +10,7 @@ extends Panel
 
 @onready var dialogue_input: Panel = $"../DialogueInput"
 
-var previous_value: int = 5
+var previous_value: int = Debug.tiles_per_leg
 
 func _ready() -> void:
 	debug.pressed.connect(_toggle_panel_visibility)
@@ -68,7 +68,7 @@ func _validate_line_edit(new_text: String) -> void:
 	num = clamp(num, 1, 100)
 	line_edit.text = str(num)
 	previous_value = num
-	Debug.number_of_levels = -(num + 1)
+	Debug.tiles_per_leg = num
 
 func _validate_line_edit_on_focus_exit() -> void:
 	_validate_line_edit(line_edit.text)

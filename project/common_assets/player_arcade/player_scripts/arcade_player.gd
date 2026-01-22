@@ -63,6 +63,10 @@ var tap_screen_pos: Vector2 = Vector2.ZERO
 # TIMERS
 @export var tap_timer: Timer
 
+# COMBO
+var combo_counter: int = 0
+const COUNTER = preload("uid://cpphloewhd56b")
+
 #AUDIO
 const TAILOR_DEATH = preload("uid://c105it70lk014")
 
@@ -105,6 +109,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		move_and_slide()
 		apply_friction_and_gravity(delta)
+		if is_on_floor() and needle_count == max_needle_count:
+			reset_combo()
 
 	if get_slide_collision_count() > 0:
 		if touched_spikes():
@@ -250,7 +256,7 @@ func apply_friction_and_gravity(delta: float) -> void:
 			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
 		return
 
-	if not is_on_floor():
+	if !is_on_floor():
 		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
 	else:
 		var normal = get_floor_normal()
@@ -434,3 +440,17 @@ func kill():
 	sfx.volume_db = -20.0
 	add_child(sfx)
 	sfx.play()
+
+func reset_combo():
+	combo_counter = 0
+
+func increment_combo(collect_location: Vector2, collectable_type: int):
+	combo_counter += 1
+	spawn_counter(collect_location, collectable_type)
+
+func spawn_counter(pos: Vector2, _collectable_type: int):
+	var instance = COUNTER.instantiate()
+	instance.number_value = combo_counter
+	instance.lifetime = 1.0
+	add_sibling(instance)
+	instance.global_position = pos

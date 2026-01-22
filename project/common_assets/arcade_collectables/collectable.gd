@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		if body.name == "arcade_player":
+		if body.name == "ArcadePlayer":
 			if body.dead:
 				return
 		if collected:
@@ -44,9 +44,10 @@ func _on_body_entered(body: Node2D) -> void:
 		set_deferred("monitoring", false)
 		collision_shape_2d.set_deferred("disabled", true)
 
+		for node in get_tree().get_nodes_in_group("player"):
+			if node.name == "ArcadePlayer":
+				node.increment_combo(global_position, collectable_type)
 		GameManager.add_resource(collectable_type)
-		var main = get_node("../../../")
-		main.restart_timer(global_position)
 
 		audio_player.set_bus("Sfx")
 		audio_player.play()

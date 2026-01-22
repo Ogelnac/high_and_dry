@@ -186,4 +186,4 @@ func _apply_shop_selection(items:Array[ShopManager.ShopItem]) -> void:
 
 func leave_shop():
 	Debug.switch_player = false
-	get_tree().change_scene_to_file("res://project/scenes/stages/_arcade_main.tscn")
+	get_tree().change_scene_to_file("uid://dxc74hnt0exva")

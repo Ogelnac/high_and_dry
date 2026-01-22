@@ -1,4 +1,4 @@
 extends Node
 
-func pass_time(t: int) -> void:
+func pass_time(_t: int) -> void:
 	return

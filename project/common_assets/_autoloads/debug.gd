@@ -3,12 +3,10 @@ extends Node
 var infinite_resources: bool = false
 var infinite_health: bool = false
 var disable_rising_death: bool = false
-var number_of_levels: int = -2 # one level
+var tiles_per_leg: int = 4
 
-var game_ended: bool = false
-
-#Demo tadd trader
-var expell_res: bool = false
+# Tutorial Tadd trader
+var expel_res: bool = false
 var res_expelled: bool = false
 var switch_player: bool = false
 
@@ -21,6 +19,6 @@ func end_game_button_visibility():
 
 func _process(_delta: float) -> void:
 	if res_expelled:
-		expell_res = false
+		expel_res = false
 		switch_player = true
 		res_expelled = false

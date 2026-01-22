@@ -56,7 +56,7 @@ var _theta: float = 0.0
 var _omega: float = 0.0
 
 func _ready() -> void:
-	Debug.expell_res = false
+	Debug.expel_res = false
 	Debug.res_expelled = false
 	_build_rope_world()
 	_prev_anchor = global_position
@@ -282,7 +282,7 @@ func _rope_world_tangent_at_distance(d: float) -> Vector2:
 	return tangent / nlen
 
 func _update_zero_hold(delta: float) -> void:
-	var held = Debug.expell_res
+	var held = Debug.expel_res
 	if held:
 		zero_hold_time += delta
 		var rate = min(REMOVE_MAX_RATE, REMOVE_START_RATE + REMOVE_ACCEL * zero_hold_time)

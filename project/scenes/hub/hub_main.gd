@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready() -> void:
 	await get_tree().process_frame
-	if not GameManager.game_progress["demo_played"]:
+	if !GameManager.game_progress["tutorial_played"]:
 		get_tree().change_scene_to_file("uid://dxc74hnt0exva")
 		return
 
