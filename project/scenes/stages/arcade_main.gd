@@ -10,6 +10,9 @@ const LEVEL_1_0 = preload("uid://u557m6xvcvqr")
 const LEVEL_1_BOAT_PICKUP = preload("uid://bwygpnwblafg4")
 const LEVEL_1_BOAT_DROPOFF = preload("uid://b6erk81axuxl6")
 
+const LEVEL_VISUALS = preload("uid://q1i62eqp5m7v")
+
+
 var levels: Array[PackedScene]
 
 @onready var player_host: Node2D = $PlayerHost
@@ -21,6 +24,7 @@ var current_tile: int = 0
 var max_tile_seen: int = 0
 var max_tiles_loaded: int = 5
 var tiles_in_scene: Array[Object] = []
+var visuals_in_scene: Array[Object] = []
 
 var is_playing: bool = false
 var game_ended: bool = false
@@ -78,6 +82,10 @@ func _process(_delta: float) -> void:
 	if tiles_in_scene.size() > max_tiles_loaded:
 		tiles_in_scene[max_tiles_loaded].queue_free()
 		tiles_in_scene.remove_at(max_tiles_loaded)
+	
+	if visuals_in_scene.size() > max_tiles_loaded:
+		visuals_in_scene[max_tiles_loaded].queue_free()
+		visuals_in_scene.remove_at(max_tiles_loaded)
 
 func load_tutorial():
 	rich_text_label.visible = true
@@ -86,29 +94,39 @@ func load_tutorial():
 	the tutorial![/wave][/center]"
 
 func pattern_update(tile: int) -> void:
+	var visuals_instance: Node
+	visuals_instance = LEVEL_VISUALS.instantiate()
+	add_child(visuals_instance)
+	visuals_instance.global_position.y = float(-608 * tile)
+	
 	var level_instance: Node
 	if tile == 0:
 		if GameManager.legs_completed == 0:
 			# Start tile
 			level_instance = LEVEL_1_0.instantiate()
+			visuals_instance.find_child("ForegroundStart").visible = true
 		else:
 			# Boat dropoff
 			level_instance = LEVEL_1_BOAT_DROPOFF.instantiate()
+			visuals_instance.find_child("BackgroundDropOff").visible = true
+			visuals_instance.find_child("ForegroundDropOff").visible = true
 	elif tile == Debug.tiles_per_leg:
 		# Add interim level
 		level_instance = LEVEL_1_BOAT_PICKUP.instantiate()
+		visuals_instance.find_child("ForegroundPickUp").visible = true
 		level_instance.interim = true
 	else:
 		# Add random level
 		level_instance = LEVEL_TEMPLATE.instantiate()
+	
 	add_child(level_instance)
+	level_instance.global_position.y = float(-608 * tile)
+	tiles_in_scene.insert(0, level_instance)
+	visuals_in_scene.insert(0, visuals_instance)
 	
 	if tile > 0 and tile % 5 == 0:
 		# Every 5 tiles spawn a special collectable
 		pass
-	
-	level_instance.global_position.y = float(-608 * tile)
-	tiles_in_scene.insert(0, level_instance)
 
 func end_run():
 	game_ended = true
@@ -121,8 +139,8 @@ func end_run():
 	
 	ui.shader_objects = ui.find_objects_with_shader()
 	ui._fade_to_black(0.02)
-	arcade_player.get_node("Sprite2D").z_index = 50
-	arcade_player.get_node("ResourceTrail").z_index = 50
+	arcade_player.get_node("Sprite2D").z_index = 20
+	arcade_player.get_node("ResourceTrail").z_index = 20
 	
 	if not GameManager.game_progress["tutorial_played"]:
 		GameManager.game_progress["tutorial_played"] = true

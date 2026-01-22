@@ -41,7 +41,7 @@ position_smoothing_enabled = true
 script = ExtResource("6_t0yuy")
 
 [node name="RisingDeath" type="Area2D" parent="."]
-z_index = 20
+z_index = 10
 collision_layer = 32
 script = ExtResource("7_uv6rw")
 
