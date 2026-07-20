@@ -6,6 +6,7 @@ extends Node2D
 # Level 3 - Depths
 
 const LEVEL_TEMPLATE = preload("uid://cne0knoik5exi")
+const LEVEL_2_1 = preload("uid://d2yys6p3i4ttj")
 const LEVEL_1_0 = preload("uid://u557m6xvcvqr")
 const LEVEL_1_BOAT_PICKUP = preload("uid://bwygpnwblafg4")
 const LEVEL_1_BOAT_DROPOFF = preload("uid://b6erk81axuxl6")
@@ -117,7 +118,7 @@ func pattern_update(tile: int) -> void:
 		level_instance.interim = true
 	else:
 		# Add random level
-		level_instance = LEVEL_TEMPLATE.instantiate()
+		level_instance = LEVEL_2_1.instantiate()
 	
 	add_child(level_instance)
 	level_instance.global_position.y = float(-608 * tile)

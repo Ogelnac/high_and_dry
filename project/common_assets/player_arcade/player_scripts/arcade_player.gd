@@ -44,6 +44,7 @@ var slowmo_count = slowmo_max
 var climbing_thread = false
 var climbing_target_location = Vector2.ZERO
 var climbing_target: CharacterBody2D
+var prev_position: Vector2 = Vector2.ZERO
 
 # AIMING
 @onready var aim_line: Line2D = $AimLine
@@ -72,7 +73,7 @@ const TAILOR_DEATH = preload("uid://c105it70lk014")
 
 func _ready() -> void:
 	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
-	$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
+	#$Sprite2D.scale = Vector2.ONE # keep this. player was spawning all strectched body horror style
 
 func _physics_process(delta: float) -> void:
 	if dead:
@@ -89,21 +90,21 @@ func _physics_process(delta: float) -> void:
 		Engine.time_scale = 1.0
 
 	if climbing_thread:
-		var collision = move_and_collide((climbing_target_location - global_position).normalized() * climb_velocity * delta, true)
-		if collision:
-			var oneway: bool = false
-			var tilemap: TileMapLayer = collision.get_collider()
-			var rid: RID = collision.get_collider_rid()
-			if tilemap:
-				var cell: Vector2i = tilemap.get_coords_for_body_rid(rid)
-				var data: TileData = tilemap.get_cell_tile_data(cell)
-				
-				if data:
-					oneway = data.get_custom_data("oneway")
-			if !oneway or position.y - 12.0 < collision.get_position().y:
-				climbing_thread = false
-				recall_needles.emit()
-		else:
+		#var collision = move_and_collide((climbing_target_location - global_position).normalized() * climb_velocity * delta, true)
+		#if collision:
+			#var oneway: bool = false
+			#var tilemap: TileMapLayer = collision.get_collider()
+			#var rid: RID = collision.get_collider_rid()
+			#if tilemap:
+				#var cell: Vector2i = tilemap.get_coords_for_body_rid(rid)
+				#var data: TileData = tilemap.get_cell_tile_data(cell)
+				#
+				#if data:
+					#oneway = data.get_custom_data("oneway")
+			#if !oneway or position.y - 12.0 < collision.get_position().y:
+				#climbing_thread = false
+				#recall_needles.emit()
+		#else:
 			velocity = (climbing_target_location - global_position).normalized() * climb_velocity
 			move_and_slide()
 	else:
@@ -111,6 +112,11 @@ func _physics_process(delta: float) -> void:
 		apply_friction_and_gravity(delta)
 		if is_on_floor() and needle_count == max_needle_count:
 			reset_combo()
+	
+	if climbing_thread and (global_position - prev_position).length() < 1.0:
+		climbing_thread = false
+		recall_needles.emit()
+	prev_position = global_position
 
 	if get_slide_collision_count() > 0:
 		if touched_spikes():
@@ -234,18 +240,18 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 	var direction = -released_displacement.normalized()
 	var vel = direction * throw_velocity
 
-	if is_on_wall() or is_on_ceiling() or is_on_floor():
-		var normal = get_contact_normal()
-
-		if direction.dot(normal) > 0.0:
-			var parallel = vel - normal * vel.dot(normal)
-			if parallel.length() < 0.0:
-				vel = parallel * throw_velocity
-		else:
-			var tangent = Vector2(-normal.y, normal.x).normalized()
-			if direction.dot(tangent) < 0.0:
-				tangent = -tangent
-			vel = tangent * throw_velocity
+	#if is_on_wall() or is_on_ceiling() or is_on_floor():
+		#var normal = get_contact_normal()
+#
+		#if direction.dot(normal) > 0.0:
+			#var parallel = vel - normal * vel.dot(normal)
+			#if parallel.length() < 0.0:
+				#vel = parallel * throw_velocity
+		#else:
+			#var tangent = Vector2(-normal.y, normal.x).normalized()
+			#if direction.dot(tangent) < 0.0:
+				#tangent = -tangent
+			#vel = tangent * throw_velocity
 	return vel
 
 func apply_friction_and_gravity(delta: float) -> void:
