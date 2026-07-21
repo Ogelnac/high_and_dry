@@ -22,13 +22,13 @@ func _ready():
 	sprite.frame = random_frame
 	
 	match random_frame:
-		109: 
+		207: 
 			collision_shape.shape.radius = 5
 			bumper.pitch_scale = 1.5
-		110: 
+		208: 
 			collision_shape.shape.radius = 6
 			bumper.pitch_scale = 1.25
-		111: 
+		209: 
 			collision_shape.shape.radius = 7
 			bumper.pitch_scale = 1
 

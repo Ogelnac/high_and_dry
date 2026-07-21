@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhv16y778i1e2"]
+[gd_scene format=3 uid="uid://bhv16y778i1e2"]
 
 [ext_resource type="Script" uid="uid://crly0a8s7fa74" path="res://project/common_assets/player_hub/player.gd" id="1_dyp2x"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://project/common_assets/_textures/tailor.png" id="1_qowkf"]
@@ -88,33 +88,31 @@ _data = {
 radius = 6.0
 height = 24.0
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1602108494 groups=["player"]]
 collision_mask = 9
 script = ExtResource("1_dyp2x")
 jump_force = -260.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1461494438]
 material = SubResource("ShaderMaterial_hqtel")
 position = Vector2(0, -6)
 texture = ExtResource("1_qowkf")
 hframes = 5
 vframes = 5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
-libraries = {
-&"": SubResource("AnimationLibrary_tamwi")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1563483873]
+libraries/ = SubResource("AnimationLibrary_tamwi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1456698119]
 visible = false
 position = Vector2(0, -6)
 shape = SubResource("CapsuleShape2D_lqj7t")
 
-[node name="StepSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="StepSFX" type="AudioStreamPlayer2D" parent="." unique_id=261941778]
 stream = ExtResource("4_hqtel")
 volume_db = -10.0
 pitch_scale = 1.86
 panning_strength = 0.5
 
-[node name="StepTimer" type="Timer" parent="."]
+[node name="StepTimer" type="Timer" parent="." unique_id=1122317394]
 wait_time = 0.3

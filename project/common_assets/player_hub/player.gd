@@ -238,7 +238,6 @@ func _physics_process(delta: float) -> void:
 	elif not virtual_joystick_active:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
 
-
 	move_and_slide()
 
 	if velocity.x != 0:
