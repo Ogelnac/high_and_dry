@@ -124,9 +124,9 @@ func _physics_process(delta: float) -> void:
 		if touched_spikes():
 			slime_count = slime_count_max
 
-	#handle_animation()
-	#update_sprite_orientation(delta)
-	#apply_squash_and_stretch(delta)
+	handle_animation()
+	update_sprite_orientation(delta)
+	apply_squash_and_stretch(delta)
 	previous_velocity = velocity
 
 	if touching and tap_timer.is_stopped():
@@ -145,27 +145,12 @@ func _physics_process(delta: float) -> void:
 					aim_line.to_local(global_position + get_throw_velocity(release_displacement))
 				]
 
-	#var local_aim_x = (-release_displacement).rotated(-current_angle).x
-	#var wall_dir = get_wall_collision_direction()
-
-	#var deadzone = 0.5
-	#if aiming:
-		#if local_aim_x < deadzone:
-			#sprite.flip_h = true
-		#elif local_aim_x > deadzone:
-			#sprite.flip_h = false
-	#elif wall_dir != 0:
-		#var local_wall_x = Vector2(wall_dir, 0).rotated(-current_angle).x
-		#if local_wall_x > deadzone:
-			#sprite.flip_h = true
-		#elif local_wall_x < deadzone:
-			#sprite.flip_h = false
-	#elif abs(velocity.x) > 0.5:
-		#var local_vel_x = velocity.rotated(-current_angle).x
-		#if local_vel_x < 0.1:
-			#sprite.flip_h = true
-		#elif local_vel_x > 0.1:
-			#sprite.flip_h = false
+	if not aiming:
+		var local_velocity_x := velocity.rotated(-current_angle).x
+		if local_velocity_x < -1.0:
+			sprite.flip_h = true
+		elif local_velocity_x > 1.0:
+			sprite.flip_h = false
 
 func _process(delta: float) -> void:
 	if Debug.infinite_health:
@@ -415,7 +400,7 @@ func handle_animation() -> void:
 		return
 
 	if is_on_floor() or is_on_wall() or is_on_ceiling():
-		if velocity.length() < 0.5:
+		if velocity.length() < 5.0:
 			anim.play("idle")
 		else:
 			anim.play("run")
@@ -429,11 +414,15 @@ func update_sprite_orientation(delta: float) -> void:
 		sprite.position = Vector2(0, -6).rotated(current_angle)
 		return
 
-	var on_surface := is_on_floor() or is_on_wall() or is_on_ceiling()
+	var floor_detected := floor_ray_cast.is_colliding()
+	var on_surface := floor_detected or is_on_wall() or is_on_ceiling()
 	if on_surface:
-		var surface_normal = Vector2.ZERO
-		for i in range(get_slide_collision_count()):
-			surface_normal += get_slide_collision(i).get_normal()
+		var surface_normal := Vector2.ZERO
+		if floor_detected:
+			surface_normal = floor_ray_cast.get_collision_normal()
+		else:
+			for i in range(get_slide_collision_count()):
+				surface_normal += get_slide_collision(i).get_normal()
 		if surface_normal != Vector2.ZERO:
 			surface_normal = surface_normal.normalized()
 			var tangent = Vector2(-surface_normal.y, surface_normal.x)
@@ -451,8 +440,9 @@ func wrapf(value: float, min_val: float, max_val: float) -> float:
 func apply_squash_and_stretch(delta: float) -> void:
 	var target_stretch_x = 1.0
 	var target_stretch_y = 1.0
+	var grounded := floor_ray_cast.is_colliding()
 
-	if not is_on_floor():
+	if not grounded:
 		if velocity.y < 0:
 			target_stretch_x = 1.0 + (squash_intensity * 0.2)
 			target_stretch_y = 1.0 - (squash_intensity * 0.2)
@@ -460,7 +450,7 @@ func apply_squash_and_stretch(delta: float) -> void:
 			target_stretch_x = 1.0 - (squash_intensity * 0.2)
 			target_stretch_y = 1.0 + (squash_intensity * 0.2)
 
-	if is_on_floor() and previous_velocity.y > landing_squash_threshold and landing_squash_timer <= 0:
+	if grounded and previous_velocity.y > landing_squash_threshold and landing_squash_timer <= 0:
 		landing_squash_timer = 0.2
 		target_stretch_x = 1.2 * landing_squash_multiplier
 		target_stretch_y = 0.6
