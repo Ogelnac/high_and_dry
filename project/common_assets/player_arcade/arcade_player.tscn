@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://busmpycjb5vsd"]
+[gd_scene format=3 uid="uid://busmpycjb5vsd"]
 
 [ext_resource type="Script" uid="uid://bc13dhll8e5s3" path="res://project/common_assets/player_arcade/player_scripts/arcade_player.gd" id="1_qxev7"]
 [ext_resource type="Script" uid="uid://dncv44ovu1kof" path="res://project/common_assets/player_arcade/resource_trail.gd" id="2_qnqhn"]
@@ -239,16 +239,17 @@ _data = {
 &"run": SubResource("Animation_53c1m")
 }
 
-[node name="ArcadePlayer" type="CharacterBody2D" node_paths=PackedStringArray("tap_timer") groups=["player"]]
+[node name="ArcadePlayer" type="CharacterBody2D" unique_id=1650850013 node_paths=PackedStringArray("tap_timer") groups=["player"]]
 collision_mask = 74
+floor_stop_on_slope = false
 script = ExtResource("1_qxev7")
 tap_timer = NodePath("TapTimer")
 
-[node name="AirMeter" type="Node2D" parent="."]
+[node name="AirMeter" type="Node2D" parent="." unique_id=2135243774]
 position = Vector2(0, -32)
 script = ExtResource("7_jatp4")
 
-[node name="Bubble" type="Sprite2D" parent="AirMeter"]
+[node name="Bubble" type="Sprite2D" parent="AirMeter" unique_id=585629425]
 z_index = 400
 material = SubResource("ShaderMaterial_tt4ve")
 position = Vector2(-17, 0)
@@ -256,14 +257,14 @@ texture = ExtResource("2_tt4ve")
 hframes = 2
 vframes = 2
 
-[node name="Bubble2" type="Sprite2D" parent="AirMeter"]
+[node name="Bubble2" type="Sprite2D" parent="AirMeter" unique_id=355763297]
 z_index = 400
 material = SubResource("ShaderMaterial_tt4ve")
 texture = ExtResource("2_tt4ve")
 hframes = 2
 vframes = 2
 
-[node name="Bubble3" type="Sprite2D" parent="AirMeter"]
+[node name="Bubble3" type="Sprite2D" parent="AirMeter" unique_id=11451409]
 z_index = 400
 material = SubResource("ShaderMaterial_tt4ve")
 position = Vector2(17, 0)
@@ -272,24 +273,26 @@ hframes = 2
 vframes = 2
 frame = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AirMeter"]
-libraries = {
-&"": SubResource("AnimationLibrary_82sa7")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AirMeter" unique_id=569784513]
+libraries/ = SubResource("AnimationLibrary_82sa7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1070445105]
 z_index = 20
 shape = SubResource("CircleShape2D_sb2v7")
 
-[node name="RightWallRay" type="RayCast2D" parent="CollisionShape2D"]
+[node name="RightWallRay" type="RayCast2D" parent="CollisionShape2D" unique_id=284035013]
 target_position = Vector2(12, 0)
 collision_mask = 74
 
-[node name="LeftWallRay" type="RayCast2D" parent="CollisionShape2D"]
+[node name="LeftWallRay" type="RayCast2D" parent="CollisionShape2D" unique_id=200915560]
 target_position = Vector2(-12, 0)
 collision_mask = 74
 
-[node name="ResourceTrail" type="Line2D" parent="."]
+[node name="FloorRayCast" type="RayCast2D" parent="CollisionShape2D" unique_id=1519265799]
+target_position = Vector2(0, 12)
+collision_mask = 74
+
+[node name="ResourceTrail" type="Line2D" parent="." unique_id=1841881935]
 texture_filter = 1
 width = 1.0
 joint_mode = 2
@@ -298,33 +301,31 @@ bead_scene = ExtResource("3_07mc3")
 vel_bias_gain = -0.01
 accel_drive_gain = 0.02
 
-[node name="Knot" type="Sprite2D" parent="ResourceTrail"]
+[node name="Knot" type="Sprite2D" parent="ResourceTrail" unique_id=554160863]
 texture_filter = 1
 texture = ExtResource("4_tt4ve")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
-[node name="AimRay" type="RayCast2D" parent="."]
+[node name="AimRay" type="RayCast2D" parent="." unique_id=846898123]
 target_position = Vector2(300, 0)
 collision_mask = 2
 
-[node name="AimLine" type="Line2D" parent="."]
+[node name="AimLine" type="Line2D" parent="." unique_id=157205758]
 position = Vector2(0, -4)
 width = 1.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1409652124]
 material = SubResource("ShaderMaterial_kul7w")
 position = Vector2(0, -6)
 texture = ExtResource("4_uymdo")
 hframes = 5
 vframes = 5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_cuypb")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=509557204]
+libraries/ = SubResource("AnimationLibrary_cuypb")
 
-[node name="TapTimer" type="Timer" parent="."]
+[node name="TapTimer" type="Timer" parent="." unique_id=60995852]
 wait_time = 0.1
 one_shot = true
 

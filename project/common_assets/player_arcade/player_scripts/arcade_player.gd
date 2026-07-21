@@ -22,6 +22,7 @@ var drip_delay = drip_delay_max
 @export var climb_stop_velocity: float = 0.0 #150.0
 @export var throw_velocity: float = 800.0
 @export var collect_velocity: float = 0.0 #50.0
+var prev_vel: Vector2 = Vector2.ZERO
 
 # ANIMATION
 @export var squash_intensity: float = 0.5
@@ -55,6 +56,7 @@ var last_surface_angle := 0.0
 # WALL JUMP
 @onready var right_wall_ray: RayCast2D = $CollisionShape2D/RightWallRay
 @onready var left_wall_ray: RayCast2D = $CollisionShape2D/LeftWallRay
+@onready var floor_ray_cast: RayCast2D = $CollisionShape2D/FloorRayCast
 
 # TOUCH
 var touching: bool = false
@@ -122,9 +124,9 @@ func _physics_process(delta: float) -> void:
 		if touched_spikes():
 			slime_count = slime_count_max
 
-	handle_animation()
-	update_sprite_orientation(delta)
-	apply_squash_and_stretch(delta)
+	#handle_animation()
+	#update_sprite_orientation(delta)
+	#apply_squash_and_stretch(delta)
 	previous_velocity = velocity
 
 	if touching and tap_timer.is_stopped():
@@ -143,17 +145,27 @@ func _physics_process(delta: float) -> void:
 					aim_line.to_local(global_position + get_throw_velocity(release_displacement))
 				]
 
-	var local_aim_x = (-release_displacement).rotated(-current_angle).x
-	var wall_dir = get_wall_collision_direction()
+	#var local_aim_x = (-release_displacement).rotated(-current_angle).x
+	#var wall_dir = get_wall_collision_direction()
 
-	if aiming:
-		sprite.flip_h = local_aim_x < 0
-	elif wall_dir != 0:
-		var local_wall_x = Vector2(wall_dir, 0).rotated(-current_angle).x
-		sprite.flip_h = local_wall_x > 0
-	elif abs(velocity.x) > 0.5:
-		var local_vel_x = velocity.rotated(-current_angle).x
-		sprite.flip_h = local_vel_x < 0
+	#var deadzone = 0.5
+	#if aiming:
+		#if local_aim_x < deadzone:
+			#sprite.flip_h = true
+		#elif local_aim_x > deadzone:
+			#sprite.flip_h = false
+	#elif wall_dir != 0:
+		#var local_wall_x = Vector2(wall_dir, 0).rotated(-current_angle).x
+		#if local_wall_x > deadzone:
+			#sprite.flip_h = true
+		#elif local_wall_x < deadzone:
+			#sprite.flip_h = false
+	#elif abs(velocity.x) > 0.5:
+		#var local_vel_x = velocity.rotated(-current_angle).x
+		#if local_vel_x < 0.1:
+			#sprite.flip_h = true
+		#elif local_vel_x > 0.1:
+			#sprite.flip_h = false
 
 func _process(delta: float) -> void:
 	if Debug.infinite_health:
@@ -218,7 +230,7 @@ func _input(event: InputEvent):
 						velocity.x = -hop_velocity.x
 					else:
 						velocity.x = hop_velocity.x
-				elif is_on_floor():
+				elif floor_ray_cast.is_colliding():
 					# Hop
 					velocity.y = hop_velocity.y
 					if abs(velocity.x) > 0.5:
@@ -256,20 +268,48 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 
 func apply_friction_and_gravity(delta: float) -> void:
 	var arcade_resources = GameManager.new_arcade_resources.size()
-	if in_water:
-		velocity.y -= 100.0 * delta
-		if damping > 0.0:
-			velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
-		return
-
-	if !is_on_floor():
-		velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
+	#velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
+	
+	if is_on_floor():
+		#var normal = get_floor_normal()
+		#velocity = velocity.length() * velocity.slide(normal).normalized() * 0.8
+		velocity = get_real_velocity() - 0.05 * prev_vel * (1.0 - slime_count/slime_count_max)
+		if abs(velocity.x) < 1.0:
+			velocity.x = 0.0
+		if abs(velocity.y) < 1.0:
+			velocity.y = 0.0
 	else:
-		var normal = get_floor_normal()
-		var tangential = Vector2(-normal.y, normal.x)
-		var tangential_velocity = velocity.dot(tangential)
-		tangential_velocity = move_toward(tangential_velocity, 0.0, friction)
-		velocity = tangential * tangential_velocity
+		if in_water:
+			velocity.y -= 100.0 * delta
+			#if damping > 0.0:
+				#velocity = velocity.move_toward(Vector2.ZERO, damping * delta)
+			#return
+		else:
+			velocity.y += (200.0 + (10.0 * slime_count) + (arcade_resources * 0.2)) * delta
+		
+	
+	prev_vel = get_real_velocity()
+		
+	#if is_on_floor():
+		#var normal = get_floor_normal()
+		#if normal.y > -0.95:
+			## On a slope
+			#if normal.x > 0.0:
+				## Up-left slope
+				#if velocity.x > 0.5:
+					#velocity.x *= 1.0
+				#elif velocity.x < 0.5:
+					#velocity.x *= 0.0
+				#else:
+					#velocity = Vector2.ZERO
+			#else:
+				## Up-right slope
+				#if velocity.x > 0.5:
+					#velocity.x += 0.0
+				#elif velocity.x < 0.5:
+					#velocity.x *= 1.0
+				#else:
+					#velocity = Vector2.ZERO
 
 func touched_spikes() -> bool:
 	if (is_on_floor() or is_on_wall() or is_on_ceiling()):
@@ -375,7 +415,7 @@ func handle_animation() -> void:
 		return
 
 	if is_on_floor() or is_on_wall() or is_on_ceiling():
-		if velocity.length() < 5.0:
+		if velocity.length() < 0.5:
 			anim.play("idle")
 		else:
 			anim.play("run")
