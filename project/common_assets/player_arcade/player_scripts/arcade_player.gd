@@ -25,12 +25,7 @@ var drip_delay = drip_delay_max
 var prev_vel: Vector2 = Vector2.ZERO
 
 # ANIMATION
-@export var squash_intensity: float = 0.5
-@export var landing_squash_multiplier: float = 2.5
-@export var landing_squash_threshold: float = 200.0
-@onready var sprite:= $Sprite2D
-var landing_squash_timer: float = 0.0
-var previous_velocity: Vector2 = Vector2.ZERO
+@onready var sprite := $Sprite2D
 
 # NEEDLE
 const NEEDLE = preload("uid://bfcp62kdq7nfb")
@@ -38,7 +33,6 @@ const NEEDLE = preload("uid://bfcp62kdq7nfb")
 @export var needle_count: int = 1
 signal recall_needles
 var needle_thrown := false
-var current_angle := 0.0
 var aiming = false
 @export var slowmo_max = 1.0
 var slowmo_count = slowmo_max
@@ -51,7 +45,6 @@ var prev_position: Vector2 = Vector2.ZERO
 @onready var aim_line: Line2D = $AimLine
 @onready var aim_ray: RayCast2D = $AimRay
 var release_displacement: Vector2 = Vector2.ZERO
-var last_surface_angle := 0.0
 
 # WALL JUMP
 @onready var right_wall_ray: RayCast2D = $CollisionShape2D/RightWallRay
@@ -124,10 +117,7 @@ func _physics_process(delta: float) -> void:
 		if touched_spikes():
 			slime_count = slime_count_max
 
-	handle_animation()
-	update_sprite_orientation(delta)
-	apply_squash_and_stretch(delta)
-	previous_velocity = velocity
+	sprite.update_animation(delta)
 
 	if touching and tap_timer.is_stopped():
 		# Aiming
@@ -144,13 +134,6 @@ func _physics_process(delta: float) -> void:
 					aim_line.to_local(Vector2(global_position.x, global_position.y - 4)),
 					aim_line.to_local(global_position + get_throw_velocity(release_displacement))
 				]
-
-	if not aiming:
-		var local_velocity_x := velocity.rotated(-current_angle).x
-		if local_velocity_x < -1.0:
-			sprite.flip_h = true
-		elif local_velocity_x > 1.0:
-			sprite.flip_h = false
 
 func _process(delta: float) -> void:
 	if Debug.infinite_health:
@@ -357,119 +340,12 @@ func _on_tap_timer_timeout() -> void:
 		slowmo_count = slowmo_max
 	pass
 
-func handle_animation() -> void:
-	var anim := $AnimationPlayer
-
-	if aiming:
-		anim.stop()
-		var local_aim = -release_displacement.rotated(-current_angle)
-		var angle = rad_to_deg(atan2(-local_aim.x, -local_aim.y))
-
-		if angle < 0:
-			angle += 360
-
-		var frame := 8
-		if angle >= 0 and angle < 45:
-			frame = 8
-		elif angle < 70:
-			frame = 7
-		elif angle < 90:
-			frame = 6
-		elif angle < 120:
-			frame = 5
-		elif angle < 180:
-			frame = 4
-		elif angle < 240:
-			frame = 4
-		elif angle < 270:
-			frame = 5
-		elif angle < 290:
-			frame = 6
-		elif angle < 315:
-			frame = 7
-		else:
-			frame = 8
-
-		sprite.frame = frame
-
-		sprite.flip_h = release_displacement.x > 0
-		return
-
-	if needle_thrown or climbing_thread:
-		anim.play("idle_temp")
-		return
-
-	if is_on_floor() or is_on_wall() or is_on_ceiling():
-		if velocity.length() < 5.0:
-			anim.play("idle")
-		else:
-			anim.play("run")
-	else:
-		anim.play("idle")
-
-func update_sprite_orientation(delta: float) -> void:
-	if in_water:
-		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
-		sprite.rotation = current_angle
-		sprite.position = Vector2(0, -6).rotated(current_angle)
-		return
-
-	var floor_detected := floor_ray_cast.is_colliding()
-	var on_surface := floor_detected or is_on_wall() or is_on_ceiling()
-	if on_surface:
-		var surface_normal := Vector2.ZERO
-		if floor_detected:
-			surface_normal = floor_ray_cast.get_collision_normal()
-		else:
-			for i in range(get_slide_collision_count()):
-				surface_normal += get_slide_collision(i).get_normal()
-		if surface_normal != Vector2.ZERO:
-			surface_normal = surface_normal.normalized()
-			var tangent = Vector2(-surface_normal.y, surface_normal.x)
-			last_surface_angle = tangent.angle()
-		current_angle = lerp_angle(current_angle, last_surface_angle, delta * 10.0)
-	else:
-		current_angle = lerp_angle(current_angle, 0.0, delta * 5.0)
-
-	sprite.rotation = current_angle
-	sprite.position = Vector2(0, -6).rotated(current_angle)
-
-func wrapf(value: float, min_val: float, max_val: float) -> float:
-	return fmod((value - min_val), (max_val - min_val)) + min_val
-
-func apply_squash_and_stretch(delta: float) -> void:
-	var target_stretch_x = 1.0
-	var target_stretch_y = 1.0
-	var grounded := floor_ray_cast.is_colliding()
-
-	if not grounded:
-		if velocity.y < 0:
-			target_stretch_x = 1.0 + (squash_intensity * 0.2)
-			target_stretch_y = 1.0 - (squash_intensity * 0.2)
-		else:
-			target_stretch_x = 1.0 - (squash_intensity * 0.2)
-			target_stretch_y = 1.0 + (squash_intensity * 0.2)
-
-	if grounded and previous_velocity.y > landing_squash_threshold and landing_squash_timer <= 0:
-		landing_squash_timer = 0.2
-		target_stretch_x = 1.2 * landing_squash_multiplier
-		target_stretch_y = 0.6
-
-	if landing_squash_timer > 0:
-		landing_squash_timer -= delta
-	else:
-		landing_squash_timer = 0.0
-
-	sprite.scale.x = lerp(sprite.scale.x, target_stretch_x, delta * 10)
-	sprite.scale.y = lerp(sprite.scale.y, target_stretch_y, delta * 10)
-
 func kill():
 	dead = true
 	aiming = false
 	climbing_thread = false
 	aim_line.points = [Vector2.ZERO, Vector2.ZERO]
-	$AnimationPlayer.stop()
-	sprite.frame = 23
+	sprite.show_death_frame()
 	var sfx := AudioStreamPlayer.new()
 	sfx.set_bus("Sfx")
 	sfx.stream = TAILOR_DEATH

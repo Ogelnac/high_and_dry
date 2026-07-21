@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djr7fvvk6jg6e" path="res://project/common_assets/player_arcade/resource_bead.tscn" id="3_07mc3"]
 [ext_resource type="Texture2D" uid="uid://du5rvjj4acp4s" path="res://project/common_assets/_textures/particles.png" id="4_tt4ve"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://project/common_assets/_textures/tailor.png" id="4_uymdo"]
+[ext_resource type="Script" uid="uid://dod8bvlsjrw2i" path="res://project/common_assets/player_arcade/arcade_player_animations.gd" id="4_w5ibb"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="6_tt4ve"]
 [ext_resource type="Script" uid="uid://cpwim52iwibmb" path="res://project/common_assets/player_arcade/player_scripts/air_meter.gd" id="7_jatp4"]
 
@@ -307,6 +308,14 @@ texture = ExtResource("4_tt4ve")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1409652124]
+material = SubResource("ShaderMaterial_kul7w")
+position = Vector2(0, -6)
+texture = ExtResource("4_uymdo")
+hframes = 5
+vframes = 5
+script = ExtResource("4_w5ibb")
+
 [node name="AimRay" type="RayCast2D" parent="." unique_id=846898123]
 target_position = Vector2(300, 0)
 collision_mask = 2
@@ -314,13 +323,6 @@ collision_mask = 2
 [node name="AimLine" type="Line2D" parent="." unique_id=157205758]
 position = Vector2(0, -4)
 width = 1.0
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1409652124]
-material = SubResource("ShaderMaterial_kul7w")
-position = Vector2(0, -6)
-texture = ExtResource("4_uymdo")
-hframes = 5
-vframes = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=509557204]
 libraries/ = SubResource("AnimationLibrary_cuypb")
