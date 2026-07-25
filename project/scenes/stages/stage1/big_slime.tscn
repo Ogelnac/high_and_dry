@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cmvxjxmlos3rc"]
+
+[ext_resource type="Texture2D" uid="uid://bayku2amr4ico" path="res://project/scenes/stages/stage1/slime.png" id="1_llwv2"]
+[ext_resource type="Shader" uid="uid://boq3wchwo4xe2" path="res://project/scenes/stages/stage1/slime.gdshader" id="2_muscw"]
+[ext_resource type="Texture2D" uid="uid://cdstcfvy3ra0b" path="res://project/scenes/stages/stage1/slime_diffraction.png" id="3_o48gu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uvxgg"]
+shader = ExtResource("2_muscw")
+shader_parameter/black_dot_transition = 0.510000000475
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
+shader_parameter/diffraction = ExtResource("3_o48gu")
+shader_parameter/diffraction_strength = 200.0
+
+[node name="BigSlime" type="Node2D" unique_id=1304501050]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1832115765]
+z_index = 39
+
+[node name="Eye" type="Sprite2D" parent="Node2D" unique_id=987887286]
+position = Vector2(-16, 0)
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(161, 65, 14, 14)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Eye" unique_id=1595475821]
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(145, 65, 14, 14)
+
+[node name="Brow" type="Sprite2D" parent="Node2D/Eye" unique_id=354616585]
+position = Vector2(0, -10)
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(161, 81, 14, 14)
+
+[node name="Eye2" type="Sprite2D" parent="Node2D" unique_id=2116558388]
+position = Vector2(16, 0)
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(161, 65, 14, 14)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Eye2" unique_id=599635955]
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(145, 65, 14, 14)
+
+[node name="Brow" type="Sprite2D" parent="Node2D/Eye2" unique_id=918058931]
+position = Vector2(0, -10)
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(161, 81, 14, 14)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=998149066]
+z_index = 50
+texture_filter = 1
+material = SubResource("ShaderMaterial_uvxgg")
+texture = ExtResource("1_llwv2")
+region_enabled = true
+region_rect = Rect2(0, 0, 112, 112)

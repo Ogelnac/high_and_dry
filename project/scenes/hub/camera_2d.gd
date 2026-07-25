@@ -9,28 +9,28 @@ var is_in_pestos: bool = false
 var is_in_weavers: bool = false
 var player: Node2D = null
 
-@onready var pestos: Area2D = $"../Pestos"
-@onready var weavers: Area2D = $"../Weavers"
+@onready var pestos: Area2D = $"../CameraZones/Pestos"
+@onready var weavers: Area2D = $"../CameraZones/Weavers"
 
-@onready var left: Area2D = $"../Left"
-@onready var mid_left: Area2D = $"../MidLeft"
-@onready var middle: Area2D = $"../Middle"
-@onready var mid_right: Area2D = $"../MidRight"
-@onready var right: Area2D = $"../Right"
+@onready var left: Area2D = $"../CameraZones/Left"
+@onready var mid_left: Area2D = $"../CameraZones/MidLeft"
+@onready var middle: Area2D = $"../CameraZones/Middle"
+@onready var mid_right: Area2D = $"../CameraZones/MidRight"
+@onready var right: Area2D = $"../CameraZones/Right"
 
 @onready var ui: Control = $"../CanvasLayer/UI"
 
 @onready var parallax_array: Array[Node2D] = [
-	$"../Background",
-	$"../MidBackground",
-	$"../ForeGround",
-	$"../ForeGround",
-	$"../Pachinko",
-	$"../Title",
-	$"../Water",
-	$"../Ink",
-	$"../Lava",
-	$"../Sewage"]
+	$"../Environment/Background",
+	$"../Environment/MidBackground",
+	$"../Environment/ForeGround",
+	$"../Environment/ForeGround",
+	$"../Environment/Pachinko",
+	$"../Environment/Title",
+	$"../Environment/Water",
+	$"../Environment/Ink",
+	$"../Environment/Lava",
+	$"../Environment/Sewage"]
 
 func _ready() -> void:
 	pestos.body_entered.connect(_on_pestos_body_entered)
