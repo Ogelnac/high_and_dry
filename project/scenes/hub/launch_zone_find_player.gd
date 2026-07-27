@@ -3,8 +3,9 @@ extends Area2D
 var searching := false
 
 func _ready() -> void:
-	var player_host = get_node("../../../PlayerHost")
-	player_host.launch_zone = self
+	if has_node("../../../PlayerHost"):
+		var player_host = get_node("../../../PlayerHost")
+		player_host.launch_zone = self
 
 func _process(_delta):
 	if searching:

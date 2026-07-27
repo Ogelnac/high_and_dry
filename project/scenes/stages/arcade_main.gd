@@ -104,7 +104,7 @@ func pattern_update(tile: int) -> void:
 	if tile == 0:
 		# Start tile
 		level_instance = levels[0].instantiate()
-	if tile == Debug.number_of_levels:
+	if tile == -(Debug.number_of_levels + 1):
 		# Add interim level
 		level_instance = levels[1].instantiate()
 		level_instance.interim = true
