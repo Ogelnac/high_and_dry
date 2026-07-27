@@ -114,6 +114,7 @@ func pattern_update(tile: int) -> void:
 		level_instance = levels[rand_level].instantiate()
 
 	add_child(level_instance)
+	ui.refresh_shader_objects()
 	if tile < 0 and tile % 5 == 0:
 		# Every 5 levels has a Special Collectable (SC)
 		level_instance.spawn_sc()
@@ -135,7 +136,7 @@ func end_run():
 
 	await player_end_animation_sequence()
 	
-	ui.shader_objects = ui.find_objects_with_shader()
+	ui.refresh_shader_objects()
 	ui._fade_to_black(0.02)
 	arcade_player.get_node("Sprite2D").z_index = 50
 	arcade_player.get_node("ResourceTrail").z_index = 50

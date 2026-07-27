@@ -34,6 +34,7 @@ size = Vector2(224, 20)
 size = Vector2(224, 197)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kelph"]
+resource_local_to_scene = true
 shader = ExtResource("3_y8mlg")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
@@ -130,11 +131,11 @@ position = Vector2(0, -354)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceCollection" unique_id=570567343]
 shape = SubResource("RectangleShape2D_8e7xq")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=877812280]
+[node name="Boat" parent="." unique_id=1396843700 instance=ExtResource("11_dixv3")]
+position = Vector2(-200, -272)
+
+[node name="BoatSmoke" type="Sprite2D" parent="." unique_id=877812280 groups=["shader_objects"]]
 z_index = -150
 material = SubResource("ShaderMaterial_kelph")
 position = Vector2(0, -368)
 texture = SubResource("ViewportTexture_kelph")
-
-[node name="Boat" parent="." unique_id=1396843700 instance=ExtResource("11_dixv3")]
-position = Vector2(-200, -272)

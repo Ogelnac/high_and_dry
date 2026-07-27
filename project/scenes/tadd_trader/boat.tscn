@@ -15,6 +15,7 @@ offsets = PackedFloat32Array(0.23221, 0.873908, 0.998752)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bmdcp"]
+resource_local_to_scene = true
 shader = ExtResource("3_1ylil")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
@@ -32,10 +33,10 @@ size = Vector2i(256, 256)
 render_target_update_mode = 4
 
 [node name="Offset" type="Node2D" parent="SubViewport" unique_id=596288424]
-position = Vector2(120, 450)
+position = Vector2(128, 128)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="SubViewport/Offset" unique_id=1316207960]
-position = Vector2(-200, -272)
+emitting = false
 amount = 64
 texture = ExtResource("2_jdgnk")
 lifetime = 5.0

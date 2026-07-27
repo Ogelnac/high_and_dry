@@ -14,6 +14,7 @@ shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbdqu"]
+resource_local_to_scene = true
 shader = ExtResource("3_r680b")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
@@ -74,7 +75,7 @@ position = Vector2(0, -289)
 [node name="Boat" parent="." unique_id=2139469552 instance=ExtResource("6_cbr84")]
 position = Vector2(0, -187)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=714916963]
+[node name="BoatSmoke" type="Sprite2D" parent="." unique_id=714916963 groups=["shader_objects"]]
 z_index = -150
 material = SubResource("ShaderMaterial_fbdqu")
 position = Vector2(1, -275)
