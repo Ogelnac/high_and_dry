@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource("1_sw5hh")
-shader_parameter/black_dot_transition = 0.750000011875
+shader_parameter/black_dot_transition = 0.7750000130625
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0

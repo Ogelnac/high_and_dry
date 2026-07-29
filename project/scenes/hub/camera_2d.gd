@@ -19,18 +19,7 @@ var player: Node2D = null
 @onready var right: Area2D = $"../CameraZones/Right"
 
 @onready var ui: Control = $"../CanvasLayer/UI"
-
-@onready var parallax_array: Array[Node2D] = [
-	$"../Environment/Background",
-	$"../Environment/MidBackground",
-	$"../Environment/ForeGround",
-	$"../Environment/ForeGround",
-	$"../Environment/Pachinko",
-	$"../Environment/Title",
-	$"../Environment/Water",
-	$"../Environment/Ink",
-	$"../Environment/Lava",
-	$"../Environment/Sewage"]
+@onready var parallax_controller: Node = $"../Environment"
 
 func _ready() -> void:
 	pestos.body_entered.connect(_on_pestos_body_entered)
@@ -48,7 +37,7 @@ func _on_left_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(left.global_position)
+		_reset_parallax()
 
 func _on_mid_left_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -56,7 +45,7 @@ func _on_mid_left_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(mid_left.global_position)
+		_reset_parallax()
 
 func _on_middle_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -64,7 +53,7 @@ func _on_middle_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(middle.global_position)
+		_reset_parallax()
 
 func _on_mid_right_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -72,7 +61,7 @@ func _on_mid_right_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(mid_right.global_position)
+		_reset_parallax()
 
 func _on_right_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -80,7 +69,7 @@ func _on_right_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = false
 		player = body
-		_reset_parallax(right.global_position)
+		_reset_parallax()
 
 func _on_pestos_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -88,7 +77,7 @@ func _on_pestos_body_entered(body: Node2D) -> void:
 		is_in_pestos = true
 		is_in_weavers = false
 		player = body
-		_reset_parallax(pestos.global_position)
+		_reset_parallax()
 
 func _on_weavers_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -96,7 +85,7 @@ func _on_weavers_body_entered(body: Node2D) -> void:
 		is_in_pestos = false
 		is_in_weavers = true
 		player = body
-		_reset_parallax(weavers.global_position)
+		_reset_parallax()
 
 func _physics_process(_delta: float) -> void:
 	if player:
@@ -108,6 +97,5 @@ func _physics_process(_delta: float) -> void:
 	if is_in_weavers and player:
 		global_position.x = clamp(player.global_position.x, weavers_min_x, weavers_max_x)
 
-func _reset_parallax(new_position: Vector2):
-	for parallax in parallax_array:
-		parallax._reset_reference(new_position)
+func _reset_parallax() -> void:
+	parallax_controller.reset_reference()
