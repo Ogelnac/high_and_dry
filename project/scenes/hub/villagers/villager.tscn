@@ -1,8 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://vka4isjne5qt"]
+[gd_scene format=3 uid="uid://vka4isjne5qt"]
 
 [ext_resource type="Script" uid="uid://dqq0i3cll7o3e" path="res://project/scenes/hub/villagers/villager.gd" id="1_wkvmw"]
 [ext_resource type="Texture2D" uid="uid://bja62rcwvqab" path="res://project/scenes/hub/villagers/animal_bodies.png" id="2_73nnc"]
 [ext_resource type="Texture2D" uid="uid://d2lkn4x63rrm6" path="res://project/scenes/hub/villagers/animal_base.png" id="2_myk3s"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_nf0sm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ajebe"]
+shader = ExtResource("2_nf0sm")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.5
 
 [sub_resource type="Animation" id="Animation_73nnc"]
 length = 0.001
@@ -271,22 +278,26 @@ _data = {
 &"tail_run": SubResource("Animation_022lg")
 }
 
-[node name="Villager" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u3ijq"]
+shader = ExtResource("2_nf0sm")
+shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.5
+
+[node name="Villager" type="Node2D" unique_id=2086680436]
 script = ExtResource("1_wkvmw")
 
-[node name="Body" type="Sprite2D" parent="."]
-texture_filter = 1
+[node name="Body" type="Sprite2D" parent="." unique_id=153228782]
+material = SubResource("ShaderMaterial_ajebe")
 texture = ExtResource("2_73nnc")
 hframes = 8
 vframes = 8
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
-libraries = {
-&"": SubResource("AnimationLibrary_ajebe")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body" unique_id=15545268]
+libraries/ = SubResource("AnimationLibrary_ajebe")
 
-[node name="Head" type="Sprite2D" parent="."]
-texture_filter = 1
+[node name="Head" type="Sprite2D" parent="." unique_id=808047535]
+material = SubResource("ShaderMaterial_u3ijq")
 texture = ExtResource("2_myk3s")
 hframes = 5
 vframes = 5
