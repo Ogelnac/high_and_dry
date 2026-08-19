@@ -27,7 +27,8 @@ func _ready() -> void:
 	check_box_4.button_pressed = Debug.infinite_silkworms
 	world_notes_toggle.button_pressed = Debug.world_notes_visible
 
-	level_count.value = Debug.number_of_levels
+	level_count.value = Debug.tiles_per_leg
+	Debug.number_of_levels = Debug.tiles_per_leg
 	level_count.value_changed.connect(_set_number_of_levels)
 
 func _toggle_panel_visibility():
@@ -67,3 +68,4 @@ func _deny():
 
 func _set_number_of_levels(value: float) -> void:
 	Debug.number_of_levels = int(value)
+	Debug.tiles_per_leg = int(value)

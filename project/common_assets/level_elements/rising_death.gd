@@ -42,12 +42,12 @@ func _on_body_entered(body: Node2D) -> void:
 		boat = body.get_node_or_null("../Boat")
 		boat.moving = true
 
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and player:
 		player.in_water = true
 		call_deferred("_spawn_splash", player.global_position)
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and player:
 		player.in_water = false
 		drip_time_left = drip_duration
 		if drip_timer.is_inside_tree():

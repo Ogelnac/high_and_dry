@@ -28,7 +28,7 @@ func _toggle():
 		switch_to_arcade()
 
 func switch_to_arcade():
-	if not current or not arcade_player_scene:
+	if !(current and arcade_player_scene):
 		return
 	if current.scene_file_path == arcade_player_scene.resource_path:
 		return

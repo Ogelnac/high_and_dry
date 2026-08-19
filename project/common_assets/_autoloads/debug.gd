@@ -10,11 +10,10 @@ var world_notes_visible: bool = false
 var world_note_input_captured: bool = false
 var active_world_note: Node = null
 var number_of_levels: int = 5
+var tiles_per_leg: int = 4
 
-var game_ended: bool = false
-
-#Demo tadd trader
-var expell_res: bool = false
+# Tutorial Tadd trader
+var expel_res: bool = false
 var res_expelled: bool = false
 var switch_player: bool = false
 
@@ -31,6 +30,6 @@ func end_game_button_visibility():
 
 func _process(_delta: float) -> void:
 	if res_expelled:
-		expell_res = false
+		expel_res = false
 		switch_player = true
 		res_expelled = false

@@ -11,6 +11,8 @@ var stuck = false
 var recalled = false
 var collected = false
 
+var recall_speed: float = 300.0
+
 # Wobble thread configuration
 const THREAD_RESOLUTION := 10
 var wave_amplitude := 15.0
@@ -20,7 +22,7 @@ var wave_time := 0.0
 func _ready() -> void:
 	thread_target = get_parent()
 	thread.width = 1.0
-	thread.points.resize(THREAD_RESOLUTION)
+	#thread.points.resize(THREAD_RESOLUTION)
 	thread_target.recall_needles.connect(_on_recall_needles)
 
 func _physics_process(delta: float) -> void:
@@ -30,7 +32,7 @@ func _physics_process(delta: float) -> void:
 			stuck = false
 
 	if recalled:
-		global_position = global_position.move_toward(thread_target.global_position, 300.0 * delta)
+		global_position = global_position.move_toward(thread_target.global_position, recall_speed * delta)
 		rotation = (global_position - thread_target.global_position).normalized().angle()
 		if (thread_target.global_position - global_position).length() < 32.0:
 			on_needle_collected()
@@ -47,6 +49,7 @@ func _physics_process(delta: float) -> void:
 					velocity = Vector2.ZERO
 				else:
 					recalled = true
+					recall_speed = 600.0
 
 	update_thread(delta)
 

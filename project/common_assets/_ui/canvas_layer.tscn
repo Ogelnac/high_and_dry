@@ -322,7 +322,6 @@ offset_right = 64.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level2" unique_id=1706427166]
 material = SubResource("ShaderMaterial_b8iw0")
@@ -352,7 +351,6 @@ offset_right = 64.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level3" unique_id=1936731903]
 material = SubResource("ShaderMaterial_e2cxs")
@@ -853,3 +851,5 @@ vertical_alignment = 1
 [connection signal="gui_input" from="UI/HubCounter/FabricCounter" to="UI" method="_on_fabric_counter_gui_input"]
 [connection signal="gui_input" from="UI/HubCounter/Arrow" to="UI" method="_on_arrow_gui_input"]
 [connection signal="button_up" from="UI/SceneManager/Level1" to="UI/SceneManager" method="_on_level_1_button_up"]
+[connection signal="button_up" from="UI/SceneManager/Level2" to="UI/SceneManager" method="_on_level_2_button_up"]
+[connection signal="button_up" from="UI/SceneManager/Level3" to="UI/SceneManager" method="_on_level_3_button_up"]
