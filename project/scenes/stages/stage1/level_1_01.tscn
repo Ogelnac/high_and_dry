@@ -19,6 +19,7 @@ size = Vector2(224, 20)
 size = Vector2(224, 187.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kelph"]
+resource_local_to_scene = true
 shader = ExtResource("3_y8mlg")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
@@ -58,7 +59,7 @@ position = Vector2(0, -354)
 position = Vector2(0, -4.75)
 shape = SubResource("RectangleShape2D_8e7xq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BoatSmoke" type="Sprite2D" parent="." groups=["shader_objects"]]
 z_index = -5
 material = SubResource("ShaderMaterial_kelph")
 position = Vector2(0, -368)
