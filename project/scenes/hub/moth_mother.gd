@@ -20,7 +20,7 @@ func _ready() -> void:
 
 	GameManager.load_game()
 	if GameManager.game_progress:
-		moth_mother_hatched = GameManager.game_progress.get("moth_mother_hatched")
+		moth_mother_hatched = bool(GameManager.game_progress.get("moth_mother_hatched", false))
 
 	if moth_mother_hatched:
 		_hatched()

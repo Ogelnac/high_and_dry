@@ -177,6 +177,14 @@ func save():
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_var(data)
 
+func _merge_game_progress(loaded_progress: Dictionary) -> void:
+	for key in game_progress:
+		if loaded_progress.has(key):
+			game_progress[key] = bool(loaded_progress[key])
+
+	if not loaded_progress.has("tutorial_played") and loaded_progress.has("demo_played"):
+		game_progress["tutorial_played"] = bool(loaded_progress["demo_played"])
+
 func load_game():
 	if not FileAccess.file_exists(path):
 		save()
@@ -187,7 +195,8 @@ func load_game():
 	if typeof(data) == TYPE_DICTIONARY:
 		var d: Dictionary = data
 
-		if "game_progress" in d: game_progress = d["game_progress"]
+		if "game_progress" in d and typeof(d["game_progress"]) == TYPE_DICTIONARY:
+			_merge_game_progress(d["game_progress"])
 		if "resources" in d: resources = d["resources"]
 		if "dye_value" in d: dye_value = d["dye_value"]
 		if "bottle_sizes" in d: bottle_sizes = d["bottle_sizes"]
