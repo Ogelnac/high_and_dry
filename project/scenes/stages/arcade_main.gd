@@ -176,7 +176,7 @@ func reload_scene():
 	get_tree().reload_current_scene()
 
 func leave_arcade():
-	GameManager.player_start_position = Vector2(-192.0, -575.0)
+	GameManager.player_start_position = Vector2(0.0, -575.0)
 	GameManager.UI.get_node("UI").display_swipe_to_start = false
 	GameManager.trigger_pachinko = true
 	GameManager.clear_resource_cache()

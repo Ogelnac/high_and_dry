@@ -69,7 +69,7 @@ func _on_start_game_signal_merchant() -> void:
 		GameManager.new_arcade_resources = GameManager.cached_resources
 		GameManager.clear_resource_cache()
 
-		GameManager.player_start_position = Vector2(-192.0, -575.0)
+		GameManager.player_start_position = Vector2(0.0, -575.0)
 		GameManager.UI.get_node("UI").display_swipe_to_start = false
 		GameManager.trigger_pachinko = true
 		get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")
