@@ -47,7 +47,7 @@ var silkworm_amount: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
 	"Yellow": 0,
-	"Green": 0,
+	"Green": 3,
 	"Blue": 0,
 	"Pink": 0,
 	"White": 0,
@@ -63,10 +63,21 @@ var fabric: Dictionary[String, int] = {
 	"White": 0,
 	"Brown": 0}
 
+var fabric_pile: Dictionary[String, int] = {
+	"Red": 0,
+	"Orange": 0,
+	"Yellow": 0,
+	"Green": 0,
+	"Blue": 0,
+	"Pink": 0,
+	"White": 0,
+	"Brown": 0}
+
 var new_arcade_resources: Array[int] = [] #used temporarily, by arcade mode
 var cached_resources: Array[int] = []
 var unprocessed_resources: Array[int] = [] #TEMPORARY FOR WHACK-A-PESTO the order unprocessed resources were collected
-
+var fabric_pile_max: int = 100
+var fabric_pile_storage_max: int = 9999
 var resource_cache: Dictionary[String, int] = {
 	"Red": 0,
 	"Orange": 0,
@@ -89,6 +100,9 @@ var cached_counter: bool = false
 var fade_out: bool = false
 var trigger_pachinko: bool = false
 var stage_level: Vector2i = Vector2i(0, 0)
+var _save_dirty: bool = false
+var _autosave_accum: float = 0.0
+var autosave_interval_seconds: float = 15.0
 
 const COLOR_ORDER: Array[String] = ["Red","Orange","Yellow","Green","Blue","Pink","White","Brown"]
 
@@ -134,6 +148,13 @@ func _process(_delta: float) -> void:
 		circle_fade.material.set_shader_parameter("transition_value", trans_value)
 		await get_tree().create_timer(0.5).timeout
 
+	_autosave_accum += _delta
+	if _autosave_accum >= autosave_interval_seconds:
+		_autosave_accum = 0.0
+		if _save_dirty:
+			save()
+			_save_dirty = false
+
 func get_ui_reference():
 	UI = get_node("/root/Main/CanvasLayer")
 	circle_fade = get_node("/root/Main/CanvasLayer/UI/CircleFade")
@@ -147,18 +168,22 @@ func save():
 		"silk_worms": silk_worms,
 		"sand": sand,
 		"unprocessed_resources": unprocessed_resources,
-		"fabric": fabric
+		"fabric_pile": fabric_pile
 	}
+
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_var(data)
 
 func load_game():
 	if not FileAccess.file_exists(path):
 		save()
+
 	var file = FileAccess.open(path, FileAccess.READ)
 	var data: Variant = file.get_var()
+
 	if typeof(data) == TYPE_DICTIONARY:
 		var d: Dictionary = data
+
 		if "game_progress" in d: game_progress = d["game_progress"]
 		if "resources" in d: resources = d["resources"]
 		if "dye_value" in d: dye_value = d["dye_value"]
@@ -166,7 +191,20 @@ func load_game():
 		if "silk_worms" in d: silk_worms = int(d["silk_worms"])
 		if "sand" in d: sand = int(d["sand"])
 		if "unprocessed_resources" in d: unprocessed_resources = d["unprocessed_resources"]
-		if "fabric" in d: fabric = d["fabric"]
+
+		if "fabric_pile" in d:
+			fabric_pile = d["fabric_pile"]
+
+	fabric = {
+		"Red": 0,
+		"Orange": 0,
+		"Yellow": 0,
+		"Green": 0,
+		"Blue": 0,
+		"Pink": 0,
+		"White": 0,
+		"Brown": 0
+	}
 
 func save_presets():
 	var data = {
@@ -193,15 +231,31 @@ func load_presets():
 func add_resource(collectable_type: int):
 	new_arcade_resources.append(collectable_type)
 
+func stash_held_fabric_into_piles() -> void:
+	for color_name in COLOR_ORDER:
+		var held: int = int(fabric.get(color_name, 0))
+		if held > 0:
+			var pile_current: int = int(fabric_pile.get(color_name, 0))
+			fabric_pile[color_name] = min(pile_current + held, fabric_pile_storage_max)
+			fabric[color_name] = 0
+			_save_dirty = true
+
+func stash_and_save() -> void:
+	stash_held_fabric_into_piles()
+	save()
+	_save_dirty = false
+
 func arcade_UI():
 	UI.find_child("RichTextLabel").hide()
 
 func hub_UI():
 	cached_counter = false
 	update_bottles()
+	TimeManager.set_active(true)
 
 func shop_UI():
 	cached_counter = true
+	TimeManager.set_active(false)
 
 func whack_a_pesto_UI():
 	var whack_metre = UI.find_child("WhackMetre")
@@ -267,6 +321,22 @@ func get_bottle_size(dye_name: String) -> int:
 func get_silkworm_amount(dye_name: String) -> int:
 	return int(silkworm_amount[dye_name])
 
+func is_fabric_pile_full(color_name: String) -> bool:
+	return int(fabric_pile.get(color_name, 0)) >= fabric_pile_max
+
+func get_fabric_pile_amount(color_name: String) -> int:
+	return int(fabric_pile.get(color_name, 0))
+
+func increase_fabric_pile_amount(color_name: String, amount: int = 1) -> void:
+	var current: int = int(fabric_pile.get(color_name, 0))
+	fabric_pile[color_name] = min(current + amount, fabric_pile_storage_max)
+	_save_dirty = true
+
+func decrease_fabric_pile_amount(color_name: String, amount: int = 1) -> void:
+	var current: int = int(fabric_pile.get(color_name, 0))
+	fabric_pile[color_name] = max(current - amount, 0)
+	_save_dirty = true
+
 func increase_silkworm_amount(dye_name: String):
 	silkworm_amount[dye_name] += 1
 
@@ -279,10 +349,20 @@ func get_fabric_amount(color_name: String) -> int:
 func increase_fabric_amount(color_name: String, amount: int = 1) -> void:
 	var current: int = int(fabric.get(color_name, 0))
 	fabric[color_name] = current + amount
+	UI.get_node("UI")._update_fabric_counter_text()
 
 func decrease_fabric_amount(color_name: String, amount: int = 1) -> void:
 	var current: int = int(fabric.get(color_name, 0))
 	fabric[color_name] = current - amount
+	UI.get_node("UI")._update_fabric_counter_text()
+
+func get_dye_amount(color_name: String) -> int:
+	return int(dye_value.get(color_name, 0))
+
+func decrease_dye_amount(color_name: String, amount: int) -> void:
+	var current: int = int(dye_value.get(color_name, 0))
+	dye_value[color_name] = max(current - amount, 0)
+	_save_dirty = true
 
 func _reset_progress() -> void:
 	game_progress = {
@@ -304,6 +384,10 @@ func _reset_progress() -> void:
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
 		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
 	}
+	fabric_pile = {
+		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
+		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
+	}
 	fabric = {
 		"Red": 0, "Orange": 0, "Yellow": 0, "Green": 0,
 		"Blue": 0, "Pink": 0, "White": 0, "Brown": 0
@@ -313,3 +397,8 @@ func _reset_progress() -> void:
 	sand = 0
 	save()
 	get_tree().change_scene_to_file("uid://cw2sf1bh5vj78")
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED or what == NOTIFICATION_WM_CLOSE_REQUEST:
+		if _save_dirty:
+			stash_and_save()

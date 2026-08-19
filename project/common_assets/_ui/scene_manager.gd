@@ -30,6 +30,7 @@ func fade_from_control(ctrl: Control, hold_seconds: float = 3.0) -> void:
 
 func _on_level_1_button_up() -> void:
 	GameManager.stage_level = Vector2i(1, 0)
+	GameManager.stash_held_fabric_into_piles()
 	level_select.set_bus("Sfx")
 	level_select.play()
 	rich_text_label.text = "[center][rainbow][wave amp=100 freq=5]LVL 1[/wave][/rainbow][/center]"

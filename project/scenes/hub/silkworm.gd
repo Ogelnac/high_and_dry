@@ -61,8 +61,8 @@ func _process(delta: float) -> void:
 	else:
 		linear_velocity.x = 0.0
 		animation_player.play("idle")
-		GameManager.increase_silkworm_amount(target.name)
-		var new_amount: int = GameManager.get_silkworm_amount(target.name)
+		GameManager.increase_silkworm_amount(target.bottle_colour)
+		var new_amount: int = GameManager.get_silkworm_amount(target.bottle_colour)
 		if target.has_method("set_silkworm_amount"):
 			target.set_silkworm_amount(new_amount)
 		queue_free()

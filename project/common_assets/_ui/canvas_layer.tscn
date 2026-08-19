@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cg116xv2085gb"]
+[gd_scene format=3 uid="uid://cg116xv2085gb"]
 
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="1_kmbj5"]
 [ext_resource type="Texture2D" uid="uid://2cfapccv1v7u" path="res://project/common_assets/_ui/sprites/joystick_base.png" id="2_77u76"]
@@ -61,9 +61,9 @@ shader_parameter/wave_speed = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=911213123]
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1457776137]
 process_mode = 3
 texture_filter = 1
 layout_mode = 3
@@ -76,7 +76,7 @@ mouse_filter = 1
 theme = ExtResource("1_kmbj5")
 script = ExtResource("2_l5iyv")
 
-[node name="VirtualJoystick" type="Control" parent="UI"]
+[node name="VirtualJoystick" type="Control" parent="UI" unique_id=1211688883]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -87,7 +87,7 @@ grow_vertical = 2
 pivot_offset = Vector2(292, 633)
 mouse_filter = 2
 
-[node name="JoystickBase" type="TextureRect" parent="UI/VirtualJoystick" node_paths=PackedStringArray("joystick_handle")]
+[node name="JoystickBase" type="TextureRect" parent="UI/VirtualJoystick" unique_id=1522542064 node_paths=PackedStringArray("joystick_handle")]
 modulate = Color(1, 1, 1, 0.784314)
 texture_filter = 1
 layout_mode = 1
@@ -110,7 +110,7 @@ script = ExtResource("3_nf0j4")
 joystick_handle = NodePath("../JoystickHandle")
 follow_weight = 0.85
 
-[node name="JoystickHandle" type="TextureRect" parent="UI/VirtualJoystick"]
+[node name="JoystickHandle" type="TextureRect" parent="UI/VirtualJoystick" unique_id=1510467655]
 modulate = Color(1, 1, 1, 0.784314)
 texture_filter = 1
 layout_mode = 1
@@ -131,7 +131,7 @@ mouse_filter = 2
 texture = ExtResource("4_ccaf2")
 script = ExtResource("5_kk307")
 
-[node name="HubCounter" type="VBoxContainer" parent="UI"]
+[node name="HubCounter" type="VBoxContainer" parent="UI" unique_id=229879301]
 z_index = -1
 layout_mode = 1
 anchors_preset = 10
@@ -143,7 +143,7 @@ offset_bottom = 140.0
 grow_horizontal = 2
 theme_override_constants/separation = 0
 
-[node name="Bag" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="Bag" type="RichTextLabel" parent="UI/HubCounter" unique_id=897638165]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 0
@@ -157,7 +157,7 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="ResourceCounter" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="ResourceCounter" type="RichTextLabel" parent="UI/HubCounter" unique_id=1559374795]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 0
@@ -170,7 +170,7 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="FabricCounter" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="FabricCounter" type="RichTextLabel" parent="UI/HubCounter" unique_id=873012442]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 0
@@ -183,7 +183,7 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="SilkwormCounter" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="SilkwormCounter" type="RichTextLabel" parent="UI/HubCounter" unique_id=816386013]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 0
@@ -196,7 +196,7 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="SandCounter" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="SandCounter" type="RichTextLabel" parent="UI/HubCounter" unique_id=394419788]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 0
@@ -209,7 +209,7 @@ scroll_active = false
 autowrap_mode = 0
 meta_underlined = false
 
-[node name="Arrow" type="RichTextLabel" parent="UI/HubCounter"]
+[node name="Arrow" type="RichTextLabel" parent="UI/HubCounter" unique_id=166399483]
 z_index = 1
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
@@ -225,16 +225,15 @@ autowrap_mode = 0
 horizontal_alignment = 1
 meta_underlined = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
-visible = false
+[node name="RichTextLabel" type="RichTextLabel" parent="UI" unique_id=2038751612]
 z_index = -1
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 175.0
-offset_bottom = 266.0
+offset_top = 393.99994
+offset_bottom = 485.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.0523599
@@ -247,7 +246,7 @@ bbcode_enabled = true
 text = "[center][wave amp=25 freq=5]Swipe up 
 to Play![/wave][/center]"
 
-[node name="SceneManager" type="Panel" parent="UI"]
+[node name="SceneManager" type="Panel" parent="UI" unique_id=406338183]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -259,7 +258,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("8_0ogh3")
 
-[node name="Label" type="Label" parent="UI/SceneManager"]
+[node name="Label" type="Label" parent="UI/SceneManager" unique_id=1829695872]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -274,7 +273,7 @@ text = "Level Select"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Level1" type="Button" parent="UI/SceneManager"]
+[node name="Level1" type="Button" parent="UI/SceneManager" unique_id=2065965622]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -288,13 +287,13 @@ offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level1"]
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level1" unique_id=1697438030]
 material = SubResource("ShaderMaterial_ugoqk")
 position = Vector2(64, 64)
 texture = ExtResource("10_gdo4b")
 vframes = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/SceneManager/Level1"]
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/SceneManager/Level1" unique_id=672952857]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 15
@@ -310,7 +309,7 @@ theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "[center]LVL 1[/center]"
 
-[node name="Level2" type="Button" parent="UI/SceneManager"]
+[node name="Level2" type="Button" parent="UI/SceneManager" unique_id=171039344]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -325,14 +324,14 @@ grow_horizontal = 2
 grow_vertical = 2
 disabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level2"]
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level2" unique_id=1706427166]
 material = SubResource("ShaderMaterial_b8iw0")
 position = Vector2(64, 64)
 texture = ExtResource("10_gdo4b")
 vframes = 3
 frame = 1
 
-[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level2"]
+[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level2" unique_id=1274039707]
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
@@ -340,7 +339,7 @@ hframes = 4
 vframes = 4
 frame = 1
 
-[node name="Level3" type="Button" parent="UI/SceneManager"]
+[node name="Level3" type="Button" parent="UI/SceneManager" unique_id=2053296763]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -355,14 +354,14 @@ grow_horizontal = 2
 grow_vertical = 2
 disabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level3"]
+[node name="Sprite2D" type="Sprite2D" parent="UI/SceneManager/Level3" unique_id=1936731903]
 material = SubResource("ShaderMaterial_e2cxs")
 position = Vector2(64, 64)
 texture = ExtResource("10_gdo4b")
 vframes = 3
 frame = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level3"]
+[node name="Sprite2D2" type="Sprite2D" parent="UI/SceneManager/Level3" unique_id=1201798434]
 position = Vector2(64, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("6_uoqhr")
@@ -370,12 +369,12 @@ hframes = 4
 vframes = 4
 frame = 1
 
-[node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager"]
+[node name="LevelSelect" type="AudioStreamPlayer" parent="UI/SceneManager" unique_id=726113477]
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
 bus = &"Sfx"
 
-[node name="DialogueBox" type="Panel" parent="UI"]
+[node name="DialogueBox" type="Panel" parent="UI" unique_id=705753657]
 visible = false
 layout_mode = 1
 anchors_preset = 10
@@ -386,14 +385,14 @@ offset_right = -20.0
 offset_bottom = 357.0
 grow_horizontal = 2
 
-[node name="NameLabel" type="Label" parent="UI/DialogueBox"]
+[node name="NameLabel" type="Label" parent="UI/DialogueBox" unique_id=307843519]
 layout_mode = 0
 offset_left = 10.0
 offset_right = 87.0
 offset_bottom = 25.0
 theme_override_font_sizes/font_size = 35
 
-[node name="TextLabel" type="RichTextLabel" parent="UI/DialogueBox"]
+[node name="TextLabel" type="RichTextLabel" parent="UI/DialogueBox" unique_id=1608599752]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -405,7 +404,7 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 
-[node name="CircleFade" type="ColorRect" parent="UI"]
+[node name="CircleFade" type="ColorRect" parent="UI" unique_id=983698557]
 visible = false
 z_index = 10
 material = SubResource("ShaderMaterial_iabp7")
@@ -418,7 +417,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("13_wugvg")
 
-[node name="WhackCounter" type="RichTextLabel" parent="UI"]
+[node name="WhackCounter" type="RichTextLabel" parent="UI" unique_id=2112161379]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -440,7 +439,7 @@ text = "[center]0[font_size=50]/50
 fit_content = true
 horizontal_alignment = 1
 
-[node name="WhackMetre" type="NinePatchRect" parent="UI"]
+[node name="WhackMetre" type="NinePatchRect" parent="UI" unique_id=1822215880]
 visible = false
 texture_filter = 1
 layout_mode = 1
@@ -461,7 +460,7 @@ patch_margin_top = 8
 patch_margin_right = 24
 patch_margin_bottom = 8
 
-[node name="ColorRect" type="ColorRect" parent="UI/WhackMetre"]
+[node name="ColorRect" type="ColorRect" parent="UI/WhackMetre" unique_id=124239067]
 z_index = -1
 material = SubResource("ShaderMaterial_ml53l")
 layout_mode = 1
@@ -471,7 +470,7 @@ offset_right = 157.0
 offset_bottom = 13.0
 color = Color(0, 0, 0, 1)
 
-[node name="MenuPanel" type="Panel" parent="."]
+[node name="MenuPanel" type="Panel" parent="." unique_id=8714874]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -485,7 +484,7 @@ grow_vertical = 2
 theme = ExtResource("1_kmbj5")
 script = ExtResource("15_yo1el")
 
-[node name="Label" type="Label" parent="MenuPanel"]
+[node name="Label" type="Label" parent="MenuPanel" unique_id=1460060709]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -496,7 +495,7 @@ text = "MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel" unique_id=1488356262]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -508,89 +507,80 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 32
 
-[node name="CheckBox" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=1112808318]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "MUTE BGM"
 alignment = 2
 
-[node name="CheckBox2" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+[node name="CheckBox2" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=38578487]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "MUTE SFX"
 alignment = 2
 
-[node name="CheckBox3" type="CheckBox" parent="MenuPanel/VBoxContainer"]
+[node name="CheckBox3" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=282138074]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "GIVE ALL YOUR MONEY TO THE DEVS"
 alignment = 2
 
-[node name="HSeparator" type="HSeparator" parent="MenuPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MenuPanel/VBoxContainer" unique_id=2114020343]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MenuPanel/VBoxContainer"]
+[node name="Button" type="Button" parent="MenuPanel/VBoxContainer" unique_id=608761934]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "TEST BGM"
 
-[node name="Button2" type="Button" parent="MenuPanel/VBoxContainer"]
+[node name="Button2" type="Button" parent="MenuPanel/VBoxContainer" unique_id=1647470560]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "TEST SFX"
 
-[node name="HSeparator2" type="HSeparator" parent="MenuPanel/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MenuPanel/VBoxContainer" unique_id=1384190259]
 layout_mode = 2
 
-[node name="DebugPanel" type="Panel" parent="."]
+[node name="DebugPanel" type="PanelContainer" parent="." unique_id=517047057]
 visible = false
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 21.0
 offset_top = 207.0
 offset_right = -21.0
-offset_bottom = -534.0
+offset_bottom = 207.0
 grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("1_kmbj5")
 script = ExtResource("2_86mtp")
 
-[node name="Label" type="Label" parent="DebugPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 31.0
-grow_horizontal = 2
+[node name="MarginContainer" type="MarginContainer" parent="DebugPanel" unique_id=1334880067]
+layout_mode = 2
+theme_override_constants/margin_left = 37
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 37
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel/MarginContainer" unique_id=1010228848]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1022409094]
+layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "DEBUG"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 37.0
-offset_top = 43.0
-offset_right = -37.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 32
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DebugPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=986487662]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="DebugPanel/VBoxContainer/HBoxContainer"]
+[node name="LevelCount" type="SpinBox" parent="DebugPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=906511882]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
-text = "5"
-alignment = 1
-emoji_menu_enabled = false
-virtual_keyboard_type = 2
-select_all_on_focus = true
+min_value = 1.0
+value = 5.0
 
-[node name="Label" type="Label" parent="DebugPanel/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="DebugPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=467499754]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -598,33 +588,42 @@ text = "Number of Levels"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=901703540]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Disable Rising Death"
 alignment = 2
 
-[node name="CheckBox2" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+[node name="CheckBox2" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1111602634]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Infinte Health"
 alignment = 2
 
-[node name="CheckBox3" type="CheckBox" parent="DebugPanel/VBoxContainer"]
+[node name="CheckBox3" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1873328215]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Infinite Resources"
 alignment = 2
 
-[node name="Control" type="Control" parent="DebugPanel/VBoxContainer"]
+[node name="CheckBox4" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=868252768]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+text = "Infinite Silkworms"
+alignment = 2
 
-[node name="Button" type="Button" parent="DebugPanel/VBoxContainer"]
+[node name="WorldNotesToggle" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1222712444]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Show World Notes"
+alignment = 2
+
+[node name="Button" type="Button" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=390028989]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Restart Progress"
 
-[node name="DialogueInput" type="Panel" parent="."]
+[node name="DialogueInput" type="Panel" parent="." unique_id=744162368]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -639,7 +638,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_kmbj5")
 
-[node name="Text" type="RichTextLabel" parent="DialogueInput"]
+[node name="Text" type="RichTextLabel" parent="DialogueInput" unique_id=1103492171]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -654,7 +653,7 @@ bbcode_enabled = true
 text = "[center]This is what a lot of text looks like when written in this dialogue box"
 fit_content = true
 
-[node name="Option1" type="Button" parent="DialogueInput"]
+[node name="Option1" type="Button" parent="DialogueInput" unique_id=621400044]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -668,7 +667,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Yes"
 
-[node name="Option2" type="Button" parent="DialogueInput"]
+[node name="Option2" type="Button" parent="DialogueInput" unique_id=87696699]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -682,11 +681,11 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "NO"
 
-[node name="LevelSelect" type="AudioStreamPlayer" parent="DialogueInput"]
+[node name="LevelSelect" type="AudioStreamPlayer" parent="DialogueInput" unique_id=87244121]
 stream = ExtResource("11_4mnhw")
 volume_db = -20.0
 
-[node name="ShopBox" type="Panel" parent="."]
+[node name="ShopBox" type="Panel" parent="." unique_id=328477574]
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
@@ -697,7 +696,7 @@ offset_bottom = 521.0
 grow_horizontal = 2
 theme = ExtResource("1_kmbj5")
 
-[node name="Control" type="Control" parent="ShopBox"]
+[node name="Control" type="Control" parent="ShopBox" unique_id=254685664]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -708,7 +707,7 @@ offset_right = 60.0
 offset_bottom = 142.0
 grow_horizontal = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="ShopBox/Control"]
+[node name="Sprite2D" type="Sprite2D" parent="ShopBox/Control" unique_id=461313545]
 texture_filter = 1
 position = Vector2(60, 60)
 scale = Vector2(7.5, 7.5)
@@ -716,7 +715,7 @@ texture = ExtResource("16_ml53l")
 hframes = 3
 vframes = 3
 
-[node name="NameLabel" type="Label" parent="ShopBox"]
+[node name="NameLabel" type="Label" parent="ShopBox" unique_id=498685251]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -733,7 +732,7 @@ text = "Shop Item Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescriptionLabel" type="RichTextLabel" parent="ShopBox"]
+[node name="DescriptionLabel" type="RichTextLabel" parent="ShopBox" unique_id=2082600414]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -748,7 +747,7 @@ bbcode_enabled = true
 text = "[center]This is the description of the item, not very long."
 vertical_alignment = 1
 
-[node name="Options" type="HBoxContainer" parent="ShopBox"]
+[node name="Options" type="HBoxContainer" parent="ShopBox" unique_id=1920208655]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -763,13 +762,13 @@ grow_vertical = 0
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Buy" type="Button" parent="ShopBox/Options"]
+[node name="Buy" type="Button" parent="ShopBox/Options" unique_id=345888190]
 layout_mode = 2
 size_flags_horizontal = 3
 icon_alignment = 2
 expand_icon = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ShopBox/Options/Buy"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ShopBox/Options/Buy" unique_id=558250763]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -784,13 +783,13 @@ bbcode_enabled = true
 text = "[center]100[img width=25 region=1,1,16,16]res://project/common_assets/_textures/ingredients.png[/img]"
 fit_content = true
 
-[node name="Cancel" type="Button" parent="ShopBox/Options"]
+[node name="Cancel" type="Button" parent="ShopBox/Options" unique_id=1212329152]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 35
 text = "No Thanks"
 
-[node name="HBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=1200001131]
 offset_left = 412.0
 offset_top = 38.0
 offset_right = 524.0
@@ -798,21 +797,21 @@ offset_bottom = 182.0
 theme = ExtResource("1_kmbj5")
 theme_override_constants/separation = 20
 
-[node name="Menu" type="Button" parent="HBoxContainer"]
+[node name="Menu" type="Button" parent="HBoxContainer" unique_id=1412084937]
 material = SubResource("ShaderMaterial_lptq8")
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "MENU"
 expand_icon = true
 
-[node name="Debug" type="Button" parent="HBoxContainer"]
+[node name="Debug" type="Button" parent="HBoxContainer" unique_id=1340657301]
 texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Debug"
 expand_icon = true
 
-[node name="EndGame" type="Button" parent="HBoxContainer"]
+[node name="EndGame" type="Button" parent="HBoxContainer" unique_id=803909223]
 visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -820,13 +819,13 @@ theme = ExtResource("1_kmbj5")
 text = "End game"
 script = ExtResource("16_lrj6d")
 
-[node name="PlayerPos" type="Control" parent="."]
+[node name="PlayerPos" type="Control" parent="." unique_id=209429796]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("3_fkxa7")
 
-[node name="H - ASCII" type="RichTextLabel" parent="."]
+[node name="H - ASCII" type="RichTextLabel" parent="." unique_id=1167268287]
 visible = false
 texture_filter = 1
 anchors_preset = 15

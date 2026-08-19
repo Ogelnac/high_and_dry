@@ -1,0 +1,14 @@
+[
+  {
+	"name": "Moth Mother",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [1.5, 1.7],
+	"text": "Hello there little mouse, will you be venturing out again soon?"
+  },
+  {
+	"name": "Moth Mother",
+	"vox": "res://audio/Vox.wav",
+	"pitch": [1.5, 1.7],
+	"text": "Please keep an eye out for any of my kin out there."
+  }
+]

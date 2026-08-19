@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://deulyp2frrc0y"]
+[gd_scene format=3 uid="uid://deulyp2frrc0y"]
 
 [ext_resource type="Script" uid="uid://b7n7uu33orou0" path="res://project/scenes/hub/bumper.gd" id="1_2hcpo"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_e8kwg"]
@@ -9,33 +9,34 @@
 shader = ExtResource("1_e8kwg")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
+shader_parameter/mix_scale = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxslp"]
 radius = 5.0
 
-[node name="Bumper" type="StaticBody2D"]
+[node name="Bumper" type="StaticBody2D" unique_id=1258168790]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_2hcpo")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=309904087]
 material = SubResource("ShaderMaterial_c74ds")
 texture = ExtResource("3_ck7jp")
-hframes = 32
-vframes = 32
-frame = 111
+hframes = 64
+vframes = 64
+frame = 207
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1710459840]
 shape = SubResource("CircleShape2D_rxslp")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=905561358]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1476162668]
 shape = SubResource("CircleShape2D_rxslp")
 
-[node name="Bumper" type="AudioStreamPlayer2D" parent="."]
+[node name="Bumper" type="AudioStreamPlayer2D" parent="." unique_id=1491219478]
 stream = ExtResource("4_32yb8")
 volume_db = -30.0
 

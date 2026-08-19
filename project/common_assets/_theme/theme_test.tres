@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://fvk3irjlp128"]
+[gd_resource type="Theme" format=3 uid="uid://fvk3irjlp128"]
 
 [ext_resource type="StyleBox" uid="uid://bvpc6ufgtldfg" path="res://project/common_assets/_theme/ui_box.tres" id="1_3tgme"]
 [ext_resource type="StyleBox" uid="uid://cnjlpfcf4uro5" path="res://project/common_assets/_theme/ui_box_hover.tres" id="2_py0j0"]
@@ -51,4 +51,5 @@ HSlider/styles/grabber_area = SubResource("StyleBoxFlat_ncyr5")
 LineEdit/styles/focus = ExtResource("1_3tgme")
 LineEdit/styles/normal = ExtResource("1_3tgme")
 Panel/styles/panel = ExtResource("2_py0j0")
+PanelContainer/styles/panel = ExtResource("2_py0j0")
 VBoxContainer/constants/separation = 14

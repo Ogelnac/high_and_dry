@@ -1,32 +1,34 @@
-extends Panel
+extends PanelContainer
 
 @onready var debug: Button = $"../HBoxContainer/Debug"
 
-@onready var check_box: CheckBox = $VBoxContainer/CheckBox
-@onready var check_box_2: CheckBox = $VBoxContainer/CheckBox2
-@onready var check_box_3: CheckBox = $VBoxContainer/CheckBox3
-@onready var button: Button = $VBoxContainer/Button
-@onready var line_edit: LineEdit = $VBoxContainer/HBoxContainer/LineEdit
+@onready var check_box: CheckBox = $MarginContainer/VBoxContainer/CheckBox
+@onready var check_box_2: CheckBox = $MarginContainer/VBoxContainer/CheckBox2
+@onready var check_box_3: CheckBox = $MarginContainer/VBoxContainer/CheckBox3
+@onready var check_box_4: CheckBox = $MarginContainer/VBoxContainer/CheckBox4
+@onready var world_notes_toggle: CheckButton = $MarginContainer/VBoxContainer/WorldNotesToggle
+@onready var button: Button = $MarginContainer/VBoxContainer/Button
+@onready var level_count: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/LevelCount
 
 @onready var dialogue_input: Panel = $"../DialogueInput"
-
-var previous_value: int = 5
 
 func _ready() -> void:
 	debug.pressed.connect(_toggle_panel_visibility)
 	check_box.toggled.connect(_pass_toggle_disable_rising_death)
 	check_box_2.toggled.connect(_pass_toggle_infinite_health)
 	check_box_3.toggled.connect(_pass_toggle_infinite_resources)
+	check_box_4.toggled.connect(_pass_toggle_infinite_silkworms)
+	world_notes_toggle.toggled.connect(Debug.set_world_notes_visible)
 	button.pressed.connect(show_dialogue_box)
 
 	check_box.button_pressed = Debug.disable_rising_death
 	check_box_2.button_pressed = Debug.infinite_health
 	check_box_3.button_pressed = Debug.infinite_resources
+	check_box_4.button_pressed = Debug.infinite_silkworms
+	world_notes_toggle.button_pressed = Debug.world_notes_visible
 
-	line_edit.text = str(previous_value)
-	line_edit.text_submitted.connect(_validate_line_edit)
-	line_edit.focus_exited.connect(_validate_line_edit_on_focus_exit)
-	_validate_line_edit(line_edit.text)
+	level_count.value = Debug.number_of_levels
+	level_count.value_changed.connect(_set_number_of_levels)
 
 func _toggle_panel_visibility():
 	visible = !visible
@@ -40,6 +42,9 @@ func _pass_toggle_infinite_health(toggled_on: bool):
 
 func _pass_toggle_infinite_resources(toggled_on: bool):
 	Debug.infinite_resources = toggled_on
+
+func _pass_toggle_infinite_silkworms(toggled_on: bool):
+	Debug.infinite_silkworms = toggled_on
 
 func show_dialogue_box():
 	dialogue_input.get_node("Text").text = "Are you sure you want to reset your progress?"
@@ -60,15 +65,5 @@ func _confirm():
 func _deny():
 	dialogue_input.hide()
 
-func _validate_line_edit(new_text: String) -> void:
-	var num = new_text.to_int()
-	if str(num) != new_text.strip_edges() and not new_text.is_valid_int():
-		line_edit.text = str(previous_value)
-		return
-	num = clamp(num, 1, 100)
-	line_edit.text = str(num)
-	previous_value = num
-	Debug.number_of_levels = -(num + 1)
-
-func _validate_line_edit_on_focus_exit() -> void:
-	_validate_line_edit(line_edit.text)
+func _set_number_of_levels(value: float) -> void:
+	Debug.number_of_levels = int(value)

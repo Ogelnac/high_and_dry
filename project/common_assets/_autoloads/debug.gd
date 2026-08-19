@@ -1,9 +1,15 @@
 extends Node
 
+signal world_notes_visibility_changed(visible: bool)
+
 var infinite_resources: bool = false
+var infinite_silkworms: bool = false
 var infinite_health: bool = false
 var disable_rising_death: bool = false
-var number_of_levels: int = -2 # one level
+var world_notes_visible: bool = false
+var world_note_input_captured: bool = false
+var active_world_note: Node = null
+var number_of_levels: int = 5
 
 var game_ended: bool = false
 
@@ -13,6 +19,10 @@ var res_expelled: bool = false
 var switch_player: bool = false
 
 var arcade_main_node_id: Node
+
+func set_world_notes_visible(visible: bool) -> void:
+	world_notes_visible = visible
+	world_notes_visibility_changed.emit(visible)
 
 func end_game_button_visibility():
 	if get_tree().get_current_scene() == arcade_main_node_id:

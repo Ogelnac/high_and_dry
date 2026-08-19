@@ -52,6 +52,7 @@ var prev_sign: int = 0
 var change_sign: bool = false
 var carrying_silkworm: bool = false
 var _saved_mask := 0
+var _world_note_pointer_sequence := false
 
 @onready var footstep_timer: Timer = $StepTimer
 @onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
@@ -71,6 +72,13 @@ func _ready():
 	footstep_timer.timeout.connect(_on_step_timer_timeout)
 
 func _input(event: InputEvent) -> void:
+	if Debug.world_note_input_captured or _world_note_pointer_sequence:
+		_world_note_pointer_sequence = true
+		_cancel_pointer_movement()
+		if (event is InputEventScreenTouch or event is InputEventMouseButton) and not event.pressed:
+			_world_note_pointer_sequence = false
+		return
+
 	if (event is InputEventScreenTouch or event is InputEventMouseButton) and event.position.y < 100:
 		return
 
@@ -125,7 +133,16 @@ func _input(event: InputEvent) -> void:
 
 		joystick_handle.position = virtual_joystick.get_local_mouse_position()
 
+func _cancel_pointer_movement() -> void:
+	virtual_joystick_active = false
+	virtual_joystick_offset = Vector2.ZERO
+	virtual_joystick.visible = false
+
 func _process(delta: float) -> void:
+	if Debug.world_note_input_captured:
+		_world_note_pointer_sequence = true
+		_cancel_pointer_movement()
+
 	if launch_zone and not launch_zone.body_entered.is_connected(_on_launch_zone_body_entered):
 		launch_zone.body_entered.connect(_on_launch_zone_body_entered)
 		launch_zone.body_exited.connect(_on_launch_zone_body_exited)
@@ -237,7 +254,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * max_vel * min(1.0, abs(virtual_joystick_offset.x) / acc)
 	elif not virtual_joystick_active:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
-
 
 	move_and_slide()
 

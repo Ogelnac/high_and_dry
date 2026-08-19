@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://d05pn1d2oquk2"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d05pn1d2oquk2"]
 
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://project/common_assets/_shaders/noise_and_chromashift.gdshader" id="1_6c3te"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/overlay.png" id="2_n2wp0"]
@@ -13,3 +13,24 @@ shader_parameter/chroma_offset_c = Vector2(0, 0)
 shader_parameter/chroma_offset_m = Vector2(0, 0)
 shader_parameter/chroma_offset_y = Vector2(0, 0)
 shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/paper_colour = Color(1, 1, 1, 1)
+shader_parameter/paper_albedo_strength = 0.09
+shader_parameter/crease_height = 0.7910000375725
+shader_parameter/crease_scale = 2.7710001197475
+shader_parameter/paper_roughness = 0.654000031065
+shader_parameter/ink_strength = 0.9600000456
+shader_parameter/ink_wear = 0.3390000161025
+shader_parameter/ink_grain = 0.1870000088825
+shader_parameter/ink_spread = 1.082000051395
+shader_parameter/black_lift = 0.0
+shader_parameter/light_direction = Vector3(-0.36, -0.48, 0.8)
+shader_parameter/ambient_light = 0.370000017575
+shader_parameter/directional_light = 0.034000001615
+shader_parameter/crease_specular = 0.1530000072675
+shader_parameter/light_warmth = -1.0
+shader_parameter/exposure = 1.5
+shader_parameter/camera_contrast = 1.11600000783907
+shader_parameter/camera_saturation = 0.94
+shader_parameter/lens_softness = 0.710000033725
+shader_parameter/vignette = 0.5
+shader_parameter/sensor_grain = 0.0

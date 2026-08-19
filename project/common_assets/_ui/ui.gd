@@ -50,11 +50,7 @@ func _ready():
 		player.in_launch_zone.connect(_on_player_in_launch_zone)
 		if player.position.x > -80:
 			display_swipe_to_start = false
-	shader_objects = find_objects_with_shader()
-	for obj in shader_objects:
-		if obj.material is ShaderMaterial:
-			var v: float = obj.material.get_shader_parameter("black_dot_transition")
-			black_dot_offsets[obj.get_instance_id()] = v - master_baseline
+	refresh_shader_objects()
 	for obj in shader_objects:
 		if obj.material.get_shader_parameter("black_dot_transition") >= 2.0:
 			_fade_from_black()
@@ -89,6 +85,14 @@ func update_shader_black_dot_transition(value: float) -> void:
 			var off = black_dot_offsets.get(obj.get_instance_id(), 0.0)
 			var v = clamp(value + off, 0.0, 2.0)
 			obj.material.set_shader_parameter("black_dot_transition", v)
+
+func refresh_shader_objects() -> void:
+	shader_objects = find_objects_with_shader()
+	for obj in shader_objects:
+		var instance_id: int = obj.get_instance_id()
+		if not black_dot_offsets.has(instance_id):
+			var transition: float = obj.material.get_shader_parameter("black_dot_transition")
+			black_dot_offsets[instance_id] = transition - master_baseline
 
 func find_objects_with_shader() -> Array:
 	var objects = []
