@@ -171,7 +171,8 @@ func save():
 		"silk_worms": silk_worms,
 		"sand": sand,
 		"unprocessed_resources": unprocessed_resources,
-		"fabric_pile": fabric_pile
+		"fabric_pile": fabric_pile,
+		"villager_state": VillagerManager.serialize_state()
 	}
 
 	var file = FileAccess.open(path, FileAccess.WRITE)
@@ -203,6 +204,7 @@ func load_game():
 		if "silk_worms" in d: silk_worms = int(d["silk_worms"])
 		if "sand" in d: sand = int(d["sand"])
 		if "unprocessed_resources" in d: unprocessed_resources = d["unprocessed_resources"]
+		VillagerManager.deserialize_state(d.get("villager_state", {}))
 
 		if "fabric_pile" in d:
 			fabric_pile = d["fabric_pile"]
@@ -407,6 +409,7 @@ func _reset_progress() -> void:
 	unprocessed_resources = []
 	silk_worms = 0
 	sand = 0
+	VillagerManager.reset_state()
 	save()
 	get_tree().change_scene_to_file("uid://cw2sf1bh5vj78")
 

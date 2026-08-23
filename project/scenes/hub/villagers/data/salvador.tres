@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://kjtwu0nfydf3"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"salvador"
+display_name = "Salvador"
+animal_type = &"Fox"
+personality = "Posh"
+invite_cost = Dictionary[String, int]({
+"Blue": 100,
+"Red": 300,
+"White": 200
+})
+dye_cost = Dictionary[String, int]({
+"Brown": 20,
+"Green": 40,
+"Yellow": 30
+})
+fabric_cost = Dictionary[String, int]({
+"Red": 6,
+"White": 4
+})
+glass_cost = 9
+location_weights = Dictionary[String, int]({
+"home": 15,
+"lamppost": 10,
+"other_home": 10,
+"pestos": 5,
+"ramen": 20,
+"title": 15,
+"upper_piers": 10,
+"weavers": 15
+})

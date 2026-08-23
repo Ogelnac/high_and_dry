@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://c1vihosdmaqae"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"cotton"
+display_name = "Cotton"
+animal_type = &"Rabbit"
+personality = "Shy"
+sprite_row = 1
+invite_cost = Dictionary[String, int]({
+"Brown": 150,
+"Pink": 100,
+"Yellow": 175
+})
+dye_cost = Dictionary[String, int]({
+"Blue": 40,
+"Red": 50,
+"White": 35
+})
+fabric_cost = Dictionary[String, int]({
+"Brown": 7,
+"Green": 10
+})
+glass_cost = 11
+location_weights = Dictionary[String, int]({
+"home": 30,
+"lamppost": 15,
+"other_home": 10,
+"pestos": 5,
+"ramen": 5,
+"title": 10,
+"upper_piers": 15,
+"weavers": 10
+})

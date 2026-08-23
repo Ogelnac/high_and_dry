@@ -171,6 +171,8 @@ func player_end_animation_sequence() -> void:
 func reload_scene():
 	GameManager.new_arcade_resources = []
 	GameManager.clear_resource_cache()
+	VillagerManager.begin_arcade_run()
+	GameManager.save()
 
 	ui.update_shader_black_dot_transition(0.5)
 	get_tree().reload_current_scene()

@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cmmya6v463hjb" path="res://project/common_assets/_ui/end_game.gd" id="16_lrj6d"]
 [ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="16_ml53l"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://project/common_assets/_shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
+[ext_resource type="Script" path="res://project/common_assets/_ui/villager_interaction_panel.gd" id="18_visitor"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
@@ -610,6 +611,12 @@ layout_mode = 2
 text = "Infinite Silkworms"
 alignment = 2
 
+[node name="GuaranteedVillager" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "100% Arcade Villager"
+alignment = 2
+
 [node name="WorldNotesToggle" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1222712444]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -786,6 +793,65 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 35
 text = "No Thanks"
+
+[node name="VisitorBox" type="Panel" parent="."]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -205.0
+offset_right = -20.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_kmbj5")
+script = ExtResource("18_visitor")
+
+[node name="RequestLabel" type="RichTextLabel" parent="VisitorBox"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 15.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = 75.0
+grow_horizontal = 2
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="VisitorBox"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -65.0
+offset_right = -15.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Invite" type="Button" parent="VisitorBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Invite to Hub"
+
+[node name="Chat" type="Button" parent="VisitorBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chat"
+
+[node name="Leave" type="Button" parent="VisitorBox/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Leave"
 
 [node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=1200001131]
 offset_left = 412.0

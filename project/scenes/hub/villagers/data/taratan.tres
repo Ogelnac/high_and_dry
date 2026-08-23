@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://dd4lem32jtp8r"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"taratan"
+display_name = "Taratan"
+animal_type = &"Rat"
+sprite_row = 8
+invite_cost = Dictionary[String, int]({
+"Brown": 150,
+"Orange": 275,
+"White": 200
+})
+dye_cost = Dictionary[String, int]({
+"Brown": 30,
+"Red": 35,
+"Yellow": 20
+})
+fabric_cost = Dictionary[String, int]({
+"Brown": 5,
+"Yellow": 4
+})
+glass_cost = 8
+location_weights = Dictionary[String, int]({
+"home": 10,
+"lamppost": 10,
+"other_home": 25,
+"pestos": 10,
+"ramen": 15,
+"title": 10,
+"upper_piers": 10,
+"weavers": 10
+})

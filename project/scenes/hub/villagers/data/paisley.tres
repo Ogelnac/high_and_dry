@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://bolnsmkp4vpic"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"paisley"
+display_name = "Paisley"
+animal_type = &"Badger"
+personality = "Dreamy"
+sprite_row = 5
+invite_cost = Dictionary[String, int]({
+"Green": 150,
+"Orange": 200,
+"White": 125
+})
+dye_cost = Dictionary[String, int]({
+"Brown": 45,
+"Pink": 40,
+"Red": 30
+})
+fabric_cost = Dictionary[String, int]({
+"Green": 6,
+"Red": 9
+})
+glass_cost = 10
+location_weights = Dictionary[String, int]({
+"home": 15,
+"lamppost": 10,
+"other_home": 10,
+"pestos": 10,
+"ramen": 10,
+"title": 10,
+"upper_piers": 30,
+"weavers": 5
+})

@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://b5lbt1k64qek0"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"aknitta"
+display_name = "Aknitta"
+animal_type = &"Ant"
+personality = "Grumpy"
+sprite_row = 4
+invite_cost = Dictionary[String, int]({
+"Blue": 300,
+"Pink": 200,
+"Yellow": 150
+})
+dye_cost = Dictionary[String, int]({
+"Blue": 20,
+"Green": 25,
+"Orange": 35
+})
+fabric_cost = Dictionary[String, int]({
+"Brown": 3,
+"Yellow": 5
+})
+glass_cost = 8
+location_weights = Dictionary[String, int]({
+"home": 25,
+"lamppost": 15,
+"other_home": 5,
+"pestos": 5,
+"ramen": 10,
+"title": 10,
+"upper_piers": 20,
+"weavers": 10
+})

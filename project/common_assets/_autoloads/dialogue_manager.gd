@@ -1,5 +1,7 @@
 extends Node
 
+signal dialogue_finished
+
 const SAVE_PATH := "user://player_progress.json"
 const DIALOGUE_PATH := "res://project/common_assets/_data/dialogue/"
 const VOX = preload("uid://duxckms5dutqg")
@@ -10,6 +12,7 @@ var dialogue_index := 0
 var is_typing := false
 var has_input := false
 var typing_speed := 0.03
+var retain_player_control_lock := false
 
 var scene_change_name: String
 var dialogue_box: Node
@@ -47,15 +50,30 @@ func start_dialogue(npc_id: String, input: bool):
 	has_input = input
 	if is_typing:
 		return
-	player.dialogue_mode = true
-	player.virtual_joystick_active = false
-	player.virtual_joystick_offset = Vector2.ZERO
-	player.virtual_joystick.visible = false
+	_prepare_player_for_dialogue()
 	current_dialogue = load_npc_dialogue(npc_id)
 	dialogue_index = 0
 	dialogue_box.visible = true
 	if current_dialogue.size() > 0:
 		show_line(current_dialogue[0])
+
+func start_inline_dialogue(lines: Array, retain_control: bool = false) -> void:
+	has_input = false
+	if is_typing:
+		return
+	retain_player_control_lock = retain_control
+	_prepare_player_for_dialogue()
+	current_dialogue = lines.duplicate(true)
+	dialogue_index = 0
+	dialogue_box.visible = true
+	if current_dialogue.size() > 0:
+		show_line(current_dialogue[0])
+
+func _prepare_player_for_dialogue() -> void:
+	player.dialogue_mode = true
+	player.virtual_joystick_active = false
+	player.virtual_joystick_offset = Vector2.ZERO
+	player.virtual_joystick.visible = false
 
 func open_shop(input: bool):
 	has_input = input
@@ -103,9 +121,12 @@ func _set_audio_profile(d: Dictionary) -> void:
 			_current_pitch_max = parts[1].strip_edges().to_float()
 
 func end_dialogue():
-	player.dialogue_mode = false
+	if not retain_player_control_lock:
+		player.dialogue_mode = false
 	is_typing = false
 	dialogue_box.visible = false
+	retain_player_control_lock = false
+	dialogue_finished.emit()
 
 func _typing_effect(label: RichTextLabel, full_text: String) -> void:
 	label.bbcode_enabled = true

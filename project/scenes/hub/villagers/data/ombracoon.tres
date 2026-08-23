@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://bnyhpkcmb8w5e"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"ombracoon"
+display_name = "Ombracoon"
+animal_type = &"Raccoon"
+sprite_row = 12
+invite_cost = Dictionary[String, int]({
+"Green": 150,
+"Orange": 175,
+"Pink": 250
+})
+dye_cost = Dictionary[String, int]({
+"Blue": 25,
+"Green": 30,
+"Orange": 40
+})
+fabric_cost = Dictionary[String, int]({
+"Brown": 5,
+"Yellow": 6
+})
+glass_cost = 9
+location_weights = Dictionary[String, int]({
+"home": 10,
+"lamppost": 10,
+"other_home": 20,
+"pestos": 20,
+"ramen": 10,
+"title": 10,
+"upper_piers": 10,
+"weavers": 10
+})

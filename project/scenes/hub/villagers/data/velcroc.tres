@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://pcrkhfcrcupe"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"velcroc"
+display_name = "Velcroc"
+animal_type = &"Crocodile"
+personality = "Grumpy"
+sprite_row = 7
+invite_cost = Dictionary[String, int]({
+"Green": 100,
+"Pink": 150,
+"Yellow": 125
+})
+dye_cost = Dictionary[String, int]({
+"Green": 55,
+"Orange": 45,
+"Pink": 35
+})
+fabric_cost = Dictionary[String, int]({
+"Orange": 8,
+"White": 11
+})
+glass_cost = 12
+location_weights = Dictionary[String, int]({
+"home": 15,
+"lamppost": 15,
+"other_home": 5,
+"pestos": 5,
+"ramen": 20,
+"title": 10,
+"upper_piers": 20,
+"weavers": 10
+})

@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://d3i8w3577wbeu"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"candycrane"
+display_name = "Candycrane"
+animal_type = &"Crow"
+personality = "Grumpy"
+sprite_row = 10
+invite_cost = Dictionary[String, int]({
+"Green": 225,
+"Orange": 100,
+"Yellow": 175
+})
+dye_cost = Dictionary[String, int]({
+"Orange": 30,
+"Pink": 45,
+"Yellow": 35
+})
+fabric_cost = Dictionary[String, int]({
+"Green": 8,
+"Pink": 6
+})
+glass_cost = 10
+location_weights = Dictionary[String, int]({
+"home": 20,
+"lamppost": 10,
+"other_home": 5,
+"pestos": 5,
+"ramen": 15,
+"title": 15,
+"upper_piers": 20,
+"weavers": 10
+})

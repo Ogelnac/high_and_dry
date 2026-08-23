@@ -31,6 +31,8 @@ func fade_from_control(ctrl: Control, hold_seconds: float = 3.0) -> void:
 func _on_level_1_button_up() -> void:
 	GameManager.arcade_level = 1
 	GameManager.stash_held_fabric_into_piles()
+	VillagerManager.begin_arcade_run()
+	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
 	rich_text_label.text = "[center][rainbow][wave amp=100 freq=5]LVL 1[/wave][/rainbow][/center]"
@@ -40,6 +42,8 @@ func _on_level_1_button_up() -> void:
 func _on_level_2_button_up() -> void:
 	GameManager.arcade_level = 2
 	GameManager.stash_held_fabric_into_piles()
+	VillagerManager.begin_arcade_run()
+	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
 	rich_text_label.text = "[center][rainbow][wave amp=100 freq=5]LVL 2[/wave][/rainbow][/center]"
@@ -49,6 +53,8 @@ func _on_level_2_button_up() -> void:
 func _on_level_3_button_up() -> void:
 	GameManager.arcade_level = 3
 	GameManager.stash_held_fabric_into_piles()
+	VillagerManager.begin_arcade_run()
+	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
 	rich_text_label.text = "[center][rainbow][wave amp=100 freq=5]LVL 3[/wave][/rainbow][/center]"

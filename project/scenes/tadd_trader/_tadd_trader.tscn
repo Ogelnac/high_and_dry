@@ -188,6 +188,7 @@ tile_map_data = PackedByteArray("AAD4/wIAAAAGAAQAAAD4/wMAAAAGAAUAAAD5/wIAAAAHAAQ
 tile_set = ExtResource("3_h1csa")
 
 [node name="Player" parent="." instance=ExtResource("4_vr1to")]
+z_index = 1
 position = Vector2(0, -23)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -198,6 +199,12 @@ script = ExtResource("7_vr1to")
 
 [node name="Tadd" parent="." instance=ExtResource("8_67bxi")]
 position = Vector2(-39, -39)
+
+[node name="VisitorWalkStart" type="Marker2D" parent="."]
+position = Vector2(-80, -31)
+
+[node name="VisitorWalkEnd" type="Marker2D" parent="."]
+position = Vector2(240, -31)
 
 [node name="Boon1" type="Node2D" parent="."]
 position = Vector2(48, -48)

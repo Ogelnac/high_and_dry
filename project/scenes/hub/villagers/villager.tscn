@@ -1,22 +1,21 @@
 [gd_scene format=3 uid="uid://vka4isjne5qt"]
 
 [ext_resource type="Script" uid="uid://dqq0i3cll7o3e" path="res://project/scenes/hub/villagers/villager.gd" id="1_wkvmw"]
-[ext_resource type="Texture2D" uid="uid://bja62rcwvqab" path="res://project/scenes/hub/villagers/animal_bodies.png" id="2_73nnc"]
-[ext_resource type="Texture2D" uid="uid://d2lkn4x63rrm6" path="res://project/scenes/hub/villagers/animal_base.png" id="2_myk3s"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_nf0sm"]
+[ext_resource type="Texture2D" uid="uid://bqghjrpwjblbh" path="res://project/scenes/hub/villagers/npcs.png" id="2_npcs"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="3_shader"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ajebe"]
-shader = ExtResource("2_nf0sm")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_npcs"]
+shader = ExtResource("3_shader")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.5
 
-[sub_resource type="Animation" id="Animation_73nnc"]
+[sub_resource type="Animation" id="Animation_reset"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath(".:animation_frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,133 +24,31 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
-}
 
-[sub_resource type="Animation" id="Animation_qej4r"]
-resource_name = "bird_idle"
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath(".:animation_frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [32, 33]
-}
-
-[sub_resource type="Animation" id="Animation_5fmpb"]
-resource_name = "bird_run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.2667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [34, 35, 36, 37, 38, 39]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13362257, 0.26702255, 0.5336556, 0.66698956),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 1, 0, 1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_ajebe"]
-resource_name = "insect_idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [16, 17]
-}
-
-[sub_resource type="Animation" id="Animation_jc5ju"]
-resource_name = "insect_run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.2667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [18, 19, 20, 21, 22, 23]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13362257, 0.26702255, 0.5336556, 0.66698956),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 1, 0, 1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_myk3s"]
-resource_name = "no_stripe_idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.033333335, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
 }
 
-[sub_resource type="Animation" id="Animation_6q0i0"]
-resource_name = "no_stripe_run"
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath(".:animation_frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -160,144 +57,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [2, 3, 4, 5, 6, 7]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13362257, 0.26702255, 0.5336556, 0.66698956),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 1, 0, 1, 0]
-}
 
-[sub_resource type="Animation" id="Animation_nf0sm"]
-resource_name = "stripe_idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [8, 9]
-}
-
-[sub_resource type="Animation" id="Animation_l0bgv"]
-resource_name = "stripe_run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.2667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [10, 11, 12, 13, 14, 15]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13362257, 0.26702255, 0.5336556, 0.66698956),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 1, 0, 1, 0]
-}
-
-[sub_resource type="Animation" id="Animation_u3ijq"]
-resource_name = "tail_idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [24, 25]
-}
-
-[sub_resource type="Animation" id="Animation_022lg"]
-resource_name = "tail_run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.2667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [26, 27, 28, 29, 30, 31]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13362257, 0.26702255, 0.5336556, 0.66698956),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 1, 0, 1, 0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajebe"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_npcs"]
 _data = {
-&"RESET": SubResource("Animation_73nnc"),
-&"bird_idle": SubResource("Animation_qej4r"),
-&"bird_run": SubResource("Animation_5fmpb"),
-&"insect_idle": SubResource("Animation_ajebe"),
-&"insect_run": SubResource("Animation_jc5ju"),
-&"no_stripe_idle": SubResource("Animation_myk3s"),
-&"no_stripe_run": SubResource("Animation_6q0i0"),
-&"stripe_idle": SubResource("Animation_nf0sm"),
-&"stripe_run": SubResource("Animation_l0bgv"),
-&"tail_idle": SubResource("Animation_u3ijq"),
-&"tail_run": SubResource("Animation_022lg")
+&"RESET": SubResource("Animation_reset"),
+&"idle": SubResource("Animation_idle"),
+&"run": SubResource("Animation_run")
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u3ijq"]
-shader = ExtResource("2_nf0sm")
-shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.5
 
 [node name="Villager" type="Node2D" unique_id=2086680436]
 script = ExtResource("1_wkvmw")
 
-[node name="Body" type="Sprite2D" parent="." unique_id=153228782]
-material = SubResource("ShaderMaterial_ajebe")
-texture = ExtResource("2_73nnc")
-hframes = 8
-vframes = 8
+[node name="Sprite" type="Sprite2D" parent="." unique_id=153228782]
+material = SubResource("ShaderMaterial_npcs")
+texture = ExtResource("2_npcs")
+hframes = 16
+vframes = 16
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Body" unique_id=15545268]
-libraries/ = SubResource("AnimationLibrary_ajebe")
-
-[node name="Head" type="Sprite2D" parent="." unique_id=808047535]
-material = SubResource("ShaderMaterial_u3ijq")
-texture = ExtResource("2_myk3s")
-hframes = 5
-vframes = 5
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=15545268]
+libraries/ = SubResource("AnimationLibrary_npcs")

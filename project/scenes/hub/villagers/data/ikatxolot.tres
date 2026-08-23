@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://bue1c6pwojxev"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"ikatxolot"
+display_name = "Ikatxolot"
+animal_type = &"Axolotl"
+personality = "Dreamy"
+sprite_row = 11
+invite_cost = Dictionary[String, int]({
+"Brown": 125,
+"Red": 100,
+"White": 175
+})
+dye_cost = Dictionary[String, int]({
+"Brown": 50,
+"Red": 45,
+"White": 35
+})
+fabric_cost = Dictionary[String, int]({
+"Orange": 10,
+"White": 8
+})
+glass_cost = 11
+location_weights = Dictionary[String, int]({
+"home": 15,
+"lamppost": 10,
+"other_home": 10,
+"pestos": 10,
+"ramen": 10,
+"title": 20,
+"upper_piers": 20,
+"weavers": 5
+})

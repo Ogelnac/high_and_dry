@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://duu005h4oqxy0"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"silkvester"
+display_name = "Silkvester"
+animal_type = &"Deer"
+personality = "Posh"
+sprite_row = 2
+invite_cost = Dictionary[String, int]({
+"Blue": 100,
+"Green": 150,
+"Orange": 100
+})
+dye_cost = Dictionary[String, int]({
+"Brown": 35,
+"Orange": 45,
+"Pink": 60
+})
+fabric_cost = Dictionary[String, int]({
+"Blue": 12,
+"Pink": 8
+})
+glass_cost = 12
+location_weights = Dictionary[String, int]({
+"home": 15,
+"lamppost": 20,
+"other_home": 10,
+"pestos": 5,
+"ramen": 10,
+"title": 15,
+"upper_piers": 10,
+"weavers": 15
+})

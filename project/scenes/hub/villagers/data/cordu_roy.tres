@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VillagerDefinition" format=3 uid="uid://b0iblro2wlbxj"]
+
+[ext_resource type="Script" uid="uid://dctkdtuv7g46a" path="res://project/scenes/hub/villagers/villager_definition.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+villager_id = &"cordu_roy"
+display_name = "Cordu Roy"
+animal_type = &"Lizard"
+personality = "Clever"
+sprite_row = 3
+invite_cost = Dictionary[String, int]({
+"Brown": 125,
+"Red": 175,
+"White": 225
+})
+dye_cost = Dictionary[String, int]({
+"Red": 25,
+"White": 35,
+"Yellow": 45
+})
+fabric_cost = Dictionary[String, int]({
+"Orange": 8,
+"White": 5
+})
+glass_cost = 10
+location_weights = Dictionary[String, int]({
+"home": 10,
+"lamppost": 10,
+"other_home": 10,
+"pestos": 10,
+"ramen": 10,
+"title": 10,
+"upper_piers": 10,
+"weavers": 30
+})
