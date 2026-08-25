@@ -87,6 +87,9 @@ position = Vector2(8, 0)
 tile_map_data = PackedByteArray("AAD9//7/AAAFABEAABD+//3/AAAEABAAABD+//7/AAAEABEAABD///3/AAADABAAABD///7/AAADABEAABAAAP7/AAACABEAABD9//3/AAAFABAAABD8//3/AAAGABAAABD8//7/AAAGABEAABD7//7/AAAHABEAABD6//7/AAAIABEAABA=")
 tile_set = ExtResource("4_sv3qi")
 
+[node name="LaunchTarget" type="Marker2D" parent="."]
+position = Vector2(0, 11)
+
 [node name="LaunchZone" type="Area2D" parent="." unique_id=546366409]
 position = Vector2(0, 11)
 script = ExtResource("5_8h65s")

@@ -8,7 +8,7 @@ villager_id = &"candycrane"
 display_name = "Candycrane"
 animal_type = &"Crow"
 personality = "Grumpy"
-sprite_row = 10
+sprite_row = 12
 invite_cost = Dictionary[String, int]({
 "Green": 225,
 "Orange": 100,

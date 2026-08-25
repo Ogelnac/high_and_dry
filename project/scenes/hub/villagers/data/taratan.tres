@@ -7,7 +7,6 @@ script = ExtResource("1")
 villager_id = &"taratan"
 display_name = "Taratan"
 animal_type = &"Rat"
-sprite_row = 8
 invite_cost = Dictionary[String, int]({
 "Brown": 150,
 "Orange": 275,

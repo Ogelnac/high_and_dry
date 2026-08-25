@@ -1518,7 +1518,6 @@ collision_enabled = false
 metadata/parallax_motion_scale = Vector2(0.005, 0)
 
 [node name="Sewage" type="TileMapLayer" parent="Environment" unique_id=1406833944 groups=["shader_objects"]]
-visible = false
 modulate = Color(0.2, 0.580392, 0.14902, 1)
 z_index = 100
 material = SubResource("ShaderMaterial_d2t1y")
@@ -1753,5 +1752,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SilkwormCollider" unique_id=220561491]
 shape = SubResource("RectangleShape2D_nwj2w")
 
+[connection signal="enter_tadd_signal" from="Player" to="." method="_on_player_enter_tadd"]
 [connection signal="body_entered" from="LaunchZone" to="Player" method="_on_launch_zone_body_entered"]
 [connection signal="body_exited" from="LaunchZone" to="Player" method="_on_launch_zone_body_exited"]

@@ -1,10 +1,10 @@
 extends Panel
 
-signal invite_requested
+signal payment_requested
 signal closed
 
 @onready var request_label: RichTextLabel = $RequestLabel
-@onready var invite_button: Button = $Options/Invite
+@onready var payment_button: Button = $Options/GiveResources
 @onready var chat_button: Button = $Options/Chat
 @onready var leave_button: Button = $Options/Leave
 
@@ -12,29 +12,32 @@ var _definition: VillagerDefinition
 var _dialogue_completion_pending := false
 
 func _ready() -> void:
-	invite_button.pressed.connect(_on_invite_pressed)
+	payment_button.pressed.connect(_on_payment_pressed)
 	chat_button.pressed.connect(_on_chat_pressed)
 	leave_button.pressed.connect(close)
 
-func begin_interaction(definition: VillagerDefinition, invited: bool) -> void:
+func begin_interaction(definition: VillagerDefinition, can_pay: bool) -> void:
 	_definition = definition
 	request_label.text = _format_request(definition.invite_cost)
-	invite_button.disabled = invited
+	payment_button.disabled = not can_pay
 	_start_villager_dialogue("[PLACEHOLDER DIALOGUE]")
 
-func mark_invited() -> void:
-	invite_button.disabled = true
-	_start_villager_dialogue("[PLACEHOLDER INVITE RESPONSE]")
+func mark_paid() -> void:
+	payment_button.disabled = true
+	request_label.text = "[center]Move-in request complete"
+	_start_villager_dialogue("[PLACEHOLDER MOVE-IN RESPONSE]")
 
 func close() -> void:
 	hide()
 	if DialogueManager.player != null:
 		DialogueManager.player.dialogue_mode = false
+		DialogueManager.player.interaction_controls_locked = false
 	closed.emit()
 
 func _open() -> void:
 	if DialogueManager.player != null:
-		DialogueManager.player.dialogue_mode = true
+		DialogueManager.player.dialogue_mode = false
+		DialogueManager.player.interaction_controls_locked = true
 		DialogueManager.player.virtual_joystick_active = false
 		DialogueManager.player.virtual_joystick_offset = Vector2.ZERO
 		DialogueManager.player.virtual_joystick.visible = false
@@ -45,6 +48,8 @@ func _start_villager_dialogue(text: String) -> void:
 		return
 	_dialogue_completion_pending = true
 	hide()
+	if DialogueManager.player != null:
+		DialogueManager.player.interaction_controls_locked = true
 	if not DialogueManager.dialogue_finished.is_connected(_on_villager_dialogue_finished):
 		DialogueManager.dialogue_finished.connect(_on_villager_dialogue_finished)
 	DialogueManager.start_inline_dialogue([{
@@ -69,8 +74,8 @@ func _format_request(cost: Dictionary[String, int]) -> String:
 		parts.append("%d[img width=25 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img]" % [amount, region.x, region.y, region.z, region.w])
 	return "[center]Move-in request\n" + "   ".join(parts)
 
-func _on_invite_pressed() -> void:
-	invite_requested.emit()
+func _on_payment_pressed() -> void:
+	payment_requested.emit()
 
 func _on_chat_pressed() -> void:
 	_start_villager_dialogue("[PLACEHOLDER DIALOGUE]")

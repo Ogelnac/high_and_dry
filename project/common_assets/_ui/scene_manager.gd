@@ -31,7 +31,6 @@ func fade_from_control(ctrl: Control, hold_seconds: float = 3.0) -> void:
 func _on_level_1_button_up() -> void:
 	GameManager.arcade_level = 1
 	GameManager.stash_held_fabric_into_piles()
-	VillagerManager.begin_arcade_run()
 	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
@@ -42,7 +41,6 @@ func _on_level_1_button_up() -> void:
 func _on_level_2_button_up() -> void:
 	GameManager.arcade_level = 2
 	GameManager.stash_held_fabric_into_piles()
-	VillagerManager.begin_arcade_run()
 	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
@@ -53,7 +51,6 @@ func _on_level_2_button_up() -> void:
 func _on_level_3_button_up() -> void:
 	GameManager.arcade_level = 3
 	GameManager.stash_held_fabric_into_piles()
-	VillagerManager.begin_arcade_run()
 	GameManager.save()
 	level_select.set_bus("Sfx")
 	level_select.play()
@@ -78,6 +75,8 @@ func _on_start_game_signal_merchant() -> void:
 		GameManager.player_start_position = Vector2(0.0, -575.0)
 		GameManager.UI.get_node("UI").display_swipe_to_start = false
 		GameManager.trigger_pachinko = true
+		VillagerManager.roll_hub_visitor(Debug.guarantee_tadd_villager)
+		GameManager.save()
 		get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")
 	else:
 		GameManager.player_start_position = Vector2(0.0, -23.0)

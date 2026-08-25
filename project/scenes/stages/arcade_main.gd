@@ -48,6 +48,9 @@ func _ready() -> void:
 
 	GameManager.get_ui_reference()
 	GameManager.arcade_UI()
+	if Debug.guarantee_tadd_villager:
+		VillagerManager.roll_hub_visitor(true)
+		GameManager.save()
 
 	ui = GameManager.UI.get_node("UI")
 	dialogue_input = GameManager.UI.get_node("DialogueInput")
@@ -171,7 +174,6 @@ func player_end_animation_sequence() -> void:
 func reload_scene():
 	GameManager.new_arcade_resources = []
 	GameManager.clear_resource_cache()
-	VillagerManager.begin_arcade_run()
 	GameManager.save()
 
 	ui.update_shader_black_dot_transition(0.5)
@@ -191,6 +193,7 @@ func leave_arcade():
 		end_game_button.hide()
 
 	Engine.time_scale = 1.0
+	VillagerManager.roll_hub_visitor(Debug.guarantee_tadd_villager)
 	GameManager.save()
 	ui.update_shader_black_dot_transition(0.5)
 	get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")

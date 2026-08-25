@@ -1,30 +1,18 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://cgx68fo4mwdm0"]
 
-[ext_resource type="Script" path="res://project/scenes/tadd_trader/arcade_visitor.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cn0mowpslsu6g" path="res://project/scenes/tadd_trader/tadd_visitor.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://vka4isjne5qt" path="res://project/scenes/hub/villagers/villager.tscn" id="2_villager"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="3_popup"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="4_shader"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_tap"]
+size = Vector2(34, 48)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_popup"]
 shader = ExtResource("4_shader")
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
 shader_parameter/mix_scale = 0.0
-
-[sub_resource type="Animation" id="Animation_reset"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
 [sub_resource type="Animation" id="Animation_open"]
 resource_name = "OpenPopup"
@@ -43,43 +31,56 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_popup"]
-_data = {
-&"RESET": SubResource("Animation_reset"),
-&"OpenPopup": SubResource("Animation_open")
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape_tap"]
-size = Vector2(34, 48)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_popup"]
+_data = {
+&"OpenPopup": SubResource("Animation_open"),
+&"RESET": SubResource("Animation_reset")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_detection"]
 size = Vector2(40, 40)
 
-[node name="ArcadeVisitor" type="Node2D"]
+[node name="TaddVisitor" type="Node2D" unique_id=493341798]
 script = ExtResource("1_script")
 
-[node name="Villager" parent="." instance=ExtResource("2_villager")]
+[node name="Villager" parent="." unique_id=72453668 instance=ExtResource("2_villager")]
+position = Vector2(0, 3)
 
-[node name="TapButton" type="Area2D" parent="."]
+[node name="TapButton" type="Area2D" parent="." unique_id=1342917428]
 position = Vector2(0, -10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton" unique_id=986811211]
 shape = SubResource("RectangleShape_tap")
 
-[node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
+[node name="Popup" type="Sprite2D" parent="." unique_id=1632553688 groups=["shader_objects"]]
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_popup")
-position = Vector2(0, -22)
+position = Vector2(0, -30)
 texture = ExtResource("3_popup")
 hframes = 3
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup" unique_id=1254556087]
 libraries/ = SubResource("AnimationLibrary_popup")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1951724061]
 position = Vector2(0, 8)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1732028048]
 shape = SubResource("RectangleShape_detection")

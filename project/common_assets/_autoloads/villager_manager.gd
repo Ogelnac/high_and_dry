@@ -2,7 +2,7 @@ extends Node
 
 const STARTING_HOUSE_COUNT := 5
 const RECENT_DIALOGUE_LIMIT := 3
-const ARCADE_VISITOR_CHANCE := 0.25
+const HUB_VISITOR_CHANCE := 0.25
 const DEFINITIONS: Array[VillagerDefinition] = [
 	preload("res://project/scenes/hub/villagers/data/salvador.tres"),
 	preload("res://project/scenes/hub/villagers/data/cotton.tres"),
@@ -25,9 +25,7 @@ var waiting_villager_id: StringName
 var pending_move_in_villager_id: StringName
 var pending_move_in_house_index := -1
 var recent_dialogue_ids: Array[String] = []
-var run_visitor_roll_done := false
-var run_visitor_id: StringName
-var run_visitor_invited := false
+var initial_debug_visitor_seeded := false
 
 func _ready() -> void:
 	for definition in DEFINITIONS:
@@ -42,7 +40,7 @@ func reset_state() -> void:
 	pending_move_in_villager_id = &""
 	pending_move_in_house_index = -1
 	recent_dialogue_ids.clear()
-	reset_run_visitor()
+	initial_debug_visitor_seeded = false
 
 func _new_house_state(index: int) -> Dictionary:
 	return {
@@ -96,33 +94,70 @@ func remember_dialogue(dialogue_id: String) -> void:
 	while recent_dialogue_ids.size() > RECENT_DIALOGUE_LIMIT:
 		recent_dialogue_ids.pop_front()
 
-func begin_arcade_run() -> void:
-	reset_run_visitor()
-
-func roll_run_visitor(guaranteed: bool = false) -> StringName:
-	if run_visitor_roll_done:
-		return run_visitor_id
-	run_visitor_roll_done = true
+func roll_hub_visitor(guaranteed: bool = false) -> StringName:
+	if not waiting_villager_id.is_empty():
+		if guaranteed:
+			initial_debug_visitor_seeded = true
+		return waiting_villager_id
 	if not has_available_house():
 		return &""
-	var eligible := get_eligible_visitor_ids()
+	var eligible: Array[StringName] = get_eligible_visitor_ids()
 	if eligible.is_empty():
 		return &""
-	if guaranteed or randf() < ARCADE_VISITOR_CHANCE:
-		run_visitor_id = eligible.pick_random()
-	return run_visitor_id
+	if guaranteed or randf() < HUB_VISITOR_CHANCE:
+		waiting_villager_id = eligible.pick_random()
+		if guaranteed:
+			initial_debug_visitor_seeded = true
+	return waiting_villager_id
 
-func invite_run_visitor_to_hub() -> bool:
-	if run_visitor_id.is_empty():
+func seed_initial_debug_visitor() -> bool:
+	if not Debug.guarantee_tadd_villager or initial_debug_visitor_seeded:
 		return false
-	waiting_villager_id = run_visitor_id
-	run_visitor_invited = true
+	return not roll_hub_visitor(true).is_empty()
+
+func can_pay_waiting_villager() -> bool:
+	if waiting_villager_id.is_empty() or not has_available_house():
+		return false
+	if Debug.infinite_resources:
+		return true
+	var definition := get_definition(waiting_villager_id)
+	if definition == null:
+		return false
+	for colour_name: String in definition.invite_cost:
+		var required: int = int(definition.invite_cost.get(colour_name, 0))
+		if int(GameManager.resources.get(colour_name, 0)) < required:
+			return false
 	return true
 
-func reset_run_visitor() -> void:
-	run_visitor_roll_done = false
-	run_visitor_id = &""
-	run_visitor_invited = false
+func pay_waiting_villager() -> bool:
+	if not can_pay_waiting_villager():
+		return false
+	var definition := get_definition(waiting_villager_id)
+	var house_index: int = get_available_house_index()
+	if definition == null or house_index < 0:
+		return false
+	if not Debug.infinite_resources:
+		for colour_name: String in definition.invite_cost:
+			var required: int = int(definition.invite_cost.get(colour_name, 0))
+			GameManager.resources[colour_name] = int(GameManager.resources.get(colour_name, 0)) - required
+	pending_move_in_villager_id = waiting_villager_id
+	pending_move_in_house_index = house_index
+	waiting_villager_id = &""
+	return true
+
+func complete_pending_move_in() -> bool:
+	if pending_move_in_villager_id.is_empty():
+		return false
+	if pending_move_in_house_index < 0 or pending_move_in_house_index >= houses.size():
+		return false
+	var house: Dictionary = houses[pending_move_in_house_index]
+	if not str(house.get("occupant_id", "")).is_empty():
+		return false
+	house["occupant_id"] = str(pending_move_in_villager_id)
+	house["tier"] = 0
+	pending_move_in_villager_id = &""
+	pending_move_in_house_index = -1
+	return true
 
 func serialize_state() -> Dictionary:
 	return {
@@ -131,9 +166,7 @@ func serialize_state() -> Dictionary:
 		"pending_move_in_villager_id": str(pending_move_in_villager_id),
 		"pending_move_in_house_index": pending_move_in_house_index,
 		"recent_dialogue_ids": recent_dialogue_ids.duplicate(),
-		"run_visitor_roll_done": run_visitor_roll_done,
-		"run_visitor_id": str(run_visitor_id),
-		"run_visitor_invited": run_visitor_invited
+		"initial_debug_visitor_seeded": initial_debug_visitor_seeded
 	}
 
 func deserialize_state(data: Variant) -> void:
@@ -154,12 +187,10 @@ func deserialize_state(data: Variant) -> void:
 	waiting_villager_id = StringName(str(saved.get("waiting_villager_id", "")))
 	pending_move_in_villager_id = StringName(str(saved.get("pending_move_in_villager_id", "")))
 	pending_move_in_house_index = int(saved.get("pending_move_in_house_index", -1))
+	initial_debug_visitor_seeded = bool(saved.get("initial_debug_visitor_seeded", false))
 	var saved_recent: Variant = saved.get("recent_dialogue_ids", [])
 	if saved_recent is Array:
 		for dialogue_id in saved_recent:
 			recent_dialogue_ids.append(str(dialogue_id))
 	while recent_dialogue_ids.size() > RECENT_DIALOGUE_LIMIT:
 		recent_dialogue_ids.pop_front()
-	run_visitor_roll_done = bool(saved.get("run_visitor_roll_done", false))
-	run_visitor_id = StringName(str(saved.get("run_visitor_id", "")))
-	run_visitor_invited = bool(saved.get("run_visitor_invited", false))

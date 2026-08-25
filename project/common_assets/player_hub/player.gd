@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal start_game_signal
+signal enter_tadd_signal
 signal in_launch_zone
 
 @export var max_speed: float = 150.0
@@ -27,6 +28,7 @@ var virtual_joystick_active: bool = false
 var virtual_joystick_start: Vector2
 var virtual_joystick_offset: Vector2
 var dialogue_mode: bool = false
+var interaction_controls_locked := false
 
 var direction: int = 0
 var is_facing_right: bool = true
@@ -44,7 +46,9 @@ var movement_locked: bool = false
 var previous_velocity: Vector2 = Vector2.ZERO
 var landing_squash_timer: float = 0.0
 var inside_launch_zone: bool = false
+var inside_tadd_launch_zone: bool = false
 var launch_commence: bool = false
+var launching_to_tadd: bool = false
 var wait_to_change_layer: bool = false
 var launch_end: bool = false
 var prev_velocity: float = 0.0
@@ -88,6 +92,10 @@ func _input(event: InputEvent) -> void:
 				DialogueManager.show_next_line()
 		return
 
+	if interaction_controls_locked:
+		_cancel_pointer_movement()
+		return
+
 	if event is InputEventScreenTouch or event is InputEventMouseButton:
 		if event.pressed:
 			virtual_joystick_active = true
@@ -112,6 +120,9 @@ func _input(event: InputEvent) -> void:
 				if swipe_normalized.y < -0.5 and is_on_floor():
 					if inside_launch_zone:
 						hub_counter.visible = false
+						launching_to_tadd = inside_tadd_launch_zone
+						if launching_to_tadd:
+							launch_zone = get_node_or_null("../Environment/Boat/LaunchZone") as Area2D
 						launch_commence = true
 					else:
 						var horizontal_jump_strength = max(abs(swipe_normalized.x) * max_speed, 50.0)
@@ -139,6 +150,10 @@ func _cancel_pointer_movement() -> void:
 	virtual_joystick.visible = false
 
 func _process(delta: float) -> void:
+	if interaction_controls_locked:
+		_cancel_pointer_movement()
+		velocity.x = 0.0
+
 	if Debug.world_note_input_captured:
 		_world_note_pointer_sequence = true
 		_cancel_pointer_movement()
@@ -161,7 +176,7 @@ func _process(delta: float) -> void:
 	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
-		var target_x = launch_zone.global_position.x
+		var target_x := _get_launch_target_x()
 		var direction_to_center = sign(target_x - position.x)
 
 		if abs(position.x - target_x) > 5:
@@ -175,7 +190,10 @@ func _process(delta: float) -> void:
 
 	if wait_to_change_layer and position.y <= launch_zone.global_position.y -55.0:
 		z_index = -6
-		start_game_signal.emit()
+		if launching_to_tadd:
+			enter_tadd_signal.emit()
+		else:
+			start_game_signal.emit()
 		wait_to_change_layer = false
 
 	if change_sign and abs(velocity.x) >= 8.5:
@@ -217,7 +235,7 @@ func _physics_process(delta: float) -> void:
 	if launch_commence == true and launch_end == false:
 		virtual_joystick_active = false
 
-		var target_x = launch_zone.global_position.x
+		var target_x := _get_launch_target_x()
 		var direction_to_center = sign(target_x - position.x)
 
 		if abs(position.x - target_x) > 5:
@@ -310,12 +328,16 @@ func change_state(new_state: String) -> void:
 			footstep_timer.stop()
 		"Run":
 			animation_player.play("Run")
+			_play_footstep()
 			footstep_timer.start()
 		"Jump":
 			animation_player.play("Jump")
 			footstep_timer.stop()
 
 func _on_step_timer_timeout() -> void:
+	_play_footstep()
+
+func _play_footstep() -> void:
 	step_sfx.set_bus("Sfx")
 	step_sfx.pitch_scale = 2.0 + randf() * 0.5 - 0.05
 	step_sfx.play()
@@ -340,3 +362,23 @@ func _on_launch_zone_body_entered(body: Node2D) -> void:
 	if body == self:
 		inside_launch_zone = true
 		in_launch_zone.emit(true)
+
+func _on_tadd_launch_zone_body_entered(body: Node2D) -> void:
+	if body == self:
+		inside_tadd_launch_zone = true
+		inside_launch_zone = true
+		in_launch_zone.emit(false)
+
+func _on_tadd_launch_zone_body_exited(body: Node2D) -> void:
+	if body == self:
+		inside_tadd_launch_zone = false
+		inside_launch_zone = false
+		in_launch_zone.emit(false)
+		launch_zone = get_node_or_null("../LaunchZone") as Area2D
+
+func _get_launch_target_x() -> float:
+	if launching_to_tadd and launch_zone != null:
+		var target := launch_zone.get_node_or_null("../LaunchTarget") as Marker2D
+		if target != null:
+			return target.global_position.x
+	return launch_zone.global_position.x

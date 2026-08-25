@@ -110,6 +110,10 @@ func _on_player_start_game_signal() -> void:
 	scene_manager.show()
 
 func _on_player_in_launch_zone(in_zone):
+	if player.inside_tadd_launch_zone:
+		display_swipe_to_start = false
+		rich_text_label.modulate.a = 0.0
+		return
 	if player.position.x > -80:
 		rich_text_label.visible = true
 		display_swipe_to_start = in_zone

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dqq0i3cll7o3e" path="res://project/scenes/hub/villagers/villager.gd" id="1_wkvmw"]
 [ext_resource type="Texture2D" uid="uid://bqghjrpwjblbh" path="res://project/scenes/hub/villagers/npcs.png" id="2_npcs"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="3_shader"]
+[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://project/common_assets/_audio/step.wav" id="4_step"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npcs"]
 shader = ExtResource("3_shader")
@@ -76,3 +77,12 @@ vframes = 16
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=15545268]
 libraries/ = SubResource("AnimationLibrary_npcs")
+
+[node name="StepSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_step")
+volume_db = -10.0
+pitch_scale = 1.86
+panning_strength = 0.5
+
+[node name="StepTimer" type="Timer" parent="."]
+wait_time = 0.3

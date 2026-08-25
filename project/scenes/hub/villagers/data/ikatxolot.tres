@@ -8,7 +8,7 @@ villager_id = &"ikatxolot"
 display_name = "Ikatxolot"
 animal_type = &"Axolotl"
 personality = "Dreamy"
-sprite_row = 11
+sprite_row = 8
 invite_cost = Dictionary[String, int]({
 "Brown": 125,
 "Red": 100,

@@ -8,7 +8,7 @@ villager_id = &"paisley"
 display_name = "Paisley"
 animal_type = &"Badger"
 personality = "Dreamy"
-sprite_row = 5
+sprite_row = 2
 invite_cost = Dictionary[String, int]({
 "Green": 150,
 "Orange": 200,

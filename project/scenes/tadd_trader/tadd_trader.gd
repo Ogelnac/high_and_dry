@@ -1,7 +1,5 @@
 extends Node2D
 
-const ARCADE_VISITOR = preload("res://project/scenes/tadd_trader/arcade_visitor.tscn")
-
 @export var normal_sheet: Texture2D
 @export var normal_hframes: int = 3
 @export var normal_vframes: int = 3
@@ -29,9 +27,6 @@ class BoostBoonDef:
 
 @onready var player: CharacterBody2D = $Player
 @onready var boons: Array[Node2D] = [$Boon1,$Boon2,$Boon3]
-@onready var visitor_walk_start: Marker2D = $VisitorWalkStart
-@onready var visitor_walk_end: Marker2D = $VisitorWalkEnd
-@onready var visitor_box: Panel = $CanvasLayer/VisitorBox
 
 var colour_names:Array[String] = [
 	"Red",
@@ -45,7 +40,6 @@ var colour_names:Array[String] = [
 
 var normal_defs:Array[BoonDef] = []
 var boost_defs:Array[BoostBoonDef] = []
-var arcade_visitor: Node2D
 
 func _ready() -> void:
 	randomize()
@@ -63,37 +57,6 @@ func _ready() -> void:
 	_init_item_defs()
 	var picks := _pick_unique_items(3)
 	_apply_shop_selection(picks)
-	visitor_box.invite_requested.connect(_on_visitor_invite_requested)
-	visitor_box.closed.connect(_on_visitor_panel_closed)
-	_setup_arcade_visitor()
-
-func _setup_arcade_visitor() -> void:
-	var roll_was_done := VillagerManager.run_visitor_roll_done
-	var visitor_id := VillagerManager.roll_run_visitor(Debug.guarantee_arcade_villager)
-	if not roll_was_done:
-		GameManager.save()
-	if visitor_id.is_empty():
-		return
-	arcade_visitor = ARCADE_VISITOR.instantiate()
-	arcade_visitor.setup(visitor_id)
-	arcade_visitor.configure_walk_area(visitor_walk_start.position.x, visitor_walk_end.position.x, visitor_walk_start.position.y)
-	add_child(arcade_visitor)
-	arcade_visitor.interaction_requested.connect(_on_visitor_interaction_requested)
-	GameManager.UI.get_node("UI").refresh_shader_objects()
-
-func _on_visitor_interaction_requested() -> void:
-	var definition := VillagerManager.get_definition(VillagerManager.run_visitor_id)
-	if definition != null:
-		visitor_box.begin_interaction(definition, VillagerManager.run_visitor_invited)
-
-func _on_visitor_invite_requested() -> void:
-	if VillagerManager.invite_run_visitor_to_hub():
-		GameManager.save()
-		visitor_box.mark_invited()
-
-func _on_visitor_panel_closed() -> void:
-	if arcade_visitor != null:
-		arcade_visitor.resume_wandering()
 
 func _init_item_defs() -> void:
 	normal_defs = []
