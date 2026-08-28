@@ -166,6 +166,90 @@ func get_house_index_for_villager(villager_id: StringName) -> int:
 			return index
 	return -1
 
+func assign_hub_locations(locations: Array[Dictionary]) -> Dictionary[StringName, StringName]:
+	var assignments: Dictionary[StringName, StringName] = {}
+	var occupancy: Dictionary[StringName, int] = {}
+	var occupied_house_indices: Array[int] = []
+	for location: Dictionary in locations:
+		var location_id := StringName(str(location.get("location_id", "")))
+		if not location_id.is_empty():
+			occupancy[location_id] = 0
+	for house_index in range(houses.size()):
+		if not str(houses[house_index].get("occupant_id", "")).is_empty():
+			occupied_house_indices.append(house_index)
+	for house_index in occupied_house_indices:
+		var house: Dictionary = houses[house_index]
+		if int(house.get("tier", 0)) >= 1:
+			continue
+		var home_candidates := _get_hub_location_candidates(&"home", house_index, locations, occupied_house_indices, occupancy)
+		if home_candidates.is_empty():
+			continue
+		var home_location: Dictionary = home_candidates[0]
+		_assign_hub_location(assignments, occupancy, StringName(str(house.get("occupant_id", ""))), home_location)
+	var roaming_house_indices := occupied_house_indices.duplicate()
+	roaming_house_indices.shuffle()
+	for house_index in roaming_house_indices:
+		var house: Dictionary = houses[house_index]
+		if int(house.get("tier", 0)) < 1:
+			continue
+		var villager_id := StringName(str(house.get("occupant_id", "")))
+		var definition := get_definition(villager_id)
+		if definition == null:
+			continue
+		var available_categories: Array[StringName] = []
+		for category_name: String in definition.location_weights:
+			var category := StringName(category_name)
+			if int(definition.location_weights.get(category_name, 0)) <= 0:
+				continue
+			if not _get_hub_location_candidates(category, house_index, locations, occupied_house_indices, occupancy).is_empty():
+				available_categories.append(category)
+		var chosen_category := _pick_weighted_location_category(definition.location_weights, available_categories)
+		if chosen_category.is_empty():
+			continue
+		var candidates := _get_hub_location_candidates(chosen_category, house_index, locations, occupied_house_indices, occupancy)
+		var chosen_location: Dictionary = candidates[randi_range(0, candidates.size() - 1)]
+		_assign_hub_location(assignments, occupancy, villager_id, chosen_location)
+	return assignments
+
+func _get_hub_location_candidates(category: StringName, own_house_index: int, locations: Array[Dictionary], occupied_house_indices: Array[int], occupancy: Dictionary[StringName, int]) -> Array[Dictionary]:
+	var candidates: Array[Dictionary] = []
+	for location: Dictionary in locations:
+		var location_id := StringName(str(location.get("location_id", "")))
+		var location_type := StringName(str(location.get("location_type", "")))
+		var location_house_index := int(location.get("house_index", -1))
+		var capacity := int(location.get("capacity", 2))
+		if location_id.is_empty() or int(occupancy.get(location_id, 0)) >= capacity:
+			continue
+		if category == &"home":
+			if location_type == &"home" and location_house_index == own_house_index:
+				candidates.append(location)
+		elif category == &"other_home":
+			if location_type == &"home" and location_house_index != own_house_index and occupied_house_indices.has(location_house_index):
+				candidates.append(location)
+		elif location_type == category:
+			candidates.append(location)
+	return candidates
+
+func _pick_weighted_location_category(weights: Dictionary[String, int], available_categories: Array[StringName]) -> StringName:
+	var total_weight := 0
+	for category in available_categories:
+		total_weight += int(weights.get(str(category), 0))
+	if total_weight <= 0:
+		return &""
+	var roll := randi_range(1, total_weight)
+	for category in available_categories:
+		roll -= int(weights.get(str(category), 0))
+		if roll <= 0:
+			return category
+	return available_categories.back()
+
+func _assign_hub_location(assignments: Dictionary[StringName, StringName], occupancy: Dictionary[StringName, int], villager_id: StringName, location: Dictionary) -> void:
+	var location_id := StringName(str(location.get("location_id", "")))
+	if villager_id.is_empty() or location_id.is_empty():
+		return
+	assignments[villager_id] = location_id
+	occupancy[location_id] = int(occupancy.get(location_id, 0)) + 1
+
 func has_home_upgrade_request(house_index: int) -> bool:
 	if house_index < 0 or house_index >= houses.size():
 		return false

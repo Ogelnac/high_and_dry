@@ -6,6 +6,7 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6u4lp"]
 texture = ExtResource("1_kksmg")
+use_texture_padding = false
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
 0:0/0 = 0
@@ -1557,6 +1558,7 @@ texture = ExtResource("1_kksmg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0u5sr"]
 texture = ExtResource("2_kksmg")
+use_texture_padding = false
 0:2/0 = 0
 1:2/0 = 0
 2:2/0 = 0
@@ -1586,6 +1588,7 @@ texture = ExtResource("2_kksmg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_407c2"]
 texture = ExtResource("3_kksmg")
+use_texture_padding = false
 0:0/size_in_atlas = Vector2i(8, 4)
 0:0/animation_columns = 2
 0:0/animation_speed = 4.0

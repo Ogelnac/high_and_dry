@@ -3,6 +3,7 @@ extends Node2D
 @onready var player: CharacterBody2D = $Player
 @onready var tadd_launch_zone: Area2D = $Environment/Boat/LaunchZone
 @onready var resident_box: Panel = $CanvasLayer/VisitorBox
+@onready var villager_locations_root: Node2D = $VillagerLocations
 @onready var resident_slots: Array[HubResident] = [
 	$Residents/House1Resident,
 	$Residents/House2Resident,
@@ -52,6 +53,19 @@ func _on_player_enter_tadd() -> void:
 	get_tree().change_scene_to_file("res://project/scenes/tadd_trader/_hub_tadd_trader.tscn")
 
 func _setup_residents() -> void:
+	var locations := _get_enabled_villager_locations()
+	var location_records: Array[Dictionary] = []
+	var locations_by_id: Dictionary[StringName, HubVillagerLocation] = {}
+	for location in locations:
+		var location_id := StringName(location.name)
+		location_records.append(location.get_assignment_record())
+		locations_by_id[location_id] = location
+	var assignments := VillagerManager.assign_hub_locations(location_records)
+	var location_totals: Dictionary[StringName, int] = {}
+	for assigned_villager_id: StringName in assignments:
+		var assigned_location_id: StringName = assignments[assigned_villager_id]
+		location_totals[assigned_location_id] = int(location_totals.get(assigned_location_id, 0)) + 1
+	var location_slots_used: Dictionary[StringName, int] = {}
 	for house_index: int in range(resident_slots.size()):
 		var resident: HubResident = resident_slots[house_index]
 		resident.visible = false
@@ -62,11 +76,29 @@ func _setup_residents() -> void:
 		var occupant_id := StringName(str(house.get("occupant_id", "")))
 		if occupant_id.is_empty():
 			continue
-		resident.setup(occupant_id, house_index, int(house.get("tier", 0)))
+		var tier := int(house.get("tier", 0))
+		resident.setup(occupant_id, house_index, tier)
+		var location_id := StringName(str(assignments.get(occupant_id, "")))
+		var location := locations_by_id.get(location_id) as HubVillagerLocation
+		if location != null:
+			var slot_index := int(location_slots_used.get(location_id, 0))
+			var starting_offset := 0.0
+			if int(location_totals.get(location_id, 0)) == 2:
+				starting_offset = -10.0 if slot_index == 0 else 10.0
+			location_slots_used[location_id] = slot_index + 1
+			resident.configure_location(location_id, location.global_position, location.roam_radius, tier >= 1, starting_offset)
 		if not resident.home_request_requested.is_connected(_on_resident_home_request_requested):
 			resident.home_request_requested.connect(_on_resident_home_request_requested)
 		resident.visible = true
 		resident.process_mode = Node.PROCESS_MODE_INHERIT
+
+func _get_enabled_villager_locations() -> Array[HubVillagerLocation]:
+	var locations: Array[HubVillagerLocation] = []
+	for child in villager_locations_root.get_children():
+		var location := child as HubVillagerLocation
+		if location != null and location.enabled:
+			locations.append(location)
+	return locations
 
 func _on_resident_home_request_requested(resident: Node2D) -> void:
 	active_resident = resident as HubResident

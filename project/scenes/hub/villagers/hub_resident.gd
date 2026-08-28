@@ -15,13 +15,14 @@ signal home_request_requested(resident: Node2D)
 @onready var tap_button: Area2D = $TapButton
 
 var villager_id: StringName
+var location_id: StringName
 var house_index := -1
 var player_in_area := false
 var interaction_active := false
 var panel_interaction_active := false
 var consume_upgrade_comment_after_dialogue := false
 var nearby_player: CharacterBody2D
-var home_x := 0.0
+var roam_center_x := 0.0
 var target_x := 0.0
 var idle_time_remaining := 0.0
 var is_walking := false
@@ -29,7 +30,7 @@ var roaming_enabled := false
 var proximity_paused := false
 
 func _ready() -> void:
-	home_x = position.x
+	roam_center_x = position.x
 	target_x = position.x
 	popup.visible = false
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
@@ -61,6 +62,19 @@ func setup(value: StringName, value_house_index: int, tier: int) -> void:
 	set_villager_id(value)
 	house_index = value_house_index
 	roaming_enabled = tier >= 1
+	_begin_idle()
+
+func configure_location(value_location_id: StringName, center_global_position: Vector2, value_roam_radius: float, can_roam: bool, starting_offset_x: float = 0.0) -> void:
+	location_id = value_location_id
+	var resident_parent := get_parent() as Node2D
+	if resident_parent == null:
+		return
+	var center_local_position: Vector2 = resident_parent.to_local(center_global_position)
+	position = center_local_position + Vector2(starting_offset_x, 0.0)
+	roam_center_x = center_local_position.x
+	target_x = position.x
+	roam_radius = maxf(value_roam_radius, 0.0)
+	roaming_enabled = can_roam
 	_begin_idle()
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
@@ -142,9 +156,9 @@ func _begin_idle() -> void:
 		villager.set_running(false)
 
 func _begin_walk() -> void:
-	target_x = randf_range(home_x - roam_radius, home_x + roam_radius)
+	target_x = randf_range(roam_center_x - roam_radius, roam_center_x + roam_radius)
 	if abs(target_x - position.x) < 12.0:
-		target_x = home_x + roam_radius if position.x < home_x else home_x - roam_radius
+		target_x = roam_center_x + roam_radius if position.x < roam_center_x else roam_center_x - roam_radius
 	is_walking = true
 	villager.set_facing_direction(sign(target_x - position.x))
 	villager.set_running(true)

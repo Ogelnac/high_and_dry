@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://chsimb172v0qv"]
+[gd_scene format=3 uid="uid://chsimb172v0qv"]
 
 [ext_resource type="Script" uid="uid://5loxqwp72g3t" path="res://project/scenes/hub/moth_mother.gd" id="1_uxyte"]
 [ext_resource type="Texture2D" uid="uid://c0tqtuoq7v7j" path="res://project/scenes/hub/moth_mother.png" id="2_3aboj"]
@@ -172,10 +172,10 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8lob"]
 size = Vector2(28, 31)
 
-[node name="MothMother" type="Node2D"]
+[node name="MothMother" type="Node2D" unique_id=222167768]
 script = ExtResource("1_uxyte")
 
-[node name="Cocoon" type="Sprite2D" parent="." groups=["shader_objects"]]
+[node name="Cocoon" type="Sprite2D" parent="." unique_id=2082171387 groups=["shader_objects"]]
 texture_filter = 1
 material = SubResource("ShaderMaterial_1gwex")
 position = Vector2(0, 32)
@@ -183,13 +183,11 @@ texture = SubResource("CompressedTexture2D_mqj4d")
 hframes = 3
 vframes = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Cocoon"]
-libraries = {
-&"": SubResource("AnimationLibrary_1gwex")
-}
-autoplay = "cocoon_idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cocoon" unique_id=828577448]
+libraries/ = SubResource("AnimationLibrary_1gwex")
+autoplay = &"cocoon_idle"
 
-[node name="Moth" type="Sprite2D" parent="." groups=["shader_objects"]]
+[node name="Moth" type="Sprite2D" parent="." unique_id=1086317400 groups=["shader_objects"]]
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_1gwex")
@@ -199,20 +197,18 @@ hframes = 3
 vframes = 3
 frame = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Moth"]
-libraries = {
-&"": SubResource("AnimationLibrary_1gwex")
-}
-autoplay = "cocoon_idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Moth" unique_id=738021973]
+libraries/ = SubResource("AnimationLibrary_1gwex")
+autoplay = &"cocoon_idle"
 
-[node name="TapButton" type="Area2D" parent="."]
+[node name="TapButton" type="Area2D" parent="." unique_id=1246442816]
 position = Vector2(-8, 180)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton" unique_id=371870821]
 position = Vector2(0.5, -34.5)
 shape = SubResource("RectangleShape2D_5fvw3")
 
-[node name="Popup" type="Sprite2D" parent="." groups=["shader_objects"]]
+[node name="Popup" type="Sprite2D" parent="." unique_id=678722354 groups=["shader_objects"]]
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_eds76")
@@ -221,15 +217,13 @@ texture = ExtResource("4_1gwex")
 hframes = 3
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup"]
-libraries = {
-&"": SubResource("AnimationLibrary_tamwi")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Popup" unique_id=772533826]
+libraries/ = SubResource("AnimationLibrary_tamwi")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=292211300]
 position = Vector2(-8, 146)
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1601637612]
 position = Vector2(-1, 45)
 shape = SubResource("RectangleShape2D_r8lob")
