@@ -48,6 +48,7 @@ func _new_house_state(index: int) -> Dictionary:
 		"occupant_id": "",
 		"tier": 0,
 		"pending_tier": -1,
+		"upgrade_comment_pending": false,
 		"move_in_beauty_awarded": false
 	}
 
@@ -158,6 +159,76 @@ func complete_pending_move_in() -> bool:
 	pending_move_in_villager_id = &""
 	pending_move_in_house_index = -1
 	return true
+
+func get_house_index_for_villager(villager_id: StringName) -> int:
+	for index in range(houses.size()):
+		if StringName(str(houses[index].get("occupant_id", ""))) == villager_id:
+			return index
+	return -1
+
+func has_home_upgrade_request(house_index: int) -> bool:
+	if house_index < 0 or house_index >= houses.size():
+		return false
+	var house: Dictionary = houses[house_index]
+	if str(house.get("occupant_id", "")).is_empty():
+		return false
+	if int(house.get("pending_tier", -1)) >= 0:
+		return false
+	return int(house.get("tier", 0)) == 0 and Debug.unlock_villager_dye_requests
+
+func get_home_upgrade_cost(house_index: int) -> Dictionary[String, int]:
+	var empty_cost: Dictionary[String, int] = {}
+	if not has_home_upgrade_request(house_index):
+		return empty_cost
+	var villager_id := StringName(str(houses[house_index].get("occupant_id", "")))
+	var definition := get_definition(villager_id)
+	if definition == null:
+		return empty_cost
+	return definition.dye_cost.duplicate()
+
+func can_pay_home_upgrade(house_index: int) -> bool:
+	if not has_home_upgrade_request(house_index):
+		return false
+	if Debug.infinite_resources:
+		return true
+	var cost: Dictionary[String, int] = get_home_upgrade_cost(house_index)
+	for colour_name: String in cost:
+		if int(GameManager.dye_value.get(colour_name, 0)) < int(cost[colour_name]):
+			return false
+	return true
+
+func pay_home_upgrade(house_index: int) -> bool:
+	if not can_pay_home_upgrade(house_index):
+		return false
+	var cost: Dictionary[String, int] = get_home_upgrade_cost(house_index)
+	if not Debug.infinite_resources:
+		for colour_name: String in cost:
+			GameManager.dye_value[colour_name] = int(GameManager.dye_value.get(colour_name, 0)) - int(cost[colour_name])
+	houses[house_index]["pending_tier"] = 1
+	return true
+
+func complete_pending_home_upgrades() -> bool:
+	var completed := false
+	for house in houses:
+		var tier := int(house.get("tier", 0))
+		var pending_tier := int(house.get("pending_tier", -1))
+		if pending_tier <= tier:
+			continue
+		house["tier"] = pending_tier
+		house["pending_tier"] = -1
+		house["upgrade_comment_pending"] = true
+		completed = true
+	return completed
+
+func has_upgrade_comment(house_index: int) -> bool:
+	if house_index < 0 or house_index >= houses.size():
+		return false
+	return bool(houses[house_index].get("upgrade_comment_pending", false))
+
+func consume_upgrade_comment(house_index: int) -> void:
+	if house_index < 0 or house_index >= houses.size():
+		return
+	houses[house_index]["upgrade_comment_pending"] = false
 
 func serialize_state() -> Dictionary:
 	return {

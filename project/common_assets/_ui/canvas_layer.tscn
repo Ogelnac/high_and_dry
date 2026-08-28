@@ -617,6 +617,12 @@ layout_mode = 2
 text = "100% chance of NPC in Tadd's"
 alignment = 2
 
+[node name="DyeRequests" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Unlock villager dye requests"
+alignment = 2
+
 [node name="WorldNotesToggle" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1222712444]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2

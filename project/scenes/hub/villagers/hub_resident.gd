@@ -1,4 +1,12 @@
+class_name HubResident
 extends Node2D
+
+signal home_request_requested(resident: Node2D)
+
+@export var walk_speed := 85.0
+@export var roam_radius := 28.0
+@export var minimum_idle_time := 1.5
+@export var maximum_idle_time := 4.0
 
 @onready var villager: Node2D = $Villager
 @onready var popup: Sprite2D = $Popup
@@ -7,26 +15,61 @@ extends Node2D
 @onready var tap_button: Area2D = $TapButton
 
 var villager_id: StringName
+var house_index := -1
 var player_in_area := false
 var interaction_active := false
+var panel_interaction_active := false
+var consume_upgrade_comment_after_dialogue := false
 var nearby_player: CharacterBody2D
+var home_x := 0.0
+var target_x := 0.0
+var idle_time_remaining := 0.0
+var is_walking := false
+var roaming_enabled := false
+var proximity_paused := false
 
 func _ready() -> void:
+	home_x = position.x
+	target_x = position.x
 	popup.visible = false
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 	tap_button.input_event.connect(_on_tap_button_input_event)
 	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
+	_begin_idle()
+
+func _process(delta: float) -> void:
+	if not roaming_enabled or interaction_active or proximity_paused:
+		return
+	if is_walking:
+		var direction: float = float(sign(target_x - position.x))
+		villager.set_facing_direction(direction)
+		position.x = move_toward(position.x, target_x, walk_speed * delta)
+		if is_equal_approx(position.x, target_x):
+			_begin_idle()
+	else:
+		idle_time_remaining -= delta
+		if idle_time_remaining <= 0.0:
+			_begin_walk()
 
 func set_villager_id(value: StringName) -> void:
 	villager_id = value
 	villager.set_villager_id(value)
 	villager.set_running(false)
 
+func setup(value: StringName, value_house_index: int, tier: int) -> void:
+	set_villager_id(value)
+	house_index = value_house_index
+	roaming_enabled = tier >= 1
+	_begin_idle()
+
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		nearby_player = body as CharacterBody2D
 		player_in_area = true
+		proximity_paused = true
+		is_walking = false
+		villager.set_running(false)
 		_face_villager_toward_player()
 		if not interaction_active:
 			popup.visible = true
@@ -36,8 +79,11 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		nearby_player = null
 		player_in_area = false
+		proximity_paused = false
 		popup_animation.stop()
 		popup.visible = false
+		if not interaction_active:
+			_begin_idle()
 
 func _on_tap_button_input_event(_viewport: Node, event: InputEvent, _shape_index: int) -> void:
 	if _is_confirm_input(event) and player_in_area and not interaction_active and not nearby_player.dialogue_mode:
@@ -52,21 +98,56 @@ func _start_interaction() -> void:
 	popup.visible = false
 	_face_nearby_player()
 	nearby_player.interaction_controls_locked = true
+	if VillagerManager.has_home_upgrade_request(house_index):
+		panel_interaction_active = true
+		home_request_requested.emit(self)
+		return
+	var dialogue_text := "[PLACEHOLDER DIALOGUE]"
+	if VillagerManager.has_upgrade_comment(house_index):
+		dialogue_text = "[PLACEHOLDER HOME UPGRADE COMMENT]"
+		consume_upgrade_comment_after_dialogue = true
 	DialogueManager.start_inline_dialogue([{
 		"name": definition.display_name,
 		"pitch": [0.9, 1.1],
-		"text": "[PLACEHOLDER DIALOGUE]"
+		"text": dialogue_text
 	}])
 
 func _on_dialogue_finished() -> void:
-	if not interaction_active:
+	if not interaction_active or panel_interaction_active:
 		return
+	if consume_upgrade_comment_after_dialogue:
+		VillagerManager.consume_upgrade_comment(house_index)
+		GameManager.save()
+		consume_upgrade_comment_after_dialogue = false
+	_finish_interaction()
+
+func finish_panel_interaction() -> void:
+	panel_interaction_active = false
+	_finish_interaction()
+
+func _finish_interaction() -> void:
 	interaction_active = false
 	if nearby_player != null:
 		nearby_player.interaction_controls_locked = false
 	if player_in_area:
 		popup.visible = true
 		popup_animation.play("OpenPopup")
+	else:
+		_begin_idle()
+
+func _begin_idle() -> void:
+	is_walking = false
+	idle_time_remaining = randf_range(minimum_idle_time, maximum_idle_time)
+	if villager != null:
+		villager.set_running(false)
+
+func _begin_walk() -> void:
+	target_x = randf_range(home_x - roam_radius, home_x + roam_radius)
+	if abs(target_x - position.x) < 12.0:
+		target_x = home_x + roam_radius if position.x < home_x else home_x - roam_radius
+	is_walking = true
+	villager.set_facing_direction(sign(target_x - position.x))
+	villager.set_running(true)
 
 func _face_villager_toward_player() -> void:
 	if nearby_player == null:

@@ -7,6 +7,7 @@ extends PanelContainer
 @onready var check_box_3: CheckBox = $MarginContainer/VBoxContainer/CheckBox3
 @onready var check_box_4: CheckBox = $MarginContainer/VBoxContainer/CheckBox4
 @onready var guaranteed_villager: CheckButton = $MarginContainer/VBoxContainer/GuaranteedVillager
+@onready var dye_requests: CheckButton = $MarginContainer/VBoxContainer/DyeRequests
 @onready var world_notes_toggle: CheckButton = $MarginContainer/VBoxContainer/WorldNotesToggle
 @onready var button: Button = $MarginContainer/VBoxContainer/Button
 @onready var level_count: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/LevelCount
@@ -20,6 +21,7 @@ func _ready() -> void:
 	check_box_3.toggled.connect(_pass_toggle_infinite_resources)
 	check_box_4.toggled.connect(_pass_toggle_infinite_silkworms)
 	guaranteed_villager.toggled.connect(_pass_toggle_guaranteed_villager)
+	dye_requests.toggled.connect(_pass_toggle_dye_requests)
 	world_notes_toggle.toggled.connect(Debug.set_world_notes_visible)
 	button.pressed.connect(show_dialogue_box)
 
@@ -28,6 +30,7 @@ func _ready() -> void:
 	check_box_3.button_pressed = Debug.infinite_resources
 	check_box_4.button_pressed = Debug.infinite_silkworms
 	guaranteed_villager.button_pressed = Debug.guarantee_tadd_villager
+	dye_requests.button_pressed = Debug.unlock_villager_dye_requests
 	world_notes_toggle.button_pressed = Debug.world_notes_visible
 
 	level_count.value = Debug.tiles_per_leg
@@ -52,6 +55,9 @@ func _pass_toggle_infinite_silkworms(toggled_on: bool):
 
 func _pass_toggle_guaranteed_villager(toggled_on: bool):
 	Debug.guarantee_tadd_villager = toggled_on
+
+func _pass_toggle_dye_requests(toggled_on: bool) -> void:
+	Debug.unlock_villager_dye_requests = toggled_on
 
 func show_dialogue_box():
 	dialogue_input.get_node("Text").text = "Are you sure you want to reset your progress?"

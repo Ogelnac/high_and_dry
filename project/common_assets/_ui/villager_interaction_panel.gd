@@ -18,14 +18,22 @@ func _ready() -> void:
 
 func begin_interaction(definition: VillagerDefinition, can_pay: bool) -> void:
 	_definition = definition
-	request_label.text = _format_request(definition.invite_cost)
+	request_label.text = _format_request(definition.invite_cost, "Move-in request", &"resources")
+	payment_button.text = "Give Resources"
 	payment_button.disabled = not can_pay
 	_start_villager_dialogue("[PLACEHOLDER DIALOGUE]")
 
-func mark_paid() -> void:
+func begin_home_request(definition: VillagerDefinition, cost: Dictionary[String, int], can_pay: bool) -> void:
+	_definition = definition
+	request_label.text = _format_request(cost, "Home request", &"dye")
+	payment_button.text = "Give Dye"
+	payment_button.disabled = not can_pay
+	_start_villager_dialogue("[PLACEHOLDER HOME REQUEST]")
+
+func mark_paid(completion_text: String = "Move-in request complete", dialogue_text: String = "[PLACEHOLDER MOVE-IN RESPONSE]") -> void:
 	payment_button.disabled = true
-	request_label.text = "[center]Move-in request complete"
-	_start_villager_dialogue("[PLACEHOLDER MOVE-IN RESPONSE]")
+	request_label.text = "[center]" + completion_text
+	_start_villager_dialogue(dialogue_text)
 
 func close() -> void:
 	hide()
@@ -64,15 +72,18 @@ func _on_villager_dialogue_finished() -> void:
 	_dialogue_completion_pending = false
 	_open()
 
-func _format_request(cost: Dictionary[String, int]) -> String:
+func _format_request(cost: Dictionary[String, int], heading: String, cost_type: StringName) -> String:
 	var parts: Array[String] = []
 	for colour_name in GameManager.COLOR_ORDER:
 		var amount := int(cost.get(colour_name, 0))
 		if amount <= 0:
 			continue
-		var region: Vector4i = GameManager.INGREDIENT_REGIONS[colour_name]
-		parts.append("%d[img width=25 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img]" % [amount, region.x, region.y, region.z, region.w])
-	return "[center]Move-in request\n" + "   ".join(parts)
+		if cost_type == &"dye":
+			parts.append("[color=#%s]%d %s[/color]" % [GameManager.COLOR_HEX[colour_name], amount, colour_name.to_lower()])
+		else:
+			var region: Vector4i = GameManager.INGREDIENT_REGIONS[colour_name]
+			parts.append("%d[img width=25 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img]" % [amount, region.x, region.y, region.z, region.w])
+	return "[center]" + heading + "\n" + "   ".join(parts)
 
 func _on_payment_pressed() -> void:
 	payment_requested.emit()

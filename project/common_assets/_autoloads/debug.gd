@@ -7,6 +7,7 @@ var infinite_silkworms: bool = false
 var infinite_health: bool = false
 var disable_rising_death: bool = false
 var guarantee_tadd_villager: bool = true
+var unlock_villager_dye_requests: bool = true
 var world_notes_visible: bool = false
 var world_note_input_captured: bool = false
 var active_world_note: Node = null
