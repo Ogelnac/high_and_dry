@@ -116,15 +116,22 @@ func _start_interaction() -> void:
 		panel_interaction_active = true
 		home_request_requested.emit(self)
 		return
-	var dialogue_text := "[PLACEHOLDER DIALOGUE]"
+	var dialogue_context := &"normal"
+	var fallback_text := "[PLACEHOLDER DIALOGUE]"
 	if VillagerManager.has_upgrade_comment(house_index):
-		dialogue_text = "[PLACEHOLDER HOME UPGRADE COMMENT]"
+		dialogue_context = &"home_upgrade_comment"
+		fallback_text = "[PLACEHOLDER HOME UPGRADE COMMENT]"
 		consume_upgrade_comment_after_dialogue = true
-	DialogueManager.start_inline_dialogue([{
-		"name": definition.display_name,
-		"pitch": [0.9, 1.1],
-		"text": dialogue_text
-	}])
+	var dialogue_lines: Array[Dictionary] = VillagerManager.get_villager_dialogue(villager_id, dialogue_context, VillagerManager.get_house_tier(house_index))
+	if dialogue_lines.is_empty():
+		dialogue_lines.append({
+			"name": definition.display_name,
+			"pitch": [0.9, 1.1],
+			"text": fallback_text
+		})
+	if dialogue_context == &"normal":
+		GameManager.save()
+	DialogueManager.start_inline_dialogue(dialogue_lines)
 
 func _on_dialogue_finished() -> void:
 	if not interaction_active or panel_interaction_active:

@@ -59,10 +59,9 @@ size = Vector2(40, 40)
 script = ExtResource("1_script")
 
 [node name="Villager" parent="." unique_id=72453668 instance=ExtResource("2_villager")]
-position = Vector2(0, 3)
 
 [node name="TapButton" type="Area2D" parent="." unique_id=1342917428]
-position = Vector2(0, -10)
+position = Vector2(0, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton" unique_id=986811211]
 shape = SubResource("RectangleShape_tap")

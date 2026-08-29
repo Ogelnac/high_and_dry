@@ -200,13 +200,13 @@ position = Vector2(-39, -39)
 [node name="WaitingVillager" parent="." unique_id=766081394 instance=ExtResource("17_visitor")]
 process_mode = 4
 visible = false
-position = Vector2(80, -31)
+position = Vector2(80, -29)
 
 [node name="VisitorWalkStart" type="Marker2D" parent="." unique_id=663844545]
-position = Vector2(-95, -31)
+position = Vector2(-95, -29)
 
 [node name="VisitorWalkEnd" type="Marker2D" parent="." unique_id=208461625]
-position = Vector2(240, -31)
+position = Vector2(240, -29)
 
 [node name="Boon1" type="Node2D" parent="." unique_id=77770766]
 position = Vector2(48, -48)

@@ -1,0 +1,123 @@
+[
+	{
+		"id": "normal_all_01",
+		"contexts": ["normal"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL ALL 01]"}
+		]
+	},
+	{
+		"id": "normal_all_02",
+		"contexts": ["normal"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL ALL 02]"}
+		]
+	},
+	{
+		"id": "normal_warm_01",
+		"contexts": ["normal"],
+		"personalities": ["Friendly", "Shy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL WARM 01]"}
+		]
+	},
+	{
+		"id": "normal_warm_02",
+		"contexts": ["normal"],
+		"personalities": ["Friendly", "Shy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL WARM 02]"}
+		]
+	},
+	{
+		"id": "normal_sharp_01",
+		"contexts": ["normal"],
+		"personalities": ["Clever", "Posh", "Grumpy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL SHARP 01]"}
+		]
+	},
+	{
+		"id": "normal_sharp_02",
+		"contexts": ["normal"],
+		"personalities": ["Clever", "Posh", "Grumpy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": true,
+		"lines": [
+			{"text": "[PLACEHOLDER NORMAL SHARP 02]"}
+		]
+	},
+	{
+		"id": "home_request_all_01",
+		"contexts": ["home_request"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": false,
+		"lines": [
+			{"text": "[PLACEHOLDER HOME REQUEST]"}
+		]
+	},
+	{
+		"id": "home_request_accepted_all_01",
+		"contexts": ["home_request_accepted"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": false,
+		"lines": [
+			{"text": "[PLACEHOLDER HOME REQUEST ACCEPTED]"}
+		]
+	},
+	{
+		"id": "move_in_response_all_01",
+		"contexts": ["move_in_response"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 0,
+		"max_home_tier": 99,
+		"repeatable": false,
+		"lines": [
+			{"text": "[PLACEHOLDER MOVE-IN RESPONSE]"}
+		]
+	},
+	{
+		"id": "home_upgrade_comment_all_01",
+		"contexts": ["home_upgrade_comment"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 1,
+		"max_home_tier": 99,
+		"repeatable": false,
+		"lines": [
+			{"text": "[PLACEHOLDER HOME UPGRADE COMMENT]"}
+		]
+	},
+	{
+		"id": "home_complete_all_01",
+		"contexts": ["home_complete"],
+		"personalities": ["Friendly", "Shy", "Clever", "Posh", "Grumpy", "Dreamy"],
+		"min_home_tier": 3,
+		"max_home_tier": 99,
+		"repeatable": false,
+		"lines": [
+			{"text": "[PLACEHOLDER HOME COMPLETE]"}
+		]
+	}
+]

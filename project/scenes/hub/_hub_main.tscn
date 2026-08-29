@@ -1626,13 +1626,13 @@ house_index = 1
 roam_radius = 20.0
 
 [node name="House3" type="Marker2D" parent="VillagerLocations" unique_id=538719900]
-position = Vector2(240, 146)
+position = Vector2(240, 147)
 script = ExtResource("29_location")
 house_index = 2
 roam_radius = 20.0
 
 [node name="House4" type="Marker2D" parent="VillagerLocations" unique_id=1998441982]
-position = Vector2(176, 146)
+position = Vector2(176, 147)
 script = ExtResource("29_location")
 house_index = 3
 roam_radius = 20.0
@@ -1644,7 +1644,7 @@ house_index = 4
 roam_radius = 24.0
 
 [node name="Lamppost" type="Marker2D" parent="VillagerLocations" unique_id=950477765]
-position = Vector2(832, -207)
+position = Vector2(832, -205)
 script = ExtResource("29_location")
 location_type = "lamppost"
 
@@ -1654,22 +1654,22 @@ script = ExtResource("29_location")
 location_type = "ramen"
 
 [node name="UpperPiers" type="Marker2D" parent="VillagerLocations" unique_id=1904176265]
-position = Vector2(832, -32)
+position = Vector2(832, -29)
 script = ExtResource("29_location")
 location_type = "upper_piers"
 
 [node name="WeaversExterior" type="Marker2D" parent="VillagerLocations" unique_id=1695307288]
-position = Vector2(207, -32)
+position = Vector2(207, -29)
 script = ExtResource("29_location")
 location_type = "weavers"
 
 [node name="PestosExterior" type="Marker2D" parent="VillagerLocations" unique_id=1794807627]
-position = Vector2(0, -207)
+position = Vector2(0, -205)
 script = ExtResource("29_location")
 location_type = "pestos"
 
 [node name="Title" type="Marker2D" parent="VillagerLocations" unique_id=212936329]
-position = Vector2(207, -207)
+position = Vector2(207, -205)
 script = ExtResource("29_location")
 location_type = "title"
 
@@ -1689,12 +1689,12 @@ position = Vector2(448, -29)
 [node name="House3Resident" parent="Residents" unique_id=1215885714 instance=ExtResource("28_resident")]
 process_mode = 4
 visible = false
-position = Vector2(240, 146)
+position = Vector2(240, 147)
 
 [node name="House4Resident" parent="Residents" unique_id=290249724 instance=ExtResource("28_resident")]
 process_mode = 4
 visible = false
-position = Vector2(176, 146)
+position = Vector2(176, 147)
 
 [node name="House5Resident" parent="Residents" unique_id=1011878540 instance=ExtResource("28_resident")]
 process_mode = 4

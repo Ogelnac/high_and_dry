@@ -110,7 +110,7 @@ func _on_resident_home_request_requested(resident: Node2D) -> void:
 		active_resident = null
 		return
 	var cost: Dictionary[String, int] = VillagerManager.get_home_upgrade_cost(active_resident.house_index)
-	resident_box.begin_home_request(definition, cost, VillagerManager.can_pay_home_upgrade(active_resident.house_index))
+	resident_box.begin_home_request(definition, cost, VillagerManager.can_pay_home_upgrade(active_resident.house_index), VillagerManager.get_house_tier(active_resident.house_index))
 
 func _on_resident_payment_requested() -> void:
 	if active_resident == null:
@@ -118,7 +118,7 @@ func _on_resident_payment_requested() -> void:
 	if VillagerManager.pay_home_upgrade(active_resident.house_index):
 		GameManager.save()
 		GameManager.update_bottles()
-		resident_box.mark_paid("Home request accepted", "[PLACEHOLDER HOME REQUEST ACCEPTED]")
+		resident_box.mark_paid("Home request accepted", &"home_request_accepted", "[PLACEHOLDER HOME REQUEST ACCEPTED]")
 
 func _on_resident_panel_closed() -> void:
 	if active_resident == null:

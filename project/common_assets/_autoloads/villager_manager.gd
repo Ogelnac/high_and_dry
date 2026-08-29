@@ -3,6 +3,7 @@ extends Node
 const STARTING_HOUSE_COUNT := 5
 const RECENT_DIALOGUE_LIMIT := 3
 const HUB_VISITOR_CHANCE := 0.25
+const DIALOGUE_PATH := "res://project/common_assets/_data/dialogue/villagers.json"
 const DEFINITIONS: Array[VillagerDefinition] = [
 	preload("res://project/scenes/hub/villagers/data/salvador.tres"),
 	preload("res://project/scenes/hub/villagers/data/cotton.tres"),
@@ -25,11 +26,13 @@ var waiting_villager_id: StringName
 var pending_move_in_villager_id: StringName
 var pending_move_in_house_index := -1
 var recent_dialogue_ids: Array[String] = []
+var dialogue_entries: Array[Dictionary] = []
 var initial_debug_visitor_seeded := false
 
 func _ready() -> void:
 	for definition in DEFINITIONS:
 		definitions_by_id[definition.villager_id] = definition
+	_load_dialogue_entries()
 	reset_state()
 
 func reset_state() -> void:
@@ -94,6 +97,103 @@ func remember_dialogue(dialogue_id: String) -> void:
 	recent_dialogue_ids.append(dialogue_id)
 	while recent_dialogue_ids.size() > RECENT_DIALOGUE_LIMIT:
 		recent_dialogue_ids.pop_front()
+
+func get_house_tier(house_index: int) -> int:
+	if house_index < 0 or house_index >= houses.size():
+		return 0
+	return int(houses[house_index].get("tier", 0))
+
+func get_villager_dialogue(villager_id: StringName, context: StringName, home_tier: int = 0, remember: bool = true) -> Array[Dictionary]:
+	var selected: Dictionary = select_villager_dialogue_entry(villager_id, context, home_tier, remember)
+	var lines: Array[Dictionary] = []
+	if selected.is_empty():
+		return lines
+	var definition := get_definition(villager_id)
+	if definition == null:
+		return lines
+	var raw_lines: Variant = selected.get("lines", [])
+	if not raw_lines is Array:
+		return lines
+	for raw_line: Variant in raw_lines:
+		if not raw_line is Dictionary:
+			continue
+		var line: Dictionary = raw_line.duplicate(true)
+		if str(line.get("name", "")).is_empty():
+			line["name"] = definition.display_name
+		if not line.has("pitch"):
+			line["pitch"] = [0.9, 1.1]
+		lines.append(line)
+	return lines
+
+func select_villager_dialogue_entry(villager_id: StringName, context: StringName, home_tier: int = 0, remember: bool = true) -> Dictionary:
+	var definition := get_definition(villager_id)
+	if definition == null:
+		return {}
+	var eligible: Array[Dictionary] = []
+	for entry: Dictionary in dialogue_entries:
+		var dialogue_id := str(entry.get("id", ""))
+		if dialogue_id.is_empty():
+			continue
+		if not _tag_list_matches(entry.get("contexts", []), str(context)):
+			continue
+		if not _tag_list_matches(entry.get("personalities", []), str(definition.personality)):
+			continue
+		if home_tier < int(entry.get("min_home_tier", 0)):
+			continue
+		if home_tier > int(entry.get("max_home_tier", 99)):
+			continue
+		eligible.append(entry)
+	if eligible.is_empty():
+		return {}
+	var selected: Dictionary = _pick_least_recent_dialogue(eligible)
+	if remember and bool(selected.get("repeatable", true)):
+		remember_dialogue(str(selected.get("id", "")))
+	return selected.duplicate(true)
+
+func _load_dialogue_entries() -> void:
+	dialogue_entries.clear()
+	if not FileAccess.file_exists(DIALOGUE_PATH):
+		return
+	var file := FileAccess.open(DIALOGUE_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if not parsed is Array:
+		return
+	for entry: Variant in parsed:
+		if entry is Dictionary:
+			dialogue_entries.append(entry)
+
+func _tag_list_matches(value: Variant, target: String) -> bool:
+	if not value is Array:
+		return false
+	if value.is_empty():
+		return true
+	for tag: Variant in value:
+		if str(tag).to_lower() == target.to_lower() or str(tag) == "*":
+			return true
+	return false
+
+func _pick_least_recent_dialogue(entries: Array[Dictionary]) -> Dictionary:
+	var unseen: Array[Dictionary] = []
+	for entry: Dictionary in entries:
+		if not recent_dialogue_ids.has(str(entry.get("id", ""))):
+			unseen.append(entry)
+	if not unseen.is_empty():
+		return unseen[randi_range(0, unseen.size() - 1)]
+	var oldest_index := RECENT_DIALOGUE_LIMIT + 1
+	var oldest: Array[Dictionary] = []
+	for entry: Dictionary in entries:
+		var recent_index := recent_dialogue_ids.find(str(entry.get("id", "")))
+		if recent_index < oldest_index:
+			oldest_index = recent_index
+			oldest.clear()
+			oldest.append(entry)
+		elif recent_index == oldest_index:
+			oldest.append(entry)
+	if oldest.is_empty():
+		return entries[randi_range(0, entries.size() - 1)]
+	return oldest[randi_range(0, oldest.size() - 1)]
 
 func roll_hub_visitor(guaranteed: bool = false) -> StringName:
 	if not waiting_villager_id.is_empty():
