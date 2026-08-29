@@ -20,8 +20,10 @@ var player: Node2D = null
 
 @onready var ui: Control = $"../CanvasLayer/UI"
 @onready var parallax_controller: Node = $"../Environment"
+@onready var audio_listener: AudioListener2D = $AudioListener2D
 
 func _ready() -> void:
+	audio_listener.make_current()
 	pestos.body_entered.connect(_on_pestos_body_entered)
 	weavers.body_entered.connect(_on_weavers_body_entered)
 
@@ -96,6 +98,8 @@ func _physics_process(_delta: float) -> void:
 
 	if is_in_weavers and player:
 		global_position.x = clamp(player.global_position.x, weavers_min_x, weavers_max_x)
+
+	audio_listener.global_position = get_screen_center_position()
 
 func _reset_parallax() -> void:
 	parallax_controller.reset_reference()

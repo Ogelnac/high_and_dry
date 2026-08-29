@@ -82,6 +82,8 @@ libraries/ = SubResource("AnimationLibrary_npcs")
 stream = ExtResource("4_step")
 volume_db = -10.0
 pitch_scale = 1.86
+max_distance = 300.0
+attenuation = 2.0
 panning_strength = 0.5
 
 [node name="StepTimer" type="Timer" parent="."]

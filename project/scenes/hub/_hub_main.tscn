@@ -1707,6 +1707,8 @@ zoom = Vector2(2.61, 2.61)
 position_smoothing_enabled = true
 script = ExtResource("4_etw35")
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
+
 [node name="CameraZones" type="Node2D" parent="." unique_id=1564145090]
 
 [node name="Pestos" type="Area2D" parent="CameraZones" unique_id=1724772761]

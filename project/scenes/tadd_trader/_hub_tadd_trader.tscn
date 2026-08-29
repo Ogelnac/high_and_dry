@@ -203,7 +203,7 @@ visible = false
 position = Vector2(80, -31)
 
 [node name="VisitorWalkStart" type="Marker2D" parent="." unique_id=663844545]
-position = Vector2(-80, -31)
+position = Vector2(-95, -31)
 
 [node name="VisitorWalkEnd" type="Marker2D" parent="." unique_id=208461625]
 position = Vector2(240, -31)
