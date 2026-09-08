@@ -59,7 +59,11 @@ func configure_walk_area(minimum_x: float, maximum_x: float, y_position: float) 
 	target_x = position.x
 
 func resume_wandering() -> void:
+	call_deferred("_resume_wandering")
+
+func _resume_wandering() -> void:
 	interaction_paused = false
+	tap_button.input_pickable = true
 	_begin_idle()
 
 func _begin_idle() -> void:
@@ -93,6 +97,7 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 func _on_tap_button_input_event(_viewport: Node, event: InputEvent, _shape_index: int) -> void:
 	if _is_confirm_input(event) and player_in_area and not interaction_paused:
 		interaction_paused = true
+		tap_button.input_pickable = false
 		is_walking = false
 		villager.set_running(false)
 		_face_nearby_player()

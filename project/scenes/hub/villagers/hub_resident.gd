@@ -108,6 +108,7 @@ func _start_interaction() -> void:
 	if definition == null or nearby_player == null:
 		return
 	interaction_active = true
+	tap_button.input_pickable = false
 	popup_animation.stop()
 	popup.visible = false
 	_face_nearby_player()
@@ -140,14 +141,15 @@ func _on_dialogue_finished() -> void:
 		VillagerManager.consume_upgrade_comment(house_index)
 		GameManager.save()
 		consume_upgrade_comment_after_dialogue = false
-	_finish_interaction()
+	call_deferred("_finish_interaction")
 
 func finish_panel_interaction() -> void:
 	panel_interaction_active = false
-	_finish_interaction()
+	call_deferred("_finish_interaction")
 
 func _finish_interaction() -> void:
 	interaction_active = false
+	tap_button.input_pickable = true
 	if nearby_player != null:
 		nearby_player.interaction_controls_locked = false
 	if player_in_area:

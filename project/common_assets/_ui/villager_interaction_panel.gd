@@ -10,6 +10,7 @@ signal closed
 
 var _definition: VillagerDefinition
 var _dialogue_completion_pending := false
+var _close_after_dialogue := false
 var _home_tier := 0
 
 func _ready() -> void:
@@ -19,6 +20,7 @@ func _ready() -> void:
 
 func begin_interaction(definition: VillagerDefinition, can_pay: bool) -> void:
 	_definition = definition
+	_close_after_dialogue = false
 	_home_tier = 0
 	request_label.text = _format_request(definition.invite_cost, "Move-in request", &"resources")
 	payment_button.text = "Give Resources"
@@ -27,6 +29,7 @@ func begin_interaction(definition: VillagerDefinition, can_pay: bool) -> void:
 
 func begin_home_request(definition: VillagerDefinition, cost: Dictionary[String, int], can_pay: bool, home_tier: int = 0) -> void:
 	_definition = definition
+	_close_after_dialogue = false
 	_home_tier = home_tier
 	request_label.text = _format_request(cost, "Home request", &"dye")
 	payment_button.text = "Give Dye"
@@ -36,6 +39,7 @@ func begin_home_request(definition: VillagerDefinition, cost: Dictionary[String,
 func mark_paid(completion_text: String = "Move-in request complete", dialogue_context: StringName = &"move_in_response", fallback_text: String = "[PLACEHOLDER MOVE-IN RESPONSE]") -> void:
 	payment_button.disabled = true
 	request_label.text = "[center]" + completion_text
+	_close_after_dialogue = true
 	_start_villager_dialogue(dialogue_context, fallback_text)
 
 func close() -> void:
@@ -78,6 +82,10 @@ func _on_villager_dialogue_finished() -> void:
 	if not _dialogue_completion_pending:
 		return
 	_dialogue_completion_pending = false
+	if _close_after_dialogue:
+		_close_after_dialogue = false
+		close()
+		return
 	_open()
 
 func _format_request(cost: Dictionary[String, int], heading: String, cost_type: StringName) -> String:
