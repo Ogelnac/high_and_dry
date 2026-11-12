@@ -1,6 +1,6 @@
 extends Node
 
-const STARTING_HOUSE_COUNT := 5
+const STARTING_HOUSE_COUNT := 8
 const RECENT_DIALOGUE_LIMIT := 3
 const HUB_VISITOR_CHANCE := 0.25
 const DIALOGUE_PATH := "res://project/common_assets/_data/dialogue/villagers.json"

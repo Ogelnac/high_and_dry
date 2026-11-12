@@ -1,9 +1,9 @@
 extends Camera2D
 
-@export var pestos_min_y: float = -396.0
-@export var pestos_max_y: float = 70.0
-@export var weavers_min_x: float = 190.0
-@export var weavers_max_x: float = 610.0
+@export var pestos_min_x: float = -776.0
+@export var pestos_max_x: float = -376.0
+@export var weavers_min_x: float = -800.0
+@export var weavers_max_x: float = -417.0
 
 var is_in_pestos: bool = false
 var is_in_weavers: bool = false
@@ -94,7 +94,8 @@ func _physics_process(_delta: float) -> void:
 		global_position.y = player.global_position.y - 120.0
 
 	if is_in_pestos and player:
-		global_position.y = clamp(player.global_position.y - 160, pestos_min_y, pestos_max_y)
+		global_position.x = clamp(player.global_position.x, pestos_min_x, pestos_max_x)
+		global_position.y = pestos.global_position.y
 
 	if is_in_weavers and player:
 		global_position.x = clamp(player.global_position.x, weavers_min_x, weavers_max_x)

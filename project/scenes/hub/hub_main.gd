@@ -9,7 +9,10 @@ extends Node2D
 	$Residents/House2Resident,
 	$Residents/House3Resident,
 	$Residents/House4Resident,
-	$Residents/House5Resident
+	$Residents/House5Resident,
+	$Residents/House6Resident,
+	$Residents/House7Resident,
+	$Residents/House8Resident
 ]
 
 var active_resident: HubResident
