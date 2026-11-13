@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://chg3r121dysqe"]
+
+[ext_resource type="Shader" uid="uid://bq52yhp8oufx5" path="res://project/common_assets/_shaders/inverted_text_dots.gdshader" id="1_dots"]
+
+[resource]
+shader = ExtResource("1_dots")
+shader_parameter/dot_spacing = 2.0
+shader_parameter/dot_radius = 2.0000000298024
+shader_parameter/dot_softness = 0.40000000596046
+shader_parameter/msdf_pixel_range = 16.0

@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cl2aayhlflmgs"]
+
+[ext_resource type="Shader" uid="uid://m0a7vkd7x3g8" path="res://project/common_assets/_shaders/cmyk_border.gdshader" id="1_border"]
+
+[resource]
+shader = ExtResource("1_border")
+shader_parameter/dot_spacing = 2.0000000260771
+shader_parameter/dot_radius = 2.0000000223518
+shader_parameter/registration_offset = 2.0
+shader_parameter/dot_softness = 0.3999999910592

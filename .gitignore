@@ -9,6 +9,7 @@ export_presets.cfg
 
 # Godot-specific ignores
 *.import
+!project/common_assets/_fonts/TsunagiGothic.ttf.import
 .import/
 export.cfg
 export_credentials.cfg

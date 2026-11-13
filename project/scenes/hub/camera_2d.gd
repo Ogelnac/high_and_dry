@@ -1,5 +1,8 @@
 extends Camera2D
 
+@export var debug_free_pan: bool = true
+@export var debug_pan_speed: float = 300.0
+
 @export var pestos_min_x: float = -776.0
 @export var pestos_max_x: float = -376.0
 @export var weavers_min_x: float = -800.0
@@ -24,6 +27,9 @@ var player: Node2D = null
 
 func _ready() -> void:
 	audio_listener.make_current()
+	if debug_free_pan:
+		return
+
 	pestos.body_entered.connect(_on_pestos_body_entered)
 	weavers.body_entered.connect(_on_weavers_body_entered)
 
@@ -89,7 +95,16 @@ func _on_weavers_body_entered(body: Node2D) -> void:
 		player = body
 		_reset_parallax()
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if debug_free_pan:
+		var direction := Vector2(
+			float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
+			float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W))
+		)
+		global_position += direction.normalized() * debug_pan_speed * delta
+		audio_listener.global_position = get_screen_center_position()
+		return
+
 	if player:
 		global_position.y = player.global_position.y - 120.0
 
