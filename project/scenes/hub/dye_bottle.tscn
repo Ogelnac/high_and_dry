@@ -1,39 +1,29 @@
 [gd_scene load_steps=31 format=3 uid="uid://dcbqhtv80rquh"]
 
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_lknwk"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="1_lknwk"]
 [ext_resource type="Script" uid="uid://badhbpujbe3dj" path="res://project/scenes/hub/bottle_fill.gd" id="2_6v68p"]
-[ext_resource type="Shader" uid="uid://dgwv0sy64jj4j" path="res://project/common_assets/_shaders/dye_fill.gdshader" id="3_fsv54"]
+[ext_resource type="Shader" uid="uid://dgwv0sy64jj4j" path="res://project/common_assets/_shaders/cmyk_dye_fill.gdshader" id="3_fsv54"]
 [ext_resource type="Texture2D" uid="uid://08uhq76e0s0t" path="res://project/scenes/hub/wave_mask.png" id="4_fh0p5"]
 [ext_resource type="Texture2D" uid="uid://dcctse7b7qwbn" path="res://project/scenes/hub/bottles_masks.png" id="5_5558v"]
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="6_8fpsj"]
 [ext_resource type="Texture2D" uid="uid://fyel6mixdgos" path="res://project/scenes/hub/bottles.png" id="7_ssxh2"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="8_6jl7j"]
-[ext_resource type="Shader" uid="uid://cuvq7gnith2sg" path="res://project/scenes/hub/thread.gdshader" id="9_6v68p"]
+[ext_resource type="Shader" uid="uid://cuvq7gnith2sg" path="res://project/scenes/hub/cmyk_thread.gdshader" id="9_6v68p"]
 [ext_resource type="Texture2D" uid="uid://byslko3nn77gj" path="res://project/scenes/hub/silkworm.png" id="9_vwh3j"]
 [ext_resource type="Texture2D" uid="uid://ctp5fcayfn62k" path="res://project/scenes/hub/fabric.png" id="10_fsv54"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
 shader = ExtResource("3_fsv54")
 shader_parameter/wave_mask = ExtResource("4_fh0p5")
 shader_parameter/fill_colour = Color(0.67451, 0.196078, 0.196078, 1)
-shader_parameter/fill_height = 0.10000000475
-shader_parameter/max_offset = 0.14
-shader_parameter/min_offset = 0.84
-shader_parameter/wave_freq = 4.0
-shader_parameter/wave_band = 0.05
-shader_parameter/wave_speed = 0.4
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b1qrp"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 0.8
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_nxt8p"]
 length = 0.001
@@ -76,8 +66,6 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gngh3"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_f6a44"]
 resource_name = "Idle"
@@ -178,20 +166,14 @@ shader_parameter/thread2_slider = 0.0
 shader_parameter/thread3_slider = 0.0
 shader_parameter/region_rect = Vector4(128, 0, 64, 128)
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fh0p5"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8i1rr"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_come4"]
 size = Vector2(31, 29)
@@ -202,8 +184,6 @@ size = Vector2(28, 31)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0n3wm"]
 shader = ExtResource("1_lknwk")
 shader_parameter/black_dot_transition = 1.1000000285
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [node name="DyeBottle" type="Node2D"]
 material = SubResource("ShaderMaterial_jq2sk")

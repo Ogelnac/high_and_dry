@@ -1,8 +1,10 @@
 shader_type canvas_item;
 
-uniform float dot_spacing : hint_range(0.25, 24.0, 0.05) = 2.0;
-uniform float dot_radius : hint_range(0.0, 10.0, 0.05) = 0.55;
-uniform float dot_softness : hint_range(0.0, 0.4, 0.01) = 0.15;
+#include "res://project/common_assets/_shaders/cmyk_screen.gdshaderinc"
+
+uniform float dot_spacing : hint_range(0.25, 24.0, 0.05) = 1.5;
+uniform float dot_radius : hint_range(0.0, 10.0, 0.05) = 2.0;
+uniform float dot_softness : hint_range(0.0, 0.6, 0.01) = 0.5;
 uniform float msdf_pixel_range = 16.0;
 
 varying vec2 local_position;
@@ -21,14 +23,13 @@ void fragment() {
 
 	float spacing = max(dot_spacing, 0.25);
 	float radius = clamp(dot_radius, 0.0, spacing * 0.5);
-	vec2 grid = vec2(local_position.x + local_position.y, local_position.y - local_position.x) * 0.70710678;
-	vec2 cell = fract(grid / spacing + 0.5) - 0.5;
+	vec2 grid = plate_grid(local_position, spacing, BLACK_GRID);
+	vec2 nearest = floor(grid + 0.5);
+	vec2 local_delta = plate_center(nearest, spacing, BLACK_GRID) - local_position;
 	float pixel_width = max(length(dFdx(local_position)), length(dFdy(local_position)));
-	float aa = clamp(max(pixel_width * 0.5, spacing * dot_softness), 0.000001, spacing * 0.5);
+	float aa = clamp(max(pixel_width * 0.5, spacing * dot_softness), 0.000001, spacing * 0.6);
 	float distance_inside = glyph * screen_range * pixel_width;
 	float resolved = 1.0 - smoothstep(0.45, 1.15, pixel_width / spacing);
-	vec2 grid_delta = -cell * spacing;
-	vec2 local_delta = vec2(grid_delta.x - grid_delta.y, grid_delta.x + grid_delta.y) * 0.70710678;
 	vec2 local_dx = dFdx(local_position);
 	vec2 local_dy = dFdy(local_position);
 	float determinant = local_dx.x * local_dy.y - local_dx.y * local_dy.x;
@@ -43,7 +44,7 @@ void fragment() {
 	vec3 center = texture(TEXTURE, sample_uv).rgb;
 	float center_distance = (max(min(center.r, center.g), min(max(center.r, center.g), center.b)) - 0.5) * screen_range * pixel_width;
 	float cutout_radius = radius * (1.0 - smoothstep(0.0, spacing * 0.5, center_distance));
-	float outside_cutout = length(cell) * spacing - cutout_radius;
+	float outside_cutout = length(local_delta) - cutout_radius;
 	outside_cutout = mix(aa, outside_cutout, smoothstep(0.0, aa, cutout_radius));
 	float eroded = min(distance_inside + radius * 0.55, outside_cutout);
 	float dotted_alpha = smoothstep(-aa, aa, eroded);

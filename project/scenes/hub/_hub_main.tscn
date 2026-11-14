@@ -8,19 +8,19 @@
 [ext_resource type="Material" uid="uid://cl2aayhlflmgs" path="res://project/common_assets/_shaders/materials/cmyk_border.tres" id="3_nxt8p"]
 [ext_resource type="Script" uid="uid://c8o4tstn22f4m" path="res://project/common_assets/effects/custom_parallax.gd" id="3_objk6"]
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://project/common_assets/_shaders/noise_and_chromashift.gdshader" id="4_7lvc3"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="4_bb06l"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="4_bb06l"]
 [ext_resource type="Script" uid="uid://bhiugfm5vkncc" path="res://project/scenes/hub/camera_2d.gd" id="4_etw35"]
-[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://project/common_assets/_shaders/materials/tilemap_halftone.tres" id="4_o67ql"]
-[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/bg_tilemap_halftone.tres" id="4_qkgjc"]
+[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://project/common_assets/_shaders/materials/cmyk_tilemap.tres" id="4_o67ql"]
+[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/cmyk_bg_tilemap.tres" id="4_qkgjc"]
 [ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/overlay.png" id="5_3ijpa"]
 [ext_resource type="PackedScene" uid="uid://djlds3w7gvaqy" path="res://project/scenes/hub/pesto.tscn" id="5_j3pii"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://project/scenes/hub/main.tres" id="5_rhfmc"]
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="5_yxj2o"]
-[ext_resource type="Material" uid="uid://5s87hg73cq4d" path="res://project/common_assets/_shaders/materials/cmyk_text_border.tres" id="6_coxxa"]
+[ext_resource type="Material" uid="uid://5s87hg73cq4d" path="res://project/common_assets/_shaders/materials/cmyk_text.tres" id="6_coxxa"]
 [ext_resource type="Texture2D" uid="uid://plmha61w7hhx" path="res://project/common_assets/_textures/title.png" id="7_hdm0b"]
 [ext_resource type="Texture2D" uid="uid://ku1bhlchciru" path="res://project/common_assets/_textures/magazine_hint.png" id="7_nxt8p"]
 [ext_resource type="PackedScene" path="res://project/scenes/hub/world_note.tscn" id="9_gkq2y"]
-[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/mbg_tilemap_halftone.tres" id="9_xnmlj"]
+[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/cmyk_mbg_tilemap.tres" id="9_xnmlj"]
 [ext_resource type="PackedScene" uid="uid://20rpo03igtnd" path="res://project/scenes/tadd_trader/boat.tscn" id="10_1wsg8"]
 [ext_resource type="Texture2D" uid="uid://6eksl7ib1rnp" path="res://project/common_assets/_textures/light_texture.png" id="15_s8asq"]
 [ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://project/scenes/hub/resource_manager.gd" id="20_a3i5d"]
@@ -34,7 +34,8 @@
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://project/scenes/hub/doorway.tscn" id="27_3nqyi"]
 [ext_resource type="PackedScene" path="res://project/scenes/hub/villagers/hub_resident.tscn" id="28_resident"]
 [ext_resource type="Script" uid="uid://dlrrihbv1by0b" path="res://project/scenes/hub/villagers/hub_villager_location.gd" id="29_location"]
-[ext_resource type="Material" uid="uid://chg3r121dysqe" path="res://project/common_assets/_shaders/materials/inverted_text_dots.tres" id="30_hint_dots"]
+[ext_resource type="Material" uid="uid://chg3r121dysqe" path="res://project/common_assets/_shaders/materials/cmyk_inverted_text_dots.tres" id="30_hint_dots"]
+[ext_resource type="Shader" uid="uid://m0a7vkd7x3g8" path="res://project/common_assets/_shaders/cmyk_border.gdshader" id="34_magazine_screen"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5jbf"]
 shader = ExtResource("4_7lvc3")
@@ -43,23 +44,35 @@ shader_parameter/overlay_pixel_size = Vector2(6.904, 5.52)
 shader_parameter/registration_offset = 0.0
 shader_parameter/scroll_speed = Vector2(0, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_magazine_artwork"]
+shader = ExtResource("34_magazine_screen")
+shader_parameter/dot_spacing = 1.5
+shader_parameter/dot_radius = 2.0
+shader_parameter/registration_offset = 2.0
+shader_parameter/dot_softness = 0.6
+shader_parameter/use_artwork_texture = true
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uvxgg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kelph"]
 resource_local_to_scene = true
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_uvxgg"]
 viewport_path = NodePath("Environment/Boat/SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gbw88"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 1.00000002375
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8i1rr"]
 texture = ExtResource("5_yxj2o")
@@ -605,9 +618,11 @@ sources/3 = SubResource("TileSetAtlasSource_r2ark")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wg2xd"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nxt8p"]
 texture = ExtResource("5_yxj2o")
@@ -1120,39 +1135,51 @@ sources/3 = SubResource("TileSetAtlasSource_3ijpa")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d2t1y"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1wsg8"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.80000001425
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pe7nc"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nwj2w"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.7750000130625
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8i1rr"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.8250000154375
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a32pt"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.7750000130625
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0ws3"]
 size = Vector2(176, 140)
@@ -1171,9 +1198,11 @@ size = Vector2(54, 96)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_54wue"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="Animation" id="Animation_35sx4"]
 length = 0.001
@@ -1219,9 +1248,11 @@ size = Vector2(31, 29)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qnost"]
 shader = ExtResource("4_bb06l")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
 shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -1344,17 +1375,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Backgrounds" type="Node" parent="Test" unique_id=2010113105]
-
-[node name="Main" type="ColorRect" parent="Test/Backgrounds" unique_id=1038560264]
-z_index = -999
-material = ExtResource("3_nxt8p")
-offset_left = -120.0
-offset_top = -656.0
-offset_right = 952.0
-offset_bottom = 720.0
-color = Color(0.015686275, 0.015686275, 0.015686275, 1)
-
 [node name="Left" type="Control" parent="Test" unique_id=1610412497]
 layout_mode = 3
 anchors_preset = 0
@@ -1370,7 +1390,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
-theme_override_colors/default_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 bbcode_enabled = true
 text = "[font_size=192][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" slant=0.2]High&Dry[font_size=92][outline_size=5][outline_color=#AAAAAA][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\"][color=#AAAAAA]
@@ -1405,7 +1425,7 @@ fit_content = true
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Test/Left" unique_id=1967608595]
-material = ExtResource("3_nxt8p")
+material = SubResource("ShaderMaterial_magazine_artwork")
 layout_mode = 0
 offset_left = 1039.0
 offset_top = -2.0
@@ -1414,6 +1434,7 @@ offset_bottom = 254.0
 texture = ExtResource("7_nxt8p")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Test/Left/TextureRect" unique_id=408405001]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1453,20 +1474,20 @@ fit_content = true
 z_index = -999
 material = ExtResource("3_nxt8p")
 layout_mode = 0
-offset_left = 1051.0
-offset_top = 371.0
-offset_right = 1419.0
-offset_bottom = 563.0
-color = Color(0.015686275, 0.015686275, 0.015686275, 1)
+offset_left = 1049.0834
+offset_top = 370.0
+offset_right = 1420.9166
+offset_bottom = 564.0
+color = Color(0.003921569, 0.003921569, 0.003921569, 1)
 
 [node name="Weavers" type="ColorRect" parent="Test/Left" unique_id=1142784370]
 z_index = -999
 material = ExtResource("3_nxt8p")
 layout_mode = 0
-offset_left = 891.0
-offset_top = 723.0
-offset_right = 1515.0
-offset_bottom = 1139.0
+offset_left = 889.5
+offset_top = 722.0
+offset_right = 1516.5
+offset_bottom = 1140.0
 color = Color(0.015686275, 0.015686275, 0.015686275, 1)
 
 [node name="Right" type="Control" parent="Test" unique_id=1864855257]
@@ -1477,15 +1498,15 @@ offset_top = -947.0
 offset_right = 1401.0
 offset_bottom = 1357.0
 
-[node name="LeftOverlay" type="ColorRect" parent="Test/Right" unique_id=401144556]
-z_index = 110
-material = SubResource("ShaderMaterial_v5jbf")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Main" type="ColorRect" parent="Test/Right" unique_id=1038560264]
+z_index = -999
+material = ExtResource("3_nxt8p")
+layout_mode = 0
+offset_left = -2.0
+offset_top = 288.43286
+offset_right = 1074.0
+offset_bottom = 1669.5671
+color = Color(0.015686275, 0.015686275, 0.015686275, 1)
 
 [node name="PageNumber" type="RichTextLabel" parent="Test/Right" unique_id=1806268706]
 material = ExtResource("6_coxxa")
@@ -1632,7 +1653,7 @@ physics_quadrant_size = 1
 z_index = 1
 material = SubResource("ShaderMaterial_wg2xd")
 position = Vector2(-8, 0)
-tile_map_data = PackedByteArray("AAD6/9v/AAAAAAAAAAD6/9z/AAACAAAAAAD6/93/AAADAAAAAAD6/97/AAAAAAAAAAD6/9//AAAAAAAAAAD6/+D/AAAAAAAAAAD6/+H/AAACAAAAAAD6/+L/AAABAAAAAAD6/+P/AAAAAAAAAAD6/+T/AAADAAAAAAD6/+X/AAABAAAAAAD6/+b/AAABAAAAAAD6/+f/AAACAAAAAAD6/+j/AAADAAAAAAD6/+n/AAAAAAAAAAD6/+r/AAABAAAAAAD6/+v/AAABAAAAAAD//9v/AAAAAAUAACAAANv/AAABAAUAACABANv/AAACAAUAACAGANv/AAAAAAAAAAAGANz/AAABAAAAAAAGAN3/AAAAAAAAAAAGAN7/AAADAAAAAAAGAN//AAAAAAAAAAAGAOD/AAABAAAAAAAGAOH/AAADAAAAAAAGAOL/AAABAAAAAAAGAOP/AAABAAAAAAAGAOT/AAAAAAAAAAAGAOX/AAADAAAAAAAGAOb/AAADAAAAAAAGAOf/AAABAAAAAAAGAOj/AAADAAAAAAAGAOn/AAABAAAAAAAGAOr/AAAAAAAAAAAGAOv/AAAAAAAAAAD6/9j/AAADAAAAAAD6/9n/AAABAAAAAAD6/9r/AAADAAAAAAD7/9j/AAADAAAAAAD7/+D/AAANAAIAACD7/+H/AAANAAEAACD7/+X/AAANAAEAAAD7/+b/AAANAAIAAAD7/+r/AAANAAEAAAD7/+v/AAANAAIAAAD8/9j/AAABAAAAAAD9/9j/AAAAAAAAAAD+/9j/AAACAAAAAAD//9j/AAABAAAAAAD//9n/AAAAAAYAACD//9r/AAAAAAYAACAAANj/AAAAAAAAAAAAANn/AAABAAYAACAAANr/AAABAAYAACABANj/AAADAAAAAAABANn/AAACAAYAACABANr/AAACAAYAACACANj/AAABAAAAAAADANj/AAACAAAAAAAEANj/AAADAAAAAAAFANj/AAADAAAAAAAFAOD/AAANAAIAADAFAOH/AAANAAEAADAFAOX/AAANAAEAABAFAOb/AAANAAIAABAFAOr/AAANAAEAABAFAOv/AAANAAIAABAGANj/AAACAAAAAAAGANn/AAACAAAAAAAGANr/AAABAAAAAAAFAOz/AAAPAA8AAAAFAO3/AAAPAA8AAAAFAO7/AAAPAA8AAAAFAO//AAAPAA8AAAD7/+z/AAAPAA8AAAD7/+3/AAAPAA8AAAD7/+7/AAAPAA8AAAD7/+//AAAPAA8AAAA=")
+tile_map_data = PackedByteArray("AAD6/9v/AAAAAAAAAAD6/9z/AAACAAAAAAD6/93/AAADAAAAAAD6/97/AAAAAAAAAAD6/9//AAAAAAAAAAD6/+D/AAAAAAAAAAD6/+H/AAACAAAAAAD6/+L/AAABAAAAAAD6/+P/AAAAAAAAAAD6/+T/AAADAAAAAAD6/+X/AAABAAAAAAD6/+b/AAABAAAAAAD6/+f/AAACAAAAAAD6/+j/AAADAAAAAAD6/+n/AAAAAAAAAAD6/+r/AAABAAAAAAD6/+v/AAABAAAAAAD//9v/AAAAAAUAACAAANv/AAABAAUAACABANv/AAACAAUAACAGANv/AAAAAAAAAAAGANz/AAABAAAAAAAGAN3/AAAAAAAAAAAGAN7/AAADAAAAAAAGAN//AAAAAAAAAAAGAOD/AAABAAAAAAAGAOH/AAADAAAAAAAGAOL/AAABAAAAAAAGAOP/AAABAAAAAAAGAOT/AAAAAAAAAAAGAOX/AAADAAAAAAAGAOb/AAADAAAAAAAGAOf/AAABAAAAAAAGAOj/AAADAAAAAAAGAOn/AAABAAAAAAAGAOr/AAAAAAAAAAAGAOv/AAAAAAAAAAD6/9j/AAADAAAAAAD6/9n/AAABAAAAAAD6/9r/AAADAAAAAAD7/9j/AAADAAAAAAD7/+D/AAANAAIAACD7/+H/AAANAAEAACD7/+X/AAANAAEAAAD7/+b/AAANAAIAAAD7/+r/AAANAAEAAAD7/+v/AAANAAIAAAD8/9j/AAABAAAAAAD9/9j/AAAAAAAAAAD+/9j/AAACAAAAAAD//9j/AAABAAAAAAD//9r/AAAAAAYAACAAANj/AAAAAAAAAAAAANr/AAABAAYAACABANj/AAADAAAAAAABANr/AAACAAYAACACANj/AAABAAAAAAADANj/AAACAAAAAAAEANj/AAADAAAAAAAFANj/AAADAAAAAAAFAOD/AAANAAIAADAFAOH/AAANAAEAADAFAOX/AAANAAEAABAFAOb/AAANAAIAABAFAOr/AAANAAEAABAFAOv/AAANAAIAABAGANj/AAACAAAAAAAGANn/AAACAAAAAAAGANr/AAABAAAAAAAFAOz/AAAPAA8AAAAFAO3/AAAPAA8AAAAFAO7/AAAPAA8AAAAFAO//AAAPAA8AAAD7/+z/AAAPAA8AAAD7/+3/AAAPAA8AAAD7/+7/AAAPAA8AAAD7/+//AAAPAA8AAAD//9n/AAAAAAYAACAAANn/AAABAAYAACABANn/AAACAAYAACA=")
 tile_set = SubResource("TileSet_coxxa")
 metadata/parallax_motion_scale = Vector2(0, 0)
 

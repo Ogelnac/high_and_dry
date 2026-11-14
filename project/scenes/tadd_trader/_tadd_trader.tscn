@@ -1,9 +1,9 @@
 [gd_scene load_steps=31 format=4 uid="uid://o3icrd55w7ci"]
 
 [ext_resource type="Script" uid="uid://hh8q688r7l60" path="res://project/scenes/tadd_trader/tadd_trader.gd" id="1_wo4bn"]
-[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://project/common_assets/_shaders/materials/tilemap_halftone.tres" id="2_0lyok"]
+[ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://project/common_assets/_shaders/materials/cmyk_tilemap.tres" id="2_0lyok"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="2_dwo4v"]
-[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/bg_tilemap_halftone.tres" id="2_h1csa"]
+[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/cmyk_bg_tilemap.tres" id="2_h1csa"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://project/scenes/hub/main.tres" id="3_h1csa"]
 [ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://project/common_assets/_textures/ingredients.png" id="3_jjls5"]
 [ext_resource type="Material" uid="uid://d05pn1d2oquk2" path="res://project/common_assets/_shaders/materials/overlay.tres" id="4_0lyok"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://gn78o6q8ke7o" path="res://project/scenes/tadd_trader/merchant_camera_2d.gd" id="7_vr1to"]
 [ext_resource type="PackedScene" uid="uid://ckp6bwvi0tej0" path="res://project/scenes/tadd_trader/tadd.tscn" id="8_67bxi"]
 [ext_resource type="Script" uid="uid://cvn4l7yhuavsa" path="res://project/scenes/tadd_trader/boon.gd" id="10_ug4cy"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="11_ic5l1"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="11_ic5l1"]
 [ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="12_wtnso"]
 [ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="13_wtnso"]
 [ext_resource type="Texture2D" uid="uid://c6j0j0x2k3b0f" path="res://project/scenes/tadd_trader/cloud.png" id="14_wtnso"]
@@ -20,8 +20,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jjls5"]
 shader = ExtResource("11_ic5l1")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjls5"]
 size = Vector2(31, 29)
@@ -29,8 +27,6 @@ size = Vector2(31, 29)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mar5n"]
 shader = ExtResource("11_ic5l1")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"
@@ -129,8 +125,6 @@ size = Vector2(28, 31)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_26lps"]
 shader = ExtResource("11_ic5l1")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mar5n"]
 viewport_path = NodePath("SubViewport")

@@ -1,22 +1,18 @@
 [gd_scene load_steps=8 format=4 uid="uid://b6erk81axuxl6"]
 
 [ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://project/scenes/stages/level.gd" id="1_f5x5x"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="3_r680b"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="3_r680b"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://project/scenes/stages/default.tres" id="4_kpj13"]
 [ext_resource type="PackedScene" uid="uid://20rpo03igtnd" path="res://project/scenes/tadd_trader/boat.tscn" id="6_cbr84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjjnm"]
 shader = ExtResource("3_r680b")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbdqu"]
 resource_local_to_scene = true
 shader = ExtResource("3_r680b")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_g0t25"]
 viewport_path = NodePath("Boat/SubViewport")

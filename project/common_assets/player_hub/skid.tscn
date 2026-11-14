@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvspdyryeddrv"]
 
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_qj5wa"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="1_qj5wa"]
 [ext_resource type="Texture2D" uid="uid://b4t18aawx008f" path="res://project/common_assets/player_hub/skid.png" id="2_mj8vf"]
 [ext_resource type="Script" uid="uid://cy2vpw7tkrsd" path="res://project/common_assets/player_hub/skid.gd" id="3_rfgr4"]
 [ext_resource type="AudioStream" uid="uid://crfrh5n7wx331" path="res://project/common_assets/_audio/player/skid.wav" id="4_0jyq5"]
@@ -8,8 +8,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpt51"]
 shader = ExtResource("1_qj5wa")
 shader_parameter/black_dot_transition = 1.1
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="Animation" id="Animation_63htf"]
 length = 0.001

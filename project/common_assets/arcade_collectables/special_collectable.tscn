@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b271mjrnhd4t7" path="res://project/common_assets/arcade_collectables/special_collectable.gd" id="1_4c114"]
 [ext_resource type="PackedScene" uid="uid://bhjo78s7o0ca2" path="res://project/common_assets/effects/burst_particle.tscn" id="2_7nxko"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="3_2578d"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="3_2578d"]
 [ext_resource type="Texture2D" uid="uid://du5rvjj4acp4s" path="res://project/common_assets/_textures/particles.png" id="4_7nxko"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://project/common_assets/_ui/sprites/sprites.png" id="4_ahcp0"]
 [ext_resource type="AudioStream" uid="uid://6c68i3qemtvk" path="res://project/common_assets/_audio/arcade_collect_special.wav" id="7_2578d"]
@@ -12,14 +12,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7nxko"]
 shader = ExtResource("3_2578d")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ahcp0"]
 shader = ExtResource("3_2578d")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [node name="SpecialCollectable" type="Area2D"]
 collision_layer = 16

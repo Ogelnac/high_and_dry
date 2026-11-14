@@ -1,6 +1,11 @@
 shader_type canvas_item;
 
+#include "res://project/common_assets/_shaders/cmyk_screen.gdshaderinc"
+
+uniform float registration_offset: hint_range(0.0, 8.0, 0.25) = 0.0;
+
 uniform sampler2D wave_mask;
+uniform float black_dot_transition: hint_range(0.5, 2.0) = 1.0;
 
 uniform vec4 fill_colour: source_color = vec4(1.0);
 uniform float fill_height: hint_range(0.0, 1.0) = 0.1;
@@ -11,42 +16,6 @@ uniform float wave_band = 0.05;
 uniform float wave_speed = 0.4;
 
 varying float alpha;
-
-vec3 colour_cbs_adjustment(vec3 colour, float contrast, float brightness, float saturation) {
-	colour += brightness;
-	colour = (colour - 0.5) * contrast + 0.5;
-	float lum = dot(colour, vec3(0.299, 0.587, 0.114));
-	colour = mix(vec3(lum), colour, saturation);
-	return clamp(colour, 0.0, 1.0);
-}
-
-vec2 fix_aspect(sampler2D tex, vec2 uv) {
-	ivec2 tex_size = textureSize (tex, 0);
-	vec2 screen_size = vec2(1.0, (1.0 / float(tex_size.x)) /(1.0 / float(tex_size.y)));
-	return uv * screen_size;
-}
-
-float get_dynamic_dot_scale(sampler2D tex) {
-	ivec2 tex_size = textureSize(tex, 0);
-	vec2 pixel_size = 1.0 / vec2(tex_size);
-	return 0.5 / pixel_size.x;
-}
-
-float halftone(sampler2D tex, vec2 uv, float angle, float ink_coverage, float dot_radius) {
-	uv = fix_aspect(tex, uv);
-	uv *= get_dynamic_dot_scale(tex);
-	float cs = cos(angle);
-	float sn = sin(angle);
-	vec2 rotated_uv = vec2(
-		uv.x * cs + uv.y * sn,
-		uv.x * sn - uv.y * cs
-	);
-	vec2 grid = fract(rotated_uv) - 0.5;
-	float dist = length(grid);
-	float radius = dot_radius * ink_coverage;
-	float edge = fract(dist);
-	return smoothstep(radius - edge, radius + edge, dist);
-}
 
 void fragment() {
 	float lo = min(min_offset, max_offset);
@@ -63,13 +32,8 @@ void fragment() {
 	vec4 tex = texture(TEXTURE, padded_uv);
 	vec3 colour = tex.rgb * fill_colour.rgb;
 
-	float max_CMY_dot_radius = 0.75;
-	float max_k_dot_radius = 1.0;
-
-	float c_dot = halftone(TEXTURE, UV, radians(15.0), (1.0 - colour.r), max_CMY_dot_radius);
-	float m_dot = halftone(TEXTURE, UV, radians(60.0), (1.0 - colour.g), max_CMY_dot_radius);
-	float y_dot = halftone(TEXTURE, UV, radians(0.0), (1.0 - colour.b), max_CMY_dot_radius);
-	float k_dot = halftone(TEXTURE, UV, radians(45.0), 1.0 - max(colour.r, max(colour.g, colour.b)), max_k_dot_radius);
+	float black_ink = black_dot_transition - max(colour.r, max(colour.g, colour.b));
+	vec3 halftone_rgb = cmyk_texture_color(UV / pixel_size, 2.0, colour, black_ink, registration_offset);
 
 	alpha = tex.a;
 
@@ -78,14 +42,5 @@ void fragment() {
 	wave_uv.y = clamp((UV.y - (edge - wave_band)) / max(wave_band, 1e-4), 0.0, 1.0);
 	alpha *= texture(wave_mask, wave_uv).a;
 
-	vec3 final_colour = vec3(c_dot, m_dot, y_dot);
-
-	float contrast = 1.0;
-	float brightness = 0.0;
-	float saturation = 1.0;
-
-	final_colour = colour_cbs_adjustment(final_colour, contrast, brightness, saturation);
-	final_colour *= vec3(k_dot);
-
-	COLOR = vec4(final_colour, alpha);
+	COLOR = vec4(halftone_rgb, alpha);
 }

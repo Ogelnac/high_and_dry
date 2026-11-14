@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://project/scenes/stages/level.gd" id="1_bn0t8"]
 [ext_resource type="Material" uid="uid://bkwcwcg5nlxw7" path="res://project/common_assets/_shaders/materials/overlay_small.tres" id="2_qldre"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="3_3u67b"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="3_3u67b"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://project/scenes/stages/default.tres" id="4_smm5j"]
 [ext_resource type="PackedScene" uid="uid://dnmgttt3udqre" path="res://project/common_assets/arcade_collectables/collectable.tscn" id="5_uc80b"]
 [ext_resource type="PackedScene" uid="uid://cnaermyxy5y37" path="res://project/common_assets/arcade_collectables/special_collectable.tscn" id="6_6clrl"]
@@ -10,8 +10,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bmdcp"]
 shader = ExtResource("3_3u67b")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [node name="level_0_0" type="Node2D"]
 script = ExtResource("1_bn0t8")

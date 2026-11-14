@@ -1,14 +1,12 @@
 [gd_scene load_steps=5 format=4 uid="uid://u557m6xvcvqr"]
 
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="1_581a3"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="1_581a3"]
 [ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://project/scenes/stages/level.gd" id="1_nkje3"]
 [ext_resource type="TileSet" uid="uid://c8paym028sup6" path="res://project/scenes/stages/default.tres" id="2_chcf0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjjnm"]
 shader = ExtResource("1_581a3")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [node name="level_1_0" type="Node2D"]
 script = ExtResource("1_nkje3")

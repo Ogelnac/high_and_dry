@@ -2,14 +2,12 @@
 
 [ext_resource type="Script" uid="uid://crly0a8s7fa74" path="res://project/common_assets/player_hub/player.gd" id="1_dyp2x"]
 [ext_resource type="Texture2D" uid="uid://budp5a71nb2hw" path="res://project/common_assets/_textures/tailor.png" id="1_qowkf"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_hqtel"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="2_hqtel"]
 [ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://project/common_assets/_audio/step.wav" id="4_hqtel"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hqtel"]
 shader = ExtResource("2_hqtel")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.5
 
 [sub_resource type="Animation" id="Animation_7stet"]
 resource_name = "Idle"

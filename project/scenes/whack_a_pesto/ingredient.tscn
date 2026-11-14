@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://wdhox5uavs7b" path="res://project/scenes/whack_a_pesto/ingredient.gd" id="1_u8g6t"]
 [ext_resource type="Texture2D" uid="uid://bdfnifowl2amv" path="res://project/common_assets/_textures/ingredients.png" id="2_u8g6t"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="2_veaxr"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="2_veaxr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wbet3"]
 radius = 12.0
@@ -10,8 +10,6 @@ radius = 12.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8app"]
 shader = ExtResource("2_veaxr")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [node name="Ingredient" type="CharacterBody2D"]
 input_pickable = true

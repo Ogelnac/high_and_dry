@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=4 uid="uid://b1v52htitw8cp"]
 
-[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/bg_tilemap_halftone.tres" id="1_bifhb"]
+[ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/cmyk_bg_tilemap.tres" id="1_bifhb"]
 [ext_resource type="Script" uid="uid://dfn4gsn28iydf" path="res://project/scenes/whack_a_pesto/whack_a_pesto.gd" id="1_hat8x"]
 [ext_resource type="PackedScene" uid="uid://ddystf5e4clwp" path="res://project/scenes/whack_a_pesto/tailor_wap.tscn" id="2_bifhb"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://project/scenes/hub/main.tres" id="2_hat8x"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="2_rbtel"]
-[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/mbg_tilemap_halftone.tres" id="3_rbtel"]
+[ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/cmyk_mbg_tilemap.tres" id="3_rbtel"]
 [ext_resource type="Material" uid="uid://bkwcwcg5nlxw7" path="res://project/common_assets/_shaders/materials/overlay_small.tres" id="7_rbtel"]
 
 [node name="Main" type="Node2D"]

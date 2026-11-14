@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://c7pgnj1ijije2" path="res://project/common_assets/_ui/joystick_handle.gd" id="5_kk307"]
 [ext_resource type="Texture2D" uid="uid://dyts0j2w4qv8n" path="res://project/common_assets/_ui/sprites/sprites.png" id="6_uoqhr"]
 [ext_resource type="Script" uid="uid://dc465xi7eluxr" path="res://project/common_assets/_ui/scene_manager.gd" id="8_0ogh3"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_halftone.gdshader" id="9_71g66"]
+[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://project/common_assets/_ui/level_select.png" id="10_gdo4b"]
 [ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://project/common_assets/_shaders/circle_fade.gdshader" id="12_uer7x"]
@@ -24,20 +24,14 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iw0"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2cxs"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 1.1
-shader_parameter/alpha_effect = 1.0
-shader_parameter/mix_scale = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iabp7"]
 shader = ExtResource("12_uer7x")

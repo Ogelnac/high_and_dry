@@ -18,17 +18,17 @@ func _ready():
 	target_position = initial_position
 	area.area_entered.connect(_on_area_entered)
 
-	var random_frame = randi_range(109, 111)
+	var random_frame = randi_range(205, 207)
 	sprite.frame = random_frame
 	
 	match random_frame:
-		207: 
+		205: 
 			collision_shape.shape.radius = 5
 			bumper.pitch_scale = 1.5
-		208: 
+		206: 
 			collision_shape.shape.radius = 6
 			bumper.pitch_scale = 1.25
-		209: 
+		207: 
 			collision_shape.shape.radius = 7
 			bumper.pitch_scale = 1
 
