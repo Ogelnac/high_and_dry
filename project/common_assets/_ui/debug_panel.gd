@@ -1,21 +1,18 @@
 extends PanelContainer
 
-@onready var debug: Button = $"../HBoxContainer/Debug"
-
 @onready var check_box: CheckBox = $MarginContainer/VBoxContainer/CheckBox
 @onready var check_box_2: CheckBox = $MarginContainer/VBoxContainer/CheckBox2
 @onready var check_box_3: CheckBox = $MarginContainer/VBoxContainer/CheckBox3
 @onready var check_box_4: CheckBox = $MarginContainer/VBoxContainer/CheckBox4
-@onready var guaranteed_villager: CheckButton = $MarginContainer/VBoxContainer/GuaranteedVillager
-@onready var dye_requests: CheckButton = $MarginContainer/VBoxContainer/DyeRequests
-@onready var world_notes_toggle: CheckButton = $MarginContainer/VBoxContainer/WorldNotesToggle
+@onready var guaranteed_villager: CheckBox = $MarginContainer/VBoxContainer/GuaranteedVillager
+@onready var dye_requests: CheckBox = $MarginContainer/VBoxContainer/DyeRequests
+@onready var world_notes_toggle: CheckBox = $MarginContainer/VBoxContainer/WorldNotesToggle
 @onready var button: Button = $MarginContainer/VBoxContainer/Button
 @onready var level_count: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/LevelCount
 
 @onready var dialogue_input: Panel = $"../DialogueInput"
 
 func _ready() -> void:
-	debug.pressed.connect(_toggle_panel_visibility)
 	check_box.toggled.connect(_pass_toggle_disable_rising_death)
 	check_box_2.toggled.connect(_pass_toggle_infinite_health)
 	check_box_3.toggled.connect(_pass_toggle_infinite_resources)
@@ -36,9 +33,6 @@ func _ready() -> void:
 	level_count.value = Debug.tiles_per_leg
 	Debug.number_of_levels = Debug.tiles_per_leg
 	level_count.value_changed.connect(_set_number_of_levels)
-
-func _toggle_panel_visibility():
-	visible = !visible
 
 func _pass_toggle_disable_rising_death(toggled_on: bool):
 	Debug.disable_rising_death = toggled_on

@@ -21,6 +21,8 @@
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://project/common_assets/_shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
 [ext_resource type="Script" path="res://project/common_assets/_ui/villager_interaction_panel.gd" id="18_visitor"]
 
+[ext_resource type="Script" path="res://project/common_assets/_ui/panel_controls.gd" id="panel_controls"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")
 shader_parameter/black_dot_transition = 0.5
@@ -54,9 +56,8 @@ shader_parameter/wave_amp = 0.005
 shader_parameter/wave_freq = 1.0
 shader_parameter/wave_speed = 2.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lptq8"]
-
 [node name="CanvasLayer" type="CanvasLayer" unique_id=911213123]
+script = ExtResource("panel_controls")
 
 [node name="UI" type="Control" parent="." unique_id=1457776137]
 process_mode = 3
@@ -463,76 +464,69 @@ offset_right = 157.0
 offset_bottom = 13.0
 color = Color(0, 0, 0, 1)
 
-[node name="MenuPanel" type="Panel" parent="." unique_id=8714874]
+[node name="MenuPanel" type="PanelContainer" parent="." unique_id=8714874]
 visible = false
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 21.0
 offset_top = 207.0
 offset_right = -21.0
-offset_bottom = -534.0
+offset_bottom = 207.0
 grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("1_kmbj5")
 script = ExtResource("15_yo1el")
 
-[node name="Label" type="Label" parent="MenuPanel" unique_id=1460060709]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 31.0
-grow_horizontal = 2
+[node name="MarginContainer" type="MarginContainer" parent="MenuPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 37
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 37
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel/MarginContainer" unique_id=1488356262]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=1460060709]
+layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel" unique_id=1488356262]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 37.0
-offset_top = 43.0
-offset_right = -37.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 32
-
-[node name="CheckBox" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=1112808318]
-custom_minimum_size = Vector2(0, 32)
+[node name="HeaderDivider" type="HSeparator" parent="MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "MUTE BGM"
+
+[node name="CheckBox" type="CheckBox" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=1112808318]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Mute BGM"
 alignment = 2
 
-[node name="CheckBox2" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=38578487]
-custom_minimum_size = Vector2(0, 32)
+[node name="CheckBox2" type="CheckBox" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=38578487]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-text = "MUTE SFX"
+text = "Mute SFX"
 alignment = 2
 
-[node name="CheckBox3" type="CheckBox" parent="MenuPanel/VBoxContainer" unique_id=282138074]
-custom_minimum_size = Vector2(0, 32)
+[node name="CheckBox3" type="CheckBox" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=282138074]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-text = "GIVE ALL YOUR MONEY TO THE DEVS"
+text = "Give all your money to the devs"
 alignment = 2
 
-[node name="HSeparator" type="HSeparator" parent="MenuPanel/VBoxContainer" unique_id=2114020343]
+[node name="HSeparator" type="HSeparator" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=2114020343]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MenuPanel/VBoxContainer" unique_id=608761934]
-custom_minimum_size = Vector2(0, 32)
+[node name="Button" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=608761934]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-text = "TEST BGM"
+text = "Test BGM"
 
-[node name="Button2" type="Button" parent="MenuPanel/VBoxContainer" unique_id=1647470560]
-custom_minimum_size = Vector2(0, 32)
+[node name="Button2" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=1647470560]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-text = "TEST SFX"
-
-[node name="HSeparator2" type="HSeparator" parent="MenuPanel/VBoxContainer" unique_id=1384190259]
-layout_mode = 2
+text = "Test SFX"
 
 [node name="DebugPanel" type="PanelContainer" parent="." unique_id=517047057]
 visible = false
@@ -555,7 +549,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugPanel/MarginContainer" unique_id=1010228848]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1022409094]
 layout_mode = 2
@@ -563,6 +557,9 @@ theme_override_font_sizes/font_size = 45
 text = "DEBUG"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HeaderDivider" type="HSeparator" parent="DebugPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=986487662]
 layout_mode = 2
@@ -574,57 +571,66 @@ min_value = 1.0
 value = 5.0
 
 [node name="Label" type="Label" parent="DebugPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=467499754]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Number of Levels"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="SettingsDivider" type="HSeparator" parent="DebugPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="CheckBox" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=901703540]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Disable Rising Death"
 alignment = 2
 
 [node name="CheckBox2" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1111602634]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-text = "Infinte Health"
+text = "Infinite Health"
 alignment = 2
 
 [node name="CheckBox3" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1873328215]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Infinite Resources"
 alignment = 2
 
 [node name="CheckBox4" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=868252768]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Infinite Silkworms"
 alignment = 2
 
-[node name="GuaranteedVillager" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="ToolsDivider" type="HSeparator" parent="DebugPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GuaranteedVillager" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "100% chance of NPC in Tadd's"
 alignment = 2
 
-[node name="DyeRequests" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="DyeRequests" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Unlock villager dye requests"
 alignment = 2
 
-[node name="WorldNotesToggle" type="CheckButton" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1222712444]
-custom_minimum_size = Vector2(0, 32)
+[node name="WorldNotesToggle" type="CheckBox" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=1222712444]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Show World Notes"
 alignment = 2
 
+[node name="ResetDivider" type="HSeparator" parent="DebugPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Button" type="Button" parent="DebugPanel/MarginContainer/VBoxContainer" unique_id=390028989]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Restart Progress"
 
@@ -862,7 +868,6 @@ theme = ExtResource("1_kmbj5")
 theme_override_constants/separation = 20
 
 [node name="Menu" type="Button" parent="HBoxContainer" unique_id=1412084937]
-material = SubResource("ShaderMaterial_lptq8")
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "MENU"
@@ -872,7 +877,7 @@ expand_icon = true
 texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-text = "Debug"
+text = "DEBUG"
 expand_icon = true
 
 [node name="EndGame" type="Button" parent="HBoxContainer" unique_id=803909223]
