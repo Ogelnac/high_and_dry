@@ -5,7 +5,7 @@ shader_type canvas_item;
 uniform float dot_spacing : hint_range(0.25, 48.0, 0.05) = 1.5;
 uniform float dot_radius : hint_range(0.5, 24.0, 0.05) = 2.0;
 uniform float registration_offset : hint_range(0.0, 8.0, 0.25) = 2.0;
-uniform float dot_softness : hint_range(0.0, 0.6, 0.01) = 0.5;
+uniform float dot_softness : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform bool use_artwork_texture = false;
 
 varying vec2 local_position;

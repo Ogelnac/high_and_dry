@@ -1,60 +1,44 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://cb8wg62oeu8ga"]
 
-[ext_resource type="Script" path="res://project/scenes/hub/world_note.gd" id="1_world_note"]
+[ext_resource type="Script" uid="uid://dt2qffgo0wpco" path="res://project/scenes/hub/world_note.gd" id="1_world_note"]
+[ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="2_1gqle"]
+[ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="2_vekwx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_note"]
-radius = 22.0
+radius = 16.03122
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_marker"]
-bg_color = Color(0.95, 0.72, 0.18, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.25, 0.16, 0.06, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-shadow_color = Color(0, 0, 0, 0.35)
-shadow_size = 4
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lsx41"]
+shader = ExtResource("2_1gqle")
+shader_parameter/atlas_frames = Vector2(1, 1)
+shader_parameter/atlas_region = Vector4(992, 992, 32, 32)
+shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
+shader_parameter/ink_imperfection = 0.3
+shader_parameter/black_ink_softness = 0.45
+shader_parameter/black_dot_transition = 0.5
 
-[node name="WorldNote" type="Area2D" groups=["world_notes"]]
-input_pickable = false
+[node name="WorldNote" type="Area2D" unique_id=337125459 groups=["world_notes"]]
 collision_layer = 512
 collision_mask = 0
+input_pickable = false
 script = ExtResource("1_world_note")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=586463088]
 shape = SubResource("CircleShape2D_note")
 
-[node name="Marker" type="Node2D" parent="."]
-visible = false
+[node name="Marker" type="Node2D" parent="." unique_id=1697036322]
 
-[node name="ButtonFace" type="Panel" parent="Marker"]
-offset_left = -22.0
-offset_top = -22.0
-offset_right = 22.0
-offset_bottom = 22.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_marker")
+[node name="Sprite2D" type="Sprite2D" parent="Marker" unique_id=825345124]
+texture_filter = 1
+material = SubResource("ShaderMaterial_lsx41")
+texture = ExtResource("2_vekwx")
+region_enabled = true
+region_rect = Rect2(992, 992, 32, 32)
 
-[node name="Icon" type="Label" parent="Marker"]
-offset_left = -22.0
-offset_top = -22.0
-offset_right = 22.0
-offset_bottom = 22.0
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.2, 0.12, 0.03, 1)
-theme_override_font_sizes/font_size = 27
-text = "!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NoteCanvas" type="CanvasLayer" parent="."]
+[node name="NoteCanvas" type="CanvasLayer" parent="." unique_id=874322192]
 layer = 90
 
-[node name="NoteDisplay" type="MarginContainer" parent="NoteCanvas"]
+[node name="NoteDisplay" type="MarginContainer" parent="NoteCanvas" unique_id=1355254444]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -73,21 +57,20 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
-[node name="NoteText" type="Label" parent="NoteCanvas/NoteDisplay"]
+[node name="NoteText" type="Label" parent="NoteCanvas/NoteDisplay" unique_id=33141767]
 layout_mode = 2
-mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_colors/font_outline_color = Color(0.08, 0.06, 0.1, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 8
-theme_override_colors/font_color = Color(1, 0.96, 0.84, 1)
-theme_override_colors/font_outline_color = Color(0.08, 0.06, 0.1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Add your note here."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="CloseTimer" type="Timer" parent="."]
+[node name="CloseTimer" type="Timer" parent="." unique_id=1757638540]
 wait_time = 3.0
 one_shot = true

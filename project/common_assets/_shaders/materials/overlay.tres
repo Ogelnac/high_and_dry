@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://d05pn1d2oquk2"]
 
 [ext_resource type="Shader" uid="uid://cvmgt0su4tvyu" path="res://project/common_assets/_shaders/noise_and_chromashift.gdshader" id="1_6c3te"]
-[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/overlay.png" id="2_n2wp0"]
+[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/magazine/overlay.png" id="2_n2wp0"]
 
 [resource]
 shader = ExtResource("1_6c3te")

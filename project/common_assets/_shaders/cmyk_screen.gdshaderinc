@@ -8,6 +8,10 @@ const vec2 MAGENTA_SHIFT = vec2(1.0, 0.0);
 const vec2 YELLOW_SHIFT = vec2(0.0, 1.0);
 const vec2 BLACK_SHIFT = vec2(0.0);
 
+float ink_variation(vec2 point) {
+	return sin(point.x * 1.1 + point.y * 0.63) * sin(point.y * 1.31 - point.x * 0.47);
+}
+
 float cmyk_scene_fade(float transition) {
 	return 1.0 - clamp((transition - 0.5) / 1.5, 0.0, 1.0);
 }

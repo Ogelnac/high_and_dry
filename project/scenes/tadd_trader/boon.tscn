@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="12_wtnso"]
+[ext_resource type="PackedScene" path="res://project/common_assets/_ui/tap_cutout.tscn" id="tap_cutout"]
+
+[ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="entity_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_boon"]
+resource_local_to_scene = true
+shader = ExtResource("entity_shader")
+shader_parameter/atlas_frames = Vector2(3, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjls5"]
+size = Vector2(31, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5whf7"]
+size = Vector2(28, 31)
+
+[node name="Boon" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+material = SubResource("ShaderMaterial_boon")
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("12_wtnso")
+hframes = 3
+vframes = 3
+
+[node name="TapButton" type="Area2D" parent="."]
+position = Vector2(-1, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TapButton"]
+position = Vector2(0.5, -34.5)
+shape = SubResource("RectangleShape2D_jjls5")
+
+[node name="Popup" parent="." instance=ExtResource("tap_cutout")]
+position = Vector2(0, -24)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+position = Vector2(0, 17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_5whf7")
+

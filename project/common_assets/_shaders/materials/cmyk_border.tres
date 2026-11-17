@@ -6,6 +6,6 @@
 shader = ExtResource("1_border")
 shader_parameter/dot_spacing = 1.5
 shader_parameter/dot_radius = 2.0
-shader_parameter/registration_offset = 2.0
-shader_parameter/dot_softness = 0.249999994412
+shader_parameter/registration_offset = 1.0
+shader_parameter/dot_softness = 0.499999988824
 shader_parameter/use_artwork_texture = false

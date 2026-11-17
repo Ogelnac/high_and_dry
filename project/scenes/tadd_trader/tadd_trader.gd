@@ -178,6 +178,8 @@ func _apply_shop_selection(items:Array[ShopManager.ShopItem]) -> void:
 				sprite.texture = normal_sheet
 				sprite.hframes = normal_hframes
 				sprite.vframes = normal_vframes
+			var material := sprite.material as ShaderMaterial
+			material.set_shader_parameter("atlas_frames", Vector2(sprite.hframes, sprite.vframes))
 			sprite.frame = it.sprite_frame
 			boon_node.set_meta("shop_item", it)
 			boon_node.visible = true

@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dqq0i3cll7o3e" path="res://project/scenes/hub/villagers/villager.gd" id="1_wkvmw"]
 [ext_resource type="Texture2D" uid="uid://bqghjrpwjblbh" path="res://project/scenes/hub/villagers/npcs.png" id="2_npcs"]
-[ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="3_shader"]
+[ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="3_shader"]
 [ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://project/common_assets/_audio/step.wav" id="4_step"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npcs"]
 shader = ExtResource("3_shader")
+shader_parameter/atlas_frames = Vector2(16, 16)
 shader_parameter/black_dot_transition = 0.5
 
 [sub_resource type="Animation" id="Animation_reset"]
@@ -68,6 +69,7 @@ _data = {
 script = ExtResource("1_wkvmw")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=153228782]
+texture_filter = 1
 material = SubResource("ShaderMaterial_npcs")
 texture = ExtResource("2_npcs")
 hframes = 16

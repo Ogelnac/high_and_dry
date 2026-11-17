@@ -52,7 +52,7 @@ func _ready():
 			display_swipe_to_start = false
 	refresh_shader_objects()
 	for obj in shader_objects:
-		if obj.material.get_shader_parameter("black_dot_transition") >= 2.0:
+		if _get_black_dot_transition(obj.material) >= 2.0:
 			_fade_from_black()
 			break
 	_update_hub_display()
@@ -91,14 +91,22 @@ func refresh_shader_objects() -> void:
 	for obj in shader_objects:
 		var instance_id: int = obj.get_instance_id()
 		if not black_dot_offsets.has(instance_id):
-			var transition: float = obj.material.get_shader_parameter("black_dot_transition")
+			var transition: float = _get_black_dot_transition(obj.material)
 			black_dot_offsets[instance_id] = transition - master_baseline
+
+func _get_black_dot_transition(material: ShaderMaterial) -> Variant:
+	if material.shader == null:
+		return null
+	var value: Variant = material.get_shader_parameter("black_dot_transition")
+	if value == null:
+		value = RenderingServer.shader_get_parameter_default(material.shader.get_rid(), "black_dot_transition")
+	return value
 
 func find_objects_with_shader() -> Array:
 	var objects = []
 	var nodes = get_tree().get_nodes_in_group("shader_objects")
 	for node in nodes:
-		if node is CanvasItem and node.material is ShaderMaterial:
+		if node is CanvasItem and node.material is ShaderMaterial and _get_black_dot_transition(node.material) != null:
 			objects.append(node)
 	return objects
 

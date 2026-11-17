@@ -10,120 +10,19 @@
 [ext_resource type="Script" uid="uid://gn78o6q8ke7o" path="res://project/scenes/tadd_trader/merchant_camera_2d.gd" id="7_vr1to"]
 [ext_resource type="PackedScene" uid="uid://ckp6bwvi0tej0" path="res://project/scenes/tadd_trader/tadd.tscn" id="8_67bxi"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="11_ic5l1"]
-[ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="12_wtnso"]
-[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="13_wtnso"]
 [ext_resource type="Texture2D" uid="uid://c6j0j0x2k3b0f" path="res://project/scenes/tadd_trader/cloud.png" id="14_wtnso"]
 [ext_resource type="Script" uid="uid://dd4achp4ggoti" path="res://project/scenes/tadd_trader/exit.gd" id="16_26lps"]
 [ext_resource type="PackedScene" uid="uid://cgx68fo4mwdm0" path="res://project/scenes/tadd_trader/tadd_visitor.tscn" id="17_visitor"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjls5"]
-shader = ExtResource("11_ic5l1")
-shader_parameter/black_dot_transition = 0.5
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjls5"]
-size = Vector2(31, 29)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mar5n"]
-shader = ExtResource("11_ic5l1")
-shader_parameter/black_dot_transition = 0.5
-
-[sub_resource type="Animation" id="Animation_7stet"]
-resource_name = "Idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_wrya3"]
-resource_name = "Jump"
-length = 0.02
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [20]
-}
-
-[sub_resource type="Animation" id="Animation_6kf0e"]
-resource_name = "OpenPopup"
-length = 0.25
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_ehjrk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_55hhd"]
-resource_name = "Run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [15, 16, 17, 18, 19, 20]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
-_data = {
-&"Idle": SubResource("Animation_7stet"),
-&"Jump": SubResource("Animation_wrya3"),
-&"OpenPopup": SubResource("Animation_6kf0e"),
-&"RESET": SubResource("Animation_ehjrk"),
-&"Run": SubResource("Animation_55hhd")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5whf7"]
-size = Vector2(28, 31)
+[ext_resource type="PackedScene" path="res://project/scenes/tadd_trader/boon.tscn" id="boon_scene"]
+[ext_resource type="PackedScene" path="res://project/common_assets/_ui/tap_cutout.tscn" id="tap_cutout"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_26lps"]
 shader = ExtResource("11_ic5l1")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.5
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mar5n"]
 viewport_path = NodePath("SubViewport")
@@ -135,6 +34,12 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_0fuo7"]
 offsets = PackedFloat32Array(0.23221, 0.873908, 0.998752)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjls5"]
+size = Vector2(31, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5whf7"]
+size = Vector2(28, 31)
 
 [node name="Main" type="Node2D" unique_id=1874661161]
 script = ExtResource("1_wo4bn")
@@ -202,116 +107,14 @@ position = Vector2(-95, -29)
 [node name="VisitorWalkEnd" type="Marker2D" parent="." unique_id=208461625]
 position = Vector2(240, -29)
 
-[node name="Boon1" type="Node2D" parent="." unique_id=77770766]
+[node name="Boon1" parent="." unique_id=77770766 instance=ExtResource("boon_scene")]
 position = Vector2(48, -48)
 
-[node name="Sprite2D" type="Sprite2D" parent="Boon1" unique_id=889039387]
-z_index = -10
-material = SubResource("ShaderMaterial_jjls5")
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("12_wtnso")
-hframes = 3
-vframes = 3
-
-[node name="TapButton" type="Area2D" parent="Boon1" unique_id=1788539159]
-position = Vector2(-1, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon1/TapButton" unique_id=2146877632]
-position = Vector2(0.5, -34.5)
-shape = SubResource("RectangleShape2D_jjls5")
-
-[node name="Popup" type="Sprite2D" parent="Boon1" unique_id=1433520038 groups=["shader_objects"]]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_mar5n")
-position = Vector2(0, -24)
-texture = ExtResource("13_wtnso")
-hframes = 3
-vframes = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Boon1/Popup" unique_id=1054904686]
-libraries/ = SubResource("AnimationLibrary_tamwi")
-
-[node name="DetectionArea" type="Area2D" parent="Boon1" unique_id=928956488]
-position = Vector2(0, 17)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon1/DetectionArea" unique_id=1149838828]
-position = Vector2(-1, -0.5)
-shape = SubResource("RectangleShape2D_5whf7")
-
-[node name="Boon2" type="Node2D" parent="." unique_id=1116092665]
+[node name="Boon2" parent="." unique_id=1116092665 instance=ExtResource("boon_scene")]
 position = Vector2(128, -48)
 
-[node name="Sprite2D" type="Sprite2D" parent="Boon2" unique_id=1265161434]
-z_index = -10
-material = SubResource("ShaderMaterial_jjls5")
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("12_wtnso")
-hframes = 3
-vframes = 3
-
-[node name="TapButton" type="Area2D" parent="Boon2" unique_id=1780654824]
-position = Vector2(-1, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon2/TapButton" unique_id=1445862061]
-position = Vector2(0.5, -34.5)
-shape = SubResource("RectangleShape2D_jjls5")
-
-[node name="Popup" type="Sprite2D" parent="Boon2" unique_id=2072492705 groups=["shader_objects"]]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_mar5n")
-position = Vector2(0, -24)
-texture = ExtResource("13_wtnso")
-hframes = 3
-vframes = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Boon2/Popup" unique_id=1400220392]
-libraries/ = SubResource("AnimationLibrary_tamwi")
-
-[node name="DetectionArea" type="Area2D" parent="Boon2" unique_id=1281762899]
-position = Vector2(0, 17)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon2/DetectionArea" unique_id=1952796551]
-position = Vector2(-1, -0.5)
-shape = SubResource("RectangleShape2D_5whf7")
-
-[node name="Boon3" type="Node2D" parent="." unique_id=956850938]
+[node name="Boon3" parent="." unique_id=956850938 instance=ExtResource("boon_scene")]
 position = Vector2(208, -48)
-
-[node name="Sprite2D" type="Sprite2D" parent="Boon3" unique_id=1068030294]
-z_index = -10
-material = SubResource("ShaderMaterial_jjls5")
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("12_wtnso")
-hframes = 3
-vframes = 3
-
-[node name="TapButton" type="Area2D" parent="Boon3" unique_id=1151292012]
-position = Vector2(-1, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon3/TapButton" unique_id=797915826]
-position = Vector2(0.5, -34.5)
-shape = SubResource("RectangleShape2D_jjls5")
-
-[node name="Popup" type="Sprite2D" parent="Boon3" unique_id=1907389048 groups=["shader_objects"]]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_mar5n")
-position = Vector2(0, -24)
-texture = ExtResource("13_wtnso")
-hframes = 3
-vframes = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Boon3/Popup" unique_id=125317377]
-libraries/ = SubResource("AnimationLibrary_tamwi")
-
-[node name="DetectionArea" type="Area2D" parent="Boon3" unique_id=1948423552]
-position = Vector2(0, 17)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boon3/DetectionArea" unique_id=83619808]
-position = Vector2(-1, -0.5)
-shape = SubResource("RectangleShape2D_5whf7")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=36021256]
 z_index = -150
@@ -358,17 +161,8 @@ position = Vector2(-1, 19)
 position = Vector2(0.5, -34.5)
 shape = SubResource("RectangleShape2D_jjls5")
 
-[node name="Popup" type="Sprite2D" parent="Exit" unique_id=356815271 groups=["shader_objects"]]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_mar5n")
+[node name="Popup" parent="Exit" unique_id=356815271 instance=ExtResource("tap_cutout")]
 position = Vector2(0, -15)
-texture = ExtResource("13_wtnso")
-hframes = 3
-vframes = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Exit/Popup" unique_id=1289918143]
-libraries/ = SubResource("AnimationLibrary_tamwi")
 
 [node name="DetectionArea" type="Area2D" parent="Exit" unique_id=812292632]
 position = Vector2(0, 17)

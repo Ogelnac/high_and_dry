@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bbttaetv3js80" path="res://project/scenes/hub/hub_main.gd" id="1_6o7rn"]
 [ext_resource type="PackedScene" uid="uid://bhv16y778i1e2" path="res://project/common_assets/player_hub/player.tscn" id="1_fvgh8"]
-[ext_resource type="Texture2D" uid="uid://c0uyglg0q0vci" path="res://project/common_assets/_textures/open_magazine.png" id="2_r2ark"]
+[ext_resource type="Texture2D" uid="uid://c0uyglg0q0vci" path="res://project/common_assets/_textures/magazine/open_magazine.png" id="2_r2ark"]
 [ext_resource type="PackedScene" uid="uid://cpphloewhd56b" path="res://project/common_assets/effects/counter.tscn" id="3_1j66b"]
 [ext_resource type="Texture2D" uid="uid://d0jlqa0xi17rs" path="res://project/common_assets/_textures/fabric.png" id="3_jpcof"]
 [ext_resource type="Material" uid="uid://cl2aayhlflmgs" path="res://project/common_assets/_shaders/materials/cmyk_border.tres" id="3_nxt8p"]
@@ -12,16 +12,19 @@
 [ext_resource type="Script" uid="uid://bhiugfm5vkncc" path="res://project/scenes/hub/camera_2d.gd" id="4_etw35"]
 [ext_resource type="Material" uid="uid://b8kxshbwslixu" path="res://project/common_assets/_shaders/materials/cmyk_tilemap.tres" id="4_o67ql"]
 [ext_resource type="Material" uid="uid://c01vyjpllrclc" path="res://project/common_assets/_shaders/materials/cmyk_bg_tilemap.tres" id="4_qkgjc"]
-[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/overlay.png" id="5_3ijpa"]
+[ext_resource type="Texture2D" uid="uid://dl5qb82f0a35h" path="res://project/common_assets/_textures/magazine/overlay.png" id="5_3ijpa"]
 [ext_resource type="PackedScene" uid="uid://djlds3w7gvaqy" path="res://project/scenes/hub/pesto.tscn" id="5_j3pii"]
 [ext_resource type="TileSet" uid="uid://ch5wc7uujkf88" path="res://project/scenes/hub/main.tres" id="5_rhfmc"]
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="5_yxj2o"]
 [ext_resource type="Material" uid="uid://5s87hg73cq4d" path="res://project/common_assets/_shaders/materials/cmyk_text.tres" id="6_coxxa"]
+[ext_resource type="Material" uid="uid://2o8wejxjqsv1" path="res://project/common_assets/_shaders/materials/cmyk_image.tres" id="7_3ijpa"]
 [ext_resource type="Texture2D" uid="uid://plmha61w7hhx" path="res://project/common_assets/_textures/title.png" id="7_hdm0b"]
-[ext_resource type="Texture2D" uid="uid://ku1bhlchciru" path="res://project/common_assets/_textures/magazine_hint.png" id="7_nxt8p"]
-[ext_resource type="PackedScene" path="res://project/scenes/hub/world_note.tscn" id="9_gkq2y"]
+[ext_resource type="Texture2D" uid="uid://dv213cu0m2uxm" path="res://project/common_assets/_textures/magazine/tailor_3d.png" id="8_3ijpa"]
+[ext_resource type="Texture2D" uid="uid://dt8c8mtg5sp7w" path="res://project/common_assets/_textures/magazine/pesto_3d.png" id="9_3ijpa"]
+[ext_resource type="PackedScene" uid="uid://cb8wg62oeu8ga" path="res://project/scenes/hub/world_note.tscn" id="9_gkq2y"]
 [ext_resource type="Material" uid="uid://ylpokppt2xeg" path="res://project/common_assets/_shaders/materials/cmyk_mbg_tilemap.tres" id="9_xnmlj"]
 [ext_resource type="PackedScene" uid="uid://20rpo03igtnd" path="res://project/scenes/tadd_trader/boat.tscn" id="10_1wsg8"]
+[ext_resource type="Texture2D" uid="uid://djyaju1gk73vv" path="res://project/common_assets/_textures/magazine/pesto_front_3d.png" id="10_v5jbf"]
 [ext_resource type="Texture2D" uid="uid://6eksl7ib1rnp" path="res://project/common_assets/_textures/light_texture.png" id="15_s8asq"]
 [ext_resource type="Script" uid="uid://vupsjyyr7xg8" path="res://project/scenes/hub/resource_manager.gd" id="20_a3i5d"]
 [ext_resource type="PackedScene" uid="uid://dcbqhtv80rquh" path="res://project/scenes/hub/dye_bottle.tscn" id="20_gbw88"]
@@ -30,12 +33,12 @@
 [ext_resource type="PackedScene" uid="uid://deulyp2frrc0y" path="res://project/scenes/hub/bumper.tscn" id="25_i2igf"]
 [ext_resource type="PackedScene" uid="uid://cg116xv2085gb" path="res://project/common_assets/_ui/canvas_layer.tscn" id="26_j17sk"]
 [ext_resource type="Script" uid="uid://qvm28w84poyn" path="res://project/scenes/hub/moss.gd" id="26_pe7nc"]
-[ext_resource type="Texture2D" uid="uid://7eyiyjos13ig" path="res://project/common_assets/_textures/tap_popup.png" id="27_0ypsv"]
 [ext_resource type="PackedScene" uid="uid://dp4tgkuytlhc6" path="res://project/scenes/hub/doorway.tscn" id="27_3nqyi"]
 [ext_resource type="PackedScene" path="res://project/scenes/hub/villagers/hub_resident.tscn" id="28_resident"]
 [ext_resource type="Script" uid="uid://dlrrihbv1by0b" path="res://project/scenes/hub/villagers/hub_villager_location.gd" id="29_location"]
 [ext_resource type="Material" uid="uid://chg3r121dysqe" path="res://project/common_assets/_shaders/materials/cmyk_inverted_text_dots.tres" id="30_hint_dots"]
-[ext_resource type="Shader" uid="uid://m0a7vkd7x3g8" path="res://project/common_assets/_shaders/cmyk_border.gdshader" id="34_magazine_screen"]
+[ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="39_ryhy8"]
+[ext_resource type="PackedScene" path="res://project/common_assets/_ui/tap_cutout.tscn" id="tap_cutout"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5jbf"]
 shader = ExtResource("4_7lvc3")
@@ -43,16 +46,6 @@ shader_parameter/overlay = ExtResource("5_3ijpa")
 shader_parameter/overlay_pixel_size = Vector2(6.904, 5.52)
 shader_parameter/registration_offset = 0.0
 shader_parameter/scroll_speed = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_magazine_artwork"]
-shader = ExtResource("34_magazine_screen")
-shader_parameter/dot_spacing = 1.5
-shader_parameter/dot_radius = 2.0
-shader_parameter/registration_offset = 2.0
-shader_parameter/dot_softness = 0.6
-shader_parameter/use_artwork_texture = true
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uvxgg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kelph"]
 resource_local_to_scene = true
@@ -1246,104 +1239,16 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b1qrp"]
 size = Vector2(31, 29)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnost"]
-shader = ExtResource("4_bb06l")
-shader_parameter/registration_offset = 0.0
-shader_parameter/dot_softness = 0.6
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryhy8"]
+resource_local_to_scene = true
+shader = ExtResource("39_ryhy8")
+shader_parameter/atlas_frames = Vector2(3, 2)
+shader_parameter/atlas_region = Vector4(0, 0, 0, 0)
+shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
+shader_parameter/ink_imperfection = 0.14
+shader_parameter/black_ink_softness = 0.45
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
-shader_parameter/continuous_tile_grid = false
-
-[sub_resource type="Animation" id="Animation_7stet"]
-resource_name = "Idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_wrya3"]
-resource_name = "Jump"
-length = 0.02
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [20]
-}
-
-[sub_resource type="Animation" id="Animation_6kf0e"]
-resource_name = "OpenPopup"
-length = 0.25
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_ehjrk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_55hhd"]
-resource_name = "Run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1333, 0.266667, 0.4, 0.533333, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [15, 16, 17, 18, 19, 20]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tamwi"]
-_data = {
-&"Idle": SubResource("Animation_7stet"),
-&"Jump": SubResource("Animation_wrya3"),
-&"OpenPopup": SubResource("Animation_6kf0e"),
-&"RESET": SubResource("Animation_ehjrk"),
-&"Run": SubResource("Animation_55hhd")
-}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnkbs"]
 size = Vector2(28, 31)
@@ -1364,8 +1269,8 @@ offset_right = 1562.8699
 offset_bottom = 1649.0
 texture = ExtResource("2_r2ark")
 
-[node name="LeftOverlay" type="ColorRect" parent="Test/Magazine" unique_id=1052980496]
-z_index = 110
+[node name="Overlay" type="ColorRect" parent="Test/Magazine" unique_id=1052980496]
+z_index = 1
 z_as_relative = false
 material = SubResource("ShaderMaterial_v5jbf")
 layout_mode = 1
@@ -1393,7 +1298,7 @@ grow_horizontal = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 bbcode_enabled = true
-text = "[font_size=192][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" slant=0.2]High&Dry[font_size=92][outline_size=5][outline_color=#AAAAAA][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\"][color=#AAAAAA]
+text = "[font_size=192][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" slant=0.2]High&Dry[font_size=92][outline_size=5][outline_color=#666666][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\"][color=#666666]
 Gameplay Guide"
 fit_content = true
 
@@ -1405,7 +1310,7 @@ offset_left = 13.0
 offset_top = 307.0
 offset_right = 833.0
 offset_bottom = 313.0
-color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+color = Color(0.4, 0.4, 0.4, 1)
 
 [node name="PageNumber" type="RichTextLabel" parent="Test/Left" unique_id=703046607]
 material = ExtResource("6_coxxa")
@@ -1420,55 +1325,37 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
-text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=28]1[/font]"
+text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=28]1."
 fit_content = true
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Test/Left" unique_id=1967608595]
-material = SubResource("ShaderMaterial_magazine_artwork")
+[node name="Tailor" type="TextureRect" parent="Test/Left" unique_id=1967608595]
+material = ExtResource("7_3ijpa")
 layout_mode = 0
-offset_left = 1039.0
-offset_top = -2.0
-offset_right = 1295.0
-offset_bottom = 254.0
-texture = ExtResource("7_nxt8p")
+offset_left = 1191.0
+offset_top = -10.0
+offset_right = 1519.381
+offset_bottom = 318.38098
+scale = Vector2(-1, 1)
+texture = ExtResource("8_3ijpa")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Test/Left/TextureRect" unique_id=408405001]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = 7.0
-offset_right = -11.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Pesto" type="TextureRect" parent="Test/Left" unique_id=9281520]
+material = ExtResource("7_3ijpa")
+layout_mode = 0
+offset_left = -39.0
+offset_top = 335.0
+offset_right = 217.0
+offset_bottom = 591.0
+texture = ExtResource("9_3ijpa")
 
-[node name="Title" type="RichTextLabel" parent="Test/Left/TextureRect/VBoxContainer" unique_id=1608396175]
-material = ExtResource("30_hint_dots")
-clip_contents = false
-layout_mode = 2
-bbcode_enabled = true
-text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=32]Pesto's Tip!"
-fit_content = true
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Test/Left/TextureRect/VBoxContainer" unique_id=1252956560]
-layout_mode = 2
-theme_override_constants/separation = 8
-theme_override_styles/separator = SubResource("StyleBoxEmpty_uvxgg")
-
-[node name="Content" type="RichTextLabel" parent="Test/Left/TextureRect/VBoxContainer" unique_id=1568780116]
-material = ExtResource("30_hint_dots")
-clip_contents = false
-layout_mode = 2
-bbcode_enabled = true
-text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=20]Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-
-Ut enim ad minim veniam."
-fit_content = true
+[node name="Pesto2" type="TextureRect" parent="Test/Left" unique_id=1657053138]
+material = ExtResource("7_3ijpa")
+layout_mode = 0
+offset_left = -8.0
+offset_top = 1850.0
+offset_right = 374.0
+offset_bottom = 2232.0
+texture = ExtResource("10_v5jbf")
 
 [node name="Pestos" type="ColorRect" parent="Test/Left" unique_id=1046946544]
 z_index = -999
@@ -1489,6 +1376,42 @@ offset_top = 722.0
 offset_right = 1516.5
 offset_bottom = 1140.0
 color = Color(0.015686275, 0.015686275, 0.015686275, 1)
+
+[node name="PestosTip" type="ColorRect" parent="Test/Left" unique_id=1223529519]
+material = ExtResource("3_nxt8p")
+layout_mode = 0
+offset_left = 327.0
+offset_top = 2016.0
+offset_right = 679.0
+offset_bottom = 2091.0
+color = Color(0.31350005, 0.57, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Test/Left/PestosTip" unique_id=1507540632]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Test/Left/PestosTip/VBoxContainer" unique_id=89403166]
+material = ExtResource("30_hint_dots")
+clip_contents = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=32][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" slant=0.2]Pesto's Helpful Hint:"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Test/Left/PestosTip/VBoxContainer" unique_id=426912002]
+material = ExtResource("30_hint_dots")
+clip_contents = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=20][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\"]Green is not a creative colour!"
+fit_content = true
+horizontal_alignment = 1
 
 [node name="Right" type="Control" parent="Test" unique_id=1864855257]
 layout_mode = 3
@@ -1521,9 +1444,32 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
-text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=28]2[/font]"
+text = "[font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\" size=28]2."
 fit_content = true
 horizontal_alignment = 1
+
+[node name="Subtitle" type="RichTextLabel" parent="Test/Right" unique_id=113694618]
+material = ExtResource("6_coxxa")
+clip_contents = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+bbcode_enabled = true
+text = "[font_size=92][outline_size=5][outline_color=#666666][font name=\"res://project/common_assets/_fonts/TsunagiGothic.ttf\"][color=#666666]The Main Pipe"
+fit_content = true
+
+[node name="Line" type="ColorRect" parent="Test/Right" unique_id=370978408]
+z_index = -999
+material = ExtResource("3_nxt8p")
+layout_mode = 0
+offset_left = 13.0
+offset_top = 107.0
+offset_right = 833.0
+offset_bottom = 113.0
+color = Color(0.4, 0.4, 0.4, 1)
 
 [node name="CanvasLayer" parent="." unique_id=758850763 instance=ExtResource("26_j17sk")]
 
@@ -1566,7 +1512,7 @@ jump_force = -320.0
 [node name="WorldNotes" type="Node" parent="." unique_id=563824083]
 
 [node name="WorldNote" parent="WorldNotes" unique_id=527109979 instance=ExtResource("9_gkq2y")]
-position = Vector2(872, -440)
+position = Vector2(794, -252)
 note_text = "colourful pixels representing moths will appear once player raises silkworm"
 
 [node name="WorldNote2" parent="WorldNotes" unique_id=1289867050 instance=ExtResource("9_gkq2y")]
@@ -2307,17 +2253,9 @@ position = Vector2(0, 3)
 position = Vector2(0.5, -34.5)
 shape = SubResource("RectangleShape2D_b1qrp")
 
-[node name="Popup" type="Sprite2D" parent="Moss" unique_id=1777833050 groups=["shader_objects"]]
-visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_qnost")
+[node name="Popup" parent="Moss" unique_id=1777833050 instance=ExtResource("tap_cutout")]
+material = SubResource("ShaderMaterial_ryhy8")
 position = Vector2(0, -32)
-texture = ExtResource("27_0ypsv")
-hframes = 3
-vframes = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Moss/Popup" unique_id=1529855294]
-libraries/ = SubResource("AnimationLibrary_tamwi")
 
 [node name="DetectionArea" type="Area2D" parent="Moss" unique_id=2062460456]
 position = Vector2(0, 8)
