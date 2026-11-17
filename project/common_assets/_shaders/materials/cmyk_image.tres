@@ -4,7 +4,7 @@
 
 [resource]
 shader = ExtResource("1_vyvf1")
-shader_parameter/dot_spacing = 2.0000000260771
+shader_parameter/dot_spacing = 1.5
 shader_parameter/dot_radius = 2.0
 shader_parameter/registration_offset = 1.0
 shader_parameter/dot_softness = 0.249999994412

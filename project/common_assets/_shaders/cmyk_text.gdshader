@@ -95,7 +95,6 @@ void fragment() {
 	shapes.a = glyph_coverage(texture(TEXTURE, UV + local_to_uv * (black_point - local_position)).rgb, distance_scale, pixel_width);
 	float interior = smoothstep(0.0, spacing, glyph * distance_scale);
 	plates.a = mix(plates.a, black_plate_coverage(black_point, spacing, ink.a, plates.a, shapes.a), interior);
-	vec4 result = mix(cmyk_composite(plates), cmyk_unresolved(rgb, ink, shapes), unresolved);
-	result = cmyk_registration_fringe(result, ink, shapes);
+	vec4 result = mix(cmyk_composite(plates), cmyk_unresolved(rgb, ink, shapes), unresolved * shapes.a);
 	COLOR = vec4(result.rgb / max(result.a, 0.00001), ink_colour.a * result.a);
 }

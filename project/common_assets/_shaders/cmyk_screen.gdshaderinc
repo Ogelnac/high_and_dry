@@ -97,9 +97,3 @@ vec4 cmyk_unresolved(vec3 rgb, vec4 ink, vec4 shapes) {
 	vec4 shifted = cmyk_composite(ink * (shapes - shared_shape) / max(remaining, 0.000001));
 	return vec4(rgb, 1.0) * shared_shape + shifted * remaining;
 }
-
-vec4 cmyk_registration_fringe(vec4 body, vec4 ink, vec4 shapes) {
-	vec3 overhang = max(shapes.rgb - shapes.a, vec3(0.0));
-	vec4 fringe = cmyk_composite(vec4(ink.rgb * overhang, 0.0));
-	return fringe + body * (1.0 - fringe.a);
-}
