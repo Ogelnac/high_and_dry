@@ -6,5 +6,5 @@
 shader = ExtResource("1_dots")
 shader_parameter/dot_spacing = 1.5
 shader_parameter/dot_radius = 2.0
-shader_parameter/dot_softness = 0.2999999932944
+shader_parameter/dot_softness = 0.5
 shader_parameter/msdf_pixel_range = 16.0

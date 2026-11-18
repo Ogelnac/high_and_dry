@@ -1292,7 +1292,7 @@ layout_mode = 0
 offset_left = 19.0
 offset_top = -38.0
 offset_right = 1165.0
-offset_bottom = 298.0
+offset_bottom = 253.0
 color = Color(0, 0, 0, 1)
 
 [node name="Title" type="RichTextLabel" parent="Test/Left" unique_id=599749617]
@@ -1384,8 +1384,7 @@ horizontal_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="Test/Left" unique_id=1850579998]
 material = ExtResource("30_hint_dots")
-position = Vector2(735, 242)
-scale = Vector2(2, 2)
+position = Vector2(936, 232.5)
 texture = ExtResource("5_yxj2o")
 region_enabled = true
 region_rect = Rect2(340, 574, 684, 161)
@@ -1393,8 +1392,7 @@ region_rect = Rect2(340, 574, 684, 161)
 [node name="Sprite2D2" type="Sprite2D" parent="Test/Left" unique_id=1732885805]
 material = ExtResource("7_3ijpa")
 instance_shader_parameters/centered_artwork = true
-position = Vector2(735, 242)
-scale = Vector2(2, 2)
+position = Vector2(936, 232.5)
 texture = ExtResource("5_yxj2o")
 region_enabled = true
 region_rect = Rect2(340, 574, 684, 161)
