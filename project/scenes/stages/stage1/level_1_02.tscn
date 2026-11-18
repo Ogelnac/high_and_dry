@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b6erk81axuxl6"]
+[gd_scene load_steps=7 format=4 uid="uid://b6erk81axuxl6"]
 
 [ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://project/scenes/stages/level.gd" id="1_f5x5x"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="3_r680b"]
@@ -13,9 +13,6 @@ shader_parameter/black_dot_transition = 0.5
 resource_local_to_scene = true
 shader = ExtResource("3_r680b")
 shader_parameter/black_dot_transition = 0.5
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_g0t25"]
-viewport_path = NodePath("Boat/SubViewport")
 
 [node name="level_1_0" type="Node2D"]
 script = ExtResource("1_f5x5x")
@@ -34,4 +31,3 @@ position = Vector2(0, -187)
 z_index = -5
 material = SubResource("ShaderMaterial_fbdqu")
 position = Vector2(1, -275)
-texture = SubResource("ViewportTexture_g0t25")

@@ -1,3 +1,5 @@
+// The shared entry points require a canvas_item shader context.
+#ifdef CMYK_ENTITY_PRINT_CANVAS
 #include "res://project/common_assets/_shaders/cmyk_screen.gdshaderinc"
 
 uniform vec2 atlas_frames = vec2(1.0);
@@ -129,3 +131,4 @@ void fragment() {
 	vec3 color = printed * artwork.a + paper_color.rgb * paper_alpha + shadow_color.rgb * shadow_alpha;
 	COLOR = vec4(color / max(alpha, 0.00001) * tint.rgb * cmyk_scene_fade(black_dot_transition), alpha * tint.a);
 }
+#endif

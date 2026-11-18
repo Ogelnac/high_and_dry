@@ -94,12 +94,12 @@ func refresh_shader_objects() -> void:
 			var transition: float = _get_black_dot_transition(obj.material)
 			black_dot_offsets[instance_id] = transition - master_baseline
 
-func _get_black_dot_transition(material: ShaderMaterial) -> Variant:
-	if material.shader == null:
+func _get_black_dot_transition(shader_material: ShaderMaterial) -> Variant:
+	if shader_material.shader == null:
 		return null
-	var value: Variant = material.get_shader_parameter("black_dot_transition")
+	var value: Variant = shader_material.get_shader_parameter("black_dot_transition")
 	if value == null:
-		value = RenderingServer.shader_get_parameter_default(material.shader.get_rid(), "black_dot_transition")
+		value = RenderingServer.shader_get_parameter_default(shader_material.shader.get_rid(), "black_dot_transition")
 	return value
 
 func find_objects_with_shader() -> Array:

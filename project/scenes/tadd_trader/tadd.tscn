@@ -18,6 +18,17 @@ shader_parameter/black_dot_transition = 0.5
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb22k"]
 size = Vector2(31, 29)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwmgl"]
+resource_local_to_scene = true
+shader = ExtResource("2_e0k7t")
+shader_parameter/atlas_frames = Vector2(3, 2)
+shader_parameter/atlas_region = Vector4(0, 0, 0, 0)
+shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
+shader_parameter/ink_imperfection = 0.14
+shader_parameter/black_ink_softness = 0.45
+shader_parameter/black_dot_transition = 0.5
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2wpjc"]
 size = Vector2(28, 31)
 
@@ -26,6 +37,7 @@ script = ExtResource("1_u2dtp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1704319428 groups=["shader_objects"]]
 z_index = -15
+texture_filter = 1
 material = SubResource("ShaderMaterial_8e7xq")
 texture = ExtResource("3_ram37")
 flip_h = true
@@ -38,6 +50,7 @@ position = Vector2(0.5, -34.5)
 shape = SubResource("RectangleShape2D_wb22k")
 
 [node name="Popup" parent="." unique_id=25772489 instance=ExtResource("tap_cutout")]
+material = SubResource("ShaderMaterial_pwmgl")
 position = Vector2(0, -39)
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=2050215091]

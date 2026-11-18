@@ -8,6 +8,7 @@ uniform float registration_offset : hint_range(0.0, 8.0, 0.25) = 2.0;
 uniform float dot_softness : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform bool use_artwork_texture = false;
 uniform vec4 artwork_region = vec4(0.0);
+instance uniform bool centered_artwork = false;
 
 varying vec2 local_position;
 varying vec2 original_position;
@@ -17,7 +18,8 @@ void vertex() {
 	original_position = VERTEX;
 	artwork_tint = COLOR;
 	float padding = min(dot_radius, max(dot_spacing, 0.25) * 2.0) + max(registration_offset, 8.0) + 2.0;
-	vec2 padding_direction = artwork_region.z > 0.0 && artwork_region.w > 0.0 ? sign(VERTEX) : UV * 2.0 - 1.0;
+	bool centered = centered_artwork || (artwork_region.z > 0.0 && artwork_region.w > 0.0);
+	vec2 padding_direction = centered ? sign(VERTEX) : UV * 2.0 - 1.0;
 	VERTEX += padding_direction * padding;
 	local_position = VERTEX;
 }
@@ -95,11 +97,12 @@ void fragment() {
 		vec2 magenta_uv = UV + local_to_uv * (magenta_point - original_position);
 		vec2 yellow_uv = UV + local_to_uv * (yellow_point - original_position);
 		vec2 black_uv = UV + local_to_uv * (black_point - original_position);
-		vec2 region_start = artwork_region.xy * TEXTURE_PIXEL_SIZE;
-		vec2 region_end = vec2(1.0);
+		vec4 sampling_region = all(greaterThan(abs(REGION_RECT.zw), vec2(0.0))) ? REGION_RECT : vec4(0.0, 0.0, 1.0, 1.0);
 		if (artwork_region.z > 0.0 && artwork_region.w > 0.0) {
-			region_end = region_start + artwork_region.zw * TEXTURE_PIXEL_SIZE;
+			sampling_region = artwork_region * TEXTURE_PIXEL_SIZE.xyxy;
 		}
+		vec2 region_start = min(sampling_region.xy, sampling_region.xy + sampling_region.zw);
+		vec2 region_end = max(sampling_region.xy, sampling_region.xy + sampling_region.zw);
 		vec2 half_texel = 0.5 * TEXTURE_PIXEL_SIZE;
 		vec2 sample_min = region_start + half_texel;
 		vec2 sample_max = region_end - half_texel;

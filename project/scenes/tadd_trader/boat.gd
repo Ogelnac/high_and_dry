@@ -24,6 +24,7 @@ var moving: bool = false
 
 func _ready():
 	_centre = position
+	smoke_sprite.texture = $SubViewport.get_texture()
 	_update_smoke_emitter()
 	update_orientation(flip_sprite)
 	cpu_particles_2d.emitting = true
