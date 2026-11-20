@@ -8,6 +8,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npcs"]
 shader = ExtResource("3_shader")
 shader_parameter/atlas_frames = Vector2(16, 16)
+shader_parameter/atlas_region = Vector4(0, 0, 0, 0)
+shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
+shader_parameter/ink_imperfection = 0.3
+shader_parameter/black_ink_softness = 0.45
 shader_parameter/black_dot_transition = 0.5
 
 [sub_resource type="Animation" id="Animation_reset"]
@@ -68,7 +73,7 @@ _data = {
 [node name="Villager" type="Node2D" unique_id=2086680436]
 script = ExtResource("1_wkvmw")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=153228782]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=153228782 groups=["shader_objects"]]
 texture_filter = 1
 material = SubResource("ShaderMaterial_npcs")
 texture = ExtResource("2_npcs")
@@ -78,7 +83,7 @@ vframes = 16
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=15545268]
 libraries/ = SubResource("AnimationLibrary_npcs")
 
-[node name="StepSFX" type="AudioStreamPlayer2D" parent="."]
+[node name="StepSFX" type="AudioStreamPlayer2D" parent="." unique_id=845212257]
 stream = ExtResource("4_step")
 volume_db = -10.0
 pitch_scale = 1.86
@@ -86,5 +91,5 @@ max_distance = 300.0
 attenuation = 2.0
 panning_strength = 0.5
 
-[node name="StepTimer" type="Timer" parent="."]
+[node name="StepTimer" type="Timer" parent="." unique_id=702470292]
 wait_time = 0.3

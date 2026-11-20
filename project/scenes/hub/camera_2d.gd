@@ -1,6 +1,5 @@
 extends Camera2D
 
-@export var debug_free_pan: bool = true
 @export var debug_pan_speed: float = 300.0
 
 @export var pestos_min_x: float = -776.0
@@ -11,6 +10,7 @@ extends Camera2D
 var is_in_pestos: bool = false
 var is_in_weavers: bool = false
 var player: Node2D = null
+var active_zone: Area2D = null
 
 @onready var pestos: Area2D = $"../CameraZones/Pestos"
 @onready var weavers: Area2D = $"../CameraZones/Weavers"
@@ -24,12 +24,10 @@ var player: Node2D = null
 @onready var ui: Control = $"../CanvasLayer/UI"
 @onready var parallax_controller: Node = $"../Environment"
 @onready var audio_listener: AudioListener2D = $AudioListener2D
+@onready var hub_player: Node2D = $"../Player"
 
 func _ready() -> void:
 	audio_listener.make_current()
-	if debug_free_pan:
-		return
-
 	pestos.body_entered.connect(_on_pestos_body_entered)
 	weavers.body_entered.connect(_on_weavers_body_entered)
 
@@ -38,65 +36,57 @@ func _ready() -> void:
 	middle.body_entered.connect(_on_middle_body_entered)
 	mid_right.body_entered.connect(_on_mid_right_body_entered)
 	right.body_entered.connect(_on_right_body_entered)
+	Debug.hub_free_camera_changed.connect(_on_hub_free_camera_changed)
+	player = hub_player
+	call_deferred("_sync_active_zone")
 
 func _on_left_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = left.global_position
-		is_in_pestos = false
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, left)
 
 func _on_mid_left_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = mid_left.global_position
-		is_in_pestos = false
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, mid_left)
 
 func _on_middle_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = middle.global_position
-		is_in_pestos = false
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, middle)
 
 func _on_mid_right_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = mid_right.global_position
-		is_in_pestos = false
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, mid_right)
 
 func _on_right_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = right.global_position
-		is_in_pestos = false
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, right)
 
 func _on_pestos_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = pestos.global_position
-		is_in_pestos = true
-		is_in_weavers = false
-		player = body
-		_reset_parallax()
+	_activate_zone(body, pestos, true)
 
 func _on_weavers_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		global_position = weavers.global_position
-		is_in_pestos = false
-		is_in_weavers = true
-		player = body
-		_reset_parallax()
+	_activate_zone(body, weavers, false, true)
+
+func _activate_zone(body: Node2D, zone: Area2D, in_pestos: bool = false, in_weavers: bool = false) -> void:
+	if body.name != "Player":
+		return
+	active_zone = zone
+	is_in_pestos = in_pestos
+	is_in_weavers = in_weavers
+	player = body
+	if Debug.hub_free_camera:
+		return
+	global_position = zone.global_position
+	_reset_parallax()
+
+func _sync_active_zone() -> void:
+	for zone: Area2D in [pestos, weavers, left, mid_left, middle, mid_right, right]:
+		if zone.overlaps_body(hub_player):
+			_activate_zone(hub_player, zone, zone == pestos, zone == weavers)
+			return
+
+func _on_hub_free_camera_changed(enabled: bool) -> void:
+	if enabled or not is_instance_valid(active_zone):
+		return
+	global_position = active_zone.global_position
+	_reset_parallax()
 
 func _physics_process(delta: float) -> void:
-	if debug_free_pan:
+	if Debug.hub_free_camera:
 		var direction := Vector2(
 			float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
 			float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W))

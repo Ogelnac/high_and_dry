@@ -25,12 +25,14 @@ func _ready() -> void:
 		tadd_launch_zone.body_entered.connect(enter_callable)
 	if not tadd_launch_zone.body_exited.is_connected(exit_callable):
 		tadd_launch_zone.body_exited.connect(exit_callable)
-	var village_state_changed := VillagerManager.complete_pending_move_in()
-	if VillagerManager.complete_pending_home_upgrades():
-		village_state_changed = true
-	if village_state_changed:
-		GameManager.save()
-	_setup_residents()
+	Debug.villagers_enabled_changed.connect(_set_villagers_enabled)
+	if Debug.villagers_enabled:
+		var village_state_changed := VillagerManager.complete_pending_move_in()
+		if VillagerManager.complete_pending_home_upgrades():
+			village_state_changed = true
+		if village_state_changed:
+			GameManager.save()
+	_set_villagers_enabled(Debug.villagers_enabled)
 	if !GameManager.game_progress["tutorial_played"]:
 		get_tree().change_scene_to_file("uid://dxc74hnt0exva")
 		return
@@ -94,6 +96,16 @@ func _setup_residents() -> void:
 			resident.home_request_requested.connect(_on_resident_home_request_requested)
 		resident.visible = true
 		resident.process_mode = Node.PROCESS_MODE_INHERIT
+
+func _set_villagers_enabled(enabled: bool) -> void:
+	if enabled:
+		_setup_residents()
+		return
+	active_resident = null
+	resident_box.hide()
+	for resident: HubResident in resident_slots:
+		resident.visible = false
+		resident.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _get_enabled_villager_locations() -> Array[HubVillagerLocation]:
 	var locations: Array[HubVillagerLocation] = []

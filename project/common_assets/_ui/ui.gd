@@ -11,6 +11,8 @@ extends Control
 @onready var silkworm_counter: RichTextLabel = $HubCounter/SilkwormCounter
 @onready var sand_counter: RichTextLabel = $HubCounter/SandCounter
 @onready var arrow_label: RichTextLabel = $HubCounter/Arrow
+@onready var backpack_open_sound: AudioStreamPlayer = $BackpackOpenSound
+@onready var backpack_close_sound: AudioStreamPlayer = $BackpackCloseSound
 
 @export var line_edit: LineEdit
 
@@ -135,8 +137,14 @@ func _play_one_shot(stream: AudioStream) -> void:
 	p.play()
 
 func _set_hub_state(new_state: int) -> void:
+	var was_open := hub_state > 0
 	hub_state = clamp(new_state, 0, 3)
 	GameManager.bag_open = hub_state > 0
+	if GameManager.bag_open != was_open:
+		if GameManager.bag_open:
+			backpack_open_sound.play()
+		else:
+			backpack_close_sound.play()
 	GameManager.save_presets()
 	_update_hub_display()
 

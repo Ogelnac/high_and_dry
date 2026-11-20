@@ -196,6 +196,8 @@ func _pick_least_recent_dialogue(entries: Array[Dictionary]) -> Dictionary:
 	return oldest[randi_range(0, oldest.size() - 1)]
 
 func roll_hub_visitor(guaranteed: bool = false) -> StringName:
+	if not Debug.villagers_enabled:
+		return &""
 	if not waiting_villager_id.is_empty():
 		if guaranteed:
 			initial_debug_visitor_seeded = true
@@ -212,7 +214,7 @@ func roll_hub_visitor(guaranteed: bool = false) -> StringName:
 	return waiting_villager_id
 
 func seed_initial_debug_visitor() -> bool:
-	if not Debug.guarantee_tadd_villager or initial_debug_visitor_seeded:
+	if not Debug.villagers_enabled or not Debug.guarantee_tadd_villager or initial_debug_visitor_seeded:
 		return false
 	return not roll_hub_visitor(true).is_empty()
 

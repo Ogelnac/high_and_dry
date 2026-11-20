@@ -14,6 +14,7 @@ func _ready() -> void:
 	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
 	GameManager.get_ui_reference()
 	GameManager.load_game()
+	Debug.villagers_enabled_changed.connect(_set_villagers_enabled)
 	if VillagerManager.seed_initial_debug_visitor():
 		GameManager.save()
 	GameManager.shop_UI()
@@ -24,6 +25,9 @@ func _ready() -> void:
 func _setup_waiting_visitor() -> void:
 	waiting_villager.visible = false
 	waiting_villager.process_mode = Node.PROCESS_MODE_DISABLED
+	visitor_definition = null
+	if not Debug.villagers_enabled:
+		return
 	if VillagerManager.waiting_villager_id.is_empty():
 		return
 	visitor_definition = VillagerManager.get_definition(VillagerManager.waiting_villager_id)
@@ -36,6 +40,10 @@ func _setup_waiting_visitor() -> void:
 	if not waiting_villager.interaction_requested.is_connected(_on_visitor_interaction_requested):
 		waiting_villager.interaction_requested.connect(_on_visitor_interaction_requested)
 	GameManager.UI.get_node("UI").refresh_shader_objects()
+
+func _set_villagers_enabled(_enabled: bool) -> void:
+	visitor_box.hide()
+	_setup_waiting_visitor()
 
 func _on_visitor_interaction_requested() -> void:
 	if visitor_definition != null:

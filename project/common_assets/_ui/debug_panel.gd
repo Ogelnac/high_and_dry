@@ -7,6 +7,8 @@ extends PanelContainer
 @onready var guaranteed_villager: CheckBox = $MarginContainer/VBoxContainer/GuaranteedVillager
 @onready var dye_requests: CheckBox = $MarginContainer/VBoxContainer/DyeRequests
 @onready var world_notes_toggle: CheckBox = $MarginContainer/VBoxContainer/WorldNotesToggle
+@onready var hub_free_camera_toggle: CheckBox = $MarginContainer/VBoxContainer/HubFreeCamera
+@onready var villagers_enabled_toggle: CheckBox = $MarginContainer/VBoxContainer/VillagersEnabled
 @onready var button: Button = $MarginContainer/VBoxContainer/Button
 @onready var level_count: SpinBox = $MarginContainer/VBoxContainer/HBoxContainer/LevelCount
 
@@ -20,6 +22,8 @@ func _ready() -> void:
 	guaranteed_villager.toggled.connect(_pass_toggle_guaranteed_villager)
 	dye_requests.toggled.connect(_pass_toggle_dye_requests)
 	world_notes_toggle.toggled.connect(Debug.set_world_notes_visible)
+	hub_free_camera_toggle.toggled.connect(Debug.set_hub_free_camera)
+	villagers_enabled_toggle.toggled.connect(Debug.set_villagers_enabled)
 	button.pressed.connect(show_dialogue_box)
 
 	check_box.button_pressed = Debug.disable_rising_death
@@ -29,6 +33,8 @@ func _ready() -> void:
 	guaranteed_villager.button_pressed = Debug.guarantee_tadd_villager
 	dye_requests.button_pressed = Debug.unlock_villager_dye_requests
 	world_notes_toggle.button_pressed = Debug.world_notes_visible
+	hub_free_camera_toggle.button_pressed = Debug.hub_free_camera
+	villagers_enabled_toggle.button_pressed = Debug.villagers_enabled
 
 	level_count.value = Debug.tiles_per_leg
 	Debug.number_of_levels = Debug.tiles_per_leg
