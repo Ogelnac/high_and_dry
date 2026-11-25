@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cqp1pldccwkgg" path="res://project/scenes/music_video/music_video.gd" id="1_scene"]
 [ext_resource type="FontFile" uid="uid://c4xxo6yj6rnct" path="res://project/common_assets/_fonts/Shutupandcode-Regular.ttf" id="2_font"]
-[ext_resource type="AudioStream" uid="uid://vj1puvuc8un5" path="res://project/common_assets/_audio/music/high_and_dry_demo.wav" id="3_track"]
+[ext_resource type="AudioStream" uid="uid://cghxpuabpv008" path="res://project/common_assets/_audio/music/high_and_dry_track2_demo.wav" id="3_0edde"]
 
 [node name="MusicVideo" type="Node2D" unique_id=1625233233]
 script = ExtResource("1_scene")
@@ -21,7 +21,7 @@ offset_bottom = 180.0
 theme_override_colors/font_color = Color(0.96, 0.9, 0.77, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 38
-text = "high & dry track 1 - demo"
+text = "high & dry track 2 - demo"
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -29,4 +29,4 @@ vertical_alignment = 2
 position = Vector2(0, 360)
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=717700571]
-stream = ExtResource("3_track")
+stream = ExtResource("3_0edde")

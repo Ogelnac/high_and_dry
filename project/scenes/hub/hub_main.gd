@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player: CharacterBody2D = $Player
-@onready var tadd_launch_zone: Area2D = $Environment/Boat/LaunchZone
+@onready var tadd_launch_zone := get_node_or_null("Boat/LaunchZone") as Area2D
 @onready var resident_box: Panel = $CanvasLayer/VisitorBox
 @onready var villager_locations_root: Node2D = $VillagerLocations
 @onready var resident_slots: Array[HubResident] = [
@@ -19,12 +19,13 @@ var active_resident: HubResident
 
 func _ready() -> void:
 	await get_tree().process_frame
-	var enter_callable := Callable(player, "_on_tadd_launch_zone_body_entered")
-	var exit_callable := Callable(player, "_on_tadd_launch_zone_body_exited")
-	if not tadd_launch_zone.body_entered.is_connected(enter_callable):
-		tadd_launch_zone.body_entered.connect(enter_callable)
-	if not tadd_launch_zone.body_exited.is_connected(exit_callable):
-		tadd_launch_zone.body_exited.connect(exit_callable)
+	if tadd_launch_zone != null:
+		var enter_callable := Callable(player, "_on_tadd_launch_zone_body_entered")
+		var exit_callable := Callable(player, "_on_tadd_launch_zone_body_exited")
+		if not tadd_launch_zone.body_entered.is_connected(enter_callable):
+			tadd_launch_zone.body_entered.connect(enter_callable)
+		if not tadd_launch_zone.body_exited.is_connected(exit_callable):
+			tadd_launch_zone.body_exited.connect(exit_callable)
 	Debug.villagers_enabled_changed.connect(_set_villagers_enabled)
 	if Debug.villagers_enabled:
 		var village_state_changed := VillagerManager.complete_pending_move_in()
@@ -36,6 +37,8 @@ func _ready() -> void:
 	if !GameManager.game_progress["tutorial_played"]:
 		get_tree().change_scene_to_file("uid://dxc74hnt0exva")
 		return
+
+	AudioManager.play_steamboat_audio(get_node_or_null("Boat") as Node2D)
 
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.player = $Player

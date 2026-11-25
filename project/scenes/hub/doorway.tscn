@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dp4tgkuytlhc6"]
+[gd_scene format=3 uid="uid://dp4tgkuytlhc6"]
 
 [ext_resource type="Script" uid="uid://dqf36t4gsnc1v" path="res://project/scenes/hub/doorway.gd" id="1_6gsfp"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="2_8bxks"]
-[ext_resource type="AudioStream" uid="uid://dey75n5wb6y4g" path="res://project/common_assets/_audio/door.wav" id="4_aa16f"]
-
+[ext_resource type="AudioStream" uid="uid://dey75n5wb6y4g" path="res://project/common_assets/_audio/sfxs/door.wav" id="4_aa16f"]
 [ext_resource type="PackedScene" path="res://project/common_assets/_ui/tap_cutout.tscn" id="tap_cutout"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qaiqh"]

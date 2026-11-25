@@ -5,16 +5,18 @@ extends Node2D
 # Level 2 - Temple
 # Level 3 - Depths
 
-const LEVEL_TEMPLATE = preload("uid://cne0knoik5exi")
-const LEVEL_2_1 = preload("uid://d2yys6p3i4ttj")
-const LEVEL_1_0 = preload("uid://u557m6xvcvqr")
-const LEVEL_1_BOAT_PICKUP = preload("uid://bwygpnwblafg4")
-const LEVEL_1_BOAT_DROPOFF = preload("uid://b6erk81axuxl6")
+const LEVEL_1_START = preload("res://project/scenes/stages/stage1/level_1_start.tscn")
 
-const LEVEL_VISUALS = preload("uid://q1i62eqp5m7v")
+const LEVEL_1_0 = preload("res://project/scenes/stages/stage1/level_1_0.tscn")
+const LEVEL_1_1 = preload("res://project/scenes/stages/stage1/level_1_1.tscn")
+const LEVEL_1_2 = preload("res://project/scenes/stages/stage1/level_1_2.tscn")
+const LEVEL_1_3 = preload("res://project/scenes/stages/stage1/level_1_3.tscn")
+const LEVEL_1_4 = preload("res://project/scenes/stages/stage1/level_1_4.tscn")
 
+const LEVEL_1_DROPOFF = preload("res://project/scenes/stages/stage1/level_1_dropoff.tscn")
+const LEVEL_1_PICKUP = preload("res://project/scenes/stages/stage1/level_1_pickup.tscn")
 
-var levels: Array[PackedScene]
+var levels: Array[PackedScene] = [LEVEL_1_0, LEVEL_1_1, LEVEL_1_2, LEVEL_1_3, LEVEL_1_4]
 
 @onready var player_host: Node2D = $PlayerHost
 @onready var rising_death: Area2D = $RisingDeath
@@ -62,12 +64,17 @@ func _ready() -> void:
 	if !GameManager.game_progress["tutorial_played"]:
 		load_tutorial()
 
+	AudioManager.play_rising_death_audio(get_node_or_null("RisingDeath/TileMapLayer") as TileMapLayer)
+
 	pattern_update(0)
+	AudioManager.resume_arcade_track(self)
 
 func _input(event: InputEvent):
-	if event is InputEventScreenTouch:
+	if event is InputEventScreenTouch and not is_playing:
 		is_playing = true
 		rising_death.is_playing = true
+
+		AudioManager.play_arcade_track(self)
 
 func _process(_delta: float) -> void:
 	if game_ended:
@@ -98,37 +105,27 @@ func load_tutorial():
 	the tutorial![/wave][/center]"
 
 func pattern_update(tile: int) -> void:
-	var visuals_instance: Node
-	visuals_instance = LEVEL_VISUALS.instantiate()
-	add_child(visuals_instance)
-	visuals_instance.global_position.y = float(-608 * tile)
-	
 	var level_instance: Node
 	if tile == 0:
 		if GameManager.legs_completed == 0:
 			# Start tile
-			level_instance = LEVEL_1_0.instantiate()
-			visuals_instance.find_child("ForegroundStart").visible = true
+			level_instance = LEVEL_1_START.instantiate()
 		else:
 			# Boat dropoff
-			level_instance = LEVEL_1_BOAT_DROPOFF.instantiate()
-			visuals_instance.find_child("BackgroundDropOff").visible = true
-			visuals_instance.find_child("ForegroundDropOff").visible = true
+			level_instance = LEVEL_1_DROPOFF.instantiate()
 	elif tile == Debug.tiles_per_leg:
 		# Add interim level
-		level_instance = LEVEL_1_BOAT_PICKUP.instantiate()
-		visuals_instance.find_child("ForegroundPickUp").visible = true
+		level_instance = LEVEL_1_PICKUP.instantiate()
 		level_instance.interim = true
 	else:
 		# Add random level
-		level_instance = LEVEL_2_1.instantiate()
-	
+		level_instance = levels[randi_range(0, levels.size() - 1)].instantiate()
+
 	add_child(level_instance)
 	level_instance.global_position.y = float(-608 * tile)
 	tiles_in_scene.insert(0, level_instance)
-	visuals_in_scene.insert(0, visuals_instance)
 	ui.refresh_shader_objects()
-	
+
 	if tile > 0 and tile % 5 == 0:
 		# Every 5 tiles spawn a special collectable
 		pass

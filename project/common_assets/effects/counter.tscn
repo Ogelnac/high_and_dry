@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpphloewhd56b"]
+[gd_scene format=3 uid="uid://cpphloewhd56b"]
 
 [ext_resource type="Script" uid="uid://ld5dc83px7ok" path="res://project/common_assets/effects/counter.gd" id="1_c0gdl"]
 [ext_resource type="Theme" uid="uid://fvk3irjlp128" path="res://project/common_assets/_theme/theme_test.tres" id="1_v1kn5"]
-[ext_resource type="AudioStream" uid="uid://b1d7fhuqrwljs" path="res://project/common_assets/_audio/collect_resource.wav" id="3_cr1nf"]
-[ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/collect50.wav" id="4_8fso8"]
+[ext_resource type="AudioStream" uid="uid://b1d7fhuqrwljs" path="res://project/common_assets/_audio/sfxs/collect_resource.wav" id="3_cr1nf"]
+[ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/sfxs/collect50.wav" id="4_8fso8"]
 
 [node name="Counter" type="Node2D"]
 script = ExtResource("1_c0gdl")

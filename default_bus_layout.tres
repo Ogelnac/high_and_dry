@@ -1,5 +1,24 @@
 [gd_resource type="AudioBusLayout" format=3 uid="uid://c474u2gk3gkm5"]
 
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_steamboat"]
+resource_name = "Steamboat Reverb"
+room_size = 0.45
+damping = 0.65
+wet = 0.12
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_tadd_music"]
+resource_name = "Tadd Music Muffle"
+cutoff_hz = 1600.0
+resonance = 0.5
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tadd_music"]
+resource_name = "Tadd Music Reverb"
+predelay_msec = 60.0
+room_size = 0.55
+damping = 0.65
+dry = 0.3
+wet = 0.25
+
 [resource]
 bus/1/name = &"Bgm"
 bus/1/solo = false
@@ -13,3 +32,21 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/3/name = &"Steamboat"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Sfx"
+bus/3/effect/0/effect = SubResource("AudioEffectReverb_steamboat")
+bus/3/effect/0/enabled = true
+bus/4/name = &"TaddMusic"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -6.0206
+bus/4/send = &"Bgm"
+bus/4/effect/0/effect = SubResource("AudioEffectLowPassFilter_tadd_music")
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource("AudioEffectReverb_tadd_music")
+bus/4/effect/1/enabled = true

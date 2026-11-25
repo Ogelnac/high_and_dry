@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b7n7uu33orou0" path="res://project/scenes/hub/bumper.gd" id="1_2hcpo"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="1_e8kwg"]
 [ext_resource type="Texture2D" uid="uid://dk5onfvkn2tfe" path="res://project/common_assets/_textures/sprite_sheet.png" id="3_ck7jp"]
-[ext_resource type="AudioStream" uid="uid://dcp6yotx1l8ch" path="res://project/common_assets/_audio/bumper.wav" id="4_32yb8"]
+[ext_resource type="AudioStream" uid="uid://dcp6yotx1l8ch" path="res://project/common_assets/_audio/sfxs/bumper.wav" id="4_32yb8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c74ds"]
 shader = ExtResource("1_e8kwg")

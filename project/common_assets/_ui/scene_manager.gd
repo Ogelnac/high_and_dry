@@ -80,4 +80,4 @@ func _on_start_game_signal_merchant() -> void:
 		get_tree().change_scene_to_file("uid://cjyisk7r6qf4c")
 	else:
 		GameManager.player_start_position = Vector2(0.0, -23.0)
-		get_tree().change_scene_to_file("uid://o3icrd55w7ci")
+		AudioManager.change_scene_with_arcade_track("uid://o3icrd55w7ci")

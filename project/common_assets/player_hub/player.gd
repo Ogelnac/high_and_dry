@@ -122,7 +122,7 @@ func _input(event: InputEvent) -> void:
 						hub_counter.visible = false
 						launching_to_tadd = inside_tadd_launch_zone
 						if launching_to_tadd:
-							launch_zone = get_node_or_null("../Environment/Boat/LaunchZone") as Area2D
+							launch_zone = get_node_or_null("../Boat/LaunchZone") as Area2D
 						launch_commence = true
 					else:
 						var horizontal_jump_strength = max(abs(swipe_normalized.x) * max_speed, 50.0)

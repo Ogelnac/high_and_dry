@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cgx68fo4mwdm0" path="res://project/scenes/tadd_trader/tadd_visitor.tscn" id="17_visitor"]
 [ext_resource type="PackedScene" path="res://project/scenes/tadd_trader/boon.tscn" id="boon_scene"]
 [ext_resource type="PackedScene" path="res://project/common_assets/_ui/tap_cutout.tscn" id="tap_cutout"]
+[ext_resource type="PackedScene" path="res://project/scenes/tadd_trader/tadd_ambience.tscn" id="tadd_ambience"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_26lps"]
 shader = ExtResource("11_ic5l1")
@@ -72,6 +73,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CanvasLayer" parent="." unique_id=1824370957 instance=ExtResource("2_dwo4v")]
+
+[node name="TaddAmbience" parent="." instance=ExtResource("tadd_ambience")]
 
 [node name="Background" type="TileMapLayer" parent="." unique_id=795950880 groups=["shader_objects"]]
 modulate = Color(0.568973, 0.568973, 0.568973, 1)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="AudioStream" uid="uid://dce21nrjvxiru" path="res://project/common_assets/_audio/ambient/ambient_sewage.wav" id="1_sewage"]
+[ext_resource type="AudioStream" uid="uid://xwepal88i7b8" path="res://project/common_assets/_audio/ambient/steamboat_engine_loop.wav" id="2_engine"]
+
+[node name="TaddAmbience" type="Node"]
+
+[node name="Sewage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_sewage")
+volume_db = -21.0
+autoplay = true
+bus = &"Sfx"
+
+[node name="Engine" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_engine")
+volume_db = -16.0
+autoplay = true
+bus = &"Steamboat"

@@ -57,6 +57,7 @@ func _ready() -> void:
 	_init_item_defs()
 	var picks := _pick_unique_items(3)
 	_apply_shop_selection(picks)
+	AudioManager.play_arcade_track(self, &"TaddMusic")
 
 func _init_item_defs() -> void:
 	normal_defs = []
@@ -188,4 +189,4 @@ func _apply_shop_selection(items:Array[ShopManager.ShopItem]) -> void:
 
 func leave_shop():
 	Debug.switch_player = false
-	get_tree().change_scene_to_file("uid://dxc74hnt0exva")
+	AudioManager.change_scene_with_arcade_track("uid://dxc74hnt0exva")

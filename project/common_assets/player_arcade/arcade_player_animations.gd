@@ -14,53 +14,44 @@ var landing_squash_timer: float = 0.0
 var previous_velocity: Vector2 = Vector2.ZERO
 
 func update_animation(delta: float) -> void:
-	_handle_animation()
 	_update_orientation(delta)
+	_handle_animation()
 	_apply_squash_and_stretch(delta)
 	_update_facing()
 	previous_velocity = player.velocity
 
 func show_death_frame() -> void:
 	animation_player.stop()
-	frame = 23
+	frame = 28
 
 func _handle_animation() -> void:
 	if player.aiming:
 		animation_player.stop()
 		var local_aim: Vector2 = -player.release_displacement.rotated(-current_angle)
-		var angle := rad_to_deg(atan2(-local_aim.x, -local_aim.y))
-		if angle < 0.0:
-			angle += 360.0
-
-		frame = 8
-		if angle < 45.0:
-			frame = 8
-		elif angle < 70.0:
-			frame = 7
-		elif angle < 90.0:
-			frame = 6
-		elif angle < 120.0:
-			frame = 5
-		elif angle < 240.0:
-			frame = 4
-		elif angle < 270.0:
-			frame = 5
-		elif angle < 290.0:
-			frame = 6
-		elif angle < 315.0:
-			frame = 7
-		else:
-			frame = 8
-
+		frame = 4 + _directional_pose(local_aim)
 		flip_h = player.release_displacement.x > 0.0
 		return
 
 	if player.needle_thrown or player.climbing_thread:
-		animation_player.play("idle_temp")
+		animation_player.stop()
+		var local_velocity: Vector2 = player.velocity.rotated(-current_angle)
+		frame = 9 + _directional_pose(local_velocity)
 	elif player.is_on_floor() or player.is_on_wall() or player.is_on_ceiling():
 		animation_player.play("idle" if player.velocity.length() < 5.0 else "run")
 	else:
 		animation_player.play("idle")
+
+func _directional_pose(direction: Vector2) -> int:
+	var angle := rad_to_deg(atan2(absf(direction.x), -direction.y))
+	if angle < 45.0:
+		return 4
+	if angle < 70.0:
+		return 3
+	if angle < 90.0:
+		return 2
+	if angle < 120.0:
+		return 1
+	return 0
 
 func _update_orientation(delta: float) -> void:
 	if player.in_water:

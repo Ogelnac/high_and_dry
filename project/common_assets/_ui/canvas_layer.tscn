@@ -12,18 +12,17 @@
 [ext_resource type="Script" uid="uid://dc465xi7eluxr" path="res://project/common_assets/_ui/scene_manager.gd" id="8_0ogh3"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="9_71g66"]
 [ext_resource type="Texture2D" uid="uid://djw3ddhuydv63" path="res://project/common_assets/_ui/level_select.png" id="10_gdo4b"]
-[ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/collect50.wav" id="11_4mnhw"]
+[ext_resource type="AudioStream" uid="uid://bhd1g3d3dsklh" path="res://project/common_assets/_audio/sfxs/collect50.wav" id="11_4mnhw"]
 [ext_resource type="Shader" uid="uid://f2jjmxjb7re0" path="res://project/common_assets/_shaders/circle_fade.gdshader" id="12_uer7x"]
 [ext_resource type="Script" uid="uid://bsbx1kmu5xy2p" path="res://project/common_assets/_ui/circle_fade.gd" id="13_wugvg"]
 [ext_resource type="Script" uid="uid://dy5hmvrmgogkk" path="res://project/common_assets/_ui/menu_panel.gd" id="15_yo1el"]
 [ext_resource type="Script" uid="uid://cmmya6v463hjb" path="res://project/common_assets/_ui/end_game.gd" id="16_lrj6d"]
 [ext_resource type="Texture2D" uid="uid://w7mrssgc3n51" path="res://project/scenes/tadd_trader/boons.png" id="16_ml53l"]
 [ext_resource type="Shader" uid="uid://qlrxyxv48frw" path="res://project/common_assets/_shaders/whack_a_pesto_counter.gdshader" id="17_fkxa7"]
-[ext_resource type="Script" path="res://project/common_assets/_ui/villager_interaction_panel.gd" id="18_visitor"]
-
-[ext_resource type="Script" path="res://project/common_assets/_ui/panel_controls.gd" id="panel_controls"]
-[ext_resource type="AudioStream" path="res://project/common_assets/_audio/back_pack_open.wav" id="backpack_open"]
-[ext_resource type="AudioStream" path="res://project/common_assets/_audio/back_pack_close.wav" id="backpack_close"]
+[ext_resource type="Script" uid="uid://cydbl5ggqiibp" path="res://project/common_assets/_ui/villager_interaction_panel.gd" id="18_visitor"]
+[ext_resource type="Script" uid="uid://cipn4wiwq040p" path="res://project/common_assets/_ui/panel_controls.gd" id="panel_controls"]
+[ext_resource type="AudioStream" uid="uid://5ouidivaycit" path="res://project/common_assets/_audio/sfxs/back_pack_open.wav" id="backpack_open"]
+[ext_resource type="AudioStream" uid="uid://bfa12dqm81a83" path="res://project/common_assets/_audio/sfxs/back_pack_close.wav" id="backpack_close"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ugoqk"]
 shader = ExtResource("9_71g66")

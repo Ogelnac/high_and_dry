@@ -9,12 +9,15 @@
 [ext_resource type="Script" uid="uid://dod8bvlsjrw2i" path="res://project/common_assets/player_arcade/arcade_player_animations.gd" id="4_w5ibb"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="6_tt4ve"]
 [ext_resource type="Script" uid="uid://cpwim52iwibmb" path="res://project/common_assets/player_arcade/player_scripts/air_meter.gd" id="7_jatp4"]
-
 [ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="cutout_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tt4ve"]
 shader = ExtResource("6_tt4ve")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.5
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="Animation" id="Animation_jatp4"]
 length = 0.001
@@ -165,7 +168,12 @@ radius = 6.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kul7w"]
 shader = ExtResource("cutout_shader")
-shader_parameter/atlas_frames = Vector2(5, 5)
+shader_parameter/atlas_frames = Vector2(6, 5)
+shader_parameter/atlas_region = Vector4(0, 0, 0, 0)
+shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
+shader_parameter/ink_imperfection = 0.3
+shader_parameter/black_ink_softness = 0.45
 shader_parameter/black_dot_transition = 0.5
 
 [sub_resource type="Animation" id="Animation_tnktm"]
@@ -228,7 +236,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [9, 10, 11, 12, 13, 14]
+"values": [14, 15, 16, 17, 18, 19]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cuypb"]
@@ -307,22 +315,22 @@ texture = ExtResource("4_tt4ve")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
+[node name="AimLine" type="Line2D" parent="." unique_id=157205758]
+position = Vector2(0, -4)
+width = 1.0
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1409652124]
 texture_filter = 1
 material = SubResource("ShaderMaterial_kul7w")
 position = Vector2(0, -6)
 texture = ExtResource("4_uymdo")
-hframes = 5
+hframes = 6
 vframes = 5
 script = ExtResource("4_w5ibb")
 
 [node name="AimRay" type="RayCast2D" parent="." unique_id=846898123]
 target_position = Vector2(300, 0)
 collision_mask = 2
-
-[node name="AimLine" type="Line2D" parent="." unique_id=157205758]
-position = Vector2(0, -4)
-width = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=509557204]
 libraries/ = SubResource("AnimationLibrary_cuypb")

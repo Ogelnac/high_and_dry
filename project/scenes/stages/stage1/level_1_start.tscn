@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://bkff3ip4jih0v"]
+[gd_scene format=4 uid="uid://bkff3ip4jih0v"]
 
 [ext_resource type="Script" uid="uid://c57x5cf8i641w" path="res://project/scenes/stages/level.gd" id="1_gv54u"]
 [ext_resource type="Shader" uid="uid://bcy4nial3j30g" path="res://project/common_assets/_shaders/cmyk_surface.gdshader" id="2_nisk5"]
@@ -8,12 +8,16 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rjjnm"]
 shader = ExtResource("2_nisk5")
+shader_parameter/registration_offset = 0.0
+shader_parameter/dot_softness = 0.5
 shader_parameter/black_dot_transition = 0.5
+shader_parameter/alpha_effect = 1.0
+shader_parameter/continuous_tile_grid = false
 
-[node name="level_2_0" type="Node2D"]
+[node name="level_2_0" type="Node2D" unique_id=69704503]
 script = ExtResource("1_gv54u")
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=1070102262]
 z_index = 40
 material = ExtResource("4_575x7")
 anchors_preset = 7
@@ -29,13 +33,13 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.05, 0.0225, 0.0225, 1)
 
-[node name="Background" type="TileMapLayer" parent="." groups=["shader_objects"]]
+[node name="Background" type="TileMapLayer" parent="." unique_id=1892465960 groups=["shader_objects"]]
 texture_filter = 1
 material = SubResource("ShaderMaterial_rjjnm")
 tile_set = ExtResource("3_0e8gf")
 collision_enabled = false
 
-[node name="Midground" type="TileMapLayer" parent="." groups=["shader_objects"]]
+[node name="Midground" type="TileMapLayer" parent="." unique_id=1866422979 groups=["shader_objects"]]
 z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_rjjnm")
@@ -43,7 +47,7 @@ tile_map_data = PackedByteArray("AAD6//r/AAAAAAAAAAD6//v/AAADAAAAAAD6//7/AAACAAA
 tile_set = ExtResource("3_0e8gf")
 physics_quadrant_size = 1
 
-[node name="Foreground" type="TileMapLayer" parent="." groups=["shader_objects"]]
+[node name="Foreground" type="TileMapLayer" parent="." unique_id=1557562454 groups=["shader_objects"]]
 z_index = 25
 texture_filter = 1
 material = SubResource("ShaderMaterial_rjjnm")
@@ -51,11 +55,11 @@ tile_map_data = PackedByteArray("AAD+/+r/AAAKAAQAAAABAOr/AAANAAQAAAA=")
 tile_set = ExtResource("3_0e8gf")
 collision_enabled = false
 
-[node name="Collectables" type="Node2D" parent="."]
+[node name="Collectables" type="Node2D" parent="." unique_id=191113928]
 
-[node name="SpecialCollectables" type="Node2D" parent="."]
+[node name="SpecialCollectables" type="Node2D" parent="." unique_id=1886949773]
 
-[node name="SpecialCollectable" parent="SpecialCollectables" instance=ExtResource("5_nisk5")]
+[node name="SpecialCollectable" parent="SpecialCollectables" unique_id=825295142 instance=ExtResource("5_nisk5")]
 position = Vector2(0, -289)
 
-[node name="Enemies" type="Node2D" parent="."]
+[node name="Enemies" type="Node2D" parent="." unique_id=697411723]

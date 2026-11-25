@@ -79,8 +79,8 @@ func _sync_active_zone() -> void:
 			_activate_zone(hub_player, zone, zone == pestos, zone == weavers)
 			return
 
-func _on_hub_free_camera_changed(enabled: bool) -> void:
-	if enabled or not is_instance_valid(active_zone):
+func _on_hub_free_camera_changed(free_enabled: bool) -> void:
+	if free_enabled or not is_instance_valid(active_zone):
 		return
 	global_position = active_zone.global_position
 	_reset_parallax()

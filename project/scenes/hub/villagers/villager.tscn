@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dqq0i3cll7o3e" path="res://project/scenes/hub/villagers/villager.gd" id="1_wkvmw"]
 [ext_resource type="Texture2D" uid="uid://bqghjrpwjblbh" path="res://project/scenes/hub/villagers/npcs.png" id="2_npcs"]
 [ext_resource type="Shader" uid="uid://d2a8dcin0l68i" path="res://project/common_assets/_shaders/cmyk_entity.gdshader" id="3_shader"]
-[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://project/common_assets/_audio/step.wav" id="4_step"]
+[ext_resource type="AudioStream" uid="uid://bqdv1ouy6gqbw" path="res://project/common_assets/_audio/sfxs/step.wav" id="4_step"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npcs"]
 shader = ExtResource("3_shader")

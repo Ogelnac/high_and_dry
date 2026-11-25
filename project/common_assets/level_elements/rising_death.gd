@@ -45,6 +45,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and player:
 		player.in_water = true
 		call_deferred("_spawn_splash", player.global_position)
+		AudioManager.play_splash_audio(player_host)
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and player:

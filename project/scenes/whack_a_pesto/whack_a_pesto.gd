@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	if doinking:
 		doink_timer -= delta
 	if doink_timer < 0.0:
-		sprite_2d.frame = 21
+		sprite_2d.frame = 26
 		doinking = false
 		doink_timer = max_doink
 
@@ -76,7 +76,7 @@ func _input(event: InputEvent) -> void:
 		var canvas_transform = get_viewport().get_canvas_transform()
 		var world_position = canvas_transform.affine_inverse() * screen_position
 		tailor_wap.global_position = world_position
-		sprite_2d.frame = 22
+		sprite_2d.frame = 27
 		var dir: int = tailor_wap.global_position.x > 0.0
 		sprite_2d.flip_h = dir
 		tailor_wap.global_position.x += 16.0 * dir
