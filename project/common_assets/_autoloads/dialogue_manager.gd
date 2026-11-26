@@ -1,5 +1,7 @@
 extends Node
 
+const CircleTransition = preload("res://project/common_assets/_ui/circle_transition.gd")
+
 signal dialogue_finished
 
 const SAVE_PATH := "user://player_progress.json"
@@ -201,7 +203,7 @@ func bind_input(scene_path: String):
 		option_2.pressed.connect(_on_option_2_pressed)
 
 func _on_option_1_pressed():
-	GameManager.change_scene(scene_change_name)
+	CircleTransition.change_scene(GameManager.UI, scene_change_name)
 
 func _on_option_2_pressed():
 	dialogue_input.visible = false

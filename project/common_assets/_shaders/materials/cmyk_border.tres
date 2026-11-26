@@ -4,8 +4,10 @@
 
 [resource]
 shader = ExtResource("1_border")
+shader_parameter/paper_color = Color(0.9607843, 0.9019608, 0.76862746, 1)
 shader_parameter/dot_spacing = 1.5
 shader_parameter/dot_radius = 2.0
 shader_parameter/registration_offset = 2.0
-shader_parameter/dot_softness = 0.499999988824
+shader_parameter/dot_softness = 0.5
 shader_parameter/use_artwork_texture = false
+shader_parameter/artwork_region = Vector4(0, 0, 0, 0)

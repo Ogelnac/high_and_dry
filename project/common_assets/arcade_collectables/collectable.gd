@@ -47,7 +47,7 @@ func _on_body_entered(body: Node2D) -> void:
 		for node in get_tree().get_nodes_in_group("player"):
 			if node.name == "ArcadePlayer":
 				node.increment_combo(global_position, collectable_type)
-		GameManager.add_resource(collectable_type)
+		GameManager.arcade_run.add_resource(collectable_type)
 
 		audio_player.set_bus("Sfx")
 		audio_player.play()

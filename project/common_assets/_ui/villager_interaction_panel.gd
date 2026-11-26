@@ -90,14 +90,14 @@ func _on_villager_dialogue_finished() -> void:
 
 func _format_request(cost: Dictionary[String, int], heading: String, cost_type: StringName) -> String:
 	var parts: Array[String] = []
-	for colour_name in GameManager.COLOR_ORDER:
+	for colour_name in GameManager.Inventory.COLOR_ORDER:
 		var amount := int(cost.get(colour_name, 0))
 		if amount <= 0:
 			continue
 		if cost_type == &"dye":
-			parts.append("[color=#%s]%d %s[/color]" % [GameManager.COLOR_HEX[colour_name], amount, colour_name.to_lower()])
+			parts.append("[color=#%s]%d %s[/color]" % [GameManager.Inventory.COLOR_HEX[colour_name], amount, colour_name.to_lower()])
 		else:
-			var region: Vector4i = GameManager.INGREDIENT_REGIONS[colour_name]
+			var region: Vector4i = GameManager.Inventory.INGREDIENT_REGIONS[colour_name]
 			parts.append("%d[img width=25 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img]" % [amount, region.x, region.y, region.z, region.w])
 	return "[center]" + heading + "\n" + "   ".join(parts)
 

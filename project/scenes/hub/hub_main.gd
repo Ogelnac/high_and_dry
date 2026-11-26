@@ -46,9 +46,14 @@ func _ready() -> void:
 	resident_box.payment_requested.connect(_on_resident_payment_requested)
 	resident_box.closed.connect(_on_resident_panel_closed)
 
-	GameManager.get_ui_reference()
-	GameManager.hub_UI()
-	GameManager.circle_fade = $CanvasLayer/UI/CircleFade
+	GameManager.UI = $CanvasLayer
+	_update_bottles()
+	TimeManager.set_active(true)
+
+
+func _update_bottles() -> void:
+	for bottle in $DyeBottles.get_children():
+		bottle._sync_from_manager()
 
 func _on_player_enter_tadd() -> void:
 	GameManager.player_start_position = Vector2(0.0, -23.0)
@@ -135,7 +140,7 @@ func _on_resident_payment_requested() -> void:
 		return
 	if VillagerManager.pay_home_upgrade(active_resident.house_index):
 		GameManager.save()
-		GameManager.update_bottles()
+		_update_bottles()
 		resident_box.mark_paid("Home request accepted", &"home_request_accepted", "[PLACEHOLDER HOME REQUEST ACCEPTED]")
 
 func _on_resident_panel_closed() -> void:

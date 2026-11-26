@@ -4,8 +4,9 @@
 
 [resource]
 shader = ExtResource("1_text")
+shader_parameter/paper_color = Color(0.9607843, 0.9019608, 0.76862746, 1)
 shader_parameter/dot_spacing = 1.5
 shader_parameter/dot_radius = 2.0
-shader_parameter/registration_offset = 0.0
+shader_parameter/registration_offset = 1.0
 shader_parameter/dot_softness = 0.5
 shader_parameter/msdf_pixel_range = 16.0

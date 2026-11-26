@@ -4,7 +4,6 @@
 
 uniform vec2 atlas_frames = vec2(1.0);
 uniform vec4 atlas_region = vec4(0.0);
-uniform vec4 paper_color : source_color = vec4(0.96, 0.90, 0.77, 1.0);
 uniform vec4 shadow_color : source_color = vec4(0.23, 0.17, 0.26, 0.65);
 uniform float ink_imperfection : hint_range(0.0, 0.3, 0.01) = 0.3;
 uniform float black_ink_softness : hint_range(0.0, 1.0, 0.01) = 0.45;
@@ -93,7 +92,7 @@ void fragment() {
 			shifted_color += (ink.rgb - printed) * (weight.x * weight.y * ink_mask);
 		}
 	}
-	printed = mix(printed, shifted_color, color_ink);
+	printed = cmyk_paper_color(mix(printed, shifted_color, color_ink));
 	printed = mix(printed, paper_color.rgb, ink_imperfection * 0.25 * color_ink * (0.5 + 0.5 * variation));
 	vec2 black_texel = artwork_uv / TEXTURE_PIXEL_SIZE - 0.5;
 	vec2 black_lower = floor(black_texel) + 0.5;
@@ -115,7 +114,7 @@ void fragment() {
 		}
 	}
 	float original_black = black_ink(artwork.rgb);
-	vec3 color_under_black = nearby_weight > 0.00001 ? nearby_color / nearby_weight : paper_color.rgb;
+	vec3 color_under_black = nearby_weight > 0.00001 ? cmyk_paper_color(nearby_color / nearby_weight) : paper_color.rgb;
 	vec3 softened_print = mix(printed, color_under_black, original_black) * (1.0 - soft_black);
 	printed = mix(printed, softened_print, black_ink_softness);
 #ifdef ENTITY_DIFFRACTION

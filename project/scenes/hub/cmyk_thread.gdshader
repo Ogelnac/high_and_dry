@@ -45,10 +45,9 @@ void fragment() {
 	vec4 base = tex * fill_colour * COLOR;
 	vec3 colour = base.rgb;
 
-	float black_ink = black_dot_transition - max(colour.r, max(colour.g, colour.b));
 	vec2 point = UV / pixel_size;
 	float spacing = 1.5;
-	vec3 cmyk_rgb = cmyk_texture_color(point, spacing, colour, black_ink, registration_offset, dot_softness);
+	vec3 cmyk_rgb = cmyk_paper_color(cmyk_screen_color(point, spacing, colour, registration_offset, dot_softness)) * cmyk_scene_fade(black_dot_transition);
 	float cmyk_a = base.a * alpha_effect;
 
 	float mask = thread_region_mask(UV, TEXTURE_PIXEL_SIZE);

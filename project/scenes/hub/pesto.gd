@@ -33,7 +33,7 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
-		if GameManager.unprocessed_resources.size()>= 50 or Debug.infinite_resources:
+		if GameManager.inventory.unprocessed_resources.size()>= 50 or Debug.infinite_resources:
 			DialogueManager.start_dialogue("pesto_start", true)
 			DialogueManager.set_input("[center]Would you like to play [color=CHARTREUSE]Whack-A-Pesto[/color]?", "Yes", "No")
 			DialogueManager.bind_input("uid://b1v52htitw8cp")

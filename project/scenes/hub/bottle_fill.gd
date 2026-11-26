@@ -63,7 +63,7 @@ func _ready() -> void:
 
 	if fabric.material is ShaderMaterial:
 		fabric.material = fabric.material.duplicate(true)
-		fabric.modulate = Color(GameManager.COLOR_HEX[bottle_colour])
+		fabric.modulate = Color(GameManager.Inventory.COLOR_HEX[bottle_colour])
 	
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
 		_update_popup_2()
 
 func _sync_from_manager() -> void:
-	var gm_silkworms: int = max(0, GameManager.get_silkworm_amount(bottle_colour))
+	var gm_silkworms: int = max(0, GameManager.inventory.get_silkworm_amount(bottle_colour))
 	var new_producing: bool = _compute_producing()
 	var producing_changed: bool = new_producing != producing
 	producing = new_producing
@@ -109,28 +109,28 @@ func _sync_from_manager() -> void:
 	else:
 		silkworm_amount = gm_silkworms
 
-	var dye_amount: int = GameManager.get_dye_value(bottle_colour)
+	var dye_amount: int = GameManager.inventory.get_dye_value(bottle_colour)
 	if dye_amount != _cached_dye_amount:
 		_cached_dye_amount = dye_amount
-		var bottle_size: int = GameManager.get_bottle_size(bottle_colour)
+		var bottle_size: int = GameManager.inventory.get_bottle_size(bottle_colour)
 		var mask_material: ShaderMaterial = mask.material
 		var fill_height: float = 0.0
 		if bottle_size > 0:
 			fill_height = float(dye_amount) / float(bottle_size)
 		mask_material.set_shader_parameter("fill_height", fill_height)
-		mask_material.set_shader_parameter("fill_colour", Color(GameManager.COLOR_HEX[bottle_colour]))
+		mask_material.set_shader_parameter("fill_colour", Color(GameManager.Inventory.COLOR_HEX[bottle_colour]))
 		if thread_material != null:
-			thread_material.set_shader_parameter("fill_colour", Color(GameManager.COLOR_HEX[bottle_colour]))
+			thread_material.set_shader_parameter("fill_colour", Color(GameManager.Inventory.COLOR_HEX[bottle_colour]))
 		bottle_label.text = "[center]" + str(dye_amount) + "[font_size= 15][flip]pp"
 
-	var pile_amount: int = GameManager.get_fabric_pile_amount(bottle_colour)
+	var pile_amount: int = GameManager.inventory.get_fabric_pile_amount(bottle_colour)
 	if pile_amount != _cached_pile_amount:
 		_cached_pile_amount = pile_amount
 
-		var shown_amount: int = clamp(pile_amount, 0, GameManager.fabric_pile_max)
+		var shown_amount: int = clamp(pile_amount, 0, GameManager.inventory.fabric_pile_max)
 		var t: float = 0.0
-		if GameManager.fabric_pile_max > 0:
-			t = float(shown_amount) / float(GameManager.fabric_pile_max)
+		if GameManager.inventory.fabric_pile_max > 0:
+			t = float(shown_amount) / float(GameManager.inventory.fabric_pile_max)
 
 		var h: float = lerp(0.0, 64.0, t)
 		var y: float = lerp(32.0, 0.0, t)
@@ -170,7 +170,7 @@ func _update_popup() -> void:
 		popup.visible = false
 
 func _update_popup_2() -> void:
-	var pile_amount: int = GameManager.get_fabric_pile_amount(bottle_colour)
+	var pile_amount: int = GameManager.inventory.get_fabric_pile_amount(bottle_colour)
 	var should_show: bool = player_in_area_2 and pile_amount > 0
 	if should_show:
 		if not popup_2.visible:
@@ -217,15 +217,15 @@ func _on_tap_button_input_event(_viewport, event, _shape_idx) -> void:
 	if player.carrying_silkworm:
 		return
 
-	var before: int = GameManager.get_silkworm_amount(bottle_colour)
+	var before: int = GameManager.inventory.get_silkworm_amount(bottle_colour)
 	if before <= 0:
 		_sync_from_manager()
 		_update_popup()
 		return
 
 	_dispensing = true
-	GameManager.decrease_silkworm_amount(bottle_colour)
-	var after: int = GameManager.get_silkworm_amount(bottle_colour)
+	GameManager.inventory.decrease_silkworm_amount(bottle_colour)
+	var after: int = GameManager.inventory.get_silkworm_amount(bottle_colour)
 
 	_sync_from_manager()
 	_update_popup()
@@ -246,15 +246,15 @@ func _on_tap_button_2_input_event(_viewport, event, _shape_idx) -> void:
 	if not player_in_area_2:
 		return
 
-	var pile_amount: int = GameManager.get_fabric_pile_amount(bottle_colour)
+	var pile_amount: int = GameManager.inventory.get_fabric_pile_amount(bottle_colour)
 	if pile_amount <= 0:
 		_sync_from_manager()
 		_update_popup_2()
 		return
 
 	_taking_fabric = true
-	GameManager.decrease_fabric_pile_amount(bottle_colour, 1)
-	GameManager.increase_fabric_amount(bottle_colour, 1)
+	GameManager.inventory.decrease_fabric_pile_amount(bottle_colour, 1)
+	GameManager.inventory.increase_fabric_amount(bottle_colour, 1)
 
 	_sync_from_manager()
 	_update_popup_2()
@@ -314,8 +314,8 @@ func _update_thread_shader() -> void:
 func _compute_producing() -> bool:
 	if not TimeManager.active:
 		return false
-	if GameManager.get_dye_amount(bottle_colour) < TimeManager.dye_cost_per_fabric:
+	if GameManager.inventory.get_dye_amount(bottle_colour) < TimeManager.dye_cost_per_fabric:
 		return false
-	var worms: int = GameManager.get_silkworm_amount(bottle_colour)
+	var worms: int = GameManager.inventory.get_silkworm_amount(bottle_colour)
 	var rate_per_minute: int = int(float(worms) / 3.0)
 	return rate_per_minute > 0

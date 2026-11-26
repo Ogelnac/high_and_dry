@@ -9,7 +9,7 @@
 shader = ExtResource("2_hqtel")
 shader_parameter/atlas_frames = Vector2(6, 5)
 shader_parameter/atlas_region = Vector4(0, 0, 0, 0)
-shader_parameter/paper_color = Color(0.96, 0.9, 0.77, 1)
+shader_parameter/paper_color = Color(0.960784314, 0.901960784, 0.768627451, 1)
 shader_parameter/shadow_color = Color(0.23, 0.17, 0.26, 0.65)
 shader_parameter/ink_imperfection = 0.2999999932944
 shader_parameter/black_ink_softness = 0.45

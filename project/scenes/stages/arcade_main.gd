@@ -48,8 +48,8 @@ func _ready() -> void:
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
 
-	GameManager.get_ui_reference()
-	GameManager.arcade_UI()
+	GameManager.UI = $CanvasLayer
+	$CanvasLayer/UI.configure_arcade()
 	if Debug.guarantee_tadd_villager:
 		VillagerManager.roll_hub_visitor(true)
 		GameManager.save()
@@ -105,7 +105,7 @@ func load_tutorial():
 func pattern_update(tile: int) -> void:
 	var level_instance: Node
 	if tile == 0:
-		if GameManager.legs_completed == 0:
+		if GameManager.arcade_run.legs_completed == 0:
 			# Start tile
 			level_instance = LEVEL_1_START.instantiate()
 		else:
@@ -167,8 +167,8 @@ func player_end_animation_sequence() -> void:
 	await t.timeout
 
 func reload_scene():
-	GameManager.new_arcade_resources = []
-	GameManager.clear_resource_cache()
+	GameManager.arcade_run.new_arcade_resources = []
+	GameManager.arcade_run.clear_resource_cache()
 	GameManager.save()
 
 	ui.update_shader_black_dot_transition(0.5)
@@ -177,8 +177,8 @@ func reload_scene():
 func leave_arcade():
 	GameManager.player_start_position = Vector2(0.0, -575.0)
 	GameManager.UI.get_node("UI").display_swipe_to_start = false
-	GameManager.trigger_pachinko = true
-	GameManager.clear_resource_cache()
+	GameManager.arcade_run.trigger_pachinko = true
+	GameManager.arcade_run.clear_resource_cache()
 
 	rich_text_label.position = Vector2(0.0, 750.0)
 	rich_text_label.text = "[center][wave amp=25 freq=5]Swipe up 

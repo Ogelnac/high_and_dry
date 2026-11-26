@@ -61,9 +61,9 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 
 func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
-		if GameManager.silk_worms > 0 or Debug.infinite_silkworms:
+		if GameManager.inventory.silk_worms > 0 or Debug.infinite_silkworms:
 			DialogueManager.start_dialogue("moth_give_silkworm", false)
-			GameManager.silk_worms -= 1
+			GameManager.inventory.silk_worms -= 1
 			GameManager.save()
 			var inst = SILKWORM.instantiate()
 			inst.held = true

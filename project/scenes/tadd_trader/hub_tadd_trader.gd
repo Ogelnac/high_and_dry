@@ -12,12 +12,12 @@ func _ready() -> void:
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.player = $Player
 	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
-	GameManager.get_ui_reference()
+	GameManager.UI = $CanvasLayer
 	GameManager.load_game()
 	Debug.villagers_enabled_changed.connect(_set_villagers_enabled)
 	if VillagerManager.seed_initial_debug_visitor():
 		GameManager.save()
-	GameManager.shop_UI()
+	TimeManager.set_active(false)
 	visitor_box.payment_requested.connect(_on_visitor_payment_requested)
 	visitor_box.closed.connect(_on_visitor_panel_closed)
 	_setup_waiting_visitor()

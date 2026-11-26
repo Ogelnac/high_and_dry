@@ -214,7 +214,7 @@ func _ensure_capacity(required_beads: int) -> void:
 
 func _get_resources() -> Array[int]:
 	var out: Array[int] = []
-	var any_val = GameManager.new_arcade_resources
+	var any_val = GameManager.arcade_run.new_arcade_resources
 	if any_val is Array:
 		var arr: Array = any_val
 		out.resize(arr.size())
@@ -316,7 +316,7 @@ func _begin_remove_one() -> void:
 	var res = _get_resources()
 	if res.size() > 0:
 		res.pop_back()
-		GameManager.new_arcade_resources = res
+		GameManager.arcade_run.new_arcade_resources = res
 	last_resources_count = -1
 
 func _animate_removals(delta: float) -> void:

@@ -46,8 +46,8 @@ func display_box(sprite: Sprite2D, shop_item: ShopItem):
 	name_label.text = shop_item.item_name
 	description_label.text = "[center]" + shop_item.description
 
-	var key: String = GameManager.COLOR_ORDER[shop_item.currency]
-	var r: Vector4i = GameManager.INGREDIENT_REGIONS[key]
+	var key: String = GameManager.Inventory.COLOR_ORDER[shop_item.currency]
+	var r: Vector4i = GameManager.Inventory.INGREDIENT_REGIONS[key]
 	buy.get_node("RichTextLabel").text = "[center]%d[img width=25 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img]" % [shop_item.cost, r.x, r.y, r.z, r.w]
 
 	shop_box.show()

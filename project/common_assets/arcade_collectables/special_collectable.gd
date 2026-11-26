@@ -48,9 +48,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 		match collectable_type:
 			"Silkworm":
-				GameManager.silk_worms += 1
+				GameManager.inventory.silk_worms += 1
 			"Sand":
-				GameManager.sand += 1
+				GameManager.inventory.sand += 1
 
 		audio_player.set_bus("Sfx")
 		audio_player.play()

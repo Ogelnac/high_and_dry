@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cq7vbkqtnuemg"]
+
+[ext_resource type="Shader" uid="uid://bq52yhp8oufx5" path="res://project/common_assets/_shaders/cmyk_invert_text.gdshader" id="1_dots"]
+
+[resource]
+shader = ExtResource("1_dots")
+shader_parameter/paper_color = Color(0.9607843, 0.9019608, 0.76862746, 1)
+shader_parameter/dot_spacing = 1.5
+shader_parameter/dot_radius = 2.0
+shader_parameter/dot_softness = 0.5
+shader_parameter/msdf_pixel_range = 16.0
+shader_parameter/use_alpha_mask = true
+shader_parameter/fill_colour = Color(0.9607843, 0.9019608, 0.76862746, 1)

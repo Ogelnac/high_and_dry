@@ -228,7 +228,7 @@ func can_pay_waiting_villager() -> bool:
 		return false
 	for colour_name: String in definition.invite_cost:
 		var required: int = int(definition.invite_cost.get(colour_name, 0))
-		if int(GameManager.resources.get(colour_name, 0)) < required:
+		if int(GameManager.inventory.resources.get(colour_name, 0)) < required:
 			return false
 	return true
 
@@ -242,7 +242,7 @@ func pay_waiting_villager() -> bool:
 	if not Debug.infinite_resources:
 		for colour_name: String in definition.invite_cost:
 			var required: int = int(definition.invite_cost.get(colour_name, 0))
-			GameManager.resources[colour_name] = int(GameManager.resources.get(colour_name, 0)) - required
+			GameManager.inventory.resources[colour_name] = int(GameManager.inventory.resources.get(colour_name, 0)) - required
 	pending_move_in_villager_id = waiting_villager_id
 	pending_move_in_house_index = house_index
 	waiting_villager_id = &""
@@ -379,7 +379,7 @@ func can_pay_home_upgrade(house_index: int) -> bool:
 		return true
 	var cost: Dictionary[String, int] = get_home_upgrade_cost(house_index)
 	for colour_name: String in cost:
-		if int(GameManager.dye_value.get(colour_name, 0)) < int(cost[colour_name]):
+		if int(GameManager.inventory.dye_value.get(colour_name, 0)) < int(cost[colour_name]):
 			return false
 	return true
 
@@ -389,7 +389,7 @@ func pay_home_upgrade(house_index: int) -> bool:
 	var cost: Dictionary[String, int] = get_home_upgrade_cost(house_index)
 	if not Debug.infinite_resources:
 		for colour_name: String in cost:
-			GameManager.dye_value[colour_name] = int(GameManager.dye_value.get(colour_name, 0)) - int(cost[colour_name])
+			GameManager.inventory.dye_value[colour_name] = int(GameManager.inventory.dye_value.get(colour_name, 0)) - int(cost[colour_name])
 	houses[house_index]["pending_tier"] = 1
 	return true
 

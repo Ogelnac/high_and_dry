@@ -4,6 +4,7 @@
 
 [resource]
 shader = ExtResource("1_7ryty")
+shader_parameter/paper_color = Color(0.9607843, 0.9019608, 0.76862746, 1)
 shader_parameter/registration_offset = 0.0
 shader_parameter/dot_softness = 0.5
 shader_parameter/black_dot_transition = 1.5000000475

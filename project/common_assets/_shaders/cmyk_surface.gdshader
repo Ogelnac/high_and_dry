@@ -22,7 +22,7 @@ void fragment() {
 	float softness = clamp(max(dot_softness, 0.5 * pixel_width / spacing), 0.000001, 0.6);
 	vec3 colour = COLOR.rgb;
 
-	vec3 cmyk_rgb = cmyk_surface_color(point, spacing, colour, black_dot_transition, registration_offset, softness);
+	vec3 cmyk_rgb = cmyk_paper_color(cmyk_screen_color(point, spacing, colour, registration_offset, softness)) * cmyk_scene_fade(black_dot_transition);
 	float cmyk_a = COLOR.a * alpha_effect;
 
 	COLOR = vec4(cmyk_rgb, cmyk_a);

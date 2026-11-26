@@ -29,14 +29,11 @@ const BURST_PARTICLE = preload("uid://bhjo78s7o0ca2")
 const PUFF = preload("uid://c2k068lcxlett")
 
 func _ready():
-	if GameManager.trigger_pachinko:
-		GameManager.trigger_pachinko = false
-		GameManager.add_resources(GameManager.new_arcade_resources)
-		if GameManager.new_arcade_resources.size() > 0:
-			_resource_count_start(GameManager.new_arcade_resources.size())
-			temp_resources = GameManager.new_arcade_resources
-			GameManager.unprocessed_resources.append_array(GameManager.new_arcade_resources)
-			GameManager.new_arcade_resources = []
+	if GameManager.arcade_run.trigger_pachinko:
+		temp_resources = GameManager.arcade_run.take_hub_haul()
+		if not temp_resources.is_empty():
+			GameManager.inventory.store_arcade_haul(temp_resources)
+			_resource_count_start(temp_resources.size())
 			GameManager.save()
 		else:
 			puff_spawn = true

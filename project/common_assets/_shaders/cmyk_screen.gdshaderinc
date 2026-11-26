@@ -1,3 +1,10 @@
+uniform vec4 paper_color : source_color = vec4(0.960784314, 0.901960784, 0.768627451, 1.0);
+
+vec3 cmyk_paper_color(vec3 rgb) {
+	float white = min(rgb.r, min(rgb.g, rgb.b));
+	return rgb - (vec3(1.0) - paper_color.rgb) * white;
+}
+
 const mat2 CYAN_GRID = mat2(vec2(0.96592583, 0.25881905), vec2(-0.25881905, 0.96592583));
 const mat2 MAGENTA_GRID = mat2(vec2(0.5, 0.86602540), vec2(-0.86602540, 0.5));
 const mat2 YELLOW_GRID = mat2(vec2(1.0, 0.0), vec2(0.0, 1.0));
@@ -28,17 +35,16 @@ vec2 plate_center(vec2 cell, float spacing, mat2 rotation) {
 	return rotation * ((cell + 0.5) * spacing);
 }
 
-float dot_mask(float distance_to_center, float radius, float softness) {
-	return 1.0 - smoothstep(radius - softness, radius + softness, distance_to_center);
+const float DOT_RADIUS_JITTER = 0.1;
+
+float dot_radius_offset(vec2 cell, mat2 rotation) {
+	vec2 seed = cell + rotation[0] * 31.7;
+	float random_value = fract(sin(dot(seed, vec2(127.1, 311.7))) * 43758.5453);
+	return (2.0 * random_value - 1.0) * DOT_RADIUS_JITTER;
 }
 
-float texture_plate(vec2 point, float spacing, mat2 rotation, float radius, float softness) {
-	if (radius <= 0.0) {
-		return 1.0;
-	}
-	vec2 cell = fract(plate_grid(point, spacing, rotation) + 0.5) - 0.5;
-	float distance_to_center = length(cell);
-	return 1.0 - dot_mask(distance_to_center, radius, max(distance_to_center, max(softness, 0.000001)));
+float dot_mask(float distance_to_center, float radius, float softness) {
+	return 1.0 - smoothstep(radius - softness, radius + softness, distance_to_center);
 }
 
 vec4 cmyk_ink(vec3 rgb) {
@@ -49,8 +55,9 @@ vec4 cmyk_ink(vec3 rgb) {
 }
 
 float tone_matched_plate(vec2 point, float spacing, mat2 rotation, float ink, float softness) {
-	vec2 cell = abs(fract(plate_grid(point, spacing, rotation) + 0.5) - 0.5);
-	float radius = length(cell);
+	vec2 grid = plate_grid(point, spacing, rotation);
+	vec2 cell = floor(grid + 0.5);
+	float radius = clamp(length(grid - cell) - dot_radius_offset(cell, rotation) / spacing, 0.0, sqrt(0.5));
 	float angle = acos(0.5 / max(radius, 0.5));
 	float area = radius <= 0.5 ? PI * radius * radius
 		: (PI - 4.0 * angle) * radius * radius + 2.0 * sqrt(max(radius * radius - 0.25, 0.0));
@@ -65,23 +72,13 @@ float black_plate_coverage(vec2 point, float spacing, float ink, float dots, flo
 	return mix(dots, merged, solidifying);
 }
 
-vec3 cmyk_surface_color(vec2 point, float spacing, vec3 rgb, float transition, float registration, float softness) {
+vec3 cmyk_screen_color(vec2 point, float spacing, vec3 rgb, float registration, float softness) {
 	vec4 ink = cmyk_ink(rgb);
+	softness = max(softness, 0.000001);
 	float cyan = tone_matched_plate(plate_position(point, CYAN_SHIFT, registration), spacing, CYAN_GRID, ink.r, softness);
 	float magenta = tone_matched_plate(plate_position(point, MAGENTA_SHIFT, registration), spacing, MAGENTA_GRID, ink.g, softness);
 	float yellow = tone_matched_plate(plate_position(point, YELLOW_SHIFT, registration), spacing, YELLOW_GRID, ink.b, softness);
 	float black = tone_matched_plate(point, spacing, BLACK_GRID, ink.a, softness);
-	vec3 screened = vec3(cyan, magenta, yellow) * black;
-	return screened * cmyk_scene_fade(transition);
-}
-
-vec3 cmyk_texture_color(vec2 point, float spacing, vec3 rgb, float black_ink, float registration, float softness) {
-	vec3 ink = cmyk_ink(rgb).rgb;
-	float cyan = texture_plate(plate_position(point, CYAN_SHIFT, registration), spacing, CYAN_GRID, 0.75 * ink.r, softness);
-	float magenta = texture_plate(plate_position(point, MAGENTA_SHIFT, registration), spacing, MAGENTA_GRID, 0.75 * ink.g, softness);
-	float yellow = texture_plate(plate_position(point, YELLOW_SHIFT, registration), spacing, YELLOW_GRID, 0.75 * ink.b, softness);
-	float black_dots = 1.0 - texture_plate(point, spacing, BLACK_GRID, 0.75 * black_ink, 0.0);
-	float black = 1.0 - black_plate_coverage(point, spacing, cmyk_ink(rgb).a, black_dots, 1.0);
 	return vec3(cyan, magenta, yellow) * black;
 }
 

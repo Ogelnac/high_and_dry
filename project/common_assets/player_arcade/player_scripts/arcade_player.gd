@@ -235,7 +235,7 @@ func get_throw_velocity(released_displacement: Vector2) -> Vector2:
 	return vel
 
 func apply_friction_and_gravity(delta: float) -> void:
-	var arcade_resources = GameManager.new_arcade_resources.size()
+	var arcade_resources = GameManager.arcade_run.new_arcade_resources.size()
 	#velocity.y += (200.0 + (50.0 * slime_count) + (arcade_resources * 0.2)) * delta
 	
 	if is_on_floor():

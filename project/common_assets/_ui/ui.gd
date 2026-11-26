@@ -38,8 +38,9 @@ var black_dot_offsets = {}
 var hub_state: int = 0 # 0 = hidden, 1 = summary, 2 = resource detail, 3 = fabric detail
 
 func _ready():
-	GameManager.load_presets()
-	if GameManager.bag_open:
+	GameManager.inventory.held_fabric_changed.connect(_update_fabric_counter_text)
+	GameManager.save_data.load_presets()
+	if GameManager.save_data.bag_open:
 		hub_state = 1
 	else:
 		hub_state = 0
@@ -58,6 +59,20 @@ func _ready():
 			_fade_from_black()
 			break
 	_update_hub_display()
+
+func configure_arcade() -> void:
+	rich_text_label.hide()
+
+
+func configure_whack_a_pesto() -> void:
+	var whack_meter := $WhackMetre
+	var meter_material := $WhackMetre/ColorRect.material as ShaderMaterial
+	for color_name in GameManager.Inventory.COLOR_ORDER:
+		meter_material.set_shader_parameter(color_name.to_lower() + "_resources", 0)
+	whack_meter.show()
+	$WhackCounter.show()
+	rich_text_label.hide()
+
 
 func _process(_delta: float) -> void:
 	if display_swipe_to_start and rich_text_label.modulate.a < 1.0:
@@ -139,13 +154,13 @@ func _play_one_shot(stream: AudioStream) -> void:
 func _set_hub_state(new_state: int) -> void:
 	var was_open := hub_state > 0
 	hub_state = clamp(new_state, 0, 3)
-	GameManager.bag_open = hub_state > 0
-	if GameManager.bag_open != was_open:
-		if GameManager.bag_open:
+	GameManager.save_data.bag_open = hub_state > 0
+	if GameManager.save_data.bag_open != was_open:
+		if GameManager.save_data.bag_open:
 			backpack_open_sound.play()
 		else:
 			backpack_close_sound.play()
-	GameManager.save_presets()
+	GameManager.save_data.save_presets()
 	_update_hub_display()
 
 func _update_hub_display() -> void:
@@ -172,36 +187,36 @@ func _update_arrow_icon() -> void:
 func _update_resource_counter_text() -> void:
 	if hub_state == 2:
 		var lines: String = ""
-		for key: String in GameManager.COLOR_ORDER:
-			var region: Vector4i = GameManager.INGREDIENT_REGIONS[key]
-			var hex: String = GameManager.COLOR_HEX[key]
-			var count: int = int(GameManager.resources.get(key, 0))
+		for key: String in GameManager.Inventory.COLOR_ORDER:
+			var region: Vector4i = GameManager.Inventory.INGREDIENT_REGIONS[key]
+			var hex: String = GameManager.Inventory.COLOR_HEX[key]
+			var count: int = int(GameManager.inventory.resources.get(key, 0))
 			lines += "[img width=48 region=%d,%d,%d,%d]uid://bdfnifowl2amv[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [region.x, region.y, region.z, region.w, hex, count]
 		resource_counter.text = lines
 	else:
 		var sum: int = 0
-		for key: String in GameManager.COLOR_ORDER:
-			sum += int(GameManager.resources.get(key, 0))
+		for key: String in GameManager.Inventory.COLOR_ORDER:
+			sum += int(GameManager.inventory.resources.get(key, 0))
 		resource_counter.text = "[img width=48 region=32,0,16,16]uid://dyts0j2w4qv8n[/img][color=ffffff]x[font_size=60]%d" % sum
 
 func _update_fabric_counter_text() -> void:
 	if hub_state == 3:
 		var lines: String = ""
-		for key: String in GameManager.COLOR_ORDER:
-			var region: Vector4i = GameManager.FABRIC_REGIONS[key]
-			var hex: String = GameManager.COLOR_HEX[key]
-			var count: int = int(GameManager.fabric.get(key, 0))
+		for key: String in GameManager.Inventory.COLOR_ORDER:
+			var region: Vector4i = GameManager.Inventory.FABRIC_REGIONS[key]
+			var hex: String = GameManager.Inventory.COLOR_HEX[key]
+			var count: int = int(GameManager.inventory.fabric.get(key, 0))
 			lines += "[img width=48 region=%d,%d,%d,%d]uid://fdg0vf4du4kc[/img][color=%s]x[font_size=60]%d[/font_size][/color]\n" % [region.x, region.y, region.z, region.w, hex, count]
 		fabric_counter.text = lines
 	else:
 		var sum: int = 0
-		for key: String in GameManager.COLOR_ORDER:
-			sum += int(GameManager.fabric.get(key, 0))
+		for key: String in GameManager.Inventory.COLOR_ORDER:
+			sum += int(GameManager.inventory.fabric.get(key, 0))
 		fabric_counter.text = "[img width=48 region=48,0,16,16]uid://dyts0j2w4qv8n[/img][color=ffffff]x[font_size=60]%d" % sum
 
 func _update_silk_and_sand_text() -> void:
-	var silk: int = GameManager.silk_worms
-	var sand: int = GameManager.sand
+	var silk: int = GameManager.inventory.silk_worms
+	var sand: int = GameManager.inventory.sand
 	silkworm_counter.text = "[img width=48 region=16,32,16,16]uid://dyts0j2w4qv8n[/img]x[font_size=60]%d" % silk
 	sand_counter.text = "[img width=48 region=0,32,16,16]uid://dyts0j2w4qv8n[/img]x[font_size=60]%d" % sand
 

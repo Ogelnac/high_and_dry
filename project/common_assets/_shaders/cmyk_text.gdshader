@@ -20,15 +20,12 @@ float glyph_distance(vec3 field) {
 	return max(min(field.r, field.g), min(max(field.r, field.g), field.b)) - 0.5;
 }
 
-float dot_coverage(float center_distance, float dot_distance, float ink, float aa, float spacing, float max_radius) {
+float dot_coverage(float center_distance, float dot_distance, float ink, float aa, float spacing, float max_radius, float radius_offset) {
 	float coverage = clamp(0.5 + center_distance / spacing, 0.0, 1.0);
 	float radius = max_radius * ink * sqrt(coverage);
+	radius = radius > 0.0 ? max(radius + radius_offset, 0.0) : 0.0;
 	float mask = dot_mask(dot_distance, radius, aa);
 	return mask * smoothstep(0.0, aa, radius);
-}
-
-float glyph_coverage(vec3 field, float distance_scale, float pixel_width) {
-	return smoothstep(-0.5 * pixel_width, 0.5 * pixel_width, glyph_distance(field) * distance_scale);
 }
 
 void fragment() {
@@ -47,9 +44,8 @@ void fragment() {
 	float spacing = max(dot_spacing, 0.25);
 	float max_radius = min(dot_radius, spacing * 2.0);
 	float pixel_width = max(max(local_step.x, local_step.y), 0.000001);
-	float aa = min(max(0.5 * pixel_width, spacing * dot_softness), spacing * 0.6);
-	float unresolved = smoothstep(0.45, 1.15, pixel_width / spacing);
-	float reach = max(max_radius + registration_offset + aa, 0.5 * pixel_width);
+	float aa = max(spacing * dot_softness, 0.000001);
+	float reach = max(max_radius + DOT_RADIUS_JITTER + registration_offset + aa, 0.5 * pixel_width);
 	float glyph = glyph_distance(texture(TEXTURE, UV).rgb);
 	if (glyph < -min(reach / distance_scale, 0.49)) {
 		discard;
@@ -74,27 +70,27 @@ void fragment() {
 		mat2 grid_rotation = rotations[channel];
 		float coverage = 0.0;
 		vec2 cell = floor(plate_grid(point, spacing, grid_rotation));
-		int extra_ring = int(ceil((plate_radius + aa) / spacing)) - 1;
+		int extra_ring = int(ceil((plate_radius + DOT_RADIUS_JITTER + aa) / spacing)) - 1;
 		for (int y = -extra_ring; y <= 1 + extra_ring; y++) {
 			for (int x = -extra_ring; x <= 1 + extra_ring; x++) {
-				vec2 center = plate_center(cell + vec2(float(x), float(y)), spacing, grid_rotation);
+				vec2 dot_cell = cell + vec2(float(x), float(y));
+				vec2 center = plate_center(dot_cell, spacing, grid_rotation);
 				float dot_distance = distance(center, point);
-				if (dot_distance < plate_radius + aa) {
+				if (dot_distance < plate_radius + DOT_RADIUS_JITTER + aa) {
 					vec2 center_uv = UV + local_to_uv * (center - local_position);
 					float center_distance = glyph_distance(texture(TEXTURE, center_uv).rgb) * distance_scale;
-					coverage = max(coverage, dot_coverage(center_distance, dot_distance, ink_amount, aa, spacing, plate_radius));
+					float radius_offset = dot_radius_offset(dot_cell, grid_rotation);
+					coverage = max(coverage, dot_coverage(center_distance, dot_distance, ink_amount, aa, spacing, plate_radius, radius_offset));
 				}
 			}
 		}
 		plates[channel] = coverage;
 	}
-	vec4 shapes;
-	shapes.r = glyph_coverage(texture(TEXTURE, UV + local_to_uv * (cyan_point - local_position)).rgb, distance_scale, pixel_width);
-	shapes.g = glyph_coverage(texture(TEXTURE, UV + local_to_uv * (magenta_point - local_position)).rgb, distance_scale, pixel_width);
-	shapes.b = glyph_coverage(texture(TEXTURE, UV + local_to_uv * (yellow_point - local_position)).rgb, distance_scale, pixel_width);
-	shapes.a = glyph_coverage(texture(TEXTURE, UV + local_to_uv * (black_point - local_position)).rgb, distance_scale, pixel_width);
+	float shape = smoothstep(-0.5 * pixel_width, 0.5 * pixel_width, glyph * distance_scale);
 	float interior = smoothstep(0.0, spacing, glyph * distance_scale);
-	plates.a = mix(plates.a, black_plate_coverage(black_point, spacing, ink.a, plates.a, shapes.a), interior);
-	vec4 result = mix(cmyk_composite(plates), cmyk_unresolved(rgb, ink, shapes), unresolved * shapes.a);
-	COLOR = vec4(result.rgb / max(result.a, 0.00001), ink_colour.a * result.a);
+	plates.a = mix(plates.a, black_plate_coverage(black_point, spacing, ink.a, plates.a, shape), interior);
+	vec4 result = cmyk_composite(plates);
+	vec3 screened = cmyk_screen_color(local_position, spacing, rgb, registration_offset, dot_softness);
+	result = mix(result, vec4(screened, 1.0), interior * shape);
+	COLOR = vec4(cmyk_paper_color(result.rgb / max(result.a, 0.00001)), ink_colour.a * result.a);
 }

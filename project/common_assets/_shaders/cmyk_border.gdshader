@@ -33,18 +33,20 @@ float plate_coverage(vec2 point, vec2 rect_size, float ink, float aa, mat2 grid_
 	vec2 nearest = round(grid);
 	float radius_limit = spacing * 0.5;
 	float max_radius = min(dot_radius, radius_limit) * ink;
-	int reach = int(ceil((max_radius + aa) / spacing + 0.5)) - 1;
+	int reach = int(ceil((max_radius + DOT_RADIUS_JITTER + aa) / spacing + 0.5)) - 1;
 	float plate_mask = 0.0;
 	for (int y = -reach; y <= reach; y++) {
 		for (int x = -reach; x <= reach; x++) {
-			vec2 center = plate_center(nearest + vec2(float(x), float(y)), spacing, grid_rotation);
+			vec2 cell = nearest + vec2(float(x), float(y));
+			vec2 center = plate_center(cell, spacing, grid_rotation);
 			float dot_distance = distance(point, center);
-			if (dot_distance < max_radius + aa) {
+			if (dot_distance < max_radius + DOT_RADIUS_JITTER + aa) {
 				vec2 cell_min = center - spacing * 0.5;
 				vec2 cell_max = center + spacing * 0.5;
 				vec2 overlap = max(min(cell_max, rect_size) - max(cell_min, vec2(0.0)), vec2(0.0));
 				float coverage = overlap.x * overlap.y / (spacing * spacing);
 				float radius = max_radius * sqrt(coverage);
+				radius = radius > 0.0 ? max(radius + dot_radius_offset(cell, grid_rotation), 0.0) : 0.0;
 				float mask = dot_mask(dot_distance, radius, aa);
 				plate_mask = max(plate_mask, mask * smoothstep(0.0, aa, radius));
 			}
@@ -93,10 +95,7 @@ void fragment() {
 		if (abs(determinant) > 0.00000001) {
 			local_to_uv = mat2(uv_dx, uv_dy) * mat2(vec2(original_dy.y, -original_dx.y), vec2(-original_dy.x, original_dx.x)) / determinant;
 		}
-		vec2 cyan_uv = UV + local_to_uv * (cyan_point - original_position);
-		vec2 magenta_uv = UV + local_to_uv * (magenta_point - original_position);
-		vec2 yellow_uv = UV + local_to_uv * (yellow_point - original_position);
-		vec2 black_uv = UV + local_to_uv * (black_point - original_position);
+		vec2 artwork_uv = UV + local_to_uv * (point - original_position);
 		vec4 sampling_region = all(greaterThan(abs(REGION_RECT.zw), vec2(0.0))) ? REGION_RECT : vec4(0.0, 0.0, 1.0, 1.0);
 		if (artwork_region.z > 0.0 && artwork_region.w > 0.0) {
 			sampling_region = artwork_region * TEXTURE_PIXEL_SIZE.xyxy;
@@ -109,38 +108,11 @@ void fragment() {
 		vec2 sample_dx = local_to_uv * local_dx;
 		vec2 sample_dy = local_to_uv * local_dy;
 		vec2 uv_pixel = abs(sample_dx) + abs(sample_dy);
-		vec4 cyan_sample = textureGrad(TEXTURE, clamp(cyan_uv, sample_min, sample_max), sample_dx, sample_dy);
-		vec4 magenta_sample = textureGrad(TEXTURE, clamp(magenta_uv, sample_min, sample_max), sample_dx, sample_dy);
-		vec4 yellow_sample = textureGrad(TEXTURE, clamp(yellow_uv, sample_min, sample_max), sample_dx, sample_dy);
-		vec4 black_sample = textureGrad(TEXTURE, clamp(black_uv, sample_min, sample_max), sample_dx, sample_dy);
-		float black_tone = cmyk_ink(black_sample.rgb * rgb).a;
-		float black_shape = artwork_alpha(black_uv, uv_pixel, black_sample.a, region_start, region_end);
-		float interior = 1.0;
-		if (black_tone > 0.75) {
-			for (int axis = 0; axis < 2; axis++) {
-				vec2 step_uv = local_to_uv[axis] * spacing;
-				for (int direction = -1; direction <= 1; direction += 2) {
-					vec2 neighbor_uv = black_uv + step_uv * float(direction);
-					vec4 neighbor = textureGrad(TEXTURE, clamp(neighbor_uv, sample_min, sample_max), sample_dx, sample_dy);
-					float neighbor_ink = cmyk_ink(neighbor.rgb * rgb).a * artwork_alpha(neighbor_uv, uv_pixel, neighbor.a, region_start, region_end);
-					interior = min(interior, smoothstep(0.25, 0.9, neighbor_ink / black_tone));
-				}
-			}
-		}
-		vec4 artwork_ink = vec4(
-			cmyk_ink(cyan_sample.rgb * rgb).r * artwork_alpha(cyan_uv, uv_pixel, cyan_sample.a, region_start, region_end),
-			cmyk_ink(magenta_sample.rgb * rgb).g * artwork_alpha(magenta_uv, uv_pixel, magenta_sample.a, region_start, region_end),
-			cmyk_ink(yellow_sample.rgb * rgb).b * artwork_alpha(yellow_uv, uv_pixel, yellow_sample.a, region_start, region_end),
-			black_tone * black_shape
-		);
-		float black_dots = 1.0 - texture_plate(black_point, spacing, BLACK_GRID, 0.75 * artwork_ink.a, 0.0);
-		vec4 screened = vec4(
-			1.0 - texture_plate(cyan_point, spacing, CYAN_GRID, 0.75 * artwork_ink.r, dot_softness),
-			1.0 - texture_plate(magenta_point, spacing, MAGENTA_GRID, 0.75 * artwork_ink.g, dot_softness),
-			1.0 - texture_plate(yellow_point, spacing, YELLOW_GRID, 0.75 * artwork_ink.b, dot_softness),
-			mix(black_dots, black_plate_coverage(black_point, spacing, black_tone, black_dots, black_shape), interior)
-		);
-		result = cmyk_composite(mix(screened, artwork_ink, unresolved * black_shape));
+		vec4 artwork = textureGrad(TEXTURE, clamp(artwork_uv, sample_min, sample_max), sample_dx, sample_dy);
+		float shape = artwork_alpha(artwork_uv, uv_pixel, artwork.a, region_start, region_end);
+		vec3 artwork_rgb = artwork.rgb * rgb;
+		vec3 screened = cmyk_screen_color(point, spacing, artwork_rgb, registration_offset, dot_softness);
+		result = vec4(mix(screened, artwork_rgb, unresolved) * shape, shape);
 	} else {
 		rect_size = mix(rect_size, original_position / max(UV, vec2(0.000001)), greaterThan(UV, vec2(0.5)));
 		vec4 ink = cmyk_ink(rgb);
@@ -158,6 +130,8 @@ void fragment() {
 		float interior = smoothstep(0.0, spacing, min(edge.x, edge.y));
 		plates.a = mix(plates.a, black_plate_coverage(black_point, spacing, ink.a, plates.a, shapes.a), interior);
 		result = mix(cmyk_composite(plates), cmyk_unresolved(rgb, ink, shapes), unresolved * shapes.a);
+		vec3 screened = cmyk_screen_color(point, spacing, rgb, registration_offset, dot_softness);
+		result = mix(result, vec4(mix(screened, rgb, unresolved), 1.0), interior * shapes.a);
 	}
-	COLOR = vec4(result.rgb / max(result.a, 0.00001), tint.a * result.a);
+	COLOR = vec4(cmyk_paper_color(result.rgb / max(result.a, 0.00001)), tint.a * result.a);
 }

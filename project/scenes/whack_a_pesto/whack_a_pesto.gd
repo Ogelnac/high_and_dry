@@ -1,5 +1,7 @@
 extends Node2D
 
+const CircleTransition = preload("res://project/common_assets/_ui/circle_transition.gd")
+
 const INGREDIENT = preload("uid://cn51vsxl4fti2")
 const PESTO = preload("uid://b2w86wklvb75l")
 const KARAKARA = preload("uid://qcu637dsm4xw")
@@ -29,9 +31,9 @@ var resource_count = 0
 var music_started = false
 
 func _ready() -> void:
-	GameManager.get_ui_reference()
-	GameManager.whack_a_pesto_UI()
-	resources_to_be_processed = GameManager.unprocessed_resources.slice(0, number_of_resources)
+	GameManager.UI = $CanvasLayer
+	$CanvasLayer/UI.configure_whack_a_pesto()
+	resources_to_be_processed = GameManager.inventory.unprocessed_resources.slice(0, number_of_resources)
 
 func _process(delta: float) -> void:
 	spawn_timer -= delta
@@ -143,14 +145,14 @@ func update_counters(new_resource: int):
 
 func end_game():
 	if !Debug.infinite_resources:
-		GameManager.unprocessed_resources = GameManager.unprocessed_resources.slice(number_of_resources, GameManager.unprocessed_resources.size())
+		GameManager.inventory.unprocessed_resources = GameManager.inventory.unprocessed_resources.slice(number_of_resources, GameManager.inventory.unprocessed_resources.size())
 		for i in range(0, 15):
 			var idx: int = int(i) % 8
 			var key: String = COLOR_ORDER[idx]
-			GameManager.resources[key] -= resources_to_be_processed.count(i)
-			GameManager.dye_value[key] += resources_to_be_processed.count(i)
+			GameManager.inventory.resources[key] -= resources_to_be_processed.count(i)
+			GameManager.inventory.dye_value[key] += resources_to_be_processed.count(i)
 		GameManager.save()
-	GameManager.change_scene("uid://cjyisk7r6qf4c")
+	CircleTransition.change_scene(GameManager.UI, "uid://cjyisk7r6qf4c")
 
 func rand_sign() -> float:
 	var r = randf()

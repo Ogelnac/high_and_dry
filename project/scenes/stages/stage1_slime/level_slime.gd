@@ -7,8 +7,8 @@ func _ready() -> void:
 	DialogueManager.dialogue_box = $CanvasLayer/UI/DialogueBox
 	DialogueManager.dialogue_input = $CanvasLayer/DialogueInput
 
-	GameManager.get_ui_reference($CanvasLayer)
-	GameManager.arcade_UI()
+	GameManager.UI = $CanvasLayer
+	$CanvasLayer/UI.configure_arcade()
 	$CanvasLayer/HBoxContainer/EndGame.visible = Debug.infinite_health
 
 	var resource_trail: Line2D = $ArcadePlayer/ResourceTrail
