@@ -110,6 +110,7 @@ script = ExtResource("7_vr1to")
 
 [node name="Tadd" parent="." unique_id=1724418552 instance=ExtResource("8_67bxi")]
 position = Vector2(-39, -39)
+boss_scene_path = "res://project/scenes/stages/stage1_slime/level_slime.tscn"
 
 [node name="WaitingVillager" parent="." unique_id=766081394 instance=ExtResource("17_visitor")]
 process_mode = 4

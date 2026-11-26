@@ -9,7 +9,6 @@ wet = 0.12
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_tadd_music"]
 resource_name = "Tadd Music Muffle"
 cutoff_hz = 1600.0
-resonance = 0.5
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_tadd_music"]
 resource_name = "Tadd Music Reverb"

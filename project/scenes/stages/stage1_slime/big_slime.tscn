@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cmvxjxmlos3rc"]
 
-[ext_resource type="Texture2D" uid="uid://bayku2amr4ico" path="res://project/scenes/stages/stage1/slime.png" id="1_llwv2"]
-[ext_resource type="Shader" uid="uid://boq3wchwo4xe2" path="res://project/scenes/stages/stage1/cmyk_slime.gdshader" id="2_muscw"]
-[ext_resource type="Texture2D" uid="uid://cdstcfvy3ra0b" path="res://project/scenes/stages/stage1/slime_diffraction.png" id="3_o48gu"]
+[ext_resource type="Texture2D" uid="uid://bayku2amr4ico" path="res://project/scenes/stages/stage1_slime/slime.png" id="1_llwv2"]
+[ext_resource type="Shader" uid="uid://boq3wchwo4xe2" path="res://project/scenes/stages/stage1_slime/cmyk_slime.gdshader" id="2_muscw"]
+[ext_resource type="Texture2D" uid="uid://cdstcfvy3ra0b" path="res://project/scenes/stages/stage1_slime/slime_diffraction.png" id="3_o48gu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvxgg"]
 shader = ExtResource("2_muscw")

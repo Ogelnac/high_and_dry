@@ -67,14 +67,12 @@ func _ready() -> void:
 	AudioManager.play_rising_death_audio(get_node_or_null("RisingDeath/TileMapLayer") as TileMapLayer)
 
 	pattern_update(0)
-	AudioManager.resume_arcade_track(self)
+	AudioManager.play_arcade_track(self)
 
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch and not is_playing:
 		is_playing = true
 		rising_death.is_playing = true
-
-		AudioManager.play_arcade_track(self)
 
 func _process(_delta: float) -> void:
 	if game_ended:

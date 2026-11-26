@@ -61,7 +61,7 @@ viewport_path = NodePath("Boat/SubViewport")
 shader = ExtResource("4_bb06l")
 shader_parameter/registration_offset = 0.0
 shader_parameter/dot_softness = 0.6
-shader_parameter/black_dot_transition = 1.00000002375
+shader_parameter/black_dot_transition = 1.5000000475
 shader_parameter/alpha_effect = 1.0
 shader_parameter/continuous_tile_grid = true
 
@@ -1129,7 +1129,7 @@ shader = ExtResource("4_bb06l")
 shader_parameter/registration_offset = 0.0
 shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.5
-shader_parameter/alpha_effect = 1.0
+shader_parameter/alpha_effect = 0.750000035625
 shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1wsg8"]
@@ -1137,7 +1137,7 @@ shader = ExtResource("4_bb06l")
 shader_parameter/registration_offset = 0.0
 shader_parameter/dot_softness = 0.6
 shader_parameter/black_dot_transition = 0.80000001425
-shader_parameter/alpha_effect = 1.0
+shader_parameter/alpha_effect = 0.50000002375
 shader_parameter/continuous_tile_grid = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ijpa"]
@@ -1517,7 +1517,7 @@ note_text = "parkour up to the front page zoom out"
 [node name="WorldNote3" parent="WorldNotes" unique_id=2064898107 instance=ExtResource("9_gkq2y")]
 position = Vector2(0, -296)
 collision_layer = 0
-note_text = "sprite of resources rises out of pesto's, roughly shows how many unprocessed resources collected"
+note_text = "pile-of-resources sprite rises out of pesto's, roughly shows how many unprocessed resources collected"
 
 [node name="Boat" parent="." unique_id=697669435 instance=ExtResource("10_1wsg8")]
 position = Vector2(867, -36)
@@ -1700,7 +1700,7 @@ modulate = Color(0.2, 0.580392, 0.14902, 1)
 z_index = -100
 material = SubResource("ShaderMaterial_1wsg8")
 position = Vector2(-8, 0)
-tile_map_data = PackedByteArray("AAAvAPn/AAAbAAEAAAAvAPr/AAAbAAIAAAAvAPv/AAAbAAEAAAAvAPz/AAAbAAIAAAAvAP3/AAAbAAEAAAAvAP7/AAAbAAIAAAAvAPj/AAAbAAAAAAAvAP//AAAbAAEAAAAvAAAAAAAbAAIAAAA=")
+tile_map_data = PackedByteArray("AAAvAPn/AAAbAAEAAAAvAPr/AAAbAAIAAAAvAPv/AAAbAAEAAAAvAPz/AAAbAAIAAAAvAP3/AAAbAAEAAAAvAP7/AAAbAAIAAAAvAPj/AAAbAAAAAAAvAP//AAAbAAEAAAA=")
 tile_set = ExtResource("5_rhfmc")
 collision_enabled = false
 metadata/parallax_motion_scale = Vector2(0.005, 0)

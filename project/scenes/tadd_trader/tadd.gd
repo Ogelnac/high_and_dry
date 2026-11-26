@@ -1,5 +1,7 @@
 extends Node2D
 
+@export_file("*.tscn") var boss_scene_path: String
+
 @onready var popup: Sprite2D = $Popup
 @onready var popup_animation: AnimationPlayer = $Popup/AnimationPlayer
 @onready var detection_area: Area2D = $DetectionArea
@@ -35,5 +37,12 @@ func is_confirm_input(event: InputEvent) -> bool:
 
 func _on_tap_button_input_event(_viewport, event, _shape_idx):
 	if is_confirm_input(event) and player_in_area:
+		if not boss_scene_path.is_empty():
+			if DialogueManager.player.dialogue_mode:
+				return
+			DialogueManager.start_dialogue("tadd_boss", true)
+			DialogueManager.set_input("[center]Ready to clear the blockage?[/center]", "Yes", "No")
+			DialogueManager.bind_input(boss_scene_path)
+			return
 		var rand_dialogue: String = "tadd_" + str(randi_range(0, 5))
 		DialogueManager.start_dialogue(rand_dialogue, false)

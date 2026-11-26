@@ -41,10 +41,6 @@ func play_arcade_track(main: Node2D, bus: StringName = &"Bgm") -> void:
 		_arcade_track_handoff_usec = -1
 	bgm.play(position)
 
-func resume_arcade_track(main: Node2D) -> void:
-	if _arcade_track_handoff_usec >= 0:
-		play_arcade_track(main)
-
 func change_scene_with_arcade_track(scene_path: String) -> void:
 	_arcade_track_handoff_usec = -1
 	var bgm := get_tree().current_scene.get_node_or_null("BGM") as AudioStreamPlayer

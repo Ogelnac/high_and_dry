@@ -158,9 +158,9 @@ func _process(_delta: float) -> void:
 			save()
 			_save_dirty = false
 
-func get_ui_reference():
-	UI = get_node("/root/Main/CanvasLayer")
-	circle_fade = get_node("/root/Main/CanvasLayer/UI/CircleFade")
+func get_ui_reference(canvas_layer: CanvasLayer = null) -> void:
+	UI = canvas_layer if canvas_layer != null else get_node("/root/Main/CanvasLayer")
+	circle_fade = UI.get_node("UI/CircleFade")
 
 func save():
 	var data = {

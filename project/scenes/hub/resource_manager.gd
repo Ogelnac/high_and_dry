@@ -59,7 +59,7 @@ func _process(delta):
 			_spawn_rigidbody(temp_resources.pop_front())
 
 	for instance in spawned_rigidbodies:
-		if instance and instance.global_position.y >= -290:
+		if instance and instance.global_position.y >= -260:
 			var counter_instance = counter.instantiate()
 			counter_instance.number_value = current_counter
 			add_child(counter_instance)
