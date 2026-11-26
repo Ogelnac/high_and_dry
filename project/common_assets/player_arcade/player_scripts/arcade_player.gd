@@ -241,7 +241,7 @@ func apply_friction_and_gravity(delta: float) -> void:
 	if is_on_floor():
 		#var normal = get_floor_normal()
 		#velocity = velocity.length() * velocity.slide(normal).normalized() * 0.8
-		velocity = get_real_velocity() - 0.05 * prev_vel * (1.0 - slime_count/slime_count_max)
+		velocity = (get_real_velocity() - 0.05 * prev_vel * (1.0 - slime_count/slime_count_max)).slide(get_floor_normal())
 		if abs(velocity.x) < 1.0:
 			velocity.x = 0.0
 		if abs(velocity.y) < 1.0:
